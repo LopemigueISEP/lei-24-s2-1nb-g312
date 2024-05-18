@@ -1,0 +1,249 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > RunTimeTestingKruskalAlgorithmController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.application.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: RunTimeTestingKruskalAlgorithmController (pt.ipp.isep.dei.g312.application.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RunTimeTestingKruskalAlgorithmController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/73)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.application.controller;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.domain.CSVLine;
+&nbsp;import pt.ipp.isep.dei.g312.ui.console.utils.KruskalAlgorithm;
+&nbsp;
+&nbsp;import java.io.*;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Collections;
+&nbsp;import java.util.Comparator;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Scanner;
+&nbsp;
+&nbsp;public class RunTimeTestingKruskalAlgorithmController {
+&nbsp;    private String folderPath;
+&nbsp;    private final List&lt;String&gt; fileNames;
+&nbsp;    private final List&lt;Integer&gt; verticesCounts;
+&nbsp;    private final List&lt;Long&gt; runTimes;
+&nbsp;
+<b class="nc">&nbsp;    public RunTimeTestingKruskalAlgorithmController() {</b>
+<b class="nc">&nbsp;        fileNames = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        verticesCounts = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        runTimes = new ArrayList&lt;&gt;();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setFolderPath(String folderPath) {
+<b class="nc">&nbsp;        this.folderPath = folderPath;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void runTests() {
+<b class="nc">&nbsp;        clearResults(); // Clear previous results before running new tests</b>
+&nbsp;
+<b class="nc">&nbsp;        File folder = new File(folderPath);</b>
+<b class="nc">&nbsp;        File[] files = folder.listFiles((dir, name) -&gt; name.toLowerCase().endsWith(&quot;.csv&quot;));</b>
+<b class="nc">&nbsp;        if (files == null || files.length == 0) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;No CSV files found in the specified folder&quot;);</b>
+&nbsp;            return;
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        for (File file : files) {</b>
+<b class="nc">&nbsp;            List&lt;CSVLine&gt; csvLines = loadCSVFile(file);</b>
+<b class="nc">&nbsp;            if (csvLines != null) {</b>
+<b class="nc">&nbsp;                runKruskalAlgorithmAndMeasureTime(file.getName(), csvLines);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private List&lt;CSVLine&gt; loadCSVFile(File file) {
+&nbsp;        try {
+<b class="nc">&nbsp;            List&lt;CSVLine&gt; csvLines = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;            Scanner fileIn = new Scanner(file);</b>
+<b class="nc">&nbsp;            while (fileIn.hasNextLine()) {</b>
+<b class="nc">&nbsp;                String[] getter = fileIn.nextLine().split(&quot;;&quot;);</b>
+<b class="nc">&nbsp;                if (getter.length &lt; 3) continue;</b>
+<b class="nc">&nbsp;                String x = getter[0];</b>
+<b class="nc">&nbsp;                String y = getter[1];</b>
+<b class="nc">&nbsp;                double cost = Double.parseDouble(getter[2]);</b>
+<b class="nc">&nbsp;                csvLines.add(new CSVLine(x, y, cost));</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            fileIn.close();</b>
+<b class="nc">&nbsp;            return csvLines;</b>
+<b class="nc">&nbsp;        } catch (FileNotFoundException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;File not found: &quot; + file.getName());</b>
+<b class="nc">&nbsp;        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error parsing CSV file: &quot; + file.getName() + &quot; - &quot; + e.getMessage());</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void runKruskalAlgorithmAndMeasureTime(String fileName, List&lt;CSVLine&gt; csvLines) {
+<b class="nc">&nbsp;        ArrayList&lt;String&gt; vertices = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (CSVLine line : csvLines) {</b>
+<b class="nc">&nbsp;            if (!vertices.contains(line.getX())) vertices.add(line.getX());</b>
+<b class="nc">&nbsp;            if (!vertices.contains(line.getY())) vertices.add(line.getY());</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        long startTime = System.nanoTime(); // Take the timestamp before sorting</b>
+<b class="nc">&nbsp;        KruskalAlgorithm.sortEdges(csvLines); // Bubble sort the edges</b>
+<b class="nc">&nbsp;        KruskalAlgorithm.runKruskalAlgorithm(vertices, csvLines);</b>
+<b class="nc">&nbsp;        long endTime = System.nanoTime(); // Timestamp after running Kruskal</b>
+&nbsp;
+<b class="nc">&nbsp;        long totalTimeMs = (endTime - startTime) / 1_000_000; // Convert to milliseconds</b>
+&nbsp;
+<b class="nc">&nbsp;        fileNames.add(fileName);</b>
+<b class="nc">&nbsp;        verticesCounts.add(vertices.size());</b>
+<b class="nc">&nbsp;        runTimes.add(totalTimeMs);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void clearResults() {
+<b class="nc">&nbsp;        fileNames.clear();</b>
+<b class="nc">&nbsp;        verticesCounts.clear();</b>
+<b class="nc">&nbsp;        runTimes.clear();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void printResults() {
+<b class="nc">&nbsp;        System.out.println(&quot;\n--- Run-Time Results (Sorted by Vertices) ------------------------&quot;);</b>
+&nbsp;
+&nbsp;        // Create a list of indices for sorting
+<b class="nc">&nbsp;        List&lt;Integer&gt; indices = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (int i = 0; i &lt; fileNames.size(); i++) {</b>
+<b class="nc">&nbsp;            indices.add(i);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Sort indices based on the number of vertices
+<b class="nc">&nbsp;        Collections.sort(indices, Comparator.comparingInt(i -&gt; verticesCounts.get(i)));</b>
+&nbsp;
+<b class="nc">&nbsp;        for (int index : indices) {</b>
+<b class="nc">&nbsp;            String fileName = fileNames.get(index);</b>
+<b class="nc">&nbsp;            int vertices = verticesCounts.get(index);</b>
+<b class="nc">&nbsp;            long runTime = runTimes.get(index);</b>
+<b class="nc">&nbsp;            System.out.printf(&quot;File: %s | Vertices: %d | Run-Time (ms): %d%n&quot;, fileName, vertices, runTime);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String[] getFileNames() {
+<b class="nc">&nbsp;        return fileNames.toArray(new String[0]);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int[] getVerticesCounts() {
+<b class="nc">&nbsp;        return verticesCounts.stream().mapToInt(Integer::intValue).toArray();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public long[] getRunTimes() {
+<b class="nc">&nbsp;        return runTimes.stream().mapToLong(Long::longValue).toArray();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void saveResultsToCSV() {
+<b class="nc">&nbsp;        try (PrintWriter writer = new PrintWriter(new FileWriter(&quot;results.csv&quot;))) {</b>
+<b class="nc">&nbsp;            writer.println(&quot;File; Vertices; Run-Time (ms)&quot;);</b>
+&nbsp;
+&nbsp;            // create list of indices to sort based on the vertices count
+<b class="nc">&nbsp;            List&lt;Integer&gt; indices = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;            for (int i = 0; i &lt; verticesCounts.size(); i++) {</b>
+<b class="nc">&nbsp;                indices.add(i);</b>
+&nbsp;            }
+&nbsp;            // Sort indices by comparing vertices counts
+<b class="nc">&nbsp;            indices.sort(Comparator.comparing(verticesCounts::get));</b>
+&nbsp;
+<b class="nc">&nbsp;            for (int i = 0; i &lt; fileNames.size(); i++) {</b>
+<b class="nc">&nbsp;                writer.printf(&quot;%s; %d; %d%n&quot;, fileNames.get(i), verticesCounts.get(i), runTimes.get(i));</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error writing to CSV file: &quot; + e.getMessage());</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-12 20:12</div>
+</div>
+</body>
+</html>

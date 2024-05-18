@@ -1,0 +1,85 @@
+
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+
+
+'hide footbox
+actor "VFM"
+participant ":ListVehiclesDueToCheckUI" as UI
+participant ":ListVehiclesDueToCheckUpController"
+participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
+participant  ":Repositories"
+participant "repositories\n:Repositories"
+participant  "VehicleRepository"
+participant "Vehicle"
+participant "CheckUps"
+participant "CheckUp"
+
+
+activate VFM
+
+ref over VFM, UI : This action assumes that the user has already logged in
+
+    VFM -> UI : Ask the system to list the vehicles that need check-up
+
+    activate UI
+        UI -> ":ListVehiclesDueToCheckUpController" : ListVehiclesDueToCheckUpController()
+        activate ":ListVehiclesDueToCheckUpController"
+
+            ":ListVehiclesDueToCheckUpController" -> ":Repositories": getInstance()
+            activate ":Repositories"
+            ":Repositories" --> ":ListVehiclesDueToCheckUpController": repositories
+            deactivate ":Repositories"
+
+
+
+             ":ListVehiclesDueToCheckUpController" -> "repositories\n:Repositories" : getVehicleRepository()
+             activate "repositories\n:Repositories"
+                "repositories\n:Repositories" --> ":ListVehiclesDueToCheckUpController" : vehicleRepository
+                     deactivate "repositories\n:Repositories"
+                     UI -> ":ListVehiclesDueToCheckUpController" : listVehiclesDueToCheckUp()
+
+
+             ":ListVehiclesDueToCheckUpController" -> "VehicleRepository" : getVehicles()
+                activate "VehicleRepository"
+             "VehicleRepository" --> ":ListVehiclesDueToCheckUpController" : ArrayList<Vehicle> vehiclesDueToCheckUp
+             deactivate "VehicleRepository"
+
+
+
+
+
+
+
+
+
+            ":ListVehiclesDueToCheckUpController" -> "Vehicle" : isCheckUpDue()
+            activate "Vehicle"
+                        "Vehicle" -> "CheckUps" : getLastCheckUpKm()
+                        activate "CheckUps"
+                        "CheckUps" -> "CheckUp" : getKm(checkUp)
+                        activate "CheckUp"
+                        "CheckUp" --> "CheckUps" : double km
+                        deactivate "CheckUp"
+                        "CheckUps" --> "Vehicle" : double lastCheckUpKm
+
+
+            deactivate "CheckUps"
+
+            Vehicle --> ":ListVehiclesDueToCheckUpController" : boolean isCheckUpDue
+                deactivate "Vehicle"
+
+            ":ListVehiclesDueToCheckUpController" --> UI : ArrayList<Vehicle> vehiclesDueToCheckUp
+        deactivate ":ListVehiclesDueToCheckUpController"
+
+        UI --> VFM : display list of vehicles due to check-up
+    deactivate UI
+
+deactivate VFM
+
+@enduml

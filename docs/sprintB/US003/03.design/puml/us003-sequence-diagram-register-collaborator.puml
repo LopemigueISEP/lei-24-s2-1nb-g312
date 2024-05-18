@@ -1,0 +1,30 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+participant "employee\n:Employee" as ORG
+
+
+autonumber 11
+-> ORG : registerCollaborator(name, birth date, admission date, email, phone number,\n admission date, taxpayer number, ID doc type and number), job)
+
+autonumber 11.1
+
+activate ORG
+group Register Collaborator with a Job and Fundamental Charateristics
+
+activate ORG
+ORG -> ORG: registerCollaborator(name, birth date, admission date, email, phone number,\n admission date, taxpayer number, ID doc type and number, job)
+
+
+end
+
+
+autonumber 12
+<-- ORG : employee
+ deactivate ORG
+
+
+@enduml

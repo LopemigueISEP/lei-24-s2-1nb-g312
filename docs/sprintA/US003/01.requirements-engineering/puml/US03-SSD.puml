@@ -1,0 +1,37 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+title System Sequence Diagram (SSD) US003
+autonumber
+
+actor HRM as HRM
+participant ":System" as System
+
+activate HRM
+
+    HRM -> System: asks to register a new collaborator
+    activate System
+
+    System --> HRM: shows fundamental characteristics form (typed data)
+    deactivate System
+
+    HRM  -> System: types requested data
+    activate System
+
+    System --> HRM: shows job list  (selected data)
+    deactivate System
+
+    HRM  -> System: selects a job from available list
+    activate System
+
+    System --> HRM: shows all data and requests confirmation
+    deactivate System
+
+    HRM  -> System: confirms data
+    activate System
+
+    System --> HRM: creates collaborator associated with a job in system\ndisplays operation success
+    deactivate System
+
+deactivate HRM
+
+@enduml

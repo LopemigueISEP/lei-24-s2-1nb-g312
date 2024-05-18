@@ -1,0 +1,84 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "VFM" as Employee
+participant ":CreateVehicleUI" as UI
+participant ":CreateVehicleController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
+participant "vehicle:\nVehicle" as VEHICLE
+activate Employee
+ref over Employee, UI : This action assumes that the user has already logged in
+
+    Employee -> UI : asks to create a new vehicle
+    activate UI
+        UI -> CTRL** : create
+        UI -> CTRL : getVehicleRepository()
+        activate CTRL
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
+
+                RepositorySingleton --> CTRL: repositories
+            deactivate RepositorySingleton
+
+            CTRL -> PLAT : getVehicleRepository()
+            activate PLAT
+
+                PLAT --> CTRL: vehicleRepository
+            deactivate PLAT
+            CTRL -> UI : vehicleRepository
+        deactivate CTRL
+
+
+        UI --> Employee : requests registrationPlate
+    deactivate UI
+
+    Employee -> UI : types registrationPlate
+    activate UI
+        UI -> CTRL : existsVehicle(registrationPlate)
+        activate CTRL
+
+
+            CTRL -> VehicleRepository : existsVehicle(registrationPlate)
+
+            activate VehicleRepository
+                VehicleRepository -> VehicleRepository : existsVehicle(registrationPlate)
+                VehicleRepository --> CTRL : false
+            deactivate VehicleRepository
+            CTRL --> UI : false
+
+        deactivate CTRL
+        UI -> Employee : requests data
+    deactivate UI
+
+
+    Employee -> UI : types requested data (registrationPlate,brand,\nmodel,type,tare,grossWeight,currentKm,\nregisterDate,acquisitionDate,checkupKm)
+    activate UI
+
+    UI --> CTRL : submitData()
+        activate CTRL
+
+
+
+            CTRL -> VEHICLE : createVehicle(registrationPlate, brand, model, type, tare, \n grossWeight, currentKm, registerDate, acquisitionDate, \n checkUpKmFrequency, checkUpKm)
+            activate VEHICLE
+                VEHICLE->VEHICLE : validateVehicle(registrationPlate)
+                VEHICLE->VEHICLE : create vehicle
+
+            VEHICLE--> VehicleRepository : vehicle
+            deactivate VEHICLE
+            activate VehicleRepository
+                VehicleRepository -> VehicleRepository : add(vehicle)
+                VehicleRepository --> CTRL : vehicle
+            deactivate VehicleRepository
+            CTRL --> UI : vehicle
+        deactivate CTRL
+        UI --> Employee : operation message
+
+    deactivate UI
+@enduml

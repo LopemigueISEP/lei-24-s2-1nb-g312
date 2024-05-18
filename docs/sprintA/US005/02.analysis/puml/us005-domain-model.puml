@@ -1,0 +1,59 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+'skinparam linetype ortho
+'left to right direction
+hide circle
+hide methods
+
+title User story 005 Domain Model
+class Organization {
+    name
+    vatNumber
+    website
+    phoneNumber
+    email
+}
+class Employee {
+    name
+    birthdate
+    email/phone
+    admisson date
+    VAT number
+    address
+    role
+}
+
+class Collaborator{
+}
+
+class HumanResourcesManager{
+}
+
+class Skill{
+    name
+    description
+}
+
+class Team{
+}
+
+class Task {
+    reference
+    description
+    duration
+    cost
+}
+Organization "1" -- "1..*" Employee : has >
+Employee "1" -- "1..*" HumanResourcesManager : is >
+Employee "1" -- "1..*" Collaborator : is >
+HumanResourcesManager "1" -- "1..*" Team : registers >
+HumanResourcesManager "1" - "1..*" Collaborator : registers >
+HumanResourcesManager "1" -- "1..*" Skill : registers >
+Collaborator "1" -- "0..*" Skill : has >
+Collaborator "1..*" -- "1" Team : has >
+Skill "1..*" -- "1" Task : needs <
+Team "1" -- "1" Task : executes >
+@enduml

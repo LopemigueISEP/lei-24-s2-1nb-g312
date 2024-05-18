@@ -1,0 +1,153 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > CreateVehicleController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.application.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: CreateVehicleController (pt.ipp.isep.dei.g312.application.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CreateVehicleController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/11)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.application.controller;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Vehicle;
+&nbsp;import pt.ipp.isep.dei.g312.repository.Repositories;
+&nbsp;import pt.ipp.isep.dei.g312.repository.VehicleRepository;
+&nbsp;
+&nbsp;import java.util.Date;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;public class CreateVehicleController {
+&nbsp;
+&nbsp;    private VehicleRepository vehicleRepository;
+&nbsp;
+<b class="nc">&nbsp;    public CreateVehicleController() {</b>
+<b class="nc">&nbsp;        getVehicleRepository();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Optional&lt;Vehicle&gt; createVehicle(String registrationPlate, String brand, String model
+&nbsp;            , String type, double tare, double grossWeight
+&nbsp;            , double currentKm, Date registerDate, Date acquisitionDate
+&nbsp;            , double checkUpKmFrequency, double checkUpKm) {
+&nbsp;
+<b class="nc">&nbsp;        Optional&lt;Vehicle&gt; newVehicle = Optional.empty();</b>
+<b class="nc">&nbsp;        Vehicle vehicle = new Vehicle(registrationPlate, brand, model</b>
+&nbsp;                , type, tare, grossWeight
+&nbsp;                , currentKm, registerDate, acquisitionDate
+&nbsp;                , checkUpKmFrequency);
+&nbsp;
+<b class="nc">&nbsp;        newVehicle = vehicleRepository.add(vehicle);</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        return newVehicle;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private VehicleRepository getVehicleRepository() {
+<b class="nc">&nbsp;        if (vehicleRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            vehicleRepository = repositories.getVehicleRepository();</b>
+&nbsp;
+&nbsp;        }
+<b class="nc">&nbsp;        return vehicleRepository;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    public Boolean existsVehicle(String registrationPlate) {
+<b class="nc">&nbsp;        return vehicleRepository.existsVehicle(registrationPlate);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-12 20:12</div>
+</div>
+</body>
+</html>

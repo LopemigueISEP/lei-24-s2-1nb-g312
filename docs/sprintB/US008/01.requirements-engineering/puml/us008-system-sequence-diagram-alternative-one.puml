@@ -1,0 +1,22 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) US008
+
+autonumber
+
+actor "VFM" as Employee
+participant ":System" as System
+
+activate Employee
+
+    Employee -> System : requests list of vehicles in need of check-up
+    activate System
+
+        System --> Employee : Provides list of vehicles for check-up
+    deactivate System
+
+
+@enduml

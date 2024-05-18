@@ -1,0 +1,142 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > UserSession</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.application.session</a>
+</div>
+
+<h1>Coverage Summary for Class: UserSession (pt.ipp.isep.dei.g312.application.session)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserSession</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.application.session;
+&nbsp;
+&nbsp;import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;public class UserSession {
+&nbsp;
+&nbsp;    private pt.isep.lei.esoft.auth.UserSession userSession;
+&nbsp;
+<b class="nc">&nbsp;    public UserSession(pt.isep.lei.esoft.auth.UserSession userSession) {</b>
+<b class="nc">&nbsp;        this.userSession = userSession;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getUserEmail() {
+<b class="nc">&nbsp;        return userSession.getUserId().getEmail();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getUserName() {
+<b class="nc">&nbsp;        return this.userSession.getUserName();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;UserRoleDTO&gt; getUserRoles() {
+<b class="nc">&nbsp;        return this.userSession.getUserRoles();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void doLogout() {
+<b class="nc">&nbsp;        this.userSession.doLogout();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean isLoggedIn() {
+<b class="nc">&nbsp;        return this.userSession.isLoggedIn();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean isLoggedInWithRole(String roleId) {
+<b class="nc">&nbsp;        return this.userSession.isLoggedInWithRole(roleId);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-12 20:12</div>
+</div>
+</body>
+</html>

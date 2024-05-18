@@ -1,0 +1,97 @@
+
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+
+
+'hide footbox
+actor "VFM"
+participant ":RegisterCheckUpUI" as UI
+participant ":CheckUpController"
+participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
+participant  ":Repositories"
+participant "repositories\n:Repositories"
+participant  "VehicleRepository"
+participant "Vehicle"
+participant "CheckUp"
+
+
+
+
+activate VFM
+
+ref over VFM, UI : This action assumes that the user has already logged in
+
+    VFM -> UI : Initiates check-up registration
+
+
+
+    activate UI
+        UI -> ":CheckUpController" : CheckUpController()
+                activate ":CheckUpController"
+                ":CheckUpController" -> ":Repositories": getInstance()
+                            activate ":Repositories"
+                            ":Repositories" --> ":CheckUpController": repositories
+                            deactivate
+                            ":CheckUpController" -> "repositories\n:Repositories" : getVehicleRepository()
+                            activate "repositories\n:Repositories"
+                            "repositories\n:Repositories" --> ":CheckUpController" : vehicleRepository
+                            deactivate "repositories\n:Repositories"
+
+        UI --> VFM : requestRegistrationPlate()
+        VFM -> UI : types data (String registrationPlate)
+        UI --> UI : validates data input format
+        UI --> VFM : requestCheckUpDate()
+        VFM -> UI : types data (Date checkUpDate)
+        UI --> UI : validates data input format
+        UI --> VFM : requestKmAtLastCheckUp()
+        VFM -> UI : types data (double kmAtLastCheckUp)
+        UI --> UI : validates data input format
+
+        UI -> ":CheckUpController" : registerCheckUp(registrationPlate, \n checkUpDate, kmAtLastCheckUp)
+
+
+":CheckUpController" -->  ":CheckUpController" : validates data (kmAtLastCheckUp)
+            ":CheckUpController" -> VehicleRepository : getVehicle(registrationPlate)
+            activate VehicleRepository
+            "VehicleRepository" --> ":CheckUpController" : vehicle
+
+
+
+
+
+
+            ":CheckUpController" -> "Vehicle" : vehicle.registerCheckUp \n (double kmAtLastCheckUp, Date checkUpDate)
+                        activate "Vehicle"
+
+            "Vehicle" -> "CheckUp" : CheckUp(double kmAtLastCheckUp, Date checkUpDate)
+                        activate "CheckUp"
+
+
+
+
+            "CheckUp" --> "Vehicle": updateSuccess
+
+            deactivate "CheckUp"
+
+            Vehicle --> ":CheckUpController" : updateSuccess
+                                                    deactivate "Vehicle"
+
+                                    ":CheckUpController" -> "VehicleRepository" : updateVehicle(vehicle)
+
+            "VehicleRepository" --> ":CheckUpController" : updateSuccess
+            deactivate VehicleRepository
+
+            ":CheckUpController" --> UI : updateSuccess
+        deactivate ":CheckUpController"
+
+        UI --> VFM : display "CheckUp registered successfully"
+    deactivate UI
+
+deactivate VFM
+
+@enduml

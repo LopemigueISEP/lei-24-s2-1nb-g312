@@ -1,0 +1,48 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+'skinparam linetype ortho
+'left to right direction
+hide circle
+hide methods
+
+
+class Employee {
+    name
+    birth date
+    contact (email/phone)
+    admission date
+    taxpayer number
+    address
+    ID doc type and number
+    role
+}
+
+Employee "1" -- "1..*" VehicleEquipmentFleetManager : is >
+
+class VehicleEquipmentFleetManager{
+}
+
+VehicleEquipmentFleetManager "1" -- "1..*" Vehicle : manages >
+
+
+class Vehicle{
+    registrationPlate
+    brand
+    model
+    type
+    tare
+    grossWeight
+    currentKm
+    registerDate
+    acquisitionDate
+    checkupKmFrequency
+    lastCheckupDate
+}
+
+
+
+
+@enduml

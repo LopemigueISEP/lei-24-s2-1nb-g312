@@ -1,0 +1,31 @@
+@startuml
+title System Sequence Diagram (SSD) US004
+autonumber
+
+actor HRM as HRM
+participant System as ":System"
+activate HRM
+HRM -> System: wants to select collaborator
+activate System
+System --> HRM: displays list of collaborators
+deactivate System
+
+HRM -> System: selects a collaborator
+activate System
+System --> HRM: displays list of collaborator's skills
+deactivate System
+
+loop while HRM wants to select more skills
+    HRM -> System: selects one skill
+    activate System
+    System --> HRM: add skill to collaborator profile
+    deactivate System
+end loop
+
+HRM -> System: confirms no more skills to add
+activate System
+System --> HRM: displays operation success
+deactivate System
+
+deactivate HRM
+@enduml

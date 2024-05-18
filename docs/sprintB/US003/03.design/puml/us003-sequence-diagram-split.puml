@@ -1,0 +1,85 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+
+actor "HRM" as HRM
+participant ":RegisterCollaboratorUI" as UI
+participant ":RegisterCollaboratorController" as CTRL
+participant "employee\n:Employee" as ORG
+
+
+
+activate HRM
+
+activate HRM
+ref over HRM, UI : This action assumes that the user has already logged in
+HRM -> UI : asks to create a new collaborator
+activate UI
+
+UI --> HRM : shows fundamental characteristics (request data)
+deactivate UI
+
+HRM -> UI : types requested data (name, birth date, admission date, email, phone number,\n admission date, taxpayer number, ID doc type and number)
+activate UI
+
+UI -> CTRL  : getJobsList()
+ref over CTRL
+Get Jobs List
+
+end ref
+activate CTRL
+
+
+CTRL --> UI : jobsList
+deactivate CTRL
+
+UI --> HRM : shows job list  (selected data)
+deactivate UI
+
+HRM -> UI : selects one job from available list
+activate UI
+
+
+UI --> HRM : shows all data and requests confirmation
+deactivate UI
+
+HRM -> UI : confirms data
+activate UI
+
+UI -> CTRL : registerCollaborator(name, birth date, admission date, email, phone number,\n admission date, taxpayer number, ID doc type and number), job)
+activate CTRL
+CTRL -> ORG : registerCollaborator(name, birth date, admission date, email, phone number,\n admission date, taxpayer number, ID doc type and number), job)
+
+ref over ORG
+
+Register Collaborator with a Job and Fundamental Charateristics
+end ref
+activate ORG
+
+ORG --> CTRL: employee
+deactivate ORG
+CTRL --> UI : employee
+deactivate CTRL
+
+UI --> HRM: operation message
+deactivate UI
+
+deactivate HRM
+
+
+
+
+
+
+
+
+
+
+
+
+
+@enduml

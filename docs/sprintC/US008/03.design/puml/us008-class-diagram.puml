@@ -1,0 +1,76 @@
+@startuml
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+skinparam classAttributeIconSize 0
+
+
+class ListVehiclesDueToCheckUpUI {
+    -ListVehiclesDueToCheckUpController
+    +ListVehiclesDueToCheckUpUI()
+    +run()
+    +listVehiclesDueToCheckUp()
+}
+
+class ListVehiclesDueToCheckUpController {
+    -VehicleRepository
+    -getVehicleRepository()
+    +ListVehiclesDueToCheckUpController()
+    +vehiclesDueToCheckUp()
+}
+
+class Repositories {
+    -VehicleRepository
+    -Repositories()
+    +getInstance()
+    +getVehicleRepository()
+}
+
+class VehicleRepository {
+    +List<Vehicle>
+    +getVehicle(String registrationPlate)
+    +getVehicles(ArrayList<>(vehiclesList))
+    +updateVehicle()
+    +existsVehicle()
+    +add()
+    +validateVehicle()
+}
+
+class Vehicle {
+    - registrationPlate : String
+    - currentKm : double
+    - checkUpKmFrequency : double
+    - kmAtLastCheckUp : double
+    - checkUpKm : double
+    -validateVehicle(String registrationPlate)
+    +registerCheckUp(double kmAtLastCheckUp, Date checkUpDate)
+    +isCheckUpDue()
+    +getCheckUpList()
+    +compareTo()
+}
+
+class CheckUp {
+- kmAtLastCheckUp : double
+- checkUpDate : Date
++ CheckUp(double kmAtLastCheckUp, Date checkUpDate)
++ getKmAtLastCheckUp()
++ getCheckUpDate()
+}
+
+class CheckUps {
++getSortedCheckUps() : List<CheckUp>
+-ArrayList<CheckUp> checkUps
+}
+
+
+ListVehiclesDueToCheckUpUI "1" ..> "1" ListVehiclesDueToCheckUpController
+ListVehiclesDueToCheckUpController "1" ..> "1" Repositories : repositories
+Repositories "1" -> "1" VehicleRepository
+VehicleRepository "1" --> "*" Vehicle
+ListVehiclesDueToCheckUpController "1" ..> "*" Vehicle
+ListVehiclesDueToCheckUpController "1" ---> "1" VehicleRepository
+Repositories --> Repositories : instance
+Vehicle "1" --> "1" CheckUps :list check-ups
+CheckUps "1" --> "*" CheckUp
+
+@enduml

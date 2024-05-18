@@ -1,0 +1,386 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > AssignSkillsCollaboratorUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui.console</a>
+</div>
+
+<h1>Coverage Summary for Class: AssignSkillsCollaboratorUI (pt.ipp.isep.dei.g312.ui.console)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AssignSkillsCollaboratorUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/120)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui.console;
+&nbsp;import pt.ipp.isep.dei.g312.application.controller.AssignSkillCollaboratorController;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Employee;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Skill;
+&nbsp;import pt.ipp.isep.dei.g312.ui.console.authorization.AuthenticationUI;
+&nbsp;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;/**
+&nbsp; * This class implements the Runnable interface and represents the user interface for assigning skills to collaborators.
+&nbsp; * It interacts with the AssignSkillCollaboratorController to retrieve collaborator and skill information, as well as
+&nbsp; * to add skills to collaborator profiles.
+&nbsp; */
+&nbsp;public class AssignSkillsCollaboratorUI implements Runnable {
+&nbsp;
+&nbsp;    private final AssignSkillCollaboratorController controller;
+&nbsp;    /**
+&nbsp;     * This constructor creates a new instance of the AssignSkillsCollaboratorController.
+&nbsp;     */
+<b class="nc">&nbsp;        public AssignSkillsCollaboratorUI() {</b>
+<b class="nc">&nbsp;            controller = new AssignSkillCollaboratorController();</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method returns the instance of the AssignSkillCollaboratorController associated with this object.
+&nbsp;     * This controller object is used for interacting with the application logic related to assigning skills to collaborators.
+&nbsp;     *
+&nbsp;     * @return The AssignSkillCollaboratorController object used by this class.
+&nbsp;     */
+&nbsp;    public AssignSkillCollaboratorController getController() {
+<b class="nc">&nbsp;        return controller;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method retrieves collaborators, allows the user to
+&nbsp;     * select a collaborator, choose skills to assign, and confirms the addition of skills.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void run() {
+<b class="nc">&nbsp;    boolean continueAddingSkills = true;</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\n\n----------------- Assign Skills to Collaborator --------------------&quot;);</b>
+&nbsp;
+&nbsp;        do {
+<b class="nc">&nbsp;            System.out.println(&quot;Please choose a collaborator:&quot;);</b>
+<b class="nc">&nbsp;            System.out.println();</b>
+<b class="nc">&nbsp;            Employee selectedCollaborator = selectCollaboratorAndItsSkills();</b>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;            if (selectedCollaborator != null) {</b>
+<b class="nc">&nbsp;                System.out.printf(&quot;The selected collaborator was: %s\n&quot;,selectedCollaborator);</b>
+<b class="nc">&nbsp;                System.out.println();</b>
+&nbsp;                // get list of skills possible to be added to collaborator based on previous skills added
+<b class="nc">&nbsp;                List&lt;Skill&gt; skills = controller.getSkillListPossibleToBeAdded(selectedCollaborator);</b>
+&nbsp;
+<b class="nc">&nbsp;                List&lt;Skill&gt; selectedSkills = new ArrayList&lt;&gt;();</b>
+&nbsp;
+&nbsp;                // loop for adding skills
+<b class="nc">&nbsp;                while (continueAddingSkills) {</b>
+<b class="nc">&nbsp;                    listSkillsPossibleToAdd(skills);</b>
+<b class="nc">&nbsp;                    Skill selectedSkill = selectSkill(skills);</b>
+<b class="nc">&nbsp;                    if (selectedSkill != null) {</b>
+<b class="nc">&nbsp;                        selectedSkills.add(selectedSkill);</b>
+<b class="nc">&nbsp;                        skills.remove(selectedSkill);</b>
+<b class="nc">&nbsp;                        System.out.printf(&quot;Skill added: %s\n&quot;, selectedSkill.getSkillName());</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                    if (!skills.isEmpty() &amp;&amp; selectedSkill != null)</b>
+<b class="nc">&nbsp;                        continueAddingSkills = confirmAddingMoreSkills();</b>
+<b class="nc">&nbsp;                    else continueAddingSkills = selectedSkill == null &amp;&amp; !skills.isEmpty();</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;
+&nbsp;                //confirms data
+<b class="nc">&nbsp;                if (showsDataRequestsValidation(selectedCollaborator, selectedSkills)) {</b>
+<b class="nc">&nbsp;                    if(!selectedSkills.isEmpty()){</b>
+<b class="nc">&nbsp;                        controller.addSkillToCollaboratorProfile(selectedCollaborator, selectedSkills);</b>
+&nbsp;                        //System.out.println(&quot;Skills added successfully!&quot;);
+&nbsp;                    }
+&nbsp;
+&nbsp;                }
+<b class="nc">&nbsp;            } else {</b>
+<b class="nc">&nbsp;                System.out.println(&quot;No collaborator selected.&quot;);</b>
+<b class="nc">&nbsp;                continueAddingSkills=false;</b>
+&nbsp;            }
+&nbsp;
+&nbsp;            // Exit loop if user confirms no more skills to add
+<b class="nc">&nbsp;        } while (continueAddingSkills);</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;Skill assignment completed.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Prompts the user to select a collaborator from a list. The list displays each collaborator&#39;s name with an index and their skills (if any).
+&nbsp;     * If the user enters &quot;0&quot;, the method exits and potentially redirects to the AuthenticationUI (assuming `new AuthenticationUI().run()` handles authentication menu).
+&nbsp;     * @return The selected Employee object, or null if no collaborators are found, the user cancels (enters &quot;0&quot;), or enters an invalid selection.
+&nbsp;     * @throws NumberFormatException if the user enters a non-numeric value for the selection.
+&nbsp;     */
+&nbsp;    private Employee selectCollaboratorAndItsSkills() {
+<b class="nc">&nbsp;        List&lt;Employee&gt; collaborator = controller.getCollaboratorListAndSkillsAdded(); // Assuming this retrieves collaborators</b>
+&nbsp;
+<b class="nc">&nbsp;        if (collaborator.isEmpty()) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;No collaborators found.&quot;);</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        int index = 1;</b>
+&nbsp;
+<b class="nc">&nbsp;        for (Employee employee : collaborator) {</b>
+<b class="nc">&nbsp;            System.out.printf(&quot;%d - %s:&quot;, index, employee.getName());</b>
+&nbsp;
+&nbsp;            // Check for and display skills (if any)
+<b class="nc">&nbsp;            List&lt;Skill&gt; skills = employee.getSkills(); // Assuming getSkills returns the employee&#39;s skills</b>
+<b class="nc">&nbsp;            if (skills != null &amp;&amp; !skills.isEmpty()) {</b>
+<b class="nc">&nbsp;                System.out.print(&quot;- Skills: &quot;);</b>
+<b class="nc">&nbsp;                for (Skill skill : skills) {</b>
+<b class="nc">&nbsp;                    System.out.printf(&quot;%s &quot;, skill.getSkillName());</b>
+<b class="nc">&nbsp;                }</b>
+<b class="nc">&nbsp;                System.out.println();</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                System.out.println(&quot; - No skills assigned&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            index++;</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        System.out.println();</b>
+<b class="nc">&nbsp;        System.out.print(&quot;Type your option (0 to cancel):&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        Scanner scanner = new Scanner(System.in);</b>
+<b class="nc">&nbsp;        String choiceStr = scanner.nextLine(); // Read input as string</b>
+&nbsp;
+&nbsp;        int choice;
+&nbsp;        try {
+<b class="nc">&nbsp;            choice = Integer.parseInt(choiceStr); // Attempt to convert to integer</b>
+<b class="nc">&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Invalid input. Please enter a number or &#39;0&#39; to cancel.&quot;);</b>
+<b class="nc">&nbsp;            return null;</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        if (choice == 0) {</b>
+<b class="nc">&nbsp;            return null; // Exit if choice is 0</b>
+<b class="nc">&nbsp;        } else if (choice &lt;= 0 || choice &gt; collaborator.size()) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Invalid selection.&quot;);</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return collaborator.get(choice - 1);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * This method displays a list of skills that can be potentially added to a collaborator.
+&nbsp;     * It checks if the provided list of skills is empty. If empty, it exits without displaying anything.
+&nbsp;     * Otherwise, it iterates through the skill list.
+&nbsp;     * For each skill, it displays the skill index and name.
+&nbsp;     *
+&nbsp;     * @param skills The list of skills that can be added to a collaborator.
+&nbsp;     */
+&nbsp;    private void listSkillsPossibleToAdd(List&lt;Skill&gt; skills) {
+<b class="nc">&nbsp;        if (skills.isEmpty()) {</b>
+&nbsp;            return;
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;---- Available Skills ----&quot;);</b>
+<b class="nc">&nbsp;        System.out.println();</b>
+<b class="nc">&nbsp;        int index = 1;</b>
+<b class="nc">&nbsp;        for (Skill skill : skills) {</b>
+<b class="nc">&nbsp;            System.out.printf(&quot;%d - %s\n&quot;, index, skill.getSkillName());</b>
+<b class="nc">&nbsp;            index++;</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * This method prompts the user to select a skill from a provided list.
+&nbsp;     * It checks if the list of skills is empty. If empty, it informs the user and exits.
+&nbsp;     * Otherwise, it prompts the user to enter the skill number for selection.
+&nbsp;     * It handles potential user input errors and provides messages.
+&nbsp;     * If a valid selection is made, it returns the selected Skill object. Otherwise, it returns null.
+&nbsp;     *
+&nbsp;     * @param skills The list of skills available for selection.
+&nbsp;     * @return The selected Skill object or null if no valid selection was made.
+&nbsp;     */
+&nbsp;    private Skill selectSkill(List&lt;Skill&gt; skills) {
+<b class="nc">&nbsp;        if (skills.isEmpty()) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;No skills available to add.&quot;);</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        System.out.println();</b>
+<b class="nc">&nbsp;        System.out.print(&quot;Select skill (number): &quot;);</b>
+&nbsp;        int choice;
+&nbsp;
+&nbsp;        try {
+<b class="nc">&nbsp;            choice = new Scanner(System.in).nextInt();</b>
+<b class="nc">&nbsp;            System.out.println();</b>
+<b class="nc">&nbsp;        } catch (InputMismatchException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Invalid input. Please enter a number.&quot;);</b>
+<b class="nc">&nbsp;            return null;</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        if (choice &lt;= 0 || choice &gt; skills.size()) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Invalid selection.&quot;);</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return skills.get(choice - 1);    }</b>
+&nbsp;    /**
+&nbsp;     * Prompts the user to confirm whether they want to add another skill.
+&nbsp;     * This method continuously prompts the user for input until a valid response (Y or N) is received (case-insensitive).
+&nbsp;     * @return True if the user wants to add another skill (Y), False otherwise (N).
+&nbsp;     */
+&nbsp;    private boolean confirmAddingMoreSkills() {
+<b class="nc">&nbsp;        Scanner scanner = new Scanner(System.in);</b>
+&nbsp;        String answer;
+&nbsp;
+&nbsp;        do {
+<b class="nc">&nbsp;            System.out.print(&quot;Add another skill? [Y/N]&quot;);</b>
+<b class="nc">&nbsp;            answer = scanner.nextLine().toLowerCase();</b>
+<b class="nc">&nbsp;            System.out.println();</b>
+&nbsp;
+<b class="nc">&nbsp;            if (answer.equalsIgnoreCase(&quot;y&quot;)) {</b>
+<b class="nc">&nbsp;                return true;</b>
+<b class="nc">&nbsp;            } else if (answer.equalsIgnoreCase(&quot;n&quot;)) {</b>
+<b class="nc">&nbsp;                return false;</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                System.out.println(&quot;Invalid input. Please enter &#39;Y&#39; or &#39;N&#39;.&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } while (true);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method displays a confirmation prompt to the user for the skills selected to be assigned to a collaborator.
+&nbsp;     * It checks if the list of skills is empty. If empty, it assumes no confirmation is needed.
+&nbsp;     * Otherwise, it displays the collaborator&#39;s name and iterates through the list of skills to be assigned,
+&nbsp;     * printing the name of each skill. Finally, it calls the `requestConfirmation` method to get user confirmation.
+&nbsp;     *
+&nbsp;     * @param collaborator The Employee object representing the collaborator.
+&nbsp;     * @param skills The list of Skill objects to be assigned to the collaborator.
+&nbsp;     * @return True if the user confirms the data, False otherwise.
+&nbsp;     */
+&nbsp;    private boolean showsDataRequestsValidation(Employee collaborator, List&lt;Skill&gt; skills) {
+<b class="nc">&nbsp;        if(!skills.isEmpty()) {</b>
+<b class="nc">&nbsp;            System.out.printf(&quot;\nSkills to assign to %s: &quot;, collaborator.getName());</b>
+<b class="nc">&nbsp;            for (Skill skill : skills) {</b>
+<b class="nc">&nbsp;                System.out.printf(&quot;\n%s&quot;, skill.getSkillName());</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            return requestConfirmation();</b>
+&nbsp;        }else {
+<b class="nc">&nbsp;            return true;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method prompts the user to confirm the displayed data.
+&nbsp;     * It uses a loop to keep asking for confirmation until the user enters a valid input.
+&nbsp;     *
+&nbsp;     * @return True if the user confirms the data, False otherwise.
+&nbsp;     */
+&nbsp;        private boolean requestConfirmation() {
+<b class="nc">&nbsp;            String dados =&quot;&quot;;</b>
+<b class="nc">&nbsp;            final String CONFIRMAR = &quot;y&quot;;</b>
+<b class="nc">&nbsp;            final String REJEITAR = &quot;n&quot;;</b>
+<b class="nc">&nbsp;            boolean resposta = false;</b>
+&nbsp;
+&nbsp;            do {
+&nbsp;                try {
+<b class="nc">&nbsp;                    Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;                    System.out.print(&quot;\nThe data is correct? [Y/N]&quot;);</b>
+<b class="nc">&nbsp;                    dados = input.nextLine().toLowerCase();</b>
+<b class="nc">&nbsp;                    if(!dados.matches(&quot;[YyNn]+&quot;)){</b>
+<b class="nc">&nbsp;                        System.out.print(&quot;Inserted character is incorrect&quot;);</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                }catch (Exception e){</b>
+<b class="nc">&nbsp;                    System.out.println(&quot;Error reading Y/N in UI&quot;);</b>
+<b class="nc">&nbsp;                }</b>
+<b class="nc">&nbsp;            }while (!dados.equals(CONFIRMAR) &amp;&amp; !dados.equals(REJEITAR));</b>
+&nbsp;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;            if(dados.equals(CONFIRMAR)){</b>
+<b class="nc">&nbsp;                resposta = true;</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            return resposta;</b>
+&nbsp;        }
+&nbsp;}
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-12 20:12</div>
+</div>
+</body>
+</html>

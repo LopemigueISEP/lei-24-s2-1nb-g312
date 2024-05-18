@@ -1,0 +1,487 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+'class ApplicationSession
+'{
+'  +static getInstance()
+'  +getCurrentSession()
+'}
+'
+'class UserSession
+'{
+'  +isLoggedInWithRole(USER_ROLE)
+'}
+'
+'class "{NameOfUC}Controller" {
+'    + {NameOfUC}Controller()
+'    + methodX(...)
+'}
+
+
+
+
+
+
+class RegisterSkillController{
+    +getAuthRepository(): authRepository
+    +getEmployeeRepository(): employeeRepository
+    +getSkillRepository(): skillRepository
+    +registerSkill(skillName, skillDescription): Optional<Skill>
+    +currentUserLogInValidation(): boolean
+    + matchEmployeeByRole(): employee
+    + printAllSkills(): void
+
+}
+
+class EmployeeRepository{
+
+-employeeList : List<Employee>
++getEmployees() : List<Employee>
++getEmployeeSkills(employee : Employee) : List<Skill>
++addSkillsToCollaboratorProfile(collaborator : Employee, skillsToAdd : List<Skill>) : Optional<Employee>
++addEmployee(employee : Employee) : Optional<Employee>
++validateEmployee(employee : Employee) : Boolean
++printRegisteredEmployees() : void
++printAllEmployeesAndHisSkills() : void
+
+
+
+}
+
+class Skill{
+-skillName: String
+-skillDescription: String
++clone(): skill
++compareTo(Skill):int
+
+}
+
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getEmployeeRepository()
+    + getSkillRepository()
+    + getJobRepository()
+    + getAuthenticationRepository()
+    + getVehicleRepository()
+    + getTeamRepository()
+
+}
+
+class Employee{
+    -name : String
+    -birthdate : Date
+    -email : String
+    -phoneNumber : int
+    -admission date : Date
+    -taxpayerNumber : String
+    -address : String
+    -docNumber : String
+    -jobTitle : String
+    -skills : List<Skill>
+
+    +registerSkill(employee, skillName, skillDescription):Optional<Skill>
+    +registerJob(employee, jobName, jobDescription):Optional<Job>
+    +registerCollaborator(name, birth date, admission date, email, phone number,\n admission date, taxpayer number, ID doc type and number, job)
+    +getAvailableSkillsToAddToCollaborator(skillRepository): List<skill>
+    +validateAddToTeam(List<Employee>):boolean
+    +addSkills(List<Skill>): void
+    +compareTo(Employee):int
+    +Employee()
+    +equals() : boolean
+    +clone() : Employee
+    + getSkills() : List<Skill>
+
+}
+
+RegisterSkillUi ..> RegisterSkillController
+
+RegisterSkillController ..> "1" Repositories : repositories
+
+Repositories -> Repositories : instance
+RegisterSkillController ..>Employee: registerSkill
+
+Repositories "1" --> "1" EmployeeRepository
+
+EmployeeRepository "1"--> "*"Employee
+Employee "1"  -->  "*"Skill : registerSkill
+
+RegisterCollaboratorController ..> Employee : employee
+
+
+
+
+
+
+class RegisterJobController{
+
+    +getEmployeeRepository()
+    +getJobRepository()
+    +getAuthRepository()
+    +registerJob(jobName, jobDescription): Optional<Job>
+    +currentUserLogInValidation(): boolean
+    +matchEmployeeByRole(): employee
+    +printAllJobs(): void
+
+}
+
+
+
+class Job{
+-jobName: String
+-jobDescription: String
++clone(): job
++compareTo(job):int
+}
+
+RegisterJobUi ..> RegisterJobController
+
+RegisterJobController ..> "1" Repositories : repositories
+
+RegisterJobController ..>Employee: registerJob
+
+Employee "1"  -->  "*"Job : registerJob
+
+
+
+
+
+
+
+
+
+class RegisterCollaboratorUI {
+
+}
+
+class RegisterCollaboratorController {
+
+    + registerCollaborator(name : String, birthdate : Date,  email : String, phoneNumber : int,\n admission date : Date, taxpayerNumber : String, address : String, docNumber : String, jobTitle : String)
+    + existsCollaborator(taxpayerNumber : String) : Boolean
+    + getJobRepository() : JobRepository
+    + getEmployeeRepository() : EmployeeRepository
+    + getJobsList() : List<String>
+    + printEmployes() : void
+
+}
+
+
+
+
+class AuthenticationRepository {
+    +getAuthentication()
+}
+class JobRepository {
+    -jobsList: List<Job>
+    +getJobsList(): List<Job>
+    +getJobTitle(jobTitle String) : Optional<Job>
+    +addJobRep(job):boolean
+    +validateJob(Job):boolean
+    +printAllJobs(): void
+}
+
+
+
+RegisterCollaboratorController ..> Repositories: repositories
+JobRepository "1" --> "*" Employee
+
+AuthenticationRepository "1"--> "*" Employee
+Repositories "1" --> "1" JobRepository
+Repositories "1" --> "1" AuthenticationRepository
+RegisterCollaboratorUI ..> RegisterCollaboratorController
+
+
+
+
+
+
+
+
+class AssignSkillCollaboratorUI {
+
+}
+
+class AssignSkillCollaboratorController {
+    +getSkillRepository() : SkillRepository
+    +getEmployeeRepository() : EmployeeRepository
+    +getCollaboratorListAndSkillsAdded() : List<Employee>
+    +getSkillListPossibleToBeAdded(selectedCollaborator : Employee ) : List<Skill>
+    +addSkillToCollaboratorProfile(collaborator : Employee , skillsToAdd: List<Skill>) : void
+    +printAllEmployeesAndHisSkills():void
+}
+
+class SkillRepository {
+    -listOfSkills: List<skill>
+    +getSkills(): Optional<List<Skill>>
+    +getSkillListPossibleToBeAdded(): List<Skill>
+    +addSkillRep(skill): boolean
+    +validateSkill(skill):boolean
+    +printAllSkill(): void
+
+
+}
+
+
+AssignSkillCollaboratorController ..> Repositories: repositories
+
+
+Repositories "1" --> "1" SkillRepository
+SkillRepository "1"--> "*" Employee
+
+
+AssignSkillCollaboratorController ..> Employee : employee
+
+
+
+AssignSkillCollaboratorUI ..> AssignSkillCollaboratorController
+
+
+
+
+
+
+'
+'class VFMUI {
+'    +run()
+'}
+'
+
+class RegisterCheckUpUI {
+}
+
+class CheckUpController {
+    +CheckUpController(getVehicleRepository)
+    +getInstance()
+    +registerCheckUp(licensePlate: String, checkUpDate: Date, kmAtCheckUp: double)
+}
+
+
+
+
+
+
+class CheckUp {
+-kmAtLastCheckUp: double
+-checkUpDate: Date
++CheckUp(kmAtLastCheckUp: double, checkUpDate: Date)
++getKmAtLastCheckUp() : double
+- double kmAtLastCheckUp
++ getCheckUpDate()
+}
+
+
+RegisterCheckUpUI ..> CheckUpController: 1..1
+CheckUpController ..> Repositories
+
+VehicleRepository "1" --> "*" Vehicle
+'Vehicle --> checkUp
+CheckUpController ..> Vehicle
+CheckUpController ..> VehicleRepository
+'VFMUI --> RegisterCheckUpUI
+
+
+
+
+
+class CreateVehicleUI {
+}
+
+class CreateVehicleController {
+    + createVehicle(registrationPlate : String, brand : String, model : String\n                        , type : String, tare : double\n                        , grossWeight : double, currentKm : double\n                        , registerDate : Date, acquisitionDate : Date\n                        , checkUpKmFrequency : double, checkUpKm : double) : Optional<Vehicle>
+    + getVehicleRepository() : VehicleRepository
+}
+
+
+class VehicleRepository {
+    - vehiclesList : List<Vehicle>
+
+    + getVehicle(registrationPlate : String) : Vehicle
+    + getVehicles() : List<Vehicle>
+    + updateVehicle(vehicle : Vehicle) : void
+    + existsVehicle(registrationPlate : String) : Boolean
+    + add(vehicle : Vehicle) : Optional<Vehicle>
+}
+
+class Vehicle {
+    - registrationPlate : String
+    - brand : String
+    - model : String
+    - type : String
+    - tare : double
+    - grossWeight : double
+    - currentKm : double
+    - registerDate : Date
+    - acquisitionDate : Date
+    - checkUpKmFrequency : double
+    - checkUpKm : double
+    - KmAtLastCheckUp : double
+    - checkUps : ArrayList<CheckUp>
+
+    -validateVehicle(String registrationPlate)
+    + clone() : Vehicle
+    +registerCheckUp(double kmAtLastCheckUp, Date checkUpDate)
+    +getCheckUpList()
+    +compareTo()
+    +Vehicle()
+    +setLastCheckUpDate(checkUpDate: Date)
+    +getVehicleDetails() : VehicleDetails
+    + isCheckUpDue() : boolean
+}
+
+CreateVehicleUI ..> CreateVehicleController
+
+CreateVehicleController ..> Repositories : repositories
+CreateVehicleController ..> VehicleRepository : vehicleRepository
+CreateVehicleController ..> Vehicle : vehicle
+
+
+
+
+
+
+
+
+
+class GenerateTeamUI {
+
+}
+
+class GenerateTeamController {
+    - employeeRepository : EmployeeRepository
+    - skillRepository : SkillRepository
+    - teamRepository : TeamRepository
+    + getTeamWithSkillSet(minNumberOfEmployees : int, maxNumberOfEmployees : int, skillSet : List<Skill>, teamEmployees : Team) : Result
+    + createTeam(teamEmployees : Team) : Optional<Team>
+    + getEmployeesNotInTeam(teamList : Team) : List<Employee>
+}
+
+
+
+
+
+class TeamRepository {
+    - teamList : List<Team>
+    + add(team : Team) : Optional<Team>
+    + validateTeam(team : Team) : boolean
+    + printRegisteredTeams() : void
+}
+
+class Team {
+    - teamEmployees : List<Employee>
+    + getTeamEmployees() : List<Employee>
+    + setTeamEmployees(teamEmployees : List<Employee>) : void
+    + clone() : Team
+    + add(employee : Employee) : void
+    + isEmpty() : boolean
+    + size() : int
+}
+
+
+
+
+GenerateTeamUI ..> GenerateTeamController
+
+GenerateTeamController ..> Repositories
+GenerateTeamController ..> TeamRepository : teamRepository
+GenerateTeamController ..> EmployeeRepository : employeeRepository
+GenerateTeamController ..> SkillRepository : skillRepository
+GenerateTeamController ..> Team : team
+GenerateTeamController ..> Skill : skill
+GenerateTeamController ..> Employee : employee
+
+
+Repositories --> TeamRepository
+TeamRepository "1" --> "*" Team
+
+
+
+
+
+
+'class VFMUI {
+'    +run()
+'}
+
+class RegisterCheckUpUI {
+}
+
+class CheckUpController {
+    -getVehicleRepository()
+    +CheckUpController(getVehicleRepository)
+    +getInstance()
+    +registerCheckUp(licensePlate: String, checkUpDate: Date, kmAtCheckUp: double)
+}
+
+
+Repositories "1" -> "1" VehicleRepository
+
+Vehicle "1" --> "*" CheckUp : registerCheckUp
+
+
+'VFMUI ..> RegisterCheckUpUI
+
+
+
+
+
+
+
+
+
+
+
+class ListVehiclesDueToCheckUpUI {
+'    -ListVehiclesDueToCheckUpController
+'    +ListVehiclesDueToCheckUpUI()
+'    +run()
+'    +listVehiclesDueToCheckUp()
+}
+
+class ListVehiclesDueToCheckUpController {
+    -VehicleRepository
+    -getVehicleRepository()
+    +ListVehiclesDueToCheckUpController()
+    +vehiclesDueToCheckUp()
+}
+
+class Repositories {
+    -VehicleRepository
+    -Repositories()
+    +getInstance()
+    +getVehicleRepository()
+}
+
+class VehicleRepository {
+    +List<Vehicle>()
+    +getVehicle(String registrationPlate)
+    +getVehicles(ArrayList<>(vehiclesList))
+    +updateVehicle()
+    +existsVehicle()
+    +add()
+    +validateVehicle()
+}
+
+
+
+
+
+class CheckUps {
++getSortedCheckUps() : List<CheckUp>
+- ArrayList<CheckUp> checkUps
+}
+
+
+ListVehiclesDueToCheckUpUI "1" ..> "1" ListVehiclesDueToCheckUpController
+ListVehiclesDueToCheckUpController "1" ..> "1" Repositories : repositories
+ListVehiclesDueToCheckUpController "1" ..> "*" Vehicle
+ListVehiclesDueToCheckUpController "1" ..> "1" VehicleRepository
+
+Vehicle "1" --> "1" CheckUps :list check-ups
+CheckUps "1" --> "*" CheckUp
+
+
+
+
+
+@enduml

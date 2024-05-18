@@ -1,0 +1,48 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+'skinparam linetype ortho
+'left to right direction
+hide circle
+hide methods
+
+class Organization {
+    name
+    vatNumber
+    website
+    phoneNumber
+    email
+}
+
+Organization "1" -- "1..*" Employee : has >
+
+class Employee {
+    name
+    birthdate
+    email/phone
+    admisson date
+    VAT number
+    address
+    role
+}
+
+Employee "1" -- "1..*" VehicleEquipmentFleetManager : is >
+
+class VehicleEquipmentFleetManager{
+}
+
+VehicleEquipmentFleetManager "1" -- "1..*" Vehicle : manages >
+
+
+class Vehicle{
+    brand
+    model
+    registrationPlate
+}
+
+
+
+
+@enduml

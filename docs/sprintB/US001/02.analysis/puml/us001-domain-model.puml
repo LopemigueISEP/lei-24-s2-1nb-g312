@@ -1,0 +1,49 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'left to right direction
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+'title Domain Model
+
+'class Platform {
+'  -description
+'}
+
+
+
+class HumanResourcesManager{
+}
+
+HumanResourcesManager "1" - "1..*" Skill : registers >
+
+
+
+
+class Skill{
+    name
+    description
+}
+
+
+
+'class User {
+'    name
+'    email
+'    password
+'}
+
+'Platform "1" -- "*" Organization : has registered >
+'Platform "1" -- "*" Category : defines >
+
+'Task "*" -- "1" Employee: created by >
+
+'Employee "0..1" -- "1" User: acts as >
+
+@enduml

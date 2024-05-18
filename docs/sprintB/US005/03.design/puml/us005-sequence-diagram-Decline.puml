@@ -1,0 +1,20 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+
+participant ":GenerateTeamUI" as UI
+
+alt  Decline
+ -> UI : declines the given proposal
+activate UI
+    <-- UI : operation aborted by the user
+deactivate UI
+End
+
+@enduml
+

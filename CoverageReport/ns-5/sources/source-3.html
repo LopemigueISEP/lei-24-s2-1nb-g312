@@ -1,0 +1,307 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > EmployeeRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.repository</a>
+</div>
+
+<h1>Coverage Summary for Class: EmployeeRepository (pt.ipp.isep.dei.g312.repository)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">EmployeeRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (9/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    57.4%
+  </span>
+  <span class="absValue">
+    (35/61)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.repository;
+&nbsp;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Employee;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Skill;
+&nbsp;
+&nbsp;
+&nbsp;import java.util.Collections;
+&nbsp;import java.util.List;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * This class represents a repository for managing Employee objects. It provides methods
+&nbsp; * for adding, retrieving, updating, and searching for employees.
+&nbsp; */
+<b class="fc">&nbsp;public class EmployeeRepository {</b>
+&nbsp;    /**
+&nbsp;     * List to store all registered employees.
+&nbsp;     */
+<b class="fc">&nbsp;    private List&lt;Employee&gt; employeeList = new ArrayList&lt;&gt;();</b>
+&nbsp;    /**
+&nbsp;     * Retrieves an `Optional` containing the employee with the specified taxpayer number.
+&nbsp;     * If no employee is found, an empty `Optional` is returned.
+&nbsp;     * @param taxpayerNumber The taxpayer number of the employee to search for.
+&nbsp;     * @return An `Optional` containing the employee or empty if not found.
+&nbsp;     */
+&nbsp;    public Optional&lt;Employee&gt; getEmployees(String taxpayerNumber) {
+<b class="fc">&nbsp;        for (Employee employee : employeeList) {</b>
+<b class="fc">&nbsp;            if (employee.getTaxpayerNumber().equals(taxpayerNumber)) {</b>
+<b class="fc">&nbsp;                return Optional.of(employee);</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return Optional.empty();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns a copy of the list containing all registered employees.
+&nbsp;     * Modifying the returned list will not affect the internal employee list.
+&nbsp;     * @return A copy of the employee list.
+&nbsp;     */
+&nbsp;    public List&lt;Employee&gt; getEmployees() {
+<b class="fc">&nbsp;        return new ArrayList&lt;&gt;(employeeList) ;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Attempts to add a new employee to the repository.
+&nbsp;     * @param employee The employee object to be added.
+&nbsp;     * @return An `Optional` containing the added employee if successful, or empty if the operation fails
+&nbsp;     */
+&nbsp;    public Optional&lt;Employee&gt; addEmployee(Employee employee) {
+<b class="fc">&nbsp;        Optional&lt;Employee&gt; newEmployee = Optional.empty();</b>
+<b class="fc">&nbsp;        boolean operationSuccess = false;</b>
+&nbsp;
+<b class="fc">&nbsp;        if (validateEmployee(employee)) {</b>
+<b class="fc">&nbsp;            newEmployee = Optional.of(employee.clone());</b>
+<b class="fc">&nbsp;            operationSuccess = employeeList.add(newEmployee.get());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (!operationSuccess) {</b>
+<b class="fc">&nbsp;            newEmployee = Optional.empty();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return newEmployee;</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Validates if the provided employee can be added to the repository.
+&nbsp;     * Currently, it checks for duplicate employees based on object equality.
+&nbsp;     * @param employee The employee to be validated.
+&nbsp;     * @return True if the employee is valid to add, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean validateEmployee(Employee employee) {
+<b class="fc">&nbsp;        boolean isValid = !employeeList.contains(employee);</b>
+&nbsp;
+<b class="fc">&nbsp;        return isValid;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Prints information about all registered employees, including their names and jobs.
+&nbsp;     */
+&nbsp;    public void printRegisteredEmployees() {
+&nbsp;
+<b class="nc">&nbsp;        for (Employee emp : employeeList) {</b>
+<b class="nc">&nbsp;            System.out.printf(&quot;%25s - Job: %s\n&quot;, emp.getName(), emp.getJob());</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        System.out.println(&quot;---------------------------------------------------&quot;);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Prints a formatted list of all registered employees and their associated skills.
+&nbsp;     * If the employee has no skills, &quot;No skills assigned&quot; is displayed.
+&nbsp;     * Otherwise, a comma-separated list of the employee&#39;s skill names is printed.
+&nbsp;     */
+&nbsp;    public void printRegisteredEmployeesAndHisSkills() {
+&nbsp;
+<b class="nc">&nbsp;        for (Employee emp : employeeList) {</b>
+<b class="nc">&nbsp;            List&lt;Skill&gt; skills = getEmployeeSkills(emp);</b>
+&nbsp;
+<b class="nc">&nbsp;            System.out.printf(&quot;%25s - &quot;, emp.getName());</b>
+&nbsp;
+<b class="nc">&nbsp;            if (skills.isEmpty()) {</b>
+<b class="nc">&nbsp;                System.out.print(&quot;No skills assigned&quot;);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                System.out.print(&quot;Skills: &quot;);</b>
+<b class="nc">&nbsp;                int index = 0;</b>
+<b class="nc">&nbsp;                for (Skill skl : skills) {</b>
+<b class="nc">&nbsp;                    if (index == 0) {</b>
+<b class="nc">&nbsp;                        System.out.printf(&quot;%s&quot;, skl.getSkillName());</b>
+<b class="nc">&nbsp;                        index++;</b>
+&nbsp;                    } else {
+<b class="nc">&nbsp;                        System.out.printf(&quot;; %s&quot;, skl.getSkillName());</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                }</b>
+&nbsp;            }
+<b class="nc">&nbsp;            System.out.println();</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        System.out.println(&quot;----------------------------------------------------------&quot;);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Attempts to add a list of skills to an existing employee&#39;s profile by finding
+&nbsp;     * the employee in the repository and then updates their skills
+&nbsp;     * @param collaborator The employee object whose skills should be updated.
+&nbsp;     * @param skillsToAdd The list of skills to be added to the employee&#39;s profile.
+&nbsp;
+&nbsp;     * @return An `Optional` containing the updated employee if successful, or empty if the collaborator
+&nbsp;     *         is not found.
+&nbsp;     */
+&nbsp;    public Optional&lt;Employee&gt; addSkillsToCollaboratorProfile(Employee collaborator, List&lt;Skill&gt; skillsToAdd) {
+&nbsp;        // Attempt to find the collaborator in the employee list
+<b class="fc">&nbsp;        Optional&lt;Employee&gt; updatedEmployee = findEmployee(collaborator);</b>
+&nbsp;
+&nbsp;        // Update skills if collaborator found
+<b class="fc">&nbsp;        if (updatedEmployee.isPresent()) {</b>
+<b class="fc">&nbsp;            Employee employeeToUpdate = updatedEmployee.get();</b>
+&nbsp;            // Update collaborator&#39;s skills (specific logic depends on your data model)
+<b class="fc">&nbsp;            employeeToUpdate.addSkills(skillsToAdd); // Assuming an addSkills method in Employee</b>
+<b class="fc">&nbsp;            return Optional.of(employeeToUpdate); // Return updated employee</b>
+&nbsp;        } else {
+&nbsp;            // Collaborator not found, return empty optional
+<b class="fc">&nbsp;            return Optional.empty();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Method to find an employee by any attribute.
+&nbsp;     * Currently, it searches based on object equality with the provided string.
+&nbsp;     *
+&nbsp;     * @param collaborator A string representing the employee attribute to search for.
+&nbsp;     * @return An `Optional` containing the employee if found, or empty if not found.
+&nbsp;     */
+&nbsp;    public Optional&lt;Employee&gt; findEmployee(Employee collaborator) {
+<b class="fc">&nbsp;        for (Employee employee : employeeList) {</b>
+&nbsp;
+<b class="fc">&nbsp;            if (employee.equals(collaborator)) { //compares taxpayernumber</b>
+<b class="fc">&nbsp;                return Optional.of(employee);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return Optional.empty();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method iterates through the employee list and searches for an employee whose job title
+&nbsp;     * matches the provided string. If a match is found, the employee object is returned. Otherwise,
+&nbsp;     * null is returned.
+&nbsp;     *
+&nbsp;     * @param rl The job title of the employee to search for.
+&nbsp;     * @return The employee object with the matching job title, or null if not found.
+&nbsp;     * @deprecated This method does not use `Optional` for null safety. Consider using `findEmployee`
+&nbsp;     *             with a search criteria based on job title instead.
+&nbsp;     */
+&nbsp;
+&nbsp;    public Employee getEmployFromJob(String rl) {
+&nbsp;        try {
+<b class="fc">&nbsp;            for (Employee emp : employeeList) {</b>
+<b class="fc">&nbsp;                if (rl.equals(emp.getJob())) {</b>
+<b class="fc">&nbsp;                    return emp;</b>
+&nbsp;                }
+<b class="fc">&nbsp;            }</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error in getting employee from the current user Job&quot;);</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;     return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves a copy of the list containing the employee&#39;s associated skills..
+&nbsp;     * @param employee The employee whose skills should be retrieved.
+&nbsp;     * @return A copy of the employee&#39;s skill list.
+&nbsp;     */
+&nbsp;
+&nbsp;    public List&lt;Skill&gt; getEmployeeSkills(Employee employee){
+&nbsp;
+<b class="fc">&nbsp;        return new ArrayList&lt;&gt;(employee.getEmployeeSkillList());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Employee&gt; getEmployeeSortedByNumberOfSkill() {
+<b class="nc">&nbsp;        List&lt;Employee&gt; employeesSortedSkills = new ArrayList&lt;&gt;(employeeList);</b>
+<b class="nc">&nbsp;        employeesSortedSkills.sort(Collections.reverseOrder());</b>
+<b class="nc">&nbsp;        return employeesSortedSkills;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-12 20:12</div>
+</div>
+</body>
+</html>

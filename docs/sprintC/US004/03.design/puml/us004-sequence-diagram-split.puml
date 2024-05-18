@@ -1,0 +1,84 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "HRM" as HRM
+participant ":AssignSkillCollaboratorUI" as UI
+participant ":AssignSkillCollaboratorController" as CTRL
+
+
+
+'participant "organization\n:Organization" as ORG
+
+
+activate HRM
+ref over HRM, UI : This action assumes that the user has already logged in
+        HRM -> UI : asks to select collaborator
+
+        activate UI
+
+            UI -> CTRL : getCollaboratorListAndSkillsAdded()
+                    ref over CTRL
+                        Get Employee Skills
+
+
+                    end ref
+            activate CTRL
+
+                CTRL --> UI : employeeSkills
+            deactivate CTRL
+
+            UI --> HRM : displays list of collaborators and their skills
+        deactivate UI
+
+    HRM -> UI : selects a collaborator
+    activate UI
+    loop while HRM wants to select more skills
+
+
+            UI -> CTRL : getSkillListPossibleToBeAdded(selectedCollaborator)
+                    ref over CTRL
+                        Get Skill List Possible to be Added
+
+                    end ref
+            activate CTRL
+
+            CTRL --> UI : skillList
+            deactivate CTRL
+
+            UI --> HRM : displays list of skills possibles to be added
+                deactivate UI
+
+                HRM -> UI : selects one or more skill(s)
+                activate UI
+
+            UI -> CTRL : addSkillToCollaboratorProfile(collaborator, skillsToAdd)
+             ref over CTRL
+             Add Skill to Collaborator Profile
+             end ref
+             activate CTRL
+
+
+
+                   ' CTRL -> ORG : addSkillToCollaboratorProfile(selectedSkill)
+                    'activate ORG
+                   ' ORG --> CTRL : add skill to collaborator profile
+                    'deactivate ORG
+                    CTRL --> UI : add skill to collaborator profile
+                    deactivate CTRL
+                    UI --> HRM : add skill to collaborator profile
+                    deactivate UI
+                    end loop
+                    HRM -> UI : confirms no more skills to add
+                    activate UI
+                    UI --> HRM : operation message
+                    deactivate UI
+
+
+deactivate HRM
+
+@enduml

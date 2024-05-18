@@ -1,0 +1,53 @@
+@startuml
+
+title Use Case Diagram
+
+left to right direction
+
+actor Collaborator
+actor GSM
+actor VFM
+actor HRM
+
+
+
+usecase "UC1 - Register skills that a collaborator may have" as UC1
+usecase "UC2 - Register a job that a collaborator need to have" as UC2
+usecase "UC3 - Register a collaborator with a job and fundamental characteristics" as UC3
+usecase "UC4 - Assign one or more skills to a collaborator" as UC4
+usecase "UC5 - Generate a team proposal automatically" as UC5
+usecase "UC6 - Register a vehicle" as UC6
+usecase "UC7 - Register a vehicle’s check-up" as UC7
+usecase "UC8 - List the vehicles needing the check-up" as UC8
+usecase "UC20 - Register a green space (garden, medium-sized park or large-sized park) and its respective area" as UC20
+usecase "UC21 - Add a new entry to the To-Do List" as UC21
+usecase "UC22 - Add a new entry in the Agenda" as UC22
+usecase "UC23 - Assign a Team to an entry in the Agenda" as UC23
+usecase "UC24 - Postpone an entry in the Agenda to a specific future date" as UC24
+usecase "UC25 - Cancel an entry in the Agenda" as UC25
+usecase "UC26 - Assign one or more vehicles to an entry in the Agenda" as UC26
+usecase "UC27 - List all green spaces managed by me" as UC27
+usecase "UC28 - Consult the tasks assigned to me between two dates" as UC28
+usecase "UC29 - Record the completion of a task" as UC29
+
+
+HRM --> UC1
+HRM --> UC2
+HRM --> UC3
+HRM --> UC4
+HRM --> UC5
+VFM --> UC6
+VFM --> UC7
+VFM --> UC8
+GSM --> UC20
+GSM --> UC21
+GSM --> UC22
+GSM --> UC23
+GSM --> UC24
+GSM --> UC25
+GSM --> UC26
+GSM --> UC27
+Collaborator --> UC28
+Collaborator --> UC29
+
+@enduml

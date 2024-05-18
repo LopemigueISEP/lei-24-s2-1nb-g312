@@ -1,0 +1,43 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+
+participant ":AssignSkillCollaboratorController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "getSkillRepository" as SkillRepository
+
+
+autonumber 6
+-> CTRL: getSkillListPossibleToBeAdded(selectedCollaborator)
+
+autonumber 6.1
+activate CTRL
+group    Get Skill List Possible to be Added
+                       CTRL -> RepositorySingleton : getInstance()
+                                           activate RepositorySingleton
+
+                                               RepositorySingleton --> CTRL: repositories
+                                           deactivate RepositorySingleton
+                                           CTRL -> PLAT : getSkillRepository()
+                                           activate PLAT
+
+                                               PLAT --> CTRL : skillRepository
+                                           deactivate PLAT
+
+                                           CTRL -> SkillRepository : getSkills()
+                                           activate SkillRepository
+
+                                               SkillRepository --> CTRL : skillList
+                                           deactivate SkillRepository
+end
+
+
+    autonumber 7
+<-- CTRL : skillList
+
+
+@enduml

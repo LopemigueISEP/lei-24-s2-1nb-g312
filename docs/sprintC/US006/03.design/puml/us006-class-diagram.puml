@@ -1,0 +1,68 @@
+@startuml
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+skinparam classAttributeIconSize 0
+class CreateVehicleUI {
+}
+
+class CreateVehicleController {
+    + createVehicle(registrationPlate : String, brand : String, model : String\n                        , type : String, tare : double\n                        , grossWeight : double, currentKm : double\n                        , registerDate : Date, acquisitionDate : Date\n                        , checkUpKmFrequency : double, checkUpKm : double) : Optional<Vehicle>
+    + getVehicleRepository() : VehicleRepository
+}
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getVehicleRepository()
+
+}
+
+
+class VehicleRepository {
+    - vehiclesList : List<Vehicle>
+
+    + getVehicle(registrationPlate : String) : Vehicle
+    + getVehicles() : List<Vehicle>
+    + updateVehicle(vehicle : Vehicle) : void
+    + existsVehicle(registrationPlate : String) : Boolean
+    + add(vehicle : Vehicle) : Optional<Vehicle>
+}
+
+class Vehicle {
+    - registrationPlate : String
+    - brand : String
+    - model : String
+    - type : String
+    - tare : double
+    - grossWeight : double
+    - currentKm : double
+    - registerDate : Date
+    - acquisitionDate : Date
+    - checkUpKmFrequency : double
+    - checkUpKm : double
+    - KmAtLastCheckUp : double
+    - checkUps : ArrayList<CheckUp>
+
+    + clone() : Vehicle
+}
+
+CreateVehicleUI .> CreateVehicleController
+
+CreateVehicleController .> Repositories : repositories
+CreateVehicleController ..> VehicleRepository : vehicleRepository
+CreateVehicleController ..> Vehicle : vehicle
+
+
+
+Repositories -> Repositories : instance
+Repositories --> "1"  VehicleRepository
+
+VehicleRepository "1" --> "*" Vehicle
+
+
+@enduml

@@ -1,0 +1,149 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > ShowListOfCollaboratorsWithSkillsUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui.console</a>
+</div>
+
+<h1>Coverage Summary for Class: ShowListOfCollaboratorsWithSkillsUI (pt.ipp.isep.dei.g312.ui.console)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShowListOfCollaboratorsWithSkillsUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui.console;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.application.controller.AssignSkillCollaboratorController;
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * This class implements a user interface for displaying a list of collaborators (employees) and their skills registered in the system.
+&nbsp; * It interacts with a `AssignSkillCollaboratorController` to retrieve and display the collaborator information regarding skills.
+&nbsp;
+&nbsp; *  *Note:* This functionality is currently limited to administrators for demonstration purposes.
+&nbsp; */
+&nbsp;public class ShowListOfCollaboratorsWithSkillsUI implements Runnable {
+&nbsp;
+&nbsp;    private final AssignSkillCollaboratorController controller;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates a new instance of `ShowListOfCollaboratorsWithSkillsUI`. It creates a new instance of
+&nbsp;     * `AssignSkillCollaboratorController` to interact with the application logic for managing skill assignments
+&nbsp;     * to collaborators.
+&nbsp;     */
+<b class="nc">&nbsp;    public ShowListOfCollaboratorsWithSkillsUI() {</b>
+<b class="nc">&nbsp;        controller = new AssignSkillCollaboratorController();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method retrieves and prints the collaborator list with their skills to the
+&nbsp;     * `AssignSkillCollaboratorController`. If an exception occurs during the printing process, it displays an error message to the user.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void run() {
+<b class="nc">&nbsp;        System.out.println(&quot;\n\n---------------- Employee List with skills----------------&quot;);</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            controller.printAllEmployeesAndHisSkills();</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Impression not possible&quot;);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-12 20:12</div>
+</div>
+</body>
+</html>

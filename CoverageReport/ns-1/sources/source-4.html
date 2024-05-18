@@ -1,0 +1,286 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > GenerateTeamController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.application.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: GenerateTeamController (pt.ipp.isep.dei.g312.application.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GenerateTeamController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/57)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.application.controller;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Employee;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Skill;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Team;
+&nbsp;import pt.ipp.isep.dei.g312.repository.EmployeeRepository;
+&nbsp;import pt.ipp.isep.dei.g312.repository.Repositories;
+&nbsp;import pt.ipp.isep.dei.g312.repository.SkillRepository;
+&nbsp;import pt.ipp.isep.dei.g312.repository.TeamRepository;
+&nbsp;import pt.ipp.isep.dei.g312.ui.console.utils.Result;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;public class GenerateTeamController {
+&nbsp;
+&nbsp;    private EmployeeRepository employeeRepository;
+&nbsp;    private SkillRepository skillRepository;
+&nbsp;    private TeamRepository teamRepository;
+&nbsp;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;    public GenerateTeamController(){</b>
+<b class="nc">&nbsp;        getEmployeeRepository();</b>
+<b class="nc">&nbsp;        getSkillRepository();</b>
+<b class="nc">&nbsp;        getTeamRepository();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    private EmployeeRepository getEmployeeRepository() {
+<b class="nc">&nbsp;        if (employeeRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            employeeRepository = repositories.getEmployeeRepository();</b>
+&nbsp;
+&nbsp;        }
+<b class="nc">&nbsp;        return employeeRepository;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    private SkillRepository getSkillRepository() {
+<b class="nc">&nbsp;        if (skillRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            skillRepository = repositories.getSkillRepository();</b>
+&nbsp;
+&nbsp;        }
+<b class="nc">&nbsp;        return skillRepository;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    private TeamRepository getTeamRepository() {
+<b class="nc">&nbsp;        if (teamRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            teamRepository = repositories.getTeamRepository();</b>
+&nbsp;
+&nbsp;        }
+<b class="nc">&nbsp;        return teamRepository;</b>
+&nbsp;    }
+&nbsp;    public Optional&lt;List&lt;Skill&gt;&gt; getSkills(){
+<b class="nc">&nbsp;        Optional&lt;List&lt;Skill&gt;&gt; skills = Optional.empty();</b>
+<b class="nc">&nbsp;        skills=skillRepository.getSkills();</b>
+&nbsp;
+<b class="nc">&nbsp;        return skills;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Attempts to assemble a team of employees based on the specified skill requirements
+&nbsp;     * and constraints on the minimum and maximum number of team members.
+&nbsp;     * &lt;p&gt;
+&nbsp;     * This method searches for employees who can fulfill the required skills and tries to form
+&nbsp;     * a team that meets the specified size constraints. It processes each suitable employee
+&nbsp;     * and adjusts the remaining skill needs accordingly. The team is considered valid if it
+&nbsp;     * contains at least the minimum number of employees required and does not exceed the maximum
+&nbsp;     * limit, while also covering all the specified skills.
+&nbsp;     *
+&nbsp;     * @param minNumberOfEmployees The minimum number of employees required in the team.
+&nbsp;     * @param maxNumberOfEmployees The maximum number of employees that the team can have.
+&nbsp;     * @param skillSet A list of {@link Skill} objects representing the skills required for the team.
+&nbsp;     * @param teamEmployees An instance of {@link Team} where the selected employees will be added.
+&nbsp;     * @return A {@link Result} object containing the outcome of the team generation process.
+&nbsp;     *         The Result includes a success flag and a message indicating the outcome. If the
+&nbsp;     *         team cannot be formed due to insufficient employees, exceeding size limits, or
+&nbsp;     *         unmet skill requirements, the result will indicate failure with an appropriate message.
+&nbsp;     *         If no employees are available to form a team, this will also result in a failure message.
+&nbsp;     */
+&nbsp;    public Result getTeamWithSkillSet(int minNumberOfEmployees,int maxNumberOfEmployees, List&lt;Skill&gt; skillSet, Team teamEmployees) {
+<b class="nc">&nbsp;        Optional&lt;List&lt;Employee&gt;&gt; availableEmployees = Optional.empty();</b>
+<b class="nc">&nbsp;        List&lt;Skill&gt; skillSetNeeded = new ArrayList&lt;&gt;(skillSet);</b>
+<b class="nc">&nbsp;        availableEmployees=Optional.of(employeeRepository.getEmployeeSortedByNumberOfSkill());</b>
+<b class="nc">&nbsp;        if (availableEmployees.isPresent()){</b>
+&nbsp;            for (Employee employee :
+<b class="nc">&nbsp;                    availableEmployees.get()) {</b>
+&nbsp;
+<b class="nc">&nbsp;                if (employee.addEmployeeIfSuitable(skillSetNeeded,teamEmployees.getTeamEmployees())){</b>
+<b class="nc">&nbsp;                    teamEmployees.add(employee);</b>
+&nbsp;
+<b class="nc">&nbsp;                    if (teamEmployees.size()&gt;=minNumberOfEmployees){</b>
+&nbsp;
+&nbsp;                        for (Employee teamEmployee:
+<b class="nc">&nbsp;                             teamEmployees.getTeamEmployees()) {</b>
+&nbsp;                            for (Skill teamEmployeeSkill :
+<b class="nc">&nbsp;                                    teamEmployee.getSkills()) {</b>
+<b class="nc">&nbsp;                                skillSetNeeded.remove(teamEmployeeSkill);</b>
+<b class="nc">&nbsp;                                }</b>
+<b class="nc">&nbsp;                        }</b>
+&nbsp;
+&nbsp;                    }
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            if (teamEmployees.isEmpty() || teamEmployees.size()&lt;minNumberOfEmployees){</b>
+<b class="nc">&nbsp;                return new Result(&quot;There are no Collaborators available to generate a team&quot;,true);</b>
+<b class="nc">&nbsp;            } else if (teamEmployees.size()&gt;maxNumberOfEmployees) {</b>
+<b class="nc">&nbsp;                return new Result(&quot;There are no possible team with the number of maximum Collaborators&quot;, true);</b>
+<b class="nc">&nbsp;            } else if (!skillSetNeeded.isEmpty()){</b>
+<b class="nc">&nbsp;                return new Result(&quot;There are no Collaborators with all the skills you need available to generate a team&quot;,true);</b>
+&nbsp;            }else {
+<b class="nc">&nbsp;                return new Result(&quot;&quot;, false);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;        else{
+<b class="nc">&nbsp;            return new Result(&quot;There are no employees available to generate a team&quot;,true);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Creates a new team based on the given team details and adds it to the repository.
+&nbsp;     * This method copies the employees from the provided team object into a new team instance,
+&nbsp;     * and then attempts to add this new team to the repository. The success of the operation
+&nbsp;     * depends on the repository&#39;s behavior and constraints.
+&nbsp;     *
+&nbsp;     * @param teamEmployees The {@link Team} object containing the list of employees to be included
+&nbsp;     *                      in the new team. The team should have its employees properly initialized.
+&nbsp;     *                      This parameter should not be null.
+&nbsp;     * @return An {@link Optional} containing the newly created team if the operation was successful,
+&nbsp;     *         or an empty Optional if the addition to the repository failed for any reason.
+&nbsp;     */
+&nbsp;    public Optional&lt;Team&gt; createTeam(Team teamEmployees) {
+<b class="nc">&nbsp;        Optional&lt;Team&gt; newTeam = Optional.empty();</b>
+<b class="nc">&nbsp;        Team team = new Team(teamEmployees.getTeamEmployees());</b>
+&nbsp;
+<b class="nc">&nbsp;        newTeam=teamRepository.add(team);</b>
+&nbsp;
+<b class="nc">&nbsp;        return newTeam;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves a list of employees who are not currently part of the specified team.
+&nbsp;     * This method queries all available employees and filters out those who are already
+&nbsp;     * members of the team provided as a parameter.
+&nbsp;     *
+&nbsp;     * @param teamList The team whose non-members are to be determined. This parameter
+&nbsp;     *                 should not be null.
+&nbsp;     * @return A list of {@link Employee} objects representing employees not in the specified
+&nbsp;     *         team. The list will be empty if all employees are part of the team or if there
+&nbsp;     *         are no employees to check.
+&nbsp;     */
+&nbsp;    public List&lt;Employee&gt; getEmployeesNotInTeam(Team teamList){
+<b class="nc">&nbsp;        Optional&lt;List&lt;Employee&gt;&gt; employees = Optional.empty();</b>
+<b class="nc">&nbsp;        List&lt;Employee&gt; employeesAdd= new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        employees=Optional.of(employeeRepository.getEmployees());</b>
+&nbsp;        for (Employee employee :
+<b class="nc">&nbsp;                employees.get()) {</b>
+<b class="nc">&nbsp;            if (employee.validateAddToTeam(teamList.getTeamEmployees())){</b>
+<b class="nc">&nbsp;                employeesAdd.add(employee);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return employeesAdd;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void printAllTeams(){
+<b class="nc">&nbsp;        teamRepository.printRegisteredTeams();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public void addTeamRemoveToAdd(Team teamEmployees, List&lt;Employee&gt; employeesToAdd, List&lt;String&gt; employeesToAddNames, int currentIndex) {
+<b class="nc">&nbsp;        teamEmployees.add(employeesToAdd.get(currentIndex));</b>
+<b class="nc">&nbsp;        employeesToAdd.remove(currentIndex);</b>
+<b class="nc">&nbsp;        employeesToAddNames.remove(currentIndex);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-12 20:12</div>
+</div>
+</body>
+</html>

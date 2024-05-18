@@ -1,0 +1,129 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "HRM" as HRM
+participant ":AssignSkillCollaboratorUI" as UI
+participant ":AssignSkillCollaboratorController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "employeeRepository" as EmployeeRepository
+participant "skillRepository" as SkillRepository
+participant "employee\n:Employee" as ORG
+
+
+activate HRM
+ref over HRM, UI : This action assumes that the user has already logged in
+        HRM -> UI : asks to select collaborator
+
+        activate UI
+
+            UI -> CTRL : getCollaboratorListAndSkillsAdded()
+            activate CTRL
+
+                CTRL -> RepositorySingleton : getInstance()
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
+
+                CTRL -> PLAT : getEmployeeRepository()
+                activate PLAT
+
+                    PLAT --> CTRL: employeeRepository
+                deactivate PLAT
+
+                CTRL -> EmployeeRepository: getEmployeeSkills()
+                activate EmployeeRepository
+
+                  EmployeeRepository --> CTRL : employeeSkills
+                deactivate EmployeeRepository
+
+                CTRL --> UI : employeeSkills
+            deactivate CTRL
+
+            UI --> HRM : displays list of employees and their skills
+        deactivate UI
+
+    HRM -> UI : selects a collaborator
+    activate UI
+    loop while HRM wants to select more skills
+
+            UI -> CTRL : getSkillListPossibleToBeAdded(selectedCollaborator)
+            activate CTRL
+
+
+                    CTRL -> RepositorySingleton : getInstance()
+                    activate RepositorySingleton
+
+                        RepositorySingleton --> CTRL: repositories
+                    deactivate RepositorySingleton
+                    CTRL -> PLAT : getSkillRepository()
+                    activate PLAT
+
+                        PLAT --> CTRL : skillRepository
+                    deactivate PLAT
+
+                    CTRL -> SkillRepository : getSkills()
+                    activate SkillRepository
+
+                        SkillRepository --> CTRL : skillList
+                    deactivate SkillRepository
+                        CTRL --> UI : skillList
+                        deactivate CTRL
+   UI --> HRM : displays list of skills possibles to be added
+    deactivate UI
+
+    HRM -> UI : selects one skill
+    activate UI
+                       UI -> CTRL : addSkillToCollaboratorProfile(collaborator, skillsToAdd)
+                       activate CTRL
+                       CTRL->CTRL: getEmployeeFromRepository()
+
+                                       activate CTRL
+                                       CTRL -> RepositorySingleton : getInstance()
+                                       activate RepositorySingleton
+
+                                       RepositorySingleton --> CTRL : repositories
+                                       deactivate RepositorySingleton
+
+                                       CTRL -> PLAT : getEmployeeRepositories()
+                                       activate PLAT
+
+
+                                       PLAT --> CTRL : EmployeeRepositories
+                                       deactivate PLAT
+
+
+                                       CTRL -> EmployeeRepository: getEmployee()
+                                       activate EmployeeRepository
+                                       EmployeeRepository -->CTRL: employee
+                                       deactivate EmployeeRepository
+
+                                   CTRL-->CTRL: employee
+                                   deactivate CTRL
+                           CTRL -> ORG : addSkillToCollaboratorProfile(collaborator, skillsToAdd)
+                           activate ORG
+
+                           ORG --> CTRL : add skill to collaborator profile
+                           deactivate ORG
+
+                                     CTRL --> UI : add skill to collaborator profile
+                    deactivate CTRL
+
+                    UI --> HRM : add skill to collaborator profile
+                    deactivate UI
+                    end loop
+                    HRM -> UI : confirms no more skills to add
+                    activate UI
+                    UI --> HRM :  operation message
+                    deactivate UI
+
+
+deactivate HRM
+
+@enduml

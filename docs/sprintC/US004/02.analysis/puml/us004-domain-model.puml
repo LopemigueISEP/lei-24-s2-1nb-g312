@@ -1,0 +1,41 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+'skinparam linetype ortho
+'left to right direction
+skinparam classAttributeIconSize 0
+hide circle
+hide methods
+
+title US004 Domain Model
+
+'class Platform {
+'  -description
+'}
+
+
+class Collaborator{
+
+}
+
+class Skill{
+    name
+    description
+}
+
+class HumanResourcesManager{
+}
+
+class Job{
+    name
+    description
+}
+
+HumanResourcesManager "1" - "1..*" Collaborator : registers >
+Collaborator "1" -- "0..*" Skill : has >
+HumanResourcesManager "1" -- "1..*" Skill : registers >
+Collaborator "1" -- "1" Job : has >
+HumanResourcesManager "1" -- "1..*" Job : registers >
+
+@enduml

@@ -1,0 +1,27 @@
+@startuml
+
+title Use Case Diagram
+
+left to right direction
+
+actor VFM
+actor HRM
+
+usecase "UC1 - Register skills that a collaborator may have" as UC1
+usecase "UC2 - Register a job that a collaborator need to have" as UC2
+usecase "UC3 - Register a collaborator with a job and fundamental characteristics" as UC3
+usecase "UC4 - Assign one or more skills to a collaborator" as UC4
+usecase "UC5 - Generate a team proposal automatically" as UC5
+usecase "UC6 - Register a vehicle" as UC6
+usecase "UC7 - Register a vehicle’s check-up" as UC7
+usecase "UC8 - List the vehicles needing the check-up" as UC8
+HRM --> UC1
+HRM --> UC2
+HRM --> UC3
+HRM --> UC4
+HRM --> UC5
+VFM --> UC6
+VFM --> UC7
+VFM --> UC8
+
+@enduml

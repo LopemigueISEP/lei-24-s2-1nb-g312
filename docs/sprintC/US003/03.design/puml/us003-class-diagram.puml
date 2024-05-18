@@ -1,0 +1,80 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+
+class RegisterCollaboratorUI {
+
+}
+
+class RegisterCollaboratorController {
+
+    + registerCollaborator(name : String, birthdate : Date,  email : String, phoneNumber : int,\n admission date : Date, taxpayerNumber : String, address : String, docNumber : String, jobTitle : String)
+    + existsCollaborator(taxpayerNumber : String) : Boolean
+    + getJobRepository() : JobRepository
+    + getEmployeeRepository() : EmployeeRepository
+    + getJobsList() : List<String>
+    + printEmployes() : void
+
+}
+
+class Repositories {
+     - Repositories()
+     + getInstance() : Repositories
+     + getJobRepository()
+     + getEmployeeRepository()
+
+}
+
+class EmployeeRepository {
+    -employeeList : List<Employee>
+    +getEmployee(taxpayerNumber : String) : Optional<Employee>
+    +addEmployee(employee : Employee) : Optional<Employee>
+    +validateEmployee(employee : Employee) : Boolean
+    +printRegisteredEmployees() : void
+}
+
+class JobRepository {
+    +jobsList : List<Job>
+    +getJobsList() : List<Job>
+    +getJobTitle(jobTitle String) : Optional<Job>
+}
+
+class Employee {
+        -name : String
+        -birthdate : Date
+        -email : String
+        -phoneNumber : int
+        -admission date : Date
+        -taxpayerNumber : String
+        -address : String
+        -docNumber : String
+        -jobTitle : String
+
+    +Employee()
+    +equals() : boolean
+    +clone() : Employee
+}
+
+
+
+
+
+RegisterCollaboratorController ..> Repositories: repositories
+RegisterCollaboratorController ..> Employee : employee : Employee
+RegisterCollaboratorController ..> JobRepository: jobRepository
+RegisterCollaboratorController ..> EmployeeRepository: employeeRepository
+JobRepository "1" --> "*" Employee
+EmployeeRepository "1" --> "*" Employee
+Repositories "1" --> "1" JobRepository
+Repositories "1" --> "1" EmployeeRepository
+RegisterCollaboratorUI .> RegisterCollaboratorController
+Repositories -> Repositories : instance
+
+@enduml

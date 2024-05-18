@@ -1,0 +1,135 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > VFMUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui.console.menu</a>
+</div>
+
+<h1>Coverage Summary for Class: VFMUI (pt.ipp.isep.dei.g312.ui.console.menu)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">VFMUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui.console.menu;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.ui.console.*;
+&nbsp;import pt.ipp.isep.dei.g312.ui.console.utils.Utils;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;public class VFMUI implements Runnable {
+<b class="nc">&nbsp;    public VFMUI(){</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public void run() {
+<b class="nc">&nbsp;        List&lt;MenuItem&gt; options = new ArrayList&lt;MenuItem&gt;();</b>
+<b class="nc">&nbsp;        options.add(new MenuItem(&quot;Register Vehicle&quot;, new CreateVehicleUI()));</b>
+<b class="nc">&nbsp;        options.add(new MenuItem(&quot;Register Check-up&quot;, new RegisterCheckUpUI()));</b>
+<b class="nc">&nbsp;        options.add(new MenuItem(&quot;List Vehicles due to CheckUp&quot;, new ListVehiclesDueToCheckUpUI()));</b>
+&nbsp;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        int option = 0;</b>
+&nbsp;        do {
+<b class="nc">&nbsp;            option = Utils.showAndSelectIndex(options, &quot;\n\n---------------- VFM MENU -----------------&quot;,true);</b>
+&nbsp;
+<b class="nc">&nbsp;            if ((option &gt;= 0) &amp;&amp; (option &lt; options.size())) {</b>
+<b class="nc">&nbsp;                options.get(option).run();</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } while (option != -1);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-12 20:12</div>
+</div>
+</body>
+</html>

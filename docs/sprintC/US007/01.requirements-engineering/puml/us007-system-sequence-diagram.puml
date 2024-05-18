@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - US007
+
+autonumber
+
+actor "VFM " as Employee
+participant ":System" as System
+
+activate Employee
+
+    Employee -> System : Initiates check-up date registration
+    activate System
+
+        System --> Employee : requests data (i.e. license plate, date, km at check-up)
+    deactivate System
+
+    Employee -> System : types requested data
+    activate System
+
+    System --> Employee : shows all data and requests confirmation
+    deactivate System
+
+    Employee -> System : confirms data
+    activate System
+
+        System --> Employee : displays operation success
+    deactivate System
+
+@enduml

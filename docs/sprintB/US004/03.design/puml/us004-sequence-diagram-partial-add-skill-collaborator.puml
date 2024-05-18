@@ -1,0 +1,58 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+
+participant ":AssignSkillCollaboratorController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "employeeRepository" as EmployeeRepository
+participant "employee\n:Employee" as ORG
+
+
+autonumber 10
+-> CTRL: addSkillToCollaboratorProfile(collaborator, skillsToAdd)
+
+autonumber 10.1
+activate CTRL
+group Add Skill to Collaborator Profile
+       activate CTRL
+                                  CTRL->CTRL: getEmployeeFromRepository()
+
+                                                                         activate CTRL
+                                                                         CTRL -> RepositorySingleton : getInstance()
+                                                                         activate RepositorySingleton
+
+                                                                         RepositorySingleton --> CTRL : repositories
+                                                                         deactivate RepositorySingleton
+
+                                                                         CTRL -> PLAT : getEmployeeRepositories()
+                                                                         activate PLAT
+
+
+                                                                         PLAT --> CTRL : EmployeeRepositories
+                                                                         deactivate PLAT
+
+
+                                                                         CTRL -> EmployeeRepository: getEmployee()
+                                                                         activate EmployeeRepository
+                                                                         EmployeeRepository -->CTRL: employee
+                                                                         deactivate EmployeeRepository
+
+                                                                     CTRL-->CTRL: employee
+                                                                     deactivate CTRL
+                                                             CTRL -> ORG : addSkillToCollaboratorProfile(collaborator, skillsToAdd)
+                                                             activate ORG
+
+                                                             ORG --> CTRL : add skill to collaborator profile
+                                                             deactivate ORG
+end
+
+
+    autonumber 11
+<-- CTRL : add skill to collaborator profile
+
+
+@enduml

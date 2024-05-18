@@ -1,0 +1,41 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+
+participant ":GenerateTeamUI" as UI
+participant ":GenerateTeamController" as CTRL
+participant "employeeRepository:\nEmployeeRepository" as EmployeeRepository
+participant "skillRepository:\nSkillRepository" as SkillRepository
+participant "teamRepository:\nTeamRepository" as TeamRepository
+participant "employee\n:Employee" as EMP
+participant "skill\n:Skill" as SKILL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "team\n:Team" as TEAM
+alt Accept
+    -> UI : Accept the given suggestion
+    activate UI
+        UI --> CTRL : submitData()
+        activate CTRL
+        CTRL -> TEAM : createTeam(Team teamEmployees)
+        activate TEAM
+            TEAM -> TEAM : create team
+            TEAM --> TeamRepository : team
+        deactivate TEAM
+        activate TeamRepository
+            TeamRepository -> TeamRepository : add(team)
+            TeamRepository --> CTRL : team
+        deactivate TeamRepository
+            CTRL --> UI : team
+        deactivate CTRL
+        <-- UI : Team successfully created!
+    deactivate UI
+End
+
+@enduml
+

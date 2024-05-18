@@ -1,0 +1,10 @@
+pt.ipp.isep.dei.g312.application.controller
+pt.ipp.isep.dei.g312.application.controller.authorization
+pt.ipp.isep.dei.g312.application.session
+pt.ipp.isep.dei.g312.domain
+pt.ipp.isep.dei.g312.repository
+pt.ipp.isep.dei.g312.ui
+pt.ipp.isep.dei.g312.ui.console
+pt.ipp.isep.dei.g312.ui.console.authorization
+pt.ipp.isep.dei.g312.ui.console.menu
+pt.ipp.isep.dei.g312.ui.console.utils

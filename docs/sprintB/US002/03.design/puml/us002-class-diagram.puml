@@ -1,0 +1,72 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class RegisterJobUi{
+
+}
+
+class RegisterJobController{
+    +getEmployeeRepository(): employeeRepository
+    +registerJob(jobName, jobDescription): Optional<Job>
+
+}
+
+class EmployeeRepository{
+
+
++getEmployee():employee
+
+}
+
+class Job{
+-jobName: String
+-jobDescription: String
+
+}
+
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getEmployeeRepository(): employeeRepository
+
+}
+
+class Employee{
+    -name : String
+    -birthdate : Date
+    -email : String
+    -phoneNumber : int
+    -admission date : Date
+    -taxpayerNumber : String
+    -address : String
+    -docNumber : String
+    -jobTitle : String
+
+    +registerJob(jobName, jobDescription): Optional<Job>
+    +validateJob(job): boolean
+    +add(job): boolean
+}
+
+RegisterJobUi ..> RegisterJobController
+
+RegisterJobController ..> "1" Repositories : repositories
+
+Repositories -> Repositories : instance
+RegisterJobController ..>Employee
+
+Repositories "1" --> "1" EmployeeRepository
+
+EmployeeRepository "1"--> "*"Employee
+Employee "1"  -->  "*"Job : registerJob
+
+
+@enduml

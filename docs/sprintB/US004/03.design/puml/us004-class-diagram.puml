@@ -1,0 +1,75 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+
+
+class AssignSkillCollaboratorUI {
+
+}
+
+class AssignSkillCollaboratorController {
+    +getSkillRepository() : SkillRepository
+    +getEmployeeRepository() : EmployeeRepository
+    +getCollaboratorListAndSkillsAdded() : List<Employee>
+    +getSkillListPossibleToBeAdded(selectedCollaborator : Employee ) : List<Skill>
+    +addSkillToCollaboratorProfile(collaborator : Employee , skillsToAdd: List<Skill>) : void
+    +printAllEmployeesAndHisSkills() : void
+
+}
+
+class Repositories {
+    +getInstance(): Repositories
+    +getEmployeeRepository()
+    +getSkillRepository()
+}
+
+class EmployeeRepository {
+    -employeeList : List<Employee>
+    +getEmployee() : List<Employee>
+    +getEmployeeSkills(employee : Employee) : List<Skill>
+    +addSkillsToCollaboratorProfile(collaborator : Employee, skillsToAdd : List<Skill>) : Optional<Employee>
+    +printAllEmployeesAndHisSkills() : void
+
+}
+
+class SkillRepository {
+    - listOfSkills : List<Skill>
+    +getSkills() : Optional<List<Skill>
+}
+
+
+class Employee {
+                    -name : String
+                    -birthdate : Date
+                    -email : String
+                    -phoneNumber : int
+                    -admission date : Date
+                    -taxpayerNumber : String
+                    -address : String
+                    -docNumber : String
+                    -jobTitle : String
+    + getSkills() : List<Skill>
+    + addSkills(skillsToAdd : List<Skill>) : void
+    +getAvailableSkillsToAddToCollaborator(skillRepository : SkillRepository) : List<Skill>
+    }
+
+AssignSkillCollaboratorController ..> Repositories: repositories
+AssignSkillCollaboratorController ..> Employee : employee : Employee
+AssignSkillCollaboratorController ..> SkillRepository : skillRepository
+AssignSkillCollaboratorController ..> EmployeeRepository : employeeRepository
+Repositories "1" --> "1" EmployeeRepository
+Repositories "1" --> "1" SkillRepository
+Repositories -> Repositories : instance
+SkillRepository "1"--> "*" Employee
+EmployeeRepository "1" --> "*" Employee
+
+AssignSkillCollaboratorUI .> AssignSkillCollaboratorController
+@enduml

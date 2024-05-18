@@ -1,0 +1,207 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Organization</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.domain</a>
+</div>
+
+<h1>Coverage Summary for Class: Organization (pt.ipp.isep.dei.g312.domain)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Organization</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/32)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.domain;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Objects;
+&nbsp;
+&nbsp;public class Organization {
+&nbsp;    private final String vatNumber;
+&nbsp;    private final List&lt;Employee&gt; employees;
+&nbsp;    private String name;
+&nbsp;    private String website;
+&nbsp;    private String phone;
+&nbsp;    private String email;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method is the constructor of the organization.
+&nbsp;     *
+&nbsp;     * @param vatNumber The vat number of the organization. This is the identity of the organization, therefore it
+&nbsp;     *                  cannot be changed.
+&nbsp;     */
+<b class="nc">&nbsp;    public Organization(String vatNumber) {</b>
+<b class="nc">&nbsp;        this.vatNumber = vatNumber;</b>
+<b class="nc">&nbsp;        employees = new ArrayList&lt;&gt;();</b>
+&nbsp;//        tasks = new ArrayList&lt;&gt;();
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method checks if an employee works for the organization.
+&nbsp;     *
+&nbsp;     * @param employee The employee to be checked.
+&nbsp;     * @return True if the employee works for the organization.
+&nbsp;     */
+&nbsp;    public boolean employees(Employee employee) {
+<b class="nc">&nbsp;        return employees.contains(employee);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This methos checks if the organization has an employee with the given email.
+&nbsp;     *
+&nbsp;     * @param email The email to be checked.
+&nbsp;     * @return True if the organization has an employee with the given email.
+&nbsp;     */
+&nbsp;    public boolean anyEmployeeHasEmail(String email) {
+<b class="nc">&nbsp;        boolean result = false;</b>
+<b class="nc">&nbsp;        for (Employee employee : employees) {</b>
+<b class="nc">&nbsp;            if (employee.hasEmail(email)) {</b>
+<b class="nc">&nbsp;                result = true;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return result;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean equals(Object o) {
+<b class="nc">&nbsp;        if (this == o) {</b>
+<b class="nc">&nbsp;            return true;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (!(o instanceof Organization)) {</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        Organization that = (Organization) o;</b>
+<b class="nc">&nbsp;        return vatNumber.equals(that.vatNumber);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int hashCode() {
+<b class="nc">&nbsp;        return Objects.hash(vatNumber);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //add employee to organization
+&nbsp;    public boolean addEmployee(Employee employee) {
+<b class="nc">&nbsp;        boolean success = false;</b>
+<b class="nc">&nbsp;        if (validateEmployee(employee)) {</b>
+<b class="nc">&nbsp;            success = employees.add(employee);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private boolean validateEmployee(Employee employee) {
+<b class="nc">&nbsp;        return employeesDoNotContain(employee);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private boolean employeesDoNotContain(Employee employee) {
+<b class="nc">&nbsp;        return !employees.contains(employee);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public Organization clone() {
+<b class="nc">&nbsp;        Organization clone = new Organization(this.vatNumber);</b>
+<b class="nc">&nbsp;        clone.name = (this.name);</b>
+<b class="nc">&nbsp;        clone.website = (this.website);</b>
+<b class="nc">&nbsp;        clone.phone = (this.phone);</b>
+<b class="nc">&nbsp;        clone.email = (this.email);</b>
+&nbsp;
+<b class="nc">&nbsp;        for (Employee in : this.employees) {</b>
+<b class="nc">&nbsp;            clone.employees.add(in.clone());</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return clone;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-12 20:12</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,199 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > VehicleRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.repository</a>
+</div>
+
+<h1>Coverage Summary for Class: VehicleRepository (pt.ipp.isep.dei.g312.repository)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">VehicleRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (6/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    79.4%
+  </span>
+  <span class="absValue">
+    (27/34)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.repository;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Organization;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Vehicle;
+&nbsp;
+&nbsp;import java.util.*;
+&nbsp;
+<b class="fc">&nbsp;public class VehicleRepository {</b>
+&nbsp;
+&nbsp;    // list of vehicles
+<b class="fc">&nbsp;    public List&lt;Vehicle&gt; vehiclesList = new ArrayList&lt;&gt;();</b>
+&nbsp;
+&nbsp;
+&nbsp;    /** Retrieves a Vehicle object from the repository based on its registration plate.
+&nbsp;     * This method iterates through the list of vehicles and returns the vehicle if its registration
+&nbsp;     * plate matches the provided string.
+&nbsp;     *
+&nbsp;     * @param registrationPlate the registration plate of the vehicle to be retrieved.
+&nbsp;     * @return Vehicle object with the matching registration plate.
+&nbsp;     * @throws NoSuchElementException if no vehicle with the given registration plate is found in the repository.
+&nbsp;     */
+&nbsp;    public Vehicle getVehicle(String registrationPlate) {
+<b class="fc">&nbsp;        for (Vehicle vehicle : vehiclesList) {</b>
+<b class="fc">&nbsp;            if (vehicle.getRegistrationPlate().equals(registrationPlate)) {</b>
+<b class="fc">&nbsp;                return vehicle;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="fc">&nbsp;        throw new NoSuchElementException(&quot;Vehicle not found&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Vehicle&gt; getVehicles() {
+<b class="nc">&nbsp;        return new ArrayList&lt;&gt;(vehiclesList);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /** Updates the details of an existing vehicle in the repository. This method iterates through the
+&nbsp;     * list of vehicles and replaces the old vehicle with the provided vehicle object if their
+&nbsp;     * registration plates match. The operation is based on the registration plate.
+&nbsp;     *
+&nbsp;     * @param vehicle the object that contains the updated details. It must have a
+&nbsp;     *                registration plate that matches an existing vehicle in the repository.
+&nbsp;     */
+&nbsp;    public void updateVehicle(Vehicle vehicle) {
+<b class="fc">&nbsp;        for (int i = 0; i &lt; vehiclesList.size(); i++) {</b>
+<b class="fc">&nbsp;            if (vehiclesList.get(i).getRegistrationPlate().equals(vehicle.getRegistrationPlate())) {</b>
+<b class="fc">&nbsp;                vehiclesList.set(i, vehicle);</b>
+&nbsp;                return;
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean existsVehicle(Vehicle vehicle){
+<b class="nc">&nbsp;        if (vehiclesList.contains(vehicle)) {</b>
+<b class="nc">&nbsp;            return true;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;    public boolean existsVehicle(String registrationPlate){
+<b class="fc">&nbsp;        if (registrationPlate == null) {</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        List&lt;Vehicle&gt; vehicles = new ArrayList&lt;&gt;(vehiclesList);</b>
+<b class="fc">&nbsp;        if (vehicles == null) {</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        for (Vehicle v : vehicles) {</b>
+<b class="fc">&nbsp;            if (registrationPlate.equalsIgnoreCase(v.getRegistrationPlate())) {</b>
+<b class="fc">&nbsp;                return true;</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public Optional&lt;Vehicle&gt; add(Vehicle vehicle) {
+<b class="fc">&nbsp;        Optional&lt;Vehicle&gt; newVehicle=Optional.empty();</b>
+<b class="fc">&nbsp;        boolean operationSuccess=false;</b>
+&nbsp;
+<b class="fc">&nbsp;        if (validateVehicle(vehicle) &amp;&amp; !existsVehicle(vehicle.getRegistrationPlate())){</b>
+<b class="fc">&nbsp;            newVehicle=Optional.of(vehicle.clone());</b>
+<b class="fc">&nbsp;            operationSuccess=vehiclesList.add(newVehicle.get());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (!operationSuccess){</b>
+<b class="fc">&nbsp;            newVehicle=Optional.empty();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return newVehicle;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private boolean validateVehicle(Vehicle vehicle) {
+<b class="fc">&nbsp;        boolean isValid = !vehiclesList.contains(vehicle);</b>
+&nbsp;
+<b class="fc">&nbsp;        return isValid;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-12 20:12</div>
+</div>
+</body>
+</html>

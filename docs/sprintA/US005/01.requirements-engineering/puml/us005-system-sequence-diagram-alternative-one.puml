@@ -1,0 +1,58 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) US005
+
+autonumber
+
+actor "GRH" as Employee
+participant ":System" as System
+
+activate Employee
+
+    Employee -> System : asks to create a new team proposal
+    activate System
+
+        System --> Employee : requests number of team employees
+    deactivate System
+
+    Employee -> System : provide number of team employees
+        activate System
+
+    System --> Employee : data validation
+        deactivate System
+    Employee -> System : confirms data
+        activate System
+
+    System --> Employee : requests skill set
+        deactivate System
+
+    Employee -> System : provide skill set
+    activate System
+
+    System --> Employee : data validation
+            deactivate System
+
+        Employee -> System : confirms data
+            activate System
+
+        System --> Employee : shows a team suggestion and asks to\n accept, accept and modify or decline
+    deactivate System
+alt Accept
+    Employee -> System : Accept the given suggestion
+    activate System
+else Accept & Modify
+    Employee -> System : modify the given suggestion and inserts it
+else Decline
+Employee -> System : declines the given suggestion
+End
+
+    System --> Employee : data validation
+Employee -> System : confirms data
+    activate System
+
+        System --> Employee : displays operation success
+    deactivate System
+@enduml

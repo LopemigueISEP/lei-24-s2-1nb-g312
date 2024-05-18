@@ -1,0 +1,162 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > CSVFile</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.domain</a>
+</div>
+
+<h1>Coverage Summary for Class: CSVFile (pt.ipp.isep.dei.g312.domain)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CSVFile</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87.5%
+  </span>
+  <span class="absValue">
+    (14/16)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.domain;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;public class CSVFile implements Cloneable {
+&nbsp;
+&nbsp;    private String fileName;
+&nbsp;    private List&lt;CSVLine&gt; csvLines;
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public CSVFile() {</b>
+<b class="fc">&nbsp;        this.csvLines = new ArrayList&lt;&gt;();</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public CSVFile(String fileName, List&lt;CSVLine&gt; csvLines) {</b>
+<b class="fc">&nbsp;        this.fileName=fileName;</b>
+<b class="fc">&nbsp;        this.csvLines=csvLines;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getFileName() {
+<b class="fc">&nbsp;        return fileName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setFileName(String fileName) {
+<b class="fc">&nbsp;        this.fileName = fileName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;CSVLine&gt; getCsvLines() {
+<b class="fc">&nbsp;        return csvLines;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setCsvLines(List&lt;CSVLine&gt; csvLines) {
+<b class="fc">&nbsp;        this.csvLines = csvLines;</b>
+&nbsp;    }
+&nbsp;    public void add(String x, String y, double cost) {
+<b class="fc">&nbsp;        CSVLine csvLine = new CSVLine(x,y,cost);</b>
+<b class="fc">&nbsp;        csvLines.add(csvLine);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /** @Override
+&nbsp;    public CSVFile clone(){
+&nbsp;        return new CSVFile(this.fileName,this.csvLines);
+&nbsp;    } */
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public CSVFile clone() {
+&nbsp;        try {
+<b class="fc">&nbsp;            CSVFile cloned = (CSVFile) super.clone();</b>
+<b class="fc">&nbsp;            cloned.csvLines = new ArrayList&lt;&gt;(csvLines); // Deep copy of lines</b>
+<b class="fc">&nbsp;            return cloned;</b>
+<b class="nc">&nbsp;        } catch (CloneNotSupportedException e) {</b>
+<b class="nc">&nbsp;            throw new AssertionError(&quot;Cloning not supported for CSVFile&quot;, e);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-12 20:12</div>
+</div>
+</body>
+</html>

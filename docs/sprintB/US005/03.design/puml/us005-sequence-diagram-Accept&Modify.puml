@@ -1,0 +1,98 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+
+participant ":GenerateTeamUI" as UI
+participant ":GenerateTeamController" as CTRL
+participant "employeeRepository:\nEmployeeRepository" as EmployeeRepository
+participant "teamRepository:\nTeamRepository" as TeamRepository
+participant "employee\n:Employee" as EMP
+
+participant "team\n:Team" as TEAM
+alt Accept & Modify
+    -> UI : Accept & Modify given suggestion
+    activate UI
+         <-- UI : aks to add collaborators or remove collaborators
+    deactivate UI
+        alt ADD
+             -> UI : add collaborators to team
+            activate UI
+                UI -> CTRL : getEmployeesNotInTeam(teamEmployees)
+                activate CTRL
+                    CTRL -> EmployeeRepository : employeeRepository.getEmployees()
+                    activate EmployeeRepository
+                        EmployeeRepository --> CTRL : employees
+                    deactivate EmployeeRepository
+                    loop employee in employees
+                        CTRL -> EMP : validateAddToTeam(teamEmployees)
+                        activate EMP
+                        EMP --> CTRL : result
+                        alt true
+                            deactivate EMP
+                            CTRL -> CTRL : teamEmployeesToAdd.add(employee)
+                        end
+                    end
+
+
+                    CTRL --> UI : teamEmployeesToAdd
+                deactivate CTRL
+                <-- UI : shows collaborators not in team to be added to team
+            deactivate UI
+            -> UI : selects collaborators to be added to team
+            activate UI
+                UI -> CTRL : addTeamRemoveToAdd(teamEmployees,teamEmployeesToAdd)
+                activate CTRL
+                    CTRL -> CTRL : teamEmployees.add(employeeSelected : teamEmployeesToAdd)
+                    CTRL --> UI : teamEmployees
+                deactivate CTRL
+            UI --> CTRL : submitData()
+                    activate CTRL
+                    CTRL -> TEAM : createTeam(Team teamEmployees)
+                    activate TEAM
+                        TEAM -> TEAM : create team
+                        TEAM --> TeamRepository : team
+                    deactivate TEAM
+                    activate TeamRepository
+                        TeamRepository -> TeamRepository : add(team)
+                        TeamRepository --> CTRL : team
+                    deactivate TeamRepository
+                        CTRL --> UI : team
+                    deactivate CTRL
+                    <-- UI : Team successfully created!
+        deactivate UI
+        else REMOVE
+             -> UI : remove collaborators to team
+                        activate UI
+                             <-- UI : shows collaborators in team to be removed from team
+                        deactivate UI
+                         -> UI : selects collaborators to be removed from team
+                        activate UI
+                            UI -> UI : teamEmployees(employeeSelected : teamEmployees)
+                        UI --> CTRL : submitData()
+                                activate CTRL
+                                CTRL -> TEAM : createTeam(Team teamEmployees)
+                                activate TEAM
+                                    TEAM -> TEAM : create team
+                                    TEAM --> TeamRepository : team
+                                deactivate TEAM
+                                activate TeamRepository
+                                    TeamRepository -> TeamRepository : add(team)
+                                    TeamRepository --> CTRL : team
+                                deactivate TeamRepository
+                                    CTRL --> UI : team
+                                deactivate CTRL
+                                 <-- UI : Team successfully created!
+                    deactivate UI
+        end
+    deactivate UI
+
+
+End
+
+@enduml
+

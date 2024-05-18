@@ -1,0 +1,73 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class RegisterSkillUi{
+
+}
+
+class RegisterSkillController{
+
+    +getEmployeeRepository(): employeeRepository
+    +registerSkill(skillName, skillDescription): Optional<Skill>
+
+}
+
+class EmployeeRepository{
+
+
++getEmployee(): employee
+
+}
+
+class Skill{
+-skillName: String
+-skillDescription: String
+
+}
+
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getEmployeeRepository(); employeeRepository
+
+}
+
+class Employee{
+    -name : String
+    -birthdate : Date
+    -email : String
+    -phoneNumber : int
+    -admission date : Date
+    -taxpayerNumber : String
+    -address : String
+    -docNumber : String
+    -jobTitle : String
+
+    +registerSkill(skillName, skillDescription): Optional<Skill>
+    +validateSkill(skill): boolean
+    +add(skill): boolean
+}
+
+RegisterSkillUi ..> RegisterSkillController
+
+RegisterSkillController ..> "1" Repositories : repositories
+
+Repositories -> Repositories : instance
+RegisterSkillController ..>Employee
+
+Repositories "1" --> "1" EmployeeRepository
+
+EmployeeRepository "1"--> "*"Employee
+Employee "1"  -->  "*"Skill : registerSkill
+
+
+@enduml

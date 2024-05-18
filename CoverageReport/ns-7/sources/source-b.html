@@ -1,0 +1,322 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > RegisterSkillUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui.console</a>
+</div>
+
+<h1>Coverage Summary for Class: RegisterSkillUI (pt.ipp.isep.dei.g312.ui.console)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RegisterSkillUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/64)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui.console;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.application.controller.RegisterSkillController;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Skill;
+&nbsp;import pt.ipp.isep.dei.g312.repository.Repositories;
+&nbsp;
+&nbsp;import java.util.Optional;
+&nbsp;import java.util.Scanner;
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * The RegisterSkillUI class prompts the user for the skill name and description, validates the input,
+&nbsp; * and submits the data to be registered.
+&nbsp; */
+&nbsp;
+&nbsp;public class RegisterSkillUI implements Runnable {
+&nbsp;
+&nbsp;    private final RegisterSkillController controller;
+&nbsp;    private String skillName;
+&nbsp;    private String skillDescription;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a RegisterSkillUI object and initializes the controller.
+&nbsp;     */
+<b class="nc">&nbsp;    public RegisterSkillUI() {</b>
+<b class="nc">&nbsp;        controller = new RegisterSkillController();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the controller instance.
+&nbsp;     *
+&nbsp;     * @return Sends the RegisterSkillController instance.
+&nbsp;     */
+&nbsp;    private RegisterSkillController getController() {
+<b class="nc">&nbsp;        return controller;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Runs the user interface for registering a skill.
+&nbsp;     * Prompts the user for data, validates it, and submits it.
+&nbsp;     */
+&nbsp;    public void run() {
+<b class="nc">&nbsp;        System.out.println(&quot;\n\n--------------- Register Skill ---------------&quot;);</b>
+&nbsp;        boolean confirm;
+&nbsp;
+&nbsp;        do {
+<b class="nc">&nbsp;            requestData();</b>
+<b class="nc">&nbsp;            confirm = showsDataRequestsValidation();</b>
+<b class="nc">&nbsp;        }while (!confirm);</b>
+<b class="nc">&nbsp;        submitData();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Requests skill name and description from the user.
+&nbsp;     */
+&nbsp;    private void requestData() {
+&nbsp;
+&nbsp;        //Request the skill name from the console
+<b class="nc">&nbsp;        skillName = requestSkillName();</b>
+&nbsp;
+&nbsp;        //Request the skill description from the console
+<b class="nc">&nbsp;        skillDescription = requestSkillDescription();</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Displays the requested data and asks for confirmation.
+&nbsp;     *
+&nbsp;     * @return true if the user confirms, false otherwise.
+&nbsp;     */
+&nbsp;    private boolean showsDataRequestsValidation() {
+&nbsp;
+<b class="nc">&nbsp;        System.out.printf(&quot;\nSkill name: %s \nSkill Description: %s&quot;,skillName,skillDescription);</b>
+<b class="nc">&nbsp;        return requestConfirmation();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Submits the skill data for registration.
+&nbsp;     */
+&nbsp;    private void submitData() {
+&nbsp;        try {
+<b class="nc">&nbsp;            Optional&lt;Skill&gt; skill = getController().registerSkill(skillName, skillDescription);</b>
+<b class="nc">&nbsp;            if (skill.isPresent()) {</b>
+<b class="nc">&nbsp;                System.out.println(&quot;\nSkill successfully created!&quot;);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                System.out.println(&quot;\nSkill not created!&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            System.out.println(&quot;submitData error&quot;);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Requests the skill name from the user and validates it.
+&nbsp;     *
+&nbsp;     * @return The validated skill name.
+&nbsp;     */
+&nbsp;    private String requestSkillName() {
+<b class="nc">&nbsp;        String skillName = &quot;&quot;;</b>
+&nbsp;
+&nbsp;        do {
+&nbsp;            try {
+<b class="nc">&nbsp;                Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;                System.out.print(&quot;Skill Name: &quot;);</b>
+<b class="nc">&nbsp;                skillName = input.nextLine().toUpperCase();</b>
+<b class="nc">&nbsp;            }catch (Exception e){</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Error reading skill name&quot;);</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;
+<b class="nc">&nbsp;        }while (!validateSkillName(skillName));</b>
+&nbsp;
+<b class="nc">&nbsp;        return skillName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Validates the skill name.
+&nbsp;     *
+&nbsp;     * @param skillName The skill name to validate.
+&nbsp;     * @return true if the name is valid, false otherwise.
+&nbsp;     */
+&nbsp;    private boolean validateSkillName(String skillName) {
+<b class="nc">&nbsp;        if(skillName.isEmpty()){</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Skill name is empty&quot;);</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if(skillName.matches(&quot;[A-Z ]+&quot;)){</b>
+<b class="nc">&nbsp;            return true;</b>
+&nbsp;        }else {
+<b class="nc">&nbsp;            System.out.println(&quot;Skill name just accept characters and spaces&quot;);</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Requests the skill description from the user and validates it.
+&nbsp;     *
+&nbsp;     * @return The validated skill description.
+&nbsp;     */
+&nbsp;    private String requestSkillDescription() {
+<b class="nc">&nbsp;        String skillDescription = &quot;&quot;;</b>
+&nbsp;        do {
+&nbsp;            try {
+<b class="nc">&nbsp;                Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;                System.out.print(&quot;Skill Description: &quot;);</b>
+<b class="nc">&nbsp;                skillDescription = input.nextLine();</b>
+<b class="nc">&nbsp;            } catch (Exception e){</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Error reading skill description&quot;);</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;
+<b class="nc">&nbsp;        }while (!validateSkillDescription(skillDescription));</b>
+&nbsp;
+<b class="nc">&nbsp;        return skillDescription;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Validates the skill description.
+&nbsp;     *
+&nbsp;     * @param skillDescription The skill description to validate.
+&nbsp;     * @return true if the description is valid, false otherwise.
+&nbsp;     */
+&nbsp;    private boolean validateSkillDescription(String skillDescription) {
+<b class="nc">&nbsp;        if(skillDescription.isEmpty()){</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Skill description is empty!&quot;);</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Requests confirmation from the user.
+&nbsp;     *
+&nbsp;     * @return true if the user confirms, false otherwise.
+&nbsp;     */
+&nbsp;    private boolean requestConfirmation() {
+<b class="nc">&nbsp;        String dados =&quot;&quot;;</b>
+<b class="nc">&nbsp;        final String CONFIRMAR = &quot;y&quot;;</b>
+<b class="nc">&nbsp;        final String REJEITAR = &quot;n&quot;;</b>
+<b class="nc">&nbsp;        boolean resposta = false;</b>
+&nbsp;
+&nbsp;        do {
+&nbsp;            try {
+<b class="nc">&nbsp;                Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;                System.out.print(&quot;\nThe data is correct? [Y/N]&quot;);</b>
+<b class="nc">&nbsp;                dados = input.nextLine().toLowerCase();</b>
+<b class="nc">&nbsp;                if(!dados.matches(&quot;[YyNn]+&quot;)){</b>
+<b class="nc">&nbsp;                    System.out.print(&quot;Inserted character is incorrect&quot;);</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }catch (Exception e){</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Error reading Y/N in UI&quot;);</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;        }while (!dados.equals(CONFIRMAR) &amp;&amp; !dados.equals(REJEITAR));</b>
+&nbsp;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        if(dados.equals(CONFIRMAR)){</b>
+<b class="nc">&nbsp;            resposta = true;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return resposta;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-12 20:12</div>
+</div>
+</body>
+</html>

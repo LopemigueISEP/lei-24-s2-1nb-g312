@@ -1,0 +1,159 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > AuthenticationRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.repository</a>
+</div>
+
+<h1>Coverage Summary for Class: AuthenticationRepository (pt.ipp.isep.dei.g312.repository)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AuthenticationRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    12.5%
+  </span>
+  <span class="absValue">
+    (1/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    11.8%
+  </span>
+  <span class="absValue">
+    (2/17)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.repository;
+&nbsp;
+&nbsp;
+&nbsp;import pt.isep.lei.esoft.auth.AuthFacade;
+&nbsp;import pt.isep.lei.esoft.auth.UserSession;
+&nbsp;import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;public class AuthenticationRepository {
+&nbsp;    private final AuthFacade authenticationFacade;
+&nbsp;
+<b class="fc">&nbsp;    public AuthenticationRepository() {</b>
+<b class="fc">&nbsp;        authenticationFacade = new AuthFacade();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean doLogin(String email, String pwd) {
+<b class="nc">&nbsp;        return authenticationFacade.doLogin(email, pwd).isLoggedIn();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void doLogout() {
+<b class="nc">&nbsp;        authenticationFacade.doLogout();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public UserSession getCurrentUserSession() {
+<b class="nc">&nbsp;        return authenticationFacade.getCurrentUserSession();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean addUserRole(String id, String description) {
+<b class="nc">&nbsp;        return authenticationFacade.addUserRole(id, description);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean addUserWithRole(String name, String email, String pwd, String roleId) {
+<b class="nc">&nbsp;        return authenticationFacade.addUserWithRole(name, email, pwd, roleId);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean validateUserRole(String role1, String role2){
+<b class="nc">&nbsp;        boolean validateUserRl = false;</b>
+<b class="nc">&nbsp;        List&lt;String&gt; rl = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        rl.add(role1);</b>
+<b class="nc">&nbsp;        rl.add(role2);</b>
+&nbsp;
+<b class="nc">&nbsp;        for(String linha: rl) {</b>
+<b class="nc">&nbsp;            if (!validateUserRl){</b>
+<b class="nc">&nbsp;                validateUserRl = getCurrentUserSession().isLoggedInWithRole(linha);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return validateUserRl;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getUserRole(List&lt;UserRoleDTO&gt; lst){
+<b class="nc">&nbsp;     return  lst.get(0).getId();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-12 20:12</div>
+</div>
+</body>
+</html>

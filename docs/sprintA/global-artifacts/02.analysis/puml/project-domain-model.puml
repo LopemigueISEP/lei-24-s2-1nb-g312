@@ -1,0 +1,130 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+'skinparam linetype ortho
+'left to right direction
+hide circle
+hide methods
+
+title Domain Model
+
+class Organization {
+    name
+    vatNumber
+    website
+    phoneNumber
+    email
+}
+class Employee {
+    name
+    birthdate
+    email/phone
+    admisson date
+    VAT number
+    address
+    role
+}
+class Agenda {
+    appointments
+    alerts
+    to-doList
+}
+class Task {
+    reference
+    description
+    duration
+    cost
+}
+class GreenSpace {
+    typology
+    size
+    numberOfEquipments
+}
+class GreenSpaceUser {
+    username
+    password
+    contactInformation
+}
+class HumanResourcesManager{
+}
+class VehicleEquipmentFleetManager{
+}
+class GreenSpacesManager{
+
+}
+class Collaborator{
+}
+class Team{
+}
+class Job{
+    name
+    description
+}
+class Skill{
+    name
+    description
+}
+class Vehicle{
+    brand
+    model
+    registrationPlate
+}
+class Equipment{
+    brand
+    model
+
+}
+class Machine{
+    brand
+    model
+}
+class GreenSpacesUserPortal{
+}
+class Comment{
+}
+class Fault{
+}
+class Malfunction{
+}
+
+Organization "1" -- "1" Agenda : owns >
+Organization "1" -- "1..*" Employee : has >
+Employee "1" -- "1..*" HumanResourcesManager : is >
+Employee "1" -- "1..*" VehicleEquipmentFleetManager : is >
+Employee "1" -- "1..*" GreenSpacesManager : is >
+Employee "1" -- "1..*" Collaborator : is >
+Task "1..*" - "1..*" GreenSpace: occurs >
+GreenSpace -[hidden]-> Task
+HumanResourcesManager "1" -- "1..*" Team : registers >
+HumanResourcesManager "1" - "1..*" Collaborator : registers >
+HumanResourcesManager "1" -- "1..*" Job : registers >
+HumanResourcesManager "1" -- "1..*" Skill : registers >
+VehicleEquipmentFleetManager "1" -- "1..*" Vehicle : manages >
+VehicleEquipmentFleetManager "1" -- "1..*" Equipment : manages >
+VehicleEquipmentFleetManager "1" -- "1..*" Machine : manages >
+GreenSpacesManager "1" -- "1..*" GreenSpace : manages >
+GreenSpacesManager "1" --- "1" Task : creates >
+GreenSpacesManager "1" --- "1" GreenSpacesUserPortal : manages >
+Collaborator "1" -- "1" Job : has >
+Collaborator "1" -- "0..*" Skill : has >
+Collaborator "1..*" -- "1" Team : has >
+Skill "1..*" -- "1" Task : needs <
+GreenSpacesUserPortal "1" --- "0..*" Comment : registers <
+GreenSpacesUserPortal "1" --- "0..*" Fault : registers <
+GreenSpacesUserPortal "1" ---- "0..*" Malfunction : registers <
+GreenSpaceUser "1" -- "0..1" Comment : posts >
+Comment -[hidden]-> GreenSpaceUser
+GreenSpaceUser "1" -- "0..1" Fault : reports >
+Fault -[hidden]-> GreenSpaceUser
+GreenSpaceUser "1" -- "0..1" Malfunction : reports >
+Malfunction -[hidden]> GreenSpaceUser
+Agenda "1" -- "0..*" Task : has >
+Team "1" -- "1" Task : executes >
+GreenSpace "1" -- "0..*" GreenSpaceUser : has >
+Vehicle "0..*" -- "1" Task : needs <
+Machine "0..*" -- "1" Task : needs <
+Equipment "0..*" -- "1" Task : needs <
+
+@enduml

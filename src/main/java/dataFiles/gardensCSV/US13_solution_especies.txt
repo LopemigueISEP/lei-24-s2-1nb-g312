@@ -1,0 +1,1 @@
+Graph Dimension = 50 : Graph Order = 25 : Minimum cost = 141

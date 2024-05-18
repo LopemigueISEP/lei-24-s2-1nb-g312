@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) US006
+
+autonumber
+
+actor "VFM" as Employee
+participant ":System" as System
+
+activate Employee
+
+    Employee -> System : asks to create a new vehicle
+    activate System
+
+        System --> Employee : requests data (i.e. Brand, Model, Type)
+    deactivate System
+
+    Employee -> System : types requested data
+    activate System
+
+        System --> Employee : validate data
+    deactivate System
+
+    Employee -> System : confirms data
+    activate System
+
+        System --> Employee : displays operation success
+    deactivate System
+
+@enduml

@@ -1,0 +1,107 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+
+class GenerateTeamUI {
+
+}
+
+class GenerateTeamController {
+    - employeeRepository : EmployeeRepository
+    - skillRepository : SkillRepository
+    - teamRepository : TeamRepository
+    + getTeamWithSkillSet(minNumberOfEmployees : int, maxNumberOfEmployees : int, skillSet : List<Skill>, teamEmployees : Team) : Result
+    + createTeam(teamEmployees : Team) : Optional<Team>
+    + getEmployeesNotInTeam(teamList : Team) : List<Employee>
+}
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getTeamRepository()
+    + getEmployeeRepository()
+    + getSkillRepository()
+
+}
+
+class EmployeeRepository {
+    - employeeList : List<Employee>
+    + getEmployee(taxpayerNumber : String) : Optional<Employee>
+    + getEmployees() : List<Employee>
+    + addEmployee(employee : Employee) : Optional<Employee>
+    + validateEmployee(employee : Employee) : boolean
+    + printRegisteredEmployees() : void
+    + printRegisteredEmployeesAndHisSkills() : void
+    + addSkillsToCollaboratorProfile(collaborator : Employee, skillsToAdd : List<Skill>) : Optional<Employee>
+}
+
+class SkillRepository {
+    - listOfSkills : List<Skill>
+    + addSkillRep(skill : Skill) : boolean
+    + validateSkill(skill : Skill) : boolean
+    + printAllSkill() : void
+    + getSkills() : Optional<List<Skill>>
+}
+
+class TeamRepository {
+    - teamList : List<Team>
+    + add(team : Team) : Optional<Team>
+    + validateTeam(team : Team) : boolean
+    + printRegisteredTeams() : void
+}
+
+class Team {
+    - teamEmployees : List<Employee>
+    + getTeamEmployees() : List<Employee>
+    + setTeamEmployees(teamEmployees : List<Employee>) : void
+    + clone() : Team
+    + add(employee : Employee) : void
+    + isEmpty() : boolean
+    + size() : int
+}
+
+class Skill {
+    - skillName : String
+    - skillDescription : String
+    + getSkillName() : String
+    + getSkillDescription() : String
+}
+
+class Employee {
+    - name : String
+    - job : String
+    - skills : List<Skill>
+    + getName() : String
+    + getJob() : String
+    + getSkills() : List<Skill>
+}
+
+GenerateTeamUI .> GenerateTeamController
+
+GenerateTeamController .> Repositories
+GenerateTeamController ..> TeamRepository : teamRepository
+GenerateTeamController ..> EmployeeRepository : employeeRepository
+GenerateTeamController ..> SkillRepository : skillRepository
+GenerateTeamController ...> Team : team
+GenerateTeamController ...> Skill : skill
+GenerateTeamController ...> Employee : employee
+
+
+
+Repositories --> Repositories : instance
+Repositories --> TeamRepository
+Repositories --> EmployeeRepository
+Repositories --> SkillRepository
+
+TeamRepository "1" --> "*" Team
+
+
+@enduml

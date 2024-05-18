@@ -1,0 +1,212 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "HRM" as HRM
+participant ":GenerateTeamUI" as UI
+participant ":GenerateTeamController" as CTRL
+participant "employeeRepository:\nEmployeeRepository" as EmployeeRepository
+participant "skillRepository:\nSkillRepository" as SkillRepository
+participant "teamRepository:\nTeamRepository" as TeamRepository
+participant "employee\n:Employee" as EMP
+participant "skill\n:Skill" as SKILL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "team\n:Team" as TEAM
+
+activate HRM
+ref over HRM, UI : This action assumes that the user has already logged in
+    HRM -> UI : asks to create a new team proposal
+    activate UI
+
+        UI -> CTRL** : create
+        UI -> CTRL : getEmployeeRepository()
+        activate CTRL
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
+
+                RepositorySingleton --> CTRL: repositories
+            deactivate RepositorySingleton
+
+            CTRL -> PLAT : getEmployeeRepository()
+            activate PLAT
+
+                PLAT --> CTRL: employeeRepository
+            deactivate PLAT
+            CTRL -> UI : employeeRepository
+        deactivate CTRL
+
+        UI -> CTRL : getSkillRepository()
+        activate CTRL
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
+
+                RepositorySingleton --> CTRL: repositories
+            deactivate RepositorySingleton
+
+            CTRL -> PLAT : getSkillRepository()
+            activate PLAT
+
+                PLAT --> CTRL: skillRepository
+            deactivate PLAT
+            CTRL -> UI : skillRepository
+        deactivate CTRL
+
+        UI -> CTRL : getTeamRepository()
+        activate CTRL
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
+
+                RepositorySingleton --> CTRL: repositories
+            deactivate RepositorySingleton
+
+            CTRL -> PLAT : getTeamRepository()
+            activate PLAT
+
+                PLAT --> CTRL: teamRepository
+            deactivate PLAT
+            CTRL -> UI : teamRepository
+        deactivate CTRL
+
+        UI --> HRM : requests minimum number of team
+    deactivate UI
+        HRM -> UI : types minimum number of team
+    activate UI
+        UI --> HRM : requests maximum number of team
+    deactivate UI
+        HRM -> UI : types maximum number of team
+    activate UI
+        UI -> CTRL : requestSkillSet()
+        activate CTRL
+            CTRL -> SkillRepository : getSkills()
+            activate SkillRepository
+                SkillRepository --> CTRL : existingSkillSet
+            deactivate SkillRepository
+            CTRL --> UI : existingSkillSet
+        deactivate CTRL
+        UI --> HRM : show existing skills to be selected
+    deactivate UI
+    HRM -> UI : selects skills needed to team
+    activate UI
+        UI -> CTRL : getTeamWithSkillSet(minNumberOfEmployees, maxNumberOfEmployees\n                               , skillSet, teamEmployees)
+        activate CTRL
+            CTRL -> EmployeeRepository : getEmployeeSortedByNumberOfSkill()
+            activate EmployeeRepository
+                EmployeeRepository --> CTRL : employeesSortedSkills
+            deactivate EmployeeRepository
+            CTRL -> EMP : addEmployeeIfSuitable(skillSetNeeded,teamEmployees.getTeamEmployees())
+            activate EMP
+                EMP --> CTRL : true
+            deactivate EMP
+            CTRL -> CTRL : generate team proposal
+            CTRL --> UI : teamEmployees
+        deactivate CTRL
+        UI --> HRM : shows generated team and asks to\n accept, accept and modify or decline
+deactivate UI
+alt Accept
+    HRM -> UI : Accept the given suggestion
+    activate UI
+        UI --> CTRL : submitData()
+        activate CTRL
+        CTRL -> TEAM : createTeam(Team teamEmployees)
+        activate TEAM
+            TEAM -> TEAM : create team
+            TEAM --> TeamRepository : team
+        deactivate TEAM
+        activate TeamRepository
+            TeamRepository -> TeamRepository : add(team)
+            TeamRepository --> CTRL : team
+        deactivate TeamRepository
+            CTRL --> UI : team
+        deactivate CTRL
+        UI --> HRM : Team successfully created!
+    deactivate UI
+else Accept & Modify
+    HRM -> UI : Accept & Modify given suggestion
+    activate UI
+        UI --> HRM : aks to add collaborators or remove collaborators
+    deactivate UI
+        alt ADD
+            HRM -> UI : add collaborators to team
+            activate UI
+                UI -> CTRL : getEmployeesNotInTeam(teamEmployees)
+                activate CTRL
+                    CTRL -> EmployeeRepository : employeeRepository.getEmployees()
+                    activate EmployeeRepository
+                        EmployeeRepository --> CTRL : employees
+                    deactivate EmployeeRepository
+                    loop employee in employees
+                        CTRL -> EMP : validateAddToTeam(teamEmployees)
+                        activate EMP
+                        EMP --> CTRL : result
+                        alt true
+                            deactivate EMP
+                            CTRL -> CTRL : teamEmployeesToAdd.add(employee)
+                        end
+                    end
+
+
+                    CTRL --> UI : teamEmployeesToAdd
+                deactivate CTRL
+                UI --> HRM : shows collaborators not in team to be added to team
+            deactivate UI
+            HRM -> UI : selects collaborators to be added to team
+            activate UI
+                UI -> CTRL : addTeamRemoveToAdd(teamEmployees,teamEmployeesToAdd)
+                activate CTRL
+                    CTRL -> CTRL : teamEmployees.add(employeeSelected : teamEmployeesToAdd)
+                    CTRL --> UI : teamEmployees
+                deactivate CTRL
+            UI --> CTRL : submitData()
+                    activate CTRL
+                    CTRL -> TEAM : createTeam(Team teamEmployees)
+                    activate TEAM
+                        TEAM -> TEAM : create team
+                        TEAM --> TeamRepository : team
+                    deactivate TEAM
+                    activate TeamRepository
+                        TeamRepository -> TeamRepository : add(team)
+                        TeamRepository --> CTRL : team
+                    deactivate TeamRepository
+                        CTRL --> UI : team
+                    deactivate CTRL
+                    UI --> HRM : Team successfully created!
+        deactivate UI
+        else REMOVE
+            HRM -> UI : remove collaborators to team
+                        activate UI
+                            UI --> HRM : shows collaborators in team to be removed from team
+                        deactivate UI
+                        HRM -> UI : selects collaborators to be removed from team
+                        activate UI
+                            UI -> UI : teamEmployees(employeeSelected : teamEmployees)
+                        UI --> CTRL : submitData()
+                                activate CTRL
+                                CTRL -> TEAM : createTeam(Team teamEmployees)
+                                activate TEAM
+                                    TEAM -> TEAM : create team
+                                    TEAM --> TeamRepository : team
+                                deactivate TEAM
+                                activate TeamRepository
+                                    TeamRepository -> TeamRepository : add(team)
+                                    TeamRepository --> CTRL : team
+                                deactivate TeamRepository
+                                    CTRL --> UI : team
+                                deactivate CTRL
+                                UI --> HRM : Team successfully created!
+                    deactivate UI
+        end
+    deactivate UI
+else Decline
+HRM -> UI : declines the given proposal
+activate UI
+    UI --> HRM : operation aborted by the user
+deactivate UI
+End
+deactivate HRM
+@enduml
+

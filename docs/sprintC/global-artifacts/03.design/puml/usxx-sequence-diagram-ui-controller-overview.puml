@@ -1,0 +1,76 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "User" as USER
+participant ":MainMenuUI" as MENU
+participant ":AuthenticationUI" as UCNAMEUI
+participant ":AuthenticationController" as CTRL
+participant "ApplicationSession" as APPSESSIONC
+participant "appSession\n:ApplicationSession" as APPSESSIONI
+participant "currentSession\n:UserSession" as CURSESSION
+
+activate USER
+
+    USER -> MENU : selects an option and types requested data
+    activate MENU
+        MENU --> UCNAMEUI** : create
+        activate UCNAMEUI
+
+            UCNAMEUI --> CTRL** : create
+        deactivate UCNAMEUI
+
+        activate CTRL
+            CTRL -> APPSESSIONC : getinstance()
+            note right
+                static method
+                (Singleton pattern)
+            end note
+            activate APPSESSIONC
+                APPSESSIONC --> CTRL : appSession 
+            deactivate APPSESSIONC
+
+            CTRL -> APPSESSIONI : getCurrentSession()
+            activate APPSESSIONI
+                APPSESSIONI --> CTRL : currentSession
+            deactivate APPSESSIONI
+        deactivate CTRL
+
+        MENU -> UCNAMEUI : run()
+        activate UCNAMEUI
+    deactivate MENU
+
+            UCNAMEUI --> USER : requests userLogginData
+            |||
+        deactivate UCNAMEUI
+
+    loop
+        USER -> UCNAMEUI : types requested data
+        activate UCNAMEUI
+            UCNAMEUI -> CTRL : doLogin(email,pwd)
+            activate CTRL
+                CTRL -> APPSESSIONC : doLogin(email,pwd)
+                activate APPSESSIONC
+                    ref over APPSESSIONC,APPSESSIONI,CURSESSION
+                    controller-checking-user-authorization
+
+
+                    end ref
+                    APPSESSIONC --> CTRL : answer
+                deactivate APPSESSIONC
+
+                CTRL --> UCNAMEUI : answer
+            deactivate CTRL
+
+            UCNAMEUI --> USER : answers/requests another thing
+            |||
+        deactivate UCNAMEUI
+    end loop
+
+deactivate USER
+
+@enduml

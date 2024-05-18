@@ -1,0 +1,1 @@
+Graph Dimension = 39 : Graph Order = 21 : Cost of a Minimum spanning tree = 116
