@@ -40,7 +40,9 @@ class Task {
 }
 class GreenSpace {
     typology
-    size
+    area
+    address
+    name
     numberOfEquipments
     waterConsumption
     equipmentUsed
@@ -133,7 +135,7 @@ HumanResourcesManager "1" -- "1..*" Skill : registers >
 VehicleEquipmentFleetManager "1" -- "1..*" Vehicle : manages >
 VehicleEquipmentFleetManager "1" -- "1..*" Equipment : manages >
 VehicleEquipmentFleetManager "1" -- "1..*" Machine : manages >
-GreenSpacesManager "1" -- "1..*" GreenSpace : manages >
+GreenSpacesManager "1" -- "1..*" GreenSpace : registers >
 GreenSpacesManager "1" --- "1" Task : creates >
 GreenSpacesManager "1" --- "1" GreenSpacesUserPortal : manages >
 GreenSpacesManager "1" --- "1..*" AssemblyPoint : manages >
