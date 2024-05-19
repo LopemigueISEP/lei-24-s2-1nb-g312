@@ -1,0 +1,37 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+skinparam classAttributeIconSize 0
+
+class Agenda {
+    appointments
+    alerts
+    to-doList
+}
+
+class Task {
+    reference
+    description
+    duration
+    cost
+    status
+}
+
+
+class GreenSpacesManager{
+
+}
+
+class Team{
+}
+
+GreenSpacesManager "1" --- "1" Task : creates >
+Agenda "1" -- "0..*" Task : has >
+Team "1" -- "1" Task : executes >
+GreenSpacesManager "1" -- "1" Agenda : manages >
+GreenSpacesManager "1" --- "1..*" Team : assigns >
+
+
+@enduml
