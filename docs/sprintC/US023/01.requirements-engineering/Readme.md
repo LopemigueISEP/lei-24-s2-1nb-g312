@@ -11,9 +11,11 @@ As an Green Space Manager, I want to assign a Team to a task entry in the Agenda
 
 **From the specifications document:**
 
->	The Agenda is made up of entries that relate to a task (which was previously in the To-Do List), 
+>	Transcribed: The Agenda is made up of entries that relate to a task (which was previously in the To-Do List), 
 the team that will carry out the task, the vehicles/equipment assigned to the task, expected duration, and the status 
 (Planned, Postponed, Canceled, Done).
+
+> Justification: The GSM needs to assign teams to complete tasks that are listed in the Agenda. 
 
 **From the client clarifications:**
 
@@ -33,8 +35,9 @@ collaborators, checking the team availability is enough.
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in.
-* **AC2:** A message must be sent to all team members informing them about the assignment.
-* **AC3:** Different email services can send the message. These services must be defined through a configuration file 
+* **AC3:** The team must be available to carry out the task in the Agenda.
+* **AC4:** A message must be sent to all team members informing them about the assignment.
+* **AC5:** Different email services can send the message. These services must be defined through a configuration file 
 to allow the use of different platforms (e.g. Gmail, DEI’s email service, etc.).
 
 ### 1.4. Found out Dependencies
