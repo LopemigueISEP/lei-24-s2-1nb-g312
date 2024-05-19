@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) US025
+
+autonumber
+
+actor "GSM" as Employee
+participant ":System" as System
+
+activate Employee
+
+    Employee -> System : asks to cancel an entry in the Agenda
+    activate System
+
+        System --> Employee : shows all non-canceled entries
+    deactivate System
+
+    Employee -> System : selects entry to cancel
+    activate System
+
+        System --> Employee : shows entry to be cancel
+    deactivate System
+
+    Employee -> System : confirms data
+    activate System
+
+        System --> Employee : displays operation success
+    deactivate System
+
+@enduml
