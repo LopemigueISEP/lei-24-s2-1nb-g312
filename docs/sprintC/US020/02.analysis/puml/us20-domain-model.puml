@@ -1,0 +1,57 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'left to right direction
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+title Domain Model US20
+
+
+class Employee {
+    name
+    birth date
+    contact (email/phone)
+    admission date
+    taxpayer number
+    address
+    ID doc type and number
+    role
+}
+
+class GreenSpacesManager{
+
+}
+
+class GreenSpace {
+    typology
+    area
+    address
+    name
+    numberOfEquipments
+    waterConsumption
+    equipmentUsed
+    inquiryUseOfPark
+    routesWaterPoints
+}
+
+class Garden{
+}
+class MediumSizedPark{
+}
+class LargeSizedPark{
+}
+
+Employee "1" -- "1..*" GreenSpacesManager : is >
+GreenSpacesManager "1" -- "1..*" GreenSpace : registers >
+GreenSpace "1" -- "1" MediumSizedPark : is >
+GreenSpace "1" -- "1" Garden : is >
+GreenSpace "1" -- "1" LargeSizedPark : is >
+
+
+@enduml

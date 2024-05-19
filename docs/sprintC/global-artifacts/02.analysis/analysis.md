@@ -206,9 +206,13 @@ Iterative Development".)
 | VehicleEquipmentFleetManager                |   manages    		 	   |                            Equipment |
 | VehicleEquipmentFleetManager                |   manages    		 	   |                              Machine |
 | GreenSpacesManager                          |   manages    		 	   |                           GreenSpace |
+| GreenSpacesManager                          |   manages    		 	   |                        AssemblyPoint |
+| GreenSpacesManager                          |   manages    		 	   |                      EvacuationRoute |
 | GreenSpacesManager                          |    creates  		 	    |                                 Task |
 | GreenSpacesManager                          |   manages    		 	   |                GreenSpacesUserPortal |
-| SoftwareQualityAssessmentTeamManager        |    tests    		 	    |           AlgorithmRouteWaterPoints  |
+| SoftwareQualityAssessmentTeamManager        |    tests    		 	    |            AlgorithmRouteWaterPoints |
+| SoftwareQualityAssessmentTeamManager        |    tests    		 	    |                        AssemblyPoint |
+| SoftwareQualityAssessmentTeamManager        |    tests    		 	    |                      EvacuationRoute |
 | Collaborator                                |    has    		  	     |                                  Job |
 | Collaborator                                |    has    		   	    |                                SKill |
 | Collaborator                                |    has    		  	     |                                 Team |

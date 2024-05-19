@@ -1,0 +1,35 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative One
+
+autonumber
+
+actor "Green Space\nManager (GSM)" as GSM
+participant ":System" as System
+
+activate GSM
+
+    GSM -> System : asks to assign teams to tasks in the Agenda
+    activate System
+
+        System -> GSM : shows list of available tasks in the Agenda ordered by park location \n and asks to select one
+    deactivate System
+
+    GSM -> System : selects a task from the list
+    activate System
+
+        System --> GSM : shows list of available teams that can perform the selected task
+    deactivate System
+
+    GSM -> System : selects a team and assigns it to the task
+    activate System
+
+        System --> GSM : displays operation success
+    deactivate System
+
+
+
+@enduml

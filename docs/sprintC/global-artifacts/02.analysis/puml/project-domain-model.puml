@@ -37,10 +37,13 @@ class Task {
     description
     duration
     cost
+    status
 }
 class GreenSpace {
     typology
-    size
+    area
+    address
+    name
     numberOfEquipments
     waterConsumption
     equipmentUsed
@@ -133,7 +136,7 @@ HumanResourcesManager "1" -- "1..*" Skill : registers >
 VehicleEquipmentFleetManager "1" -- "1..*" Vehicle : manages >
 VehicleEquipmentFleetManager "1" -- "1..*" Equipment : manages >
 VehicleEquipmentFleetManager "1" -- "1..*" Machine : manages >
-GreenSpacesManager "1" -- "1..*" GreenSpace : manages >
+GreenSpacesManager "1" -- "1..*" GreenSpace : registers >
 GreenSpacesManager "1" --- "1" Task : creates >
 GreenSpacesManager "1" --- "1" GreenSpacesUserPortal : manages >
 GreenSpacesManager "1" --- "1..*" AssemblyPoint : manages >
@@ -164,5 +167,6 @@ GreenSpace "1" -- "1" MediumSizedPark : is >
 GreenSpace "1" -- "1" Garden : is >
 GreenSpace "1" -- "1" LargeSizedPark : is >
 Vehicle "1..*" -- "0..*" CheckUp : does >
-
+GreenSpacesManager "1" -- "1" Agenda : manages >
+GreenSpacesManager "1" -- "1..*" Team : assigns >
 @enduml

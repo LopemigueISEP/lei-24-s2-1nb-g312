@@ -24,11 +24,11 @@
 | US008 | [List the vehicles needing the check-up](../../US008/Readme.md)                                                                                                                   |
 | US20  | [Register a green space (garden, medium-sized park or large-sized park) and its respective area](../../us20/Readme.md)                                                            |
 | US21  | [Add a new entry to the To-Do List](../../us21/Readme.md)                                                                                                                         |
-| US22  | [Add a new entry in the Agenda](../../US22/Readme.md)                                                                                                                             | 
-| US23  | [Assign a Team to an entry in the Agenda](../../US23/Readme.md)                                                                                                                   |
+| US22  | [Add a new entry in the Agenda](../../US022/Readme.md)                                                                                                                             | 
+| US23  | [Assign a Team to an entry in the Agenda](../../US023/Readme.md)                                                                                                                   |
 | US24  | [Postpone an entry in the Agenda to a specific future date](../../us24/Readme.md)                                                                                                 |
 | US25  | [Cancel an entry in the Agenda](../../us25/Readme.md)                                                                                                                             |
-| US26  | [Assign one or more vehicles to an entry in the Agenda](../../US26/Readme.md)                                                                                                     |
-| US27  | [List all green spaces managed by me](../../US27/Readme.md)                                                                                                                       
-| US28  | [Consult the tasks assigned to me between two dates](../../US28/Readme.md)                                                                                                        |
-| US29  | [Record the completion of a task](../../US29/Readme.md)                                                                                                                          
+| US26  | [Assign one or more vehicles to an entry in the Agenda](../../US026/Readme.md)                                                                                                     |
+| US27  | [List all green spaces managed by me](../../US027/Readme.md)                                                                                                                       
+| US28  | [Consult the tasks assigned to me between two dates](../../US028/Readme.md)                                                                                                        |
+| US29  | [Record the completion of a task](../../US029/Readme.md)                                                                                                                          
