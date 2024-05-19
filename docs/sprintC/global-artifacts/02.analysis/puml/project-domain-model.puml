@@ -37,6 +37,7 @@ class Task {
     description
     duration
     cost
+    status
 }
 class GreenSpace {
     typology
@@ -166,5 +167,6 @@ GreenSpace "1" -- "1" MediumSizedPark : is >
 GreenSpace "1" -- "1" Garden : is >
 GreenSpace "1" -- "1" LargeSizedPark : is >
 Vehicle "1..*" -- "0..*" CheckUp : does >
+GreenSpacesManager "1" -- "1" Agenda : manages >
 
 @enduml
