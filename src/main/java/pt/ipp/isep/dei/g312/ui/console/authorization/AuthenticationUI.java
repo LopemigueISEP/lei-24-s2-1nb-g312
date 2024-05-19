@@ -1,13 +1,9 @@
 package pt.ipp.isep.dei.g312.ui.console.authorization;
 
 import pt.ipp.isep.dei.g312.application.controller.authorization.AuthenticationController;
-import pt.ipp.isep.dei.g312.ui.console.menu.AdminUI;
-import pt.ipp.isep.dei.g312.ui.console.menu.HRMUI;
-import pt.ipp.isep.dei.g312.ui.console.menu.MenuItem;
-import pt.ipp.isep.dei.g312.ui.console.menu.VFMUI;
+import pt.ipp.isep.dei.g312.ui.console.menu.*;
 import pt.ipp.isep.dei.g312.ui.console.utils.Utils;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
-import pt.ipp.isep.dei.g312.ui.console.menu.CollaboratorUI;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -51,6 +47,7 @@ public class AuthenticationUI implements Runnable {
         rolesUI.add(new MenuItem(AuthenticationController.ROLE_HRM, new HRMUI()));
         rolesUI.add(new MenuItem(AuthenticationController.ROLE_VFM, new VFMUI()));
         rolesUI.add(new MenuItem(AuthenticationController.ROLE_COLLABORATOR, new CollaboratorUI()));
+        rolesUI.add(new MenuItem(AuthenticationController.ROLE_GSM, new GSMUI()));
 
         return rolesUI;
     }

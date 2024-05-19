@@ -30,6 +30,17 @@ public class AdminUI implements Runnable {
         options.add(new MenuItem("Import CSV for Planning and Building Irrigation System", new ImportCSVUI()));
         options.add(new MenuItem("Planning and Building Irrigation System", new KruskalAlgorithmUI()));
         options.add(new MenuItem("Import Group Files and Run-Time Testing Kruskal Algorithm", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("Register a Green Space", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("Show list of green Spaces", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("Add entry to the To-Do List", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("Show To-Do List", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("Add entry to the Agenda ", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("Show Agenda", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("Assign Team to an entry in Agenda", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("Postpone an entry in the Agenda to a specific future date", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("Cancel an entry in the Agenda", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("Assign vehicles to an entry in the Agenda", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("List all green spaces managed by GSM", new RunTimeTestingKruskalAlgorithmUI()));
 
         int option = 0;
         do {

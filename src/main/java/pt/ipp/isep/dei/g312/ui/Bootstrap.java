@@ -7,7 +7,7 @@ import pt.ipp.isep.dei.g312.ui.console.utils.Utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,10 +36,12 @@ public class Bootstrap implements Runnable {
         EmployeeRepository employeeRepository = Repositories.getInstance().getEmployeeRepository();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         try {
-            employeeRepository.addEmployee(new Employee("Main Administrator", (Date) dateFormat.parse("01/01/1950"), "admin@this.app", 919017113, (Date) dateFormat.parse("01/01/1968"), "246597859", "Porto", "12345678", "ADMIN"));
-            employeeRepository.addEmployee(new Employee("Employee", (Date) dateFormat.parse("01/01/1950"), "employee@this.app", 919017113, (Date) dateFormat.parse("01/01/1968"), "246597858", "Porto", "12345678", "EMPLOYEE"));
-            employeeRepository.addEmployee(new Employee("Human Resources Manager", (Date) dateFormat.parse("01/01/1950"), "HRM@this.app", 919017113, (Date) dateFormat.parse("01/01/1968"), "246597857", "Porto", "12345678", "HRM"));
-            employeeRepository.addEmployee(new Employee("Vehicle and Equipment Fleet Manager", (Date) dateFormat.parse("01/01/1950"), "VFM@this.app", 919017113, (Date) dateFormat.parse("01/01/1968"), "246597856", "Porto", "12345678", "VFM"));
+            employeeRepository.addEmployee(new Employee("Main Administrator",  dateFormat.parse("01/01/1950"), "admin@this.app", 919017113, dateFormat.parse("01/01/1968"), "246597859", "Porto", "12345678", "ADMIN"));
+            employeeRepository.addEmployee(new Employee("Employee",  dateFormat.parse("01/01/1950"), "employee@this.app", 919017113, dateFormat.parse("01/01/1968"), "246597858", "Porto", "12345678", "EMPLOYEE"));
+            employeeRepository.addEmployee(new Employee("Human Resources Manager", dateFormat.parse("01/01/1950"), "HRM@this.app", 919017113, dateFormat.parse("01/01/1968"), "246597857", "Porto", "12345678", "HRM"));
+            employeeRepository.addEmployee(new Employee("Vehicle and Equipment Fleet Manager", dateFormat.parse("01/01/1950"), "VFM@this.app", 919017113, dateFormat.parse("01/01/1968"), "246597856", "Porto", "12345678", "VFM"));
+            employeeRepository.addEmployee(new Employee("Green Space Manager", dateFormat.parse("01/01/1950"), "GSM@this.app", 919017113, dateFormat.parse("01/01/1968"), "246597855", "Porto", "12345678", "GSM"));
+
         } catch (ParseException e) {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, "Incorrect date Format", e);
         }
@@ -65,15 +67,15 @@ public class Bootstrap implements Runnable {
     private void addVehicles() throws ParseException {
         VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Vehicle vehicle = new Vehicle("80-PH-70", "BMW", "320D", "Passageiros", 1900, 2000, 19000, (Date) dateFormat.parse("08/03/2011"), (Date) dateFormat.parse("01/09/2020"), 20000);
+        Vehicle vehicle = new Vehicle("80-PH-70", "BMW", "320D", "Passageiros", 1900, 2000, 19000, dateFormat.parse("08/03/2011"), dateFormat.parse("01/09/2020"), 20000);
         vehicleRepository.add(vehicle);
 
-        Vehicle vehicleDrivenWithin = new Vehicle("81-PH-70", "BMW", "320D", "Passageiros", 1900, 2000, 19000, (Date) dateFormat.parse("08/03/2011"), (Date) dateFormat.parse("01/09/2020"), 20000);
+        Vehicle vehicleDrivenWithin = new Vehicle("81-PH-70", "BMW", "320D", "Passageiros", 1900, 2000, 19000, dateFormat.parse("08/03/2011"), dateFormat.parse("01/09/2020"), 20000);
         vehicleRepository.add(vehicleDrivenWithin);
         vehicleDrivenWithin.setCurrentKm(38500.0);
         vehicleRepository.updateVehicle(vehicleDrivenWithin);
 
-        Vehicle vehicleDrivenAbove = new Vehicle("82-PH-70", "BMW", "320D", "Passageiros", 1900, 2000, 19000, (Date) dateFormat.parse("08/03/2011"), (Date) dateFormat.parse("01/09/2020"), 20000);
+        Vehicle vehicleDrivenAbove = new Vehicle("82-PH-70", "BMW", "320D", "Passageiros", 1900, 2000, 19000, dateFormat.parse("08/03/2011"), dateFormat.parse("01/09/2020"), 20000);
         vehicleRepository.add(vehicleDrivenAbove);
         vehicleDrivenAbove.setCurrentKm(42000.0);
         vehicleRepository.updateVehicle(vehicleDrivenAbove);
@@ -113,6 +115,8 @@ public class Bootstrap implements Runnable {
                 AuthenticationController.ROLE_VFM);
         authenticationRepository.addUserRole(AuthenticationController.ROLE_COLLABORATOR,
                 AuthenticationController.ROLE_COLLABORATOR);
+        authenticationRepository.addUserRole(AuthenticationController.ROLE_GSM,
+                AuthenticationController.ROLE_GSM);
 
         authenticationRepository.addUserWithRole("Main Administrator", "admin@this.app", "admin",
                 AuthenticationController.ROLE_ADMIN);
@@ -120,6 +124,8 @@ public class Bootstrap implements Runnable {
                 AuthenticationController.ROLE_HRM);
         authenticationRepository.addUserWithRole("Vehicle and Equipment Fleet Manager", "vfm@this.app", "vfm",
                 AuthenticationController.ROLE_VFM);
+        authenticationRepository.addUserWithRole("Green Space Manager", "gsm@this.app", "gsm",
+                AuthenticationController.ROLE_GSM);
 
         authenticationRepository.addUserWithRole("Employee", "employee@this.app", "pwd",
                 AuthenticationController.ROLE_EMPLOYEE);
