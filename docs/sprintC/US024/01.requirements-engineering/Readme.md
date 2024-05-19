@@ -1,54 +1,57 @@
-# US006 - Create a Task 
+# US024 - As a GSM, I want to Postpone an entry in the Agenda to a specific future date. 
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As an organization employee, I want to create a new task in order to be further published.
+As Green Space Manager (GSM), I want to modify the date of a task, in the Agenda, to a specific future date.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
->	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
+> Transcribed: The Agenda is made up of entries that relate to a task (which was previously in the To-Do List), the team that will 
+carry out the task, the vehicles/equipment assigned to the task, expected duration, and the status (Planned, Postponed, 
+Canceled, Done).
 
->	As long as it is not published, access to the task is exclusive to the employees of the respective organization. 
+> Justification: The GSM may need to postpone a task to a future date due to unforeseen circumstances.
 
 **From the client clarifications:**
 
-> **Question:** Which is the unit of measurement used to estimate duration?
+> **Question:** Do postponed tasks need to have a defined date? Or they stay in a "postponed" state until the GSM 
+decides to schedule them?
 >
-> **Answer:** Duration is estimated in days.
+> **Answer:** When postponing a task from the Agenda, the GSM must define a future date for the task to be executed.
 
-> **Question:** Monetary data is expressed in any particular currency?
+> **Question:** The date you want to postpone in this US24 is the date referring to the "approximate expected duration" 
+field when we registered the task?
 >
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
+> **Answer:** No; sometimes, for various reasons (e.g. insufficient staff, faulty equipment or adverse weather 
+conditions) a task has to be postponed to a new date; task duration is not directly related to this.
 
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in.
-* **AC2:** The task reference must have at least 5 alphanumeric characters.
-* **AC3:** When creating a task with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
+* **AC2:** To postpone a task, it must have the "Planned" status in the Agenda.
+* **AC3:** To postpone a task, the GSM must define a new date for the task to be executed.
+* **AC4:** The team need to be available on the new date.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - Create a task category" as there must be at least one task category to classify the task being created.
+* There is a dependency on "US022 - Add a new entry in the Agenda" as there must be a task in the Agenda to be
+  assigned to a team.
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
+
 * Typed data:
-    * a reference
-    * a designation 
-    * an informal description
-    * a technical description
-    * an estimated duration
-    * an estimated cost
+    * a new date
 	
 * Selected data:
-    * a task category 
+  * a task from the Agenda (with planned status)
 
 **Output Data:**
 
@@ -57,15 +60,10 @@ As an organization employee, I want to create a new task in order to be further 
 
 ### 1.6. System Sequence Diagram (SSD)
 
-**_Other alternatives might exist._**
-
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us006-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us024-system-sequence-diagram-alternative-one.svg)
 
-#### Alternative Two
-
-![System Sequence Diagram - Alternative Two](svg/us006-system-sequence-diagram-alternative-two.svg)
 
 ### 1.7 Other Relevant Remarks
 

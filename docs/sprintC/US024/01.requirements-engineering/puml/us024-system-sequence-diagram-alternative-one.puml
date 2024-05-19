@@ -1,0 +1,56 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative One
+
+autonumber
+
+actor "Green Space\nManager (GSM)" as GSM
+participant ":System" as System
+
+activate GSM
+
+    GSM -> System : Asks to postpone a task in the Agenda
+    activate System
+
+        System --> GSM : shows a list of all tasks in the Agenda with the status "Planned"
+    deactivate System
+
+    GSM -> System : selects a task from the list
+    activate System
+
+        System --> GSM : asks for the new date to postpone the selected task
+    deactivate System
+
+loop while date not available
+
+
+    GSM -> System : types requested data (date)
+    activate System
+
+
+
+alt   Team Available
+
+        System --> GSM : check the availability of the team for the new date and confirms operation success
+
+else  Team Not Available
+
+
+        System --> GSM : shows team not available message and asks to select a new date
+
+
+
+
+End
+
+end loop
+
+    activate System
+
+        System --> GSM : displays operation success
+    deactivate System
+
+@enduml
