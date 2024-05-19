@@ -28,8 +28,9 @@ class Employee {
     role
 }
 class Agenda {
-    appointments
-    alerts
+    toDoListEntry
+    startDate
+    status
 }
 class ToDoList{
     greenSpace
@@ -177,4 +178,6 @@ GreenSpacesManager "1" -- "1" Agenda : manages >
 GreenSpacesManager "1" -- "1..*" Team : assigns >
 ToDoList "1" -- "0..*" Task : has >
 ToDoList "1" -- "0..*" GreenSpace : has >
+ToDoList "1" -- "1" Agenda : entries >
+
 @enduml

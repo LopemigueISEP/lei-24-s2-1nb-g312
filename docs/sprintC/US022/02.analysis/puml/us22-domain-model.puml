@@ -1,0 +1,48 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'left to right direction
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+title Domain Model US22
+
+
+class Employee {
+    name
+    birth date
+    contact (email/phone)
+    admission date
+    taxpayer number
+    address
+    ID doc type and number
+    role
+}
+
+class GreenSpacesManager{
+
+}
+
+class ToDoList{
+    greenSpace
+    tasks
+    urgency
+    expectedDuration
+}
+
+class Agenda {
+    toDoListEntry
+    startDate
+    status
+}
+Employee "1" -- "1..*" GreenSpacesManager : is >
+GreenSpacesManager "1" --- "1..*" ToDoList : manages >
+GreenSpacesManager "1" -- "1" Agenda : manages >
+ToDoList "1" -- "1" Agenda : entries >
+
+@enduml
