@@ -11,15 +11,20 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
 
 **From the specifications document:**
 
->	The green spaces for collective use, often called ”gardens” and ”parks”, are fundamental for people’s quality of life, especially in urban or semi-urban contexts.
+>	Transcribe: The green spaces for collective use, often called ”gardens” and ”parks”, are fundamental for people’s quality of life, especially in urban or semi-urban contexts. 
+>
+> Justification: Interest of naming green spaces.
 
->	Green spaces for collective use can vary significantly in dimensions and available amenities.
+>	Transcribed: Green spaces for collective use can vary significantly in dimensions and available amenities.
+>
+> Justification: Information that green spaces can differ in typology.
 
->	The green spaces for collective use managed by MS can significantly vary in size and installed equipment:
+>	Transcribed: The green spaces for collective use managed by MS can significantly vary in size and installed equipment:
 • Garden - garden space with or without trees with little or no equipment (may have a basic irrigation system or/and benches);
 • Medium-sized park - green space with a few hundred or thousands of square meters with a wooded garden area, it includes some infrastructures such as toilets, drinking fountains, irrigation system, lighting, children’s playground (for example, Quinta do Covelo, Jardim d’Arca de ´ Agua);
 • Large-sized park - multi-function space with diverse garden spaces, and woods, including varied equipment and services (for example, Parque da Cidade).
-
+>
+> Justification: Differentiation in the typology of green spaces: garden, medium-sized park and large-sized park.
 
 **From the client clarifications (Questions posted on Moodle):**
 
@@ -68,6 +73,7 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
 
 **Output Data:**
 
+* List of registered green spaces
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
