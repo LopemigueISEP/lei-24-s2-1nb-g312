@@ -6,30 +6,23 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "Organization Employee" as ADM
-participant ":CreateTaskUI" as UI
-participant ":CreateTaskController" as CTRL
+actor "GSM" as ADM
+participant ":AddEntryAgendaUI" as UI
+participant ":AddEntryAgendaController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "taskCategoryRepository:\nTaskCategoryRepository" as TaskCategoryRepository
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
-participant "task\n:Task" as TAREFA
+participant "greenSpaceRepository:\nGreenSpaceRepository" as GreenSpaceRepository
+participant "employeeRepository:\nEmployeeRepository" as EmployeeRepository
+participant "toDoListRepository:\nToDoListRepository" as ToDoListRepository
+participant "agenda\n:Agenda" as TAREFA
 
 activate ADM
 
-        ADM -> UI : asks to create a new task
+        ADM -> UI :  asks to add a new entry in the Agenda
 
         activate UI
 
-'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
-            'create CTRL
-            UI -> CTRL** : create
-
-            UI -> CTRL : getTaskCategories()
+            UI -> CTRL : getGreenSpaceList()
             activate CTRL
 
                 CTRL -> RepositorySingleton : getInstance()
@@ -38,37 +31,67 @@ activate ADM
                     RepositorySingleton --> CTRL: repositories
                 deactivate RepositorySingleton
 
-                CTRL -> PLAT : getTaskCategoryRepository()
+                CTRL -> PLAT : getGreenSpaceRepository()
                 activate PLAT
 
-                    PLAT --> CTRL: taskCategoryRepository
+                    PLAT --> CTRL: greenSpaceRepository
                 deactivate PLAT
 
-                CTRL -> TaskCategoryRepository : getTaskCategories()
-                activate TaskCategoryRepository
+                CTRL -> GreenSpaceRepository : getGreenSpaceList()
+                activate GreenSpaceRepository
 
-                    TaskCategoryRepository --> CTRL : taskCategoryList
-                deactivate TaskCategoryRepository
+                    GreenSpaceRepository --> CTRL : greenSpaceList
+                deactivate GreenSpaceRepository
 
-                CTRL --> UI : taskCategoryList
+                CTRL --> UI : greenSpaceList
             deactivate CTRL
 
-            UI --> ADM : shows task category list\n and asks to sleect one
+            UI --> ADM : shows green spaces to be selected
         deactivate UI
 
-    ADM -> UI : selects a task category
+    ADM -> UI : selects green space
     activate UI
 
-        UI --> ADM : requests data
-    deactivate UI
+UI -> CTRL : getToDoListEntries()
+            activate CTRL
 
-    ADM -> UI : types requested data (reference, description, \ninformal description, technical description,\nduration, cost)
+                CTRL -> RepositorySingleton : getInstance()
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
+
+                CTRL -> PLAT : getToDoListRepository()
+                activate PLAT
+
+                    PLAT --> CTRL: toDoListRepository
+                deactivate PLAT
+
+                CTRL -> ToDoListRepository : getToDoListEntries()
+                activate ToDoListRepository
+
+                    ToDoListRepository --> CTRL : toDoListEntries
+                deactivate ToDoListRepository
+
+                CTRL --> UI : toDoListEntries
+            deactivate CTRL
+
+            UI --> ADM : shows To-Do List entries (selected data)
+        deactivate UI
+
+    ADM -> UI : selects one entry from To-Do List
     activate UI
 
-        UI --> ADM : shows selected category and requested data
+        UI --> ADM : requests typed data
     deactivate UI
 
-    ADM -> UI : submits data
+    ADM -> UI : types requested data (startDate)
+    activate UI
+
+        UI --> ADM : shows all data and requests confirmation
+    deactivate UI
+
+    ADM -> UI : confirms data
     activate UI
 
         UI -> CTRL : createTask(reference,\ndescription,\ninformalDescription,\ntechnicalDescription,\nduration, cost,\ntaskCategoryDescription)
