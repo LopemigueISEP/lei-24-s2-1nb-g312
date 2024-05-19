@@ -7,24 +7,24 @@ title System Sequence Diagram (SSD) - Alternative One
 
 autonumber
 
-actor "Organization\nEmployee" as Employee
+actor "GSM" as Employee
 participant ":System" as System
 
 activate Employee
 
-    Employee -> System : asks to create a new task
+    Employee -> System : asks to add a new entry to the To-Do List
     activate System
 
-        System --> Employee : requests data (i.e. reference, designation, informal\ndescription, technical description, duration, cost)
+        System --> Employee : shows green spaces to select
+    deactivate System
+
+    Employee -> System : selects green space
+    activate System
+
+        System --> Employee : requests data (description,executionStartDate,executionEndDate)
     deactivate System
 
     Employee -> System : types requested data
-    activate System
-
-        System --> Employee : shows task category list and asks to select one
-    deactivate System
-
-    Employee -> System : selects a task category
     activate System
 
         System --> Employee : shows all data and requests confirmation
