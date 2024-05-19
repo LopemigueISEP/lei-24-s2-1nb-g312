@@ -1,0 +1,51 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+'skinparam linetype ortho
+'left to right direction
+skinparam classAttributeIconSize 0
+hide circle
+hide methods
+
+title US021 Domain Model
+
+class GreenSpacesManager{
+
+}
+
+class GreenSpace {
+    typology
+    area
+    address
+    name
+    numberOfEquipments
+    waterConsumption
+    equipmentUsed
+    inquiryUseOfPark
+    routesWaterPoints
+}
+
+class ToDoList{
+    greenSpace
+    tasks
+    urgency
+    expectedDuration
+}
+
+class Task {
+    reference
+    description
+    duration
+    cost
+    status
+}
+
+GreenSpacesManager "1" --- "1..*" ToDoList : manages >
+GreenSpacesManager "1" --- "1" Task : creates >
+GreenSpacesManager "1" -- "1..*" GreenSpace : registers >
+
+ToDoList "1" -- "0..*" Task : has >
+ToDoList "1" -- "0..*" GreenSpace : has >
+
+@enduml
