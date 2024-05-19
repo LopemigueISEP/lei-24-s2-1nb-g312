@@ -20,6 +20,7 @@ public class Repositories {
 
     private final JobRepository jobRepository;
     private final CSVFileRepository csvFileRepository;
+    private final AgendaRepository agendaRepository;
 
     /**
      * Constructs a Repositories object and initializes all repository instances.
@@ -34,6 +35,7 @@ public class Repositories {
         skillRepository = new SkillRepository();
         teamRepository = new TeamRepository();
         csvFileRepository = new CSVFileRepository();
+        agendaRepository = new AgendaRepository();
     }
 
     /**
@@ -124,5 +126,8 @@ public class Repositories {
      */
     public CSVFileRepository getcsvFileRepository() {
         return csvFileRepository;
+    }
+
+    public AgendaRepository getAgendaRepository() {return agendaRepository;
     }
 }
