@@ -34,7 +34,17 @@ class ToDoList{
     urgency
     expectedDuration
 }
-
+class GreenSpace {
+    typology
+    area
+    address
+    name
+    numberOfEquipments
+    waterConsumption
+    equipmentUsed
+    inquiryUseOfPark
+    routesWaterPoints
+}
 class Agenda {
     toDoListEntry
     startDate
@@ -44,5 +54,8 @@ Employee "1" -- "1..*" GreenSpacesManager : is >
 GreenSpacesManager "1" --- "1..*" ToDoList : manages >
 GreenSpacesManager "1" -- "1" Agenda : manages >
 ToDoList "1" -- "1" Agenda : entries >
+GreenSpacesManager "1" -- "1..*" GreenSpace : registers >
+ToDoList "1" -- "0..*" GreenSpace : has >
+
 
 @enduml

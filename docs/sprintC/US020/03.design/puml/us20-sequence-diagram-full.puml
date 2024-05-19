@@ -67,7 +67,7 @@ activate CTRL
 CTRL -> GREENSPACE : registerGreenSpace(name, address, area, typology)
 activate GREENSPACE
 
-GREENSPACE -> GREENSPACE : validateGreenSpace(name)
+GREENSPACE -> GREENSPACE : validateEntryAgenda(name)
 GREENSPACE -> GREENSPACE : registerGreenSpace
 
 GREENSPACE -> GreenSpaceRepository : greenSpace

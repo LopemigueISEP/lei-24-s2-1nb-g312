@@ -42,6 +42,7 @@ Other software classes (i.e. Pure Fabrication) identified:
 * GreenSpaceRepository
 * EmployeeRepository
 * ToDoListRepository?????
+* AgendaRepository
 
 ## 3.2. Sequence Diagram (SD)
 
