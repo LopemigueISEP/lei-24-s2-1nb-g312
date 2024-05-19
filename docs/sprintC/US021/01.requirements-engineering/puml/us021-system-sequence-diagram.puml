@@ -3,28 +3,27 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - Alternative Two
+title System Sequence Diagram (SSD) US021
 
 autonumber
 
-actor "Organization\nEmployee" as Employee
+actor "GSM" as Employee
 participant ":System" as System
-
 activate Employee
 
-    Employee -> System : asks to create a new task
+    Employee -> System : asks to add a new entry to the To-Do List
     activate System
 
-        System --> Employee : shows task category list and asks to select one
+        System --> Employee : shows green spaces to be selected
     deactivate System
 
-    Employee -> System : selects a task category
+    Employee -> System : selects green space
     activate System
 
-        System --> Employee : requests data (i.e. reference, designation, informal\ndescription, technical description, duration, cost)
+        System --> Employee : requests data (tasks, urgency, expectedDuration)
     deactivate System
 
-    Employee -> System : types requested data
+    Employee -> System : selects and types requested data
     activate System
 
         System --> Employee : shows all data and requests confirmation
@@ -35,4 +34,5 @@ activate Employee
 
         System --> Employee : displays operation success
     deactivate System
+
 @enduml
