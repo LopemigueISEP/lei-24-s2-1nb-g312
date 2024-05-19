@@ -176,4 +176,5 @@ Vehicle "1..*" -- "0..*" CheckUp : does >
 GreenSpacesManager "1" -- "1" Agenda : manages >
 GreenSpacesManager "1" -- "1..*" Team : assigns >
 ToDoList "1" -- "0..*" Task : has >
+ToDoList "1" -- "0..*" GreenSpace : has >
 @enduml
