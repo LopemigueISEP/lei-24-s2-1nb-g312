@@ -168,5 +168,5 @@ GreenSpace "1" -- "1" Garden : is >
 GreenSpace "1" -- "1" LargeSizedPark : is >
 Vehicle "1..*" -- "0..*" CheckUp : does >
 GreenSpacesManager "1" -- "1" Agenda : manages >
-
+GreenSpacesManager "1" -- "1..*" Team : assigns >
 @enduml
