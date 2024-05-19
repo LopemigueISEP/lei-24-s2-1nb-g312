@@ -1,0 +1,44 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) US022
+
+autonumber
+
+actor "GSM" as Employee
+participant ":System" as System
+activate Employee
+
+    Employee -> System : asks to add a new entry in the Agenda
+    activate System
+
+        System --> Employee : shows green spaces to be selected
+    deactivate System
+
+    Employee -> System : selects green space
+    activate System
+
+    System --> Employee : shows To-Do List entries (selected data)
+        deactivate System
+
+        Employee -> System : selects one entry from To-Do List
+        activate System
+
+        System --> Employee : requests typed data
+    deactivate System
+
+    Employee -> System : types requested data (startDate)
+    activate System
+
+        System --> Employee : shows all data and requests confirmation
+    deactivate System
+
+    Employee -> System : confirms data
+    activate System
+
+        System --> Employee : displays operation success
+    deactivate System
+
+@enduml
