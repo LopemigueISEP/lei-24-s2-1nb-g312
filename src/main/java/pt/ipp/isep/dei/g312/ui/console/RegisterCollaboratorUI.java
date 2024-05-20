@@ -125,6 +125,7 @@ public class RegisterCollaboratorUI implements Runnable {
                 String choice = scanner.nextLine();
 
                 if (choice.equals("1")) {
+                    requestData();
                     return new Result();
 
                 } else if (choice.equals("0")) {
