@@ -208,7 +208,7 @@ Then, the user can accept, accept and modify or decline the team generated.
 If it is impossible to generate a team, a message will appear.
 ![img.png](PrintScreens%20for%20User%20Manual/US05InsucessTeam.png)
 
-## 10. Show teams | HFM
+## 10. Show teams | VFM
 
 In this option the user can list all teams registered in the system.
 
@@ -284,14 +284,14 @@ After log in, with username and password previously defined, the Administrator o
 
 ![img.png](PrintScreens%20for%20User%20Manual%2Fus8%20-%20ListVehiclesDueToCheckUp%20success.png)
 
-## 14. Import CSV for Planning and Building Irrigation System | ???
+## 14. Import CSV for Planning and Building Irrigation System | QAM
 
 #### PrintScreen:
 
 #### Instructions of use (step-by-step):
 
 
-## 15. Planning and Building Irrigation System | ???
+## 15. Planning and Building Irrigation System | QAM
 
 In this option the user can plan the building of an irrigation system. The system will calculate the best route to build the irrigation system using the Kruskal Algorithm. At the end it will generate two png files of the input irrigation system scheme (input graph) and the output proposed irrigation path with the least cost (minimum cost tree subgraph), it also generates a csv text file with the minimum cost tree and the calculations of graph dimension, graph order and total cost.
 
@@ -335,7 +335,7 @@ After log in, with username and password previously defined, the Administrator o
 
 ![img.png](PrintScreens%20for%20User%20Manual%2Fus13%20-%20kruskal%20output%20csv.png)
 
-## 16. Import Group Files and Run-Time Testing Kruskal Algorithm
+## 16. Import Group Files and Run-Time Testing Kruskal Algorithm | QAM
 
 #### PrintScreen:
 
