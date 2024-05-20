@@ -23,36 +23,7 @@ activate UI
 UI -> GSM : requests typed data
 deactivate UI
 
-GSM -> UI : types requested data (name, address, area)
-activate UI
-UI -> CTRL : getGreenSpaceTypology()
-activate CTRL
-
-CTRL -> RepositorySingleton : getInstance()
-activate RepositorySingleton
-
-RepositorySingleton --> CTRL: repositories
-deactivate RepositorySingleton
-
-CTRL -> PLAT : getGreenSpaceRepository()
-activate PLAT
-
-PLAT --> CTRL: greenSpaceRepository
-deactivate PLAT
-
-CTRL -> GreenSpaceRepository : greenSpaceTypology()
-activate GreenSpaceRepository
-
-GreenSpaceRepository --> CTRL : greenSpaceTypology
-deactivate GreenSpaceRepository
-
-CTRL --> UI : getGreenSpaceTypology
-deactivate CTRL
-
-UI --> GSM : shows green spaces typology (selected data)
-deactivate UI
-
-GSM -> UI : selects one type of green space
+GSM -> UI : types requested data (name, address, area, typology)
 activate UI
 
 UI --> GSM : shows all data and requests confirmation
@@ -67,7 +38,7 @@ activate CTRL
 CTRL -> GREENSPACE : registerGreenSpace(name, address, area, typology)
 activate GREENSPACE
 
-GREENSPACE -> GREENSPACE : validateEntryAgenda(name)
+GREENSPACE -> GREENSPACE : validateGreenSpace(name)
 GREENSPACE -> GREENSPACE : registerGreenSpace
 
 GREENSPACE -> GreenSpaceRepository : greenSpace

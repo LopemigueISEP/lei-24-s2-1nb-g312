@@ -18,14 +18,9 @@ activate GSM
         System --> GSM : requests typed data
     deactivate System
 
-    GSM -> System : types requested data (name, address, area)
+    GSM -> System : types requested data (name, address, area, typology)
     activate System
 
-        System --> GSM : shows green spaces typology (selected data)
-    deactivate System
-
-    GSM -> System : selects one type of green space
-    activate System
 
         System --> GSM : shows all data and requests confirmation
     deactivate System

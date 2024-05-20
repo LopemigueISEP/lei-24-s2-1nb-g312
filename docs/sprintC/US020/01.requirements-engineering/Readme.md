@@ -46,14 +46,14 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
 
 > **Question:** Good afternoon, I would like to know between what ranges of hectares a green space is classified as garden, medium or large, or if it is possible to register 2 green spaces with the same area but in different typology, depending on the GSM it registers.
 >
-> **Answer:** FALTA RESPOSTA!!!!!
+> **Answer:** The classification is not automatic, it's up to GSM decide about it.
 
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in (green space typology, area, name, and address)
 * **AC2:** Area must only have digits
 * **AC3:** The green space name should be in capital letters, in order to prevent duplicates.
-* **AC4:** Area and typology must match (FALTA RESPOSTA).
+
 
 ### 1.4. Found out Dependencies
 
@@ -67,9 +67,8 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
     * name
     * address
     * area
-
-* Selected data:
     * green space typology
+
 
 **Output Data:**
 
@@ -85,3 +84,4 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
 ### 1.7 Other Relevant Remarks
 
 * The area must be in hectares.
+* Typology must be selected by the GSM.

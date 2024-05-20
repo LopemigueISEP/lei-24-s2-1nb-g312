@@ -13,17 +13,13 @@
 | Step 2  		     | 							                                       |                              |                                                                                                               |
 | Step 3	        | 	...validating requested data?                | RegisterGreenSpaceUI         | Pure Fabrication                                                                                              |
 | 		             | 	...temporarily keeping requested data?       | RegisterGreenSpaceUI         | Pure Fabrication                                                                                              |
-|                | 	...showing typology list?                    | GreenSpaceRepository         | I.E: has all typologies registered, Pure Fabrication                                                          |
 | Step 4  		     | 	                                             |                              |                                                                                                               |
-| Step 5 	       | 	... validating selected data?                | RegisterGreenSpaceUI         | Pure Fabrication                                                                                              |
-| 		             | 	... temporarily keeping the selected job?    | RegisterGreenSpaceUI         | Pure Fabrication                                                                                              |              
-| Step 6  		     | 							                                       |                              |                                                                                                               |              
-| Step 7         | 	...temporarily keeping requested data?       | RegisterGreenSpaceUI         | Pure Fabrication                                                                                              |
+| Step 5         | 	...temporarily keeping requested data?       | RegisterGreenSpaceUI         | Pure Fabrication                                                                                              |
 | 	              | 	... creating Vehicle Object?                 | GreenSpace                   | Creator                                                                                                       |
 | 		             | 	... validating all data (local validation)?  | GreenSpace                   | IE: object created has its own data                                                                           |
 | 		             | 	... validating all data (global validation)? | GreenSpace                   | 	IE: knows all its GreenSpaces instances                                                                      |
 | 		             | 	... saving inputted data?                    | GreenSpaceRepository         | IE: object created has its own data                                                                           |
-| Step 8  		     | 	... informing operation success?             | RegisterGreenSpaceUI         | IE: is responsible for user interactions.                                                                     | 
+| Step 6 		      | 	... informing operation success?             | RegisterGreenSpaceUI         | IE: is responsible for user interactions.                                                                     | 
 
 ### Systematization ##
 
