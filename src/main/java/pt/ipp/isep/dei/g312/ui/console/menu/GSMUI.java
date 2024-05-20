@@ -14,7 +14,7 @@ public class GSMUI implements Runnable {
     // TODO falta alterar para as respetivas UI
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
-        options.add(new MenuItem("Register a Green Space", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("Register a Green Space", new RegisterGreenSpaceUI()));
         options.add(new MenuItem("Show list of green Spaces", new RunTimeTestingKruskalAlgorithmUI()));
         options.add(new MenuItem("Add entry to the To-Do List", new RunTimeTestingKruskalAlgorithmUI()));
         options.add(new MenuItem("Show To-Do List", new RunTimeTestingKruskalAlgorithmUI()));

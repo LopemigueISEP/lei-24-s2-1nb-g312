@@ -30,7 +30,7 @@ public class AdminUI implements Runnable {
         options.add(new MenuItem("Import CSV for Planning and Building Irrigation System", new ImportCSVUI()));
         options.add(new MenuItem("Planning and Building Irrigation System", new KruskalAlgorithmUI()));
         options.add(new MenuItem("Import Group Files and Run-Time Testing Kruskal Algorithm", new RunTimeTestingKruskalAlgorithmUI()));
-        options.add(new MenuItem("Register a Green Space", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("Register a Green Space", new RegisterGreenSpaceUI()));
         options.add(new MenuItem("Show list of green Spaces", new RunTimeTestingKruskalAlgorithmUI()));
         options.add(new MenuItem("Add entry to the To-Do List", new RunTimeTestingKruskalAlgorithmUI()));
         options.add(new MenuItem("Show To-Do List", new RunTimeTestingKruskalAlgorithmUI()));

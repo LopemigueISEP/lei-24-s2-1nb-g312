@@ -1,8 +1,8 @@
 package pt.ipp.isep.dei.g312.repository;
 
-//import pt.ipp.isep.dei.g312.repository.TaskCategoryRepository;
 
-import pt.ipp.isep.dei.g312.domain.Skill;
+
+
 
 /**
  * Represents a collection of repositories and provides access to them.
@@ -21,6 +21,7 @@ public class Repositories {
     private final JobRepository jobRepository;
     private final CSVFileRepository csvFileRepository;
     private final AgendaRepository agendaRepository;
+    private final GreenSpaceRepository greenSpaceRepository;
 
     /**
      * Constructs a Repositories object and initializes all repository instances.
@@ -36,6 +37,7 @@ public class Repositories {
         teamRepository = new TeamRepository();
         csvFileRepository = new CSVFileRepository();
         agendaRepository = new AgendaRepository();
+        greenSpaceRepository = new GreenSpaceRepository();
     }
 
     /**
@@ -129,5 +131,8 @@ public class Repositories {
     }
 
     public AgendaRepository getAgendaRepository() {return agendaRepository;
+    }
+    public GreenSpaceRepository getGreenSpaceRepository() {
+        return greenSpaceRepository;
     }
 }
