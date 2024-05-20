@@ -151,20 +151,22 @@ public class RegisterGreenSpaceUI implements Runnable {
         System.out.println("1. Garden");
         System.out.println("2. Medium Sized Park");
         System.out.println("3. Large Sized Park");
-        System.out.print("Type your option: ");
 
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+        while (true) {
+            System.out.print("Type your option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
 
-        return switch (choice) {
-            case 1 -> "Garden";
-            case 2 -> "Medium Sized Park";
-            case 3 -> "Large Sized Park";
-            default -> {
+            if (choice == 1) {
+                return "Garden";
+            } else if (choice == 2) {
+                return "Medium Sized Park";
+            } else if (choice == 3) {
+                return "Large Sized Park";
+            } else {
                 System.out.println("Invalid choice. Please select a valid option.");
-                yield null;
             }
-        };
+        }
     }
     private boolean showsDataRequestsValidation() {
         System.out.printf("\nName: %s\nAddress: %s\nArea: %sha\nTypology: %s\n", name, address, area, typology);
