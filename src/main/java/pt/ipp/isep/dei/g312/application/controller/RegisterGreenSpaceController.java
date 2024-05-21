@@ -41,5 +41,9 @@ public class RegisterGreenSpaceController {
         }
         return false;
     }
+    public void printGreenSpaces(){
+
+        Repositories.getInstance().getGreenSpaceRepository().printRegisteredGreenSpaces();
+    }
 
 }

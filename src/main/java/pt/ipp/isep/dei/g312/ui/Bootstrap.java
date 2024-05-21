@@ -8,7 +8,6 @@ import pt.ipp.isep.dei.g312.ui.console.utils.Utils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +22,7 @@ public class Bootstrap implements Runnable {
         addUsers();
         addSkills();
         addJobs();
+        addGreenSpaces();
 
         try {
 
@@ -37,11 +37,11 @@ public class Bootstrap implements Runnable {
         EmployeeRepository employeeRepository = Repositories.getInstance().getEmployeeRepository();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         try {
-            employeeRepository.addEmployee(new Employee("Main Administrator", (Date) dateFormat.parse("01/01/1950"), "admin@this.app", 919017113, (Date) dateFormat.parse("01/01/1968"), "246597859", "Porto", "12345678", "ADMIN"));
-            employeeRepository.addEmployee(new Employee("Employee", (Date) dateFormat.parse("01/01/1950"), "employee@this.app", 919017113, (Date) dateFormat.parse("01/01/1968"), "246597858", "Porto", "12345678", "EMPLOYEE"));
-            employeeRepository.addEmployee(new Employee("Human Resources Manager", (Date) dateFormat.parse("01/01/1950"), "HRM@this.app", 919017113, (Date) dateFormat.parse("01/01/1968"), "246597857", "Porto", "12345678", "HRM"));
-            employeeRepository.addEmployee(new Employee("Vehicle and Equipment Fleet Manager", (Date) dateFormat.parse("01/01/1950"), "VFM@this.app", 919017113, (Date) dateFormat.parse("01/01/1968"), "246597856", "Porto", "12345678", "VFM"));
-            employeeRepository.addEmployee(new Employee("Green Space Manager", (Date) dateFormat.parse("01/01/1950"), "GSM@this.app", 919017113, (Date) dateFormat.parse("01/01/1968"), "246597855", "Porto", "12345678", "GSM"));
+            employeeRepository.addEmployee(new Employee("Main Administrator", dateFormat.parse("01/01/1950"), "admin@this.app", 919017113,  dateFormat.parse("01/01/1968"), "246597859", "Porto", "12345678", "ADMIN"));
+            employeeRepository.addEmployee(new Employee("Employee",  dateFormat.parse("01/01/1950"), "employee@this.app", 919017113,  dateFormat.parse("01/01/1968"), "246597858", "Porto", "12345678", "EMPLOYEE"));
+            employeeRepository.addEmployee(new Employee("Human Resources Manager",  dateFormat.parse("01/01/1950"), "HRM@this.app", 919017113,  dateFormat.parse("01/01/1968"), "246597857", "Porto", "12345678", "HRM"));
+            employeeRepository.addEmployee(new Employee("Vehicle and Equipment Fleet Manager", dateFormat.parse("01/01/1950"), "VFM@this.app", 919017113,  dateFormat.parse("01/01/1968"), "246597856", "Porto", "12345678", "VFM"));
+            employeeRepository.addEmployee(new Employee("Green Space Manager",  dateFormat.parse("01/01/1950"), "GSM@this.app", 919017113,  dateFormat.parse("01/01/1968"), "246597855", "Porto", "12345678", "GSM"));
 
         } catch (ParseException e) {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, "Incorrect date Format", e);
@@ -80,6 +80,16 @@ public class Bootstrap implements Runnable {
         vehicleRepository.add(vehicleDrivenAbove);
         vehicleDrivenAbove.setCurrentKm(42000.0);
         vehicleRepository.updateVehicle(vehicleDrivenAbove);
+    }
+    private void addGreenSpaces() {
+        GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Cidade", "Porto", 99.6, "Large-sized park"));
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Avioso", "Maia", 43.4, "Medium-sized park"));
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Rabada", "Santo Tirso", 15.3, "Garden"));
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Bela Vista", "Lisboa", 259.6, "Large-sized park"));
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Azibo", "Bragança", 493.2, "Large-sized park"));
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Oriental", "Campanhã", 35.9, "Medium-sized park"));
+
     }
 
     private void addOrganization() {
@@ -133,4 +143,5 @@ public class Bootstrap implements Runnable {
         authenticationRepository.addUserWithRole("Collaborator", "collaborator@this.app", "collaborator",
                 AuthenticationController.ROLE_COLLABORATOR);
     }
+
 }

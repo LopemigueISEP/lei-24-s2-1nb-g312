@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.g312.repository;
 
 
+
 import pt.ipp.isep.dei.g312.domain.GreenSpace;
 
 import java.util.ArrayList;
@@ -40,5 +41,11 @@ public class GreenSpaceRepository {
 
         return isValid;
     }
+    public void printRegisteredGreenSpaces() {
 
+        for (GreenSpace greenSpace : greenSpaceList) {
+            System.out.printf("%25s -  %s\n", greenSpace.getName(), greenSpace.getTypology());
+        }
+        System.out.println("---------------------------------------------------");
+    }
 }

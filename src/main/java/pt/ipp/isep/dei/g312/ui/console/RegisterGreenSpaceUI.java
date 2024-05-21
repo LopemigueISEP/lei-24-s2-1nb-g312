@@ -160,9 +160,9 @@ public class RegisterGreenSpaceUI implements Runnable {
             if (choice == 1) {
                 return "Garden";
             } else if (choice == 2) {
-                return "Medium Sized Park";
+                return "Medium-sized Park";
             } else if (choice == 3) {
-                return "Large Sized Park";
+                return "Large-sized Park";
             } else {
                 System.out.println("Invalid choice. Please select a valid option.");
             }
