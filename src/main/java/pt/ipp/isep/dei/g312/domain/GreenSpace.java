@@ -6,6 +6,14 @@ public class GreenSpace implements Cloneable {
     private double area;
     private String typology;
 
+    /**
+     * Main constructor for creating an `GreenSpace` object.
+     * @param name              The green space's name.
+     * @param address           The green space's address.
+     * @param area          The green space's area.
+     * @param typology              The green space's typology.
+     */
+
     public GreenSpace(String name, String address, double area, String typology){
         this.name = name;
         this.address = address;
@@ -37,6 +45,11 @@ public class GreenSpace implements Cloneable {
         return typology;
     }
 
+    /**
+     * Creates a clone of the current green space object.
+     *
+     * @return A new `Green Space` object that is a copy of the current instance.
+     */
 
     @Override
     public GreenSpace clone() {

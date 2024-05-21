@@ -11,7 +11,10 @@ import java.util.Scanner;
 
 import static pt.ipp.isep.dei.g312.ui.console.utils.Utils.raiseAlertMessage;
 
-
+/**
+ * This class implements the user interface functionalities for registering a Green Space.
+ * It interacts with the user to collect green space information and submit it to the controller for registration.
+ */
 
 public class RegisterGreenSpaceUI implements Runnable {
     private String name;
@@ -28,6 +31,12 @@ public class RegisterGreenSpaceUI implements Runnable {
         return controller;
     }
 
+    /**
+     * This method represents the main execution flow for the user interface.
+     * It displays the registration title, collects green space data, submits it for registration,
+     * and handles potential errors.
+     */
+
     @Override
     public void run() {
         Result result = new Result();
@@ -42,6 +51,9 @@ public class RegisterGreenSpaceUI implements Runnable {
             raiseAlertMessage(result.message);
         }
     }
+    /**
+     * This method attempts to register the collected green space data with the controller.
+     */
 
     private void submitData() {
         Optional<GreenSpace> greenSpace = getController().registerGreenSpace(name, address, area, typology);
@@ -52,6 +64,12 @@ public class RegisterGreenSpaceUI implements Runnable {
             System.out.println("Failed to register green space due to an error.");
         }
     }
+
+    /**
+     * This method collects green space data from the user, including name, address, area, and typology.
+     * It performs basic validation on the name and ensures the green space doesn't already exist.
+     * It returns a Result object indicating any errors encountered during data collection.
+     */
 
     private Result requestData() {
         name = requestGreenSpaceName();
@@ -88,6 +106,12 @@ public class RegisterGreenSpaceUI implements Runnable {
         return new Result();
     }
 
+    /**
+     * This method prompts the user for the green space name and validates it to ensure it's not empty and only contains letters and spaces.
+     * It keeps prompting the user until a valid name is entered.
+     * @return The validated green space name entered by the user.
+     */
+
     private String requestGreenSpaceName() {
         String greenSpaceName = "";
 
@@ -104,6 +128,12 @@ public class RegisterGreenSpaceUI implements Runnable {
 
         return greenSpaceName;
     }
+    /**
+     * This method validates the provided green space name according to the defined criteria
+     * (not empty, uppercase letters and spaces only).
+     * @param greenSpaceName The name to validate.
+     * @return True if the name is valid, false otherwise.
+     */
 
     private boolean validateGreenSpaceName(String greenSpaceName) {
         if (greenSpaceName.isEmpty()) {
@@ -119,11 +149,24 @@ public class RegisterGreenSpaceUI implements Runnable {
         }
     }
 
+    /**
+     * This method prompts the user for the green space address and returns the entered value.
+     *
+     * @return The green space address entered by the user.
+     */
+
     private String requestGreenSpaceAddress() {
         Scanner input = new Scanner(System.in);
         System.out.print("Green Space Address: ");
         return input.nextLine();
     }
+
+    /**
+     * This method prompts the user for the green space area, validates it to ensure a valid number is entered,
+     * and returns the parsed area value. It keeps prompting the user until a valid number is entered.
+     *
+     * @return The green space area entered by the user (in hectares).
+     */
 
     private double requetGreenSpaceArea() {
         Scanner input = new Scanner(System.in);
@@ -132,18 +175,23 @@ public class RegisterGreenSpaceUI implements Runnable {
         String areaString;
         double area;
 
-        do {
+        while (true) {
             areaString = input.nextLine();
             try {
-                area = Double.parseDouble(areaString.replace(",", ".")); // Replace comma with dot before parsing
-                break;
+                area = Double.parseDouble(areaString.replace(",", "."));
+                return area;
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a valid number for area.");
             }
-        } while (true);
-
-        return area;
+        }
     }
+
+    /** This method presents the user with a menu to select the green space typology (Garden, Medium-sized Park, Large-sized Park).
+     * It keeps prompting the user until a valid choice (1, 2, or 3) is entered and returns the corresponding typology string.
+     *
+     * @return The selected green space typology.
+     */
+
     public String selectTypology() {
         Scanner scanner = new Scanner(System.in);
 
@@ -168,10 +216,24 @@ public class RegisterGreenSpaceUI implements Runnable {
             }
         }
     }
+
+    /** This method displays a summary of the collected green space data for user confirmation.
+     * It calls the requestConfirmation() method to get the user's confirmation on the data.
+     *
+     * @return True if the user confirms the data, false otherwise.
+     */
+
     private boolean showsDataRequestsValidation() {
         System.out.printf("\nName: %s\nAddress: %s\nArea: %sha\nTypology: %s\n", name, address, area, typology);
         return requestConfirmation();
     }
+
+    /** This method prompts the user for confirmation on the displayed green space data.
+     * It keeps prompting the user until a valid confirmation (Y or N) is entered
+     * and returns true if the user confirms (Y), false otherwise.
+     *
+     * @return True if the user confirms the data, false otherwise.
+     */
 
     private boolean requestConfirmation() {
         String dados ="";
