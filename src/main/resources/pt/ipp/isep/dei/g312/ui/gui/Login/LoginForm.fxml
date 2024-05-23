@@ -20,16 +20,21 @@
           <RowConstraints minHeight="10.0" percentHeight="36.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="userId" promptText="Enter UserId/Email" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <TextField fx:id="userId" focusTraversable="false" promptText="Enter UserId/Email" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
                   <font>
                      <Font name="Tahoma" size="12.0" />
                   </font></TextField>
-            <PasswordField fx:id="pswrd" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <PasswordField fx:id="pswrd" focusTraversable="false" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Button mnemonicParsing="false" onAction="#logMeIn" prefHeight="25.0" prefWidth="85.0" text="Login" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="TOP">
                <font>
                   <Font name="Tahoma" size="12.0" />
                </font>
             </Button>
+               <Label fx:id="statusMsg" prefHeight="15.0" prefWidth="125.0" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                  <font>
+                     <Font name="Tahoma" size="10.0" />
+                  </font>
+               </Label>
          </children>
       </GridPane>
    </children>
