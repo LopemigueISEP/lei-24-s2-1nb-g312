@@ -1,4 +1,5 @@
 package pt.ipp.isep.dei.g312.application.controller;
+import pt.ipp.isep.dei.g312.domain.Employee;
 import pt.ipp.isep.dei.g312.domain.Task;
 import pt.ipp.isep.dei.g312.domain.TaskStatus;
 import pt.ipp.isep.dei.g312.domain.Team;
@@ -28,7 +29,14 @@ public class AssignTeamController {
 
 
     public boolean assignTeamToTask(Team team, Task task) {
-        return agendaRepository.assignTeamToTask(team, task);
+        //TODO check if email service is valid
+        if (agendaRepository.assignTeamToTask(team, task)){
+            for(Employee e : team.getTeamEmployees()){
+                System.out.println(e.getEmail());
+            }
+            return true;
+        }
+        return false;
     }
 
     public List<Team> listAvailableTeams(Task task) {
