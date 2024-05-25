@@ -23,6 +23,7 @@ public class Repositories {
     private final AgendaRepository agendaRepository;
     private final GreenSpaceRepository greenSpaceRepository;
 
+
     /**
      * Constructs a Repositories object and initializes all repository instances.
      */

@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.g312.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Represents a team of employees within an organization. This class manages a collection of
  * {@link Employee} instances that constitute a team. It provides functionality to add employees,
@@ -15,12 +16,12 @@ public class Team {
 
     private List<Employee> teamEmployees;
 
-    public Team(){
-        teamEmployees=new ArrayList<>();
+    public Team() {
+        teamEmployees = new ArrayList<>();
     }
 
     public Team(List<Employee> teamEmployees) {
-        this.teamEmployees= new ArrayList<>(teamEmployees);
+        this.teamEmployees = new ArrayList<>(teamEmployees);
     }
 
     /**
@@ -42,7 +43,7 @@ public class Team {
      *
      * @return A new {@link Team} object with the same employees as this one.
      */
-    public Team clone(){
+    public Team clone() {
         return new Team(this.teamEmployees);
     }
 
@@ -80,5 +81,15 @@ public class Team {
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);
+    }
+
+    // because method tostring on employee didn't have skill return, i only implemented the toString of the names of the employees of the team
+    @Override
+    public String toString() {
+        String teamComposition = "";
+        for(Employee e : teamEmployees) {
+            teamComposition += e.toString() + "; ";
+        }
+        return teamComposition;
     }
 }
