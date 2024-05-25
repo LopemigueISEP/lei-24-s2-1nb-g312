@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.g312.ui.console;
 import pt.ipp.isep.dei.g312.application.controller.RegisterGreenSpaceController;
 
 import pt.ipp.isep.dei.g312.domain.GreenSpace;
+import pt.ipp.isep.dei.g312.repository.Repositories;
 import pt.ipp.isep.dei.g312.ui.console.utils.Result;
 
 
@@ -21,6 +22,7 @@ public class RegisterGreenSpaceUI implements Runnable {
     private String address;
     private double area;
     private String typology;
+    private String greenSpaceManager;
     private final RegisterGreenSpaceController controller;
 
     public RegisterGreenSpaceUI() {
@@ -56,7 +58,7 @@ public class RegisterGreenSpaceUI implements Runnable {
      */
 
     private void submitData() {
-        Optional<GreenSpace> greenSpace = getController().registerGreenSpace(name, address, area, typology);
+        Optional<GreenSpace> greenSpace = getController().registerGreenSpace(name, address, area, typology, greenSpaceManager);
 
         if (greenSpace.isPresent()) {
             System.out.println("Green Space successfully registered");
@@ -101,10 +103,29 @@ public class RegisterGreenSpaceUI implements Runnable {
             address = requestGreenSpaceAddress();
             area = requetGreenSpaceArea();
             typology = selectTypology();
+            greenSpaceManager = requestGreenSpaceManager();
             showsDataRequestsValidation();
         }
         return new Result();
     }
+
+    private String requestGreenSpaceManager() {
+        String greenSpaceManager = "";
+
+        do {
+            try {
+                Scanner input = new Scanner(System.in);
+                System.out.print("Green Space Manager: ");
+                greenSpaceManager = input.nextLine().toUpperCase();
+            } catch (Exception e) {
+                System.out.println("Error reading Green Space name");
+            }
+
+        } while (!validateGreenSpaceName(greenSpaceManager));
+
+        return greenSpaceManager;
+    }
+
 
     /**
      * This method prompts the user for the green space name and validates it to ensure it's not empty and only contains letters and spaces.
@@ -186,33 +207,37 @@ public class RegisterGreenSpaceUI implements Runnable {
         }
     }
 
-    /** This method presents the user with a menu to select the green space typology (Garden, Medium-sized Park, Large-sized Park).
-     * It keeps prompting the user until a valid choice (1, 2, or 3) is entered and returns the corresponding typology string.
-     *
-     * @return The selected green space typology.
-     */
+
+    public enum GreenSpaceTypology {
+        GARDEN,
+        MEDIUM_SIZED_PARK,
+        LARGE_SIZED_PARK
+    }
 
     public String selectTypology() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Select Green Space Type:");
-        System.out.println("1. Garden");
-        System.out.println("2. Medium Sized Park");
-        System.out.println("3. Large Sized Park");
+        for (int i = 0; i < GreenSpaceTypology.values().length; i++) {
+            System.out.println((i + 1) + ". " + GreenSpaceTypology.values()[i]);
+        }
 
         while (true) {
             System.out.print("Type your option: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
 
-            if (choice == 1) {
-                return "Garden";
-            } else if (choice == 2) {
-                return "Medium-sized Park";
-            } else if (choice == 3) {
-                return "Large-sized Park";
+            // Check if the input is an integer
+            if (scanner.hasNextInt()) {
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline character
+
+                if (choice >= 1 && choice <= GreenSpaceTypology.values().length) {
+                    return GreenSpaceTypology.values()[choice - 1].toString();
+                } else {
+                    System.out.println("Invalid choice. Please select a valid option.");
+                }
             } else {
-                System.out.println("Invalid choice. Please select a valid option.");
+                System.out.println("Invalid input. Please enter a valid option.");
+                scanner.next(); // Consume invalid input
             }
         }
     }
@@ -224,7 +249,7 @@ public class RegisterGreenSpaceUI implements Runnable {
      */
 
     private boolean showsDataRequestsValidation() {
-        System.out.printf("\nName: %s\nAddress: %s\nArea: %sha\nTypology: %s\n", name, address, area, typology);
+        System.out.printf("\nName: %s\nAddress: %s\nArea: %sha\nTypology: %s\nGreen Space Manager: %s\n", name, address, area, typology, greenSpaceManager);
         return requestConfirmation();
     }
 
@@ -261,5 +286,13 @@ public class RegisterGreenSpaceUI implements Runnable {
         }
 
         return resposta;
+    }
+
+    /**
+     * Prints information about all registered green spaces using the GreenSpaceRepository.
+     */
+    public void printGreenSpaces(){
+
+        Repositories.getInstance().getGreenSpaceRepository().printRegisteredGreenSpaces();
     }
 }
