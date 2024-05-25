@@ -32,6 +32,10 @@ public class TeamRepository {
         return !teamList.contains(team);
     }
 
+    public List<Team> getAllTeams() {
+        return new ArrayList<>(teamList);
+    }
+
     public void printRegisteredTeams() {
         int index = 1;
         for (Team team : teamList) {

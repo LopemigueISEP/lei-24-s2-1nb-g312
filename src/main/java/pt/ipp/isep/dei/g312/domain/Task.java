@@ -15,20 +15,23 @@ public class Task implements Cloneable {
     TaskStatus status;
     Team assignedTeam;
     ArrayList<Vehicle> assignedVehicles;
+    int taskID;
 
 
     // constructor for to do list
-    public Task(String title, String description, int taskExpectedDuration, String type, TaskUrgency urgency) {
+    public Task(String title, String description, int taskExpectedDuration, String type, TaskUrgency urgency, int taskID) {
         this.title = title;
         this.description = description;
         this.taskExpectedDuration = taskExpectedDuration;
         this.type = type;
         this.urgency = urgency;
         this.assignedVehicles = new ArrayList<>();
+        this.taskID = taskID;
     }
 
     // constructor for clone
-    public Task(String title, String description, Date date, TaskPeriod taskStartPeriod, int taskExpectedDuration, String type, TaskUrgency urgency, TaskStatus status, Team assignedTeam, ArrayList<Vehicle> assignedVehicles) {
+    public Task(String title, String description, Date date, TaskPeriod taskStartPeriod, int taskExpectedDuration,
+                String type, TaskUrgency urgency, TaskStatus status, Team assignedTeam, ArrayList<Vehicle> assignedVehicles, int taskID) {
         this.title = title;
         this.description = description;
         this.date = date;
@@ -39,6 +42,7 @@ public class Task implements Cloneable {
         this.status = status;
         this.assignedTeam = assignedTeam;
         this.assignedVehicles = assignedVehicles;
+        this.taskID = taskID;
     }
 
     public void assignTeam(Team team) {
@@ -61,10 +65,42 @@ public class Task implements Cloneable {
         this.status = status;
     }
 
+    // method to get team assigned to the task
+    public Team getAssignedTeam(){
+        return this.assignedTeam;
+    }
+
+    // method to return status of a task
+    public TaskStatus getStatus(){
+        return this.status;
+    }
+
+    public Date getDate(){
+        return this.date;
+    }
+
+    public TaskPeriod getTaskStartPeriod(){
+        return this.taskStartPeriod;
+    }
+
+    public int getDuration(){
+        return this.taskExpectedDuration;
+    }
+
+    public int getTaskID(){
+        return this.taskID;
+    }
+
+
+    public String getTitle(){
+        return this.title;
+    }
+
+
     // clone method
     public Task clone() {
         return new Task(this.title, this.description, this.date, this.taskStartPeriod, this.taskExpectedDuration,
-                this.type, this.urgency, this.status, this.assignedTeam, this.assignedVehicles);
+                this.type, this.urgency, this.status, this.assignedTeam, this.assignedVehicles, this.taskID);
     }
 
 
