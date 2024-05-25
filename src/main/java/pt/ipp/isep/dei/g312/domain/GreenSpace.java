@@ -1,10 +1,15 @@
 package pt.ipp.isep.dei.g312.domain;
 
-public class GreenSpace implements Cloneable {
+import pt.ipp.isep.dei.g312.repository.Repositories;
+
+import java.util.Optional;
+
+public class GreenSpace implements Comparable<GreenSpace> {
     private String name;
     private String address;
     private double area;
     private String typology;
+    private String greenSpaceManager;
 
     /**
      * Main constructor for creating an `GreenSpace` object.
@@ -14,11 +19,12 @@ public class GreenSpace implements Cloneable {
      * @param typology              The green space's typology.
      */
 
-    public GreenSpace(String name, String address, double area, String typology){
+    public GreenSpace(String name, String address, double area, String typology, String greenSpaceManager){
         this.name = name;
         this.address = address;
         this.area = area;
         this.typology = typology;
+        this.greenSpaceManager = greenSpaceManager;
     }
     public String getName() {
         return name;
@@ -44,6 +50,12 @@ public class GreenSpace implements Cloneable {
     public String getTypology() {
         return typology;
     }
+    public String getGreenSpaceManager() {
+        return greenSpaceManager;
+    }
+    public void setGreenSpaceManager(String greenSpaceManager) {
+        this.greenSpaceManager = greenSpaceManager;
+    }
 
     /**
      * Creates a clone of the current green space object.
@@ -53,6 +65,32 @@ public class GreenSpace implements Cloneable {
 
     @Override
     public GreenSpace clone() {
-        return new GreenSpace(this.name, this.address, this.area, this.typology);
+        return new GreenSpace(this.name, this.address, this.area, this.typology, this.greenSpaceManager);
+    }
+
+    public static Optional<GreenSpace> registerGreenSpace(String name, String address, double area, String typology, String greenSpaceManager, boolean userValidation) {
+        boolean validateAddedRepository;
+        try {
+            if (userValidation) {
+                GreenSpace greenSpace = new GreenSpace(name,address,area,typology, greenSpaceManager);
+                validateAddedRepository = Repositories.getInstance().getGreenSpaceRepository().addGreenSpace(greenSpace);
+                if (validateAddedRepository) {
+                    return Optional.of(greenSpace);
+                } else {
+                    return Optional.empty();
+                }
+            } else {
+                System.out.println("This user don't have permissions to register green spaces");
+                return Optional.empty();
+            }
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+
+    }
+
+    @Override
+    public int compareTo(GreenSpace o) {
+        return this.name.compareTo(o.getName());
     }
 }

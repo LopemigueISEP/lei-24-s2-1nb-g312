@@ -48,11 +48,15 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
 >
 > **Answer:** The classification is not automatic, it's up to GSM decide about it.
 
+> **Question:** Good afternoon, if there are several GSMs, when a GSM creates a greenspace, does this greenspace automatically become associated with it or should there be a menu in which a general "administrator" of the company chooses which greenspace each GSM should send?
+>
+> **Answer:** You can assume that the GSM that creates the GS becomes the manager of that same GS.
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in (green space typology, area, name, and address)
 * **AC2:** Area must only have digits
 * **AC3:** The green space name should be in capital letters, in order to prevent duplicates.
+
 
 
 ### 1.4. Found out Dependencies
@@ -72,7 +76,7 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
 
 **Output Data:**
 
-* List of registered green spaces
+* List of registered green spaces with GSM responsible for the managing of green space
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)

@@ -49,6 +49,7 @@ public class AuthenticationUI implements Runnable {
         rolesUI.add(new MenuItem(AuthenticationController.ROLE_COLLABORATOR, new CollaboratorUI()));
         rolesUI.add(new MenuItem(AuthenticationController.ROLE_GSM, new GSMUI()));
 
+
         return rolesUI;
     }
 
