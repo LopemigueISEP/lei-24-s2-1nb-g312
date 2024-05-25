@@ -10,6 +10,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
+import static jdk.internal.org.jline.utils.InfoCmp.Capability.lines;
+
 public class RunTimeTestingKruskalAlgorithmController {
     private String folderPath;
     private final List<String> fileNames;
@@ -67,6 +69,7 @@ public class RunTimeTestingKruskalAlgorithmController {
     }
 
     private void runKruskalAlgorithmAndMeasureTime(String fileName, List<CSVLine> csvLines) {
+        int lineCount = csvLines.size();
         ArrayList<String> vertices = new ArrayList<>();
         for (CSVLine line : csvLines) {
             if (!vertices.contains(line.getX())) vertices.add(line.getX());
@@ -81,7 +84,8 @@ public class RunTimeTestingKruskalAlgorithmController {
         long totalTimeMs = (endTime - startTime) / 1_000_000; // Convert to milliseconds
 
         fileNames.add(fileName);
-        verticesCounts.add(vertices.size());
+        //verticesCounts.add(vertices.size());
+        verticesCounts.add(lineCount);
         runTimes.add(totalTimeMs);
     }
 
@@ -107,7 +111,9 @@ public class RunTimeTestingKruskalAlgorithmController {
             String fileName = fileNames.get(index);
             int vertices = verticesCounts.get(index);
             long runTime = runTimes.get(index);
-            System.out.printf("File: %s | Vertices: %d | Run-Time (ms): %d%n", fileName, vertices, runTime);
+            //System.out.printf("File: %s | Vertices: %d | Run-Time (ms): %d%n", fileName, vertices, runTime);
+            System.out.printf("File: %s | Lines: %d | Run-Time (ms): %d%n", fileName, vertices, runTime);
+
         }
     }
 
@@ -125,7 +131,9 @@ public class RunTimeTestingKruskalAlgorithmController {
 
     public void saveResultsToCSV() {
         try (PrintWriter writer = new PrintWriter(new FileWriter("results.csv"))) {
-            writer.println("File; Vertices; Run-Time (ms)");
+            //writer.println("File; Vertices; Run-Time (ms)");
+            writer.println("File; Lines; Run-Time (ms)");
+
 
             // create list of indices to sort based on the vertices count
             List<Integer> indices = new ArrayList<>();
@@ -141,5 +149,10 @@ public class RunTimeTestingKruskalAlgorithmController {
         } catch (IOException e) {
             System.out.println("Error writing to CSV file: " + e.getMessage());
         }
+    }
+
+    // alternative for line counts
+    public int[] getLineCounts() {
+        return verticesCounts.stream().mapToInt(Integer::intValue).toArray();
     }
 }
