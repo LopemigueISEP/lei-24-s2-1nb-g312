@@ -47,19 +47,26 @@ public class RunTimeTestingKruskalAlgorithmUI implements Runnable {
     }
 
     private void generateGraphAndDisplay() {
-        int[] verticesCountsArray = controller.getVerticesCounts();
+        //int[] verticesCountsArray = controller.getVerticesCounts();
         long[] runTimesArray = controller.getRunTimes();
+        int[] lineCountsArray = controller.getLineCounts();
+
 
         // Convert arrays to lists for easier usage with XYGraphPanel
-        var verticesCounts = Arrays.asList(Arrays.stream(verticesCountsArray).boxed().toArray(Integer[]::new));
+        //var verticesCounts = Arrays.asList(Arrays.stream(verticesCountsArray).boxed().toArray(Integer[]::new));
         var runTimes = Arrays.asList(Arrays.stream(runTimesArray).boxed().toArray(Long[]::new));
+        var lineCounts = Arrays.asList(Arrays.stream(lineCountsArray).boxed().toArray(Integer[]::new));
+
 
         // Open the graph in a JFrame
-        XYGraphPanel.createGraphFrame(verticesCounts, runTimes);
+        //XYGraphPanel.createGraphFrame(verticesCounts, runTimes);
+        XYGraphPanel.createGraphFrame(lineCounts, runTimes);
+
 
         // Generate and save the graph as a PNG file
         try {
-            XYGraphPanel.saveGraphToPNG(verticesCounts, runTimes, "run_time_graph.png");
+            //XYGraphPanel.saveGraphToPNG(verticesCounts, runTimes, "run_time_graph.png");
+            XYGraphPanel.saveGraphToPNG(lineCounts, runTimes, "run_time_graph.png");
             System.out.println("Graph generated successfully at: run_time_graph.png");
         } catch (IOException e) {
             System.out.println("Error saving graph to PNG: " + e.getMessage());
