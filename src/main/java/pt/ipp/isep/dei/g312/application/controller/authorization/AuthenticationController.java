@@ -16,8 +16,8 @@ public class AuthenticationController {
     public static final String ROLE_HRM = "HRM";
     public static final String ROLE_VFM = "VFM";
     public static final String ROLE_COLLABORATOR = "COLLABORATOR";
-    public static final String ROLE_GSM = "GSM1";
-    public static final String ROLE_GSM2 = "GSM2";
+    public static final String ROLE_GSM = "GSM";
+
 
 
     //private final ApplicationSession applicationSession;
