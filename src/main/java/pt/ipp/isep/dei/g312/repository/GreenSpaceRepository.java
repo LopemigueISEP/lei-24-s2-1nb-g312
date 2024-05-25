@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * This class represents a repository for GreenSpace objects.
- * It provides functionalities to manage GreenSpaces, including adding, retrieving, and validating them.
+ * This class represents a repository for `GreenSpace` objects.
+ * It provides functionalities to manage green spaces, including adding, retrieving, validating, and printing them.
  */
 public class GreenSpaceRepository {
     private List<GreenSpace> greenSpaceList = new ArrayList<>();
@@ -26,12 +26,14 @@ public class GreenSpaceRepository {
     }
 
     /**
-     * Adds a GreenSpace object to the repository.
+     * Attempts to add a new `GreenSpace` object to the repository.
+     * The method first validates the green space to ensure it doesn't already exist with the same name.
+     * If validation is successful, a clone of the provided green space is added to the repository
+     * and the list is sorted by name.
      *
-     * @param greenSpace The GreenSpace object to add.
-     * @return An Optional object containing the added GreenSpace on success, or Optional.empty() on failure.
+     * @param greenSpace The `GreenSpace` object to add.
+     * @return True if the green space was added successfully, false otherwise.
      */
-
     public boolean addGreenSpace(GreenSpace greenSpace) {
         Optional<GreenSpace> newGreenSpace;
         boolean operationSuccess = false;
@@ -49,10 +51,10 @@ public class GreenSpaceRepository {
     }
 
     /**
-     * Validates a GreenSpace object by checking if it already exists in the repository (based on name).
+     * Validates a `GreenSpace` object by checking if it already exists in the repository (based on name).
      *
-     * @param greenSpace The GreenSpace object to validate.
-     * @return True if the GreenSpace is valid (not already present), false otherwise.
+     * @param greenSpace The `GreenSpace` object to validate.
+     * @return True if the green space is valid (not already present), false otherwise.
      */
     public boolean validateGreenSpace(GreenSpace greenSpace) {
         boolean isValid = !greenSpaceList.contains(greenSpace);
@@ -61,9 +63,8 @@ public class GreenSpaceRepository {
     }
 
     /**
-     * Prints a formatted list of all GreenSpace objects currently stored in the repository.
+     * Prints a formatted list of all `GreenSpace` objects currently stored in the repository.
      */
-
     public void printRegisteredGreenSpaces() {
 
         for (GreenSpace greenSpace : greenSpaceList) {

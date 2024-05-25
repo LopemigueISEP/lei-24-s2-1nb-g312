@@ -42,6 +42,12 @@ public class RegisterGreenSpaceController {
         return greenSpaceRepository;
 
     }
+
+    /**
+     * Retrieves the AuthenticationRepository instance from the Repositories class.
+     *
+     * @return The AuthenticationRepository instance
+     */
     private AuthenticationRepository getAuthRepository() {
         if(authRepository == null){
             Repositories repositories = Repositories.getInstance();
@@ -50,6 +56,12 @@ public class RegisterGreenSpaceController {
 
         return authRepository;
     }
+
+    /**
+     * Retrieves the EmployeeRepository instance from the Repositories class.
+     *
+     * @return The EmployeeRepository instance
+     */
     private EmployeeRepository getEmployeeRepository(){
         if(employeeRepository == null){
             Repositories repositories = Repositories.getInstance();
@@ -60,9 +72,10 @@ public class RegisterGreenSpaceController {
     }
 
     /**
-     * Validates the current user's role.
+     * Validates the current user's role to check if they have the required permissions
+     * for green space registration.
      *
-     * @return true if the logged in user has the required roles, false otherwise.
+     * @return true if the logged in user has the required roles (ADMIN or GSM), false otherwise.
      */
     public boolean currentUserLogInValidation(){
 
@@ -90,12 +103,13 @@ public class RegisterGreenSpaceController {
         }
     }
     /**
-     * Attempts to register a new employee with the provided information.
+     * Attempts to register a new green space with the provided information.
      *
      * @param name     Green Space's name
      * @param address  Green Space's address
      * @param area     Green Space's area
      * @param typology Green Space's typology
+     * @param greenSpaceManager  The username of the employee managing the green space
      * @return An Optional containing the newly registered green space if successful, empty Optional otherwise
      */
     public Optional<GreenSpace> registerGreenSpace(String name, String address, double area, String typology, String greenSpaceManager) {
@@ -103,7 +117,7 @@ public class RegisterGreenSpaceController {
             Employee employee = matchEmployeeByRole();
             return GreenSpace.registerGreenSpace(name, address, area, typology, greenSpaceManager, currentUserLogInValidation());
         }catch (Exception e){
-            System.out.println("Error occurred while registering a skill");
+            System.out.println("Error occurred while registering a green space");
             return Optional.empty();
         }
     }

@@ -12,11 +12,13 @@ public class GreenSpace implements Comparable<GreenSpace> {
     private String greenSpaceManager;
 
     /**
-     * Main constructor for creating an `GreenSpace` object.
+     * Main constructor for creating a new `GreenSpace` object.
+     *
      * @param name              The green space's name.
      * @param address           The green space's address.
-     * @param area          The green space's area.
-     * @param typology              The green space's typology.
+     * @param area              The green space's area in square meters.
+     * @param typology          The green space's typology (e.g., Garden, Medium-Sized Park, Large-Sized Park).
+     * @param greenSpaceManager  The username of the employee managing the green space.
      */
 
     public GreenSpace(String name, String address, double area, String typology, String greenSpaceManager){
@@ -58,9 +60,9 @@ public class GreenSpace implements Comparable<GreenSpace> {
     }
 
     /**
-     * Creates a clone of the current green space object.
+     * Creates a deep copy of the current `GreenSpace` object.
      *
-     * @return A new `Green Space` object that is a copy of the current instance.
+     * @return A new `GreenSpace` object that is a copy of the current instance.
      */
 
     @Override
@@ -68,6 +70,18 @@ public class GreenSpace implements Comparable<GreenSpace> {
         return new GreenSpace(this.name, this.address, this.area, this.typology, this.greenSpaceManager);
     }
 
+    /**
+     * Attempts to register a new green space with the provided information.
+     * This method checks user permissions before attempting to add the green space to the repository.
+     *
+     * @param name              The green space's name.
+     * @param address           The green space's address.
+     * @param area              The green space's area in square meters.
+     * @param typology          The green space's typology (e.g., Garden, Medium-Sized Park, Large-Sized Park).
+     * @param greenSpaceManager  The username of the employee managing the green space.
+     * @param userValidation     A flag indicating whether the user has the necessary permissions to register green spaces.
+     * @return An Optional containing the newly registered green space if successful, empty Optional otherwise.
+     */
     public static Optional<GreenSpace> registerGreenSpace(String name, String address, double area, String typology, String greenSpaceManager, boolean userValidation) {
         boolean validateAddedRepository;
         try {
@@ -88,7 +102,13 @@ public class GreenSpace implements Comparable<GreenSpace> {
         }
 
     }
-
+    /**
+     * Implements the Comparable interface to define an ordering for GreenSpace objects.
+     * This method compares green spaces by their names.
+     *
+     * @param o The GreenSpace object to compare with.
+     * @return A negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the specified object.
+     */
     @Override
     public int compareTo(GreenSpace o) {
         return this.name.compareTo(o.getName());

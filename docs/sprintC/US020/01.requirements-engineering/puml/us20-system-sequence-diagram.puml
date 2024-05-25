@@ -18,7 +18,7 @@ activate GSM
         System --> GSM : requests typed data
     deactivate System
 
-    GSM -> System : types requested data (name, address, area, typology)
+    GSM -> System : types requested data (name, address, area, typology, manager)
     activate System
 
 

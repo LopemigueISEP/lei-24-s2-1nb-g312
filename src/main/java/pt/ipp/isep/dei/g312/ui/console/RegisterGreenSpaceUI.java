@@ -14,7 +14,7 @@ import static pt.ipp.isep.dei.g312.ui.console.utils.Utils.raiseAlertMessage;
 
 /**
  * This class implements the user interface functionalities for registering a Green Space.
- * It interacts with the user to collect green space information and submit it to the controller for registration.
+ * It interacts with the user to collect green space information and submits it to the controller for registration.
  */
 
 public class RegisterGreenSpaceUI implements Runnable {
@@ -38,7 +38,6 @@ public class RegisterGreenSpaceUI implements Runnable {
      * It displays the registration title, collects green space data, submits it for registration,
      * and handles potential errors.
      */
-
     @Override
     public void run() {
         Result result = new Result();
@@ -108,7 +107,12 @@ public class RegisterGreenSpaceUI implements Runnable {
         }
         return new Result();
     }
-
+    /**
+     * Prompts the user for the green space manager's name and validates it.
+     * This method iteratively prompts the user for the green space manager's name
+     * until a valid name is entered. A valid name consists of uppercase letters and spaces only.
+     * @return The validated green space manager's name entered by the user.
+     */
     private String requestGreenSpaceManager() {
         String greenSpaceManager = "";
 
@@ -118,7 +122,7 @@ public class RegisterGreenSpaceUI implements Runnable {
                 System.out.print("Green Space Manager: ");
                 greenSpaceManager = input.nextLine().toUpperCase();
             } catch (Exception e) {
-                System.out.println("Error reading Green Space name");
+                System.out.println("Error reading Green Space Manager Name");
             }
 
         } while (!validateGreenSpaceName(greenSpaceManager));
@@ -150,8 +154,9 @@ public class RegisterGreenSpaceUI implements Runnable {
         return greenSpaceName;
     }
     /**
-     * This method validates the provided green space name according to the defined criteria
+     * Validates the provided green space name according to the defined criteria
      * (not empty, uppercase letters and spaces only).
+
      * @param greenSpaceName The name to validate.
      * @return True if the name is valid, false otherwise.
      */
@@ -207,13 +212,23 @@ public class RegisterGreenSpaceUI implements Runnable {
         }
     }
 
-
+    /**
+     * An enumeration representing the different typologies of GreenSpaces.
+     */
     public enum GreenSpaceTypology {
         GARDEN,
         MEDIUM_SIZED_PARK,
         LARGE_SIZED_PARK
     }
-
+    /**
+     * Prompts the user to select a typology for the green space and returns the chosen typology.
+     *
+     * This method presents the available green space typologies to the user (GARDEN, MEDIUM_SIZED_PARK, LARGE_SIZED_PARK)
+     * and keeps prompting the user until a valid selection (1, 2, or 3) is entered. It then returns the corresponding typology
+     * as a String.
+     *
+     * @return The selected green space typology as a String.
+     */
     public String selectTypology() {
         Scanner scanner = new Scanner(System.in);
 
@@ -241,12 +256,11 @@ public class RegisterGreenSpaceUI implements Runnable {
             }
         }
     }
-
-    /** This method displays a summary of the collected green space data for user confirmation.
-     * It calls the requestConfirmation() method to get the user's confirmation on the data.
-     *
-     * @return True if the user confirms the data, false otherwise.
-     */
+    /**
+     Presents the collected green space data for user confirmation and calls the requestConfirmation method to get user input.
+     This method displays a summary of the collected green space information, including name, address, area, typology,
+     and green space manager. It then calls the requestConfirmation method to get the user's confirmation on the data.
+     @return True if the user confirms the data, false otherwise. */
 
     private boolean showsDataRequestsValidation() {
         System.out.printf("\nName: %s\nAddress: %s\nArea: %sha\nTypology: %s\nGreen Space Manager: %s\n", name, address, area, typology, greenSpaceManager);

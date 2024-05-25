@@ -1,0 +1,70 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+
+class RegisterGreenSpaceUI {
+
+}
+
+class RegisterGreenSpaceController {
+
+    + registerGreenSpace(name: String, address: String, area: double, typology : String, greenSpaceManager: String)
+    + existsGreenSpace(name : String) : Boolean
+    + getGreenSpaceRepository() : GreenSpaceRepository
+    + getAuthRepository() : AuthRepository
+    + getEmployeeRepository() : GreenSpaceRepository
+    + currentUserLogInValidation : boolean
+    + matchEmployeeByRole() : Employee
+
+}
+
+class Repositories {
+     - Repositories()
+     + getInstance() : Repositories
+     + getGreenSpaceRepository()
+
+
+}
+
+class GreenSpaceRepository {
+    -greenSpaceList : List<GreenSpace>
+    +getGreenSpace() : List<GreenSpace>
+    +addGreenSpace(greenSpace:GreenSpace) : boolean
+    +validateGreenSpace(greenSpace:GreenSpace) : Boolean
+    +printRegisteredGreenSpaces() : void
+}
+
+
+
+class GreenSpace {
+        -name : String
+        -address : String
+        -area : double
+        -typology : String
+        - greenSpaceManager : String
+
+    +registerGreenSpace(name: String, address: String, area: double, typology : String, greenSpaceManager: String) : Optional<GreenSpace>
+    +GreenSpace()
+    +clone() : GreenSpace
+    +compareTo(o:GreenSpace) : int
+}
+
+
+
+
+
+RegisterGreenSpaceController ..> Repositories: repositories
+RegisterGreenSpaceController ..> GreenSpaceRepository: greenSpaceRepository
+GreenSpaceRepository "1" --> "*" GreenSpace
+Repositories "1" --> "1" GreenSpaceRepository
+RegisterGreenSpaceUI .> RegisterGreenSpaceController
+Repositories -> Repositories : instance
+
+@enduml

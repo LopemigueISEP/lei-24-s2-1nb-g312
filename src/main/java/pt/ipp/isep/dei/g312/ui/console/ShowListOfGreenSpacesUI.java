@@ -20,7 +20,7 @@ public class ShowListOfGreenSpacesUI implements Runnable {
     }
 
     /**
-     * Runs the UI, displaying the list of jobs.
+     * Runs the UI, displaying the list of green spaces.
      */
 
     @Override

@@ -53,7 +53,7 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
 > **Answer:** You can assume that the GSM that creates the GS becomes the manager of that same GS.
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All required fields must be filled in (green space typology, area, name, and address)
+* **AC1:** All required fields must be filled in (green space typology, area, name, manager and address)
 * **AC2:** Area must only have digits
 * **AC3:** The green space name should be in capital letters, in order to prevent duplicates.
 
@@ -72,11 +72,11 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
     * address
     * area
     * green space typology
+    * green space manager
 
 
 **Output Data:**
 
-* List of registered green spaces with GSM responsible for the managing of green space
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
@@ -88,4 +88,4 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
 ### 1.7 Other Relevant Remarks
 
 * The area must be in hectares.
-* Typology must be selected by the GSM.
+* Typology must be selected by the GSM from the 3 previously defined.
