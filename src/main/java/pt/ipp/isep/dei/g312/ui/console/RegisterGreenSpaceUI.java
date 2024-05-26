@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.g312.ui.console;
 
 import pt.ipp.isep.dei.g312.application.controller.RegisterGreenSpaceController;
 
+import pt.ipp.isep.dei.g312.domain.Employee;
 import pt.ipp.isep.dei.g312.domain.GreenSpace;
 import pt.ipp.isep.dei.g312.repository.Repositories;
 import pt.ipp.isep.dei.g312.ui.console.utils.Result;
@@ -116,17 +117,37 @@ public class RegisterGreenSpaceUI implements Runnable {
     private String requestGreenSpaceManager() {
         String greenSpaceManager = "";
 
-        do {
-            try {
-                Scanner input = new Scanner(System.in);
-                System.out.print("Green Space Manager: ");
-                greenSpaceManager = input.nextLine().toUpperCase();
-            } catch (Exception e) {
-                System.out.println("Error reading Green Space Manager Name");
+        // Check if user is logged in using the controller's method
+        if (controller.currentUserLogInValidation()) {
+            // Retrieve logged-in user information (e.g., name) using controller's method
+            Employee employee = controller.matchEmployeeByRole();
+            if (employee != null) {
+                greenSpaceManager = employee.getName();
+                System.out.println("Green Space Manager: " + greenSpaceManager);
+
+                // Optionally, allow user to edit the pre-filled value
+                System.out.print("Press Enter to confirm, or enter a different name: ");
+                Scanner scanner = new Scanner(System.in);
+                String userInput = scanner.nextLine();
+
+                if (!userInput.isEmpty()) {
+                    greenSpaceManager = userInput.toUpperCase();
+                }
+            } else {
+                System.out.println("Error retrieving logged-in user information.");
             }
-
-        } while (!validateGreenSpaceName(greenSpaceManager));
-
+        } else {
+            // If not logged in, prompt for input as usual
+            do {
+                try {
+                    Scanner input = new Scanner(System.in);
+                    System.out.print("Green Space Manager: ");
+                    greenSpaceManager = input.nextLine().toUpperCase();
+                } catch (Exception e) {
+                    System.out.println("Error reading Green Space Manager Name");
+                }
+            } while (!validateGreenSpaceName(greenSpaceManager));
+        }
         return greenSpaceManager;
     }
 

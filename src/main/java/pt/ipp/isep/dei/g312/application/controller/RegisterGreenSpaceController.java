@@ -95,7 +95,6 @@ public class RegisterGreenSpaceController {
         try {
             String rl = authRepository.getUserRole(authRepository.getCurrentUserSession().getUserRoles());
             Employee employee = employeeRepository.getEmployFromJob(rl);
-            System.out.printf("Employee that registers: %s\n", employee);
             return employee;
         }catch (Exception e){
             System.out.println("Error in matching current user role");
