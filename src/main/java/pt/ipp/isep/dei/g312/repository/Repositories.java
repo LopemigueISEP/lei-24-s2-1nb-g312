@@ -22,6 +22,8 @@ public class Repositories {
     private final CSVFileRepository csvFileRepository;
     private final AgendaRepository agendaRepository;
     private final GreenSpaceRepository greenSpaceRepository;
+    private final ToDoRepository toDoRepository;
+
 
 
     /**
@@ -39,6 +41,7 @@ public class Repositories {
         csvFileRepository = new CSVFileRepository();
         agendaRepository = new AgendaRepository();
         greenSpaceRepository = new GreenSpaceRepository();
+        toDoRepository = new ToDoRepository();
     }
 
     /**
@@ -136,4 +139,8 @@ public class Repositories {
     public GreenSpaceRepository getGreenSpaceRepository() {
         return greenSpaceRepository;
     }
+    public ToDoRepository getToDoRepository() {
+        return toDoRepository;
+    }
+
 }

@@ -20,7 +20,7 @@ class GreenSpaceRepositoryTest {
     public void testGetGreenSpace() { //empty list
         GreenSpaceRepository repository = new GreenSpaceRepository();
 
-        List<GreenSpace> greenSpaces = repository.getGreenSpace();
+        List<GreenSpace> greenSpaces = repository.getGreenSpaceList();
         assertEquals(0, greenSpaces.size());
     }
 
@@ -33,7 +33,7 @@ class GreenSpaceRepositoryTest {
 
         assertTrue(repository.addGreenSpace(greenSpace));
 
-        List<GreenSpace> greenSpaces = repository.getGreenSpace();
+        List<GreenSpace> greenSpaces = repository.getGreenSpaceList();
         assertEquals(1, greenSpaces.size());
 
         // Assuming sorting by name, compare the first element's name with the added green space
@@ -91,7 +91,7 @@ class GreenSpaceRepositoryTest {
         assertFalse(output.contains("Green Space name")); // Check for header
 
         // Assert that each green space is present in the output with expected format
-        List<GreenSpace> greenSpaces = repository.getGreenSpace();
+        List<GreenSpace> greenSpaces = repository.getGreenSpaceList();
         for (GreenSpace greenSpace : greenSpaces) {
             String expectedFormat = String.format("%25s -  %s - %s\n", greenSpace.getName(), greenSpace.getTypology(), greenSpace.getGreenSpaceManager());
             assertFalse(output.contains(expectedFormat));

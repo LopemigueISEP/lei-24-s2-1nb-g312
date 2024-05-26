@@ -128,7 +128,7 @@ public class RegisterGreenSpaceController {
      * @return True if a green space with the given name exists, False otherwise
      */
     public Boolean existsGreenSpace(String name) {
-        for (GreenSpace e : greenSpaceRepository.getGreenSpace()) {
+        for (GreenSpace e : greenSpaceRepository.getGreenSpaceList()) {
             if (e.getName().equalsIgnoreCase(name)) {
                 return true;
             }

@@ -184,4 +184,7 @@ public class AgendaRepository {
     public List<Task> getAgenda(){
         return this.agenda;
     }
+
+    public void addEntryAgenda(String startDate, ToDoList selectedEntry) {
+    }
 }

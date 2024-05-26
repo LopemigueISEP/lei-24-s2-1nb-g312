@@ -21,7 +21,7 @@ public class GreenSpaceRepository {
      *
      * @return An unmodifiable list containing all GreenSpaces.
      */
-    public List<GreenSpace> getGreenSpace() {
+    public List<GreenSpace> getGreenSpaceList() {
         return new ArrayList<>(greenSpaceList);
     }
 
