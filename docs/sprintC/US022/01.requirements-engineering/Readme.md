@@ -42,6 +42,15 @@ In the daily management, the GSM uses two essential tools: the Agenda and the Ta
 >
 > **Answer:** The starting date for the task. Later the GSM will be able to add the Team and vehicles (if required).
 
+> **Question:** Can I add an entry that has a time period that already have an existing entry in the Agenda?
+>
+> **Answer:** Yes, because:
+a) there are many parks to manage
+b) different tasks can be executed at same time in the same park.
+
+> **Question:** Regarding the US022, when we are registering an entry to the agenda, are the three inputs (selecting an existing task from the to-do list, starting date, and finishing date) sufficient?
+>
+> **Answer:** The starting date will be enough because the task already has the predicted duration.
 
 ### 1.3. Acceptance Criteria
 
@@ -67,7 +76,6 @@ In the daily management, the GSM uses two essential tools: the Agenda and the Ta
 
 **Output Data:**
 
-* List of added entries
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)

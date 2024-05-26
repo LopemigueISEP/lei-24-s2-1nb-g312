@@ -18,6 +18,7 @@ participant "agendaRepository:\nAgendaRepository" as AgendaRepository
 participant "agenda\n:Agenda" as TAREFA
 
 activate ADM
+ref over ADM, UI : This action assumes that the user has already logged in
 
         ADM -> UI :  asks to add a new entry in the Agenda
 

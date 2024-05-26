@@ -39,6 +39,7 @@ class GreenSpace {
     area
     address
     name
+    manager
     numberOfEquipments
     waterConsumption
     equipmentUsed
