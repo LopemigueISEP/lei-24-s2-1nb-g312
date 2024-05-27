@@ -105,6 +105,7 @@ public class RegisterGreenSpaceUI implements Runnable {
             area = requetGreenSpaceArea();
             typology = selectTypology();
             greenSpaceManager = requestGreenSpaceManager();
+            showsDataRequestsValidation();
 
             if (!requestConfirmation()) {
                 return new Result("Green space registration cancelled ", true);
