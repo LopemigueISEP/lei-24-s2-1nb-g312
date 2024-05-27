@@ -107,10 +107,6 @@ public class RegisterGreenSpaceUI implements Runnable {
             greenSpaceManager = requestGreenSpaceManager();
             showsDataRequestsValidation();
 
-            if (!requestConfirmation()) {
-                return new Result("Green space registration cancelled ", true);
-
-            }
         }
         return new Result();
     }
@@ -200,8 +196,18 @@ public class RegisterGreenSpaceUI implements Runnable {
 
     private String requestGreenSpaceAddress() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Green Space Address: ");
-        return input.nextLine();
+        String address;
+
+        do {
+            System.out.print("Green Space Address: ");
+            address = input.nextLine();
+
+            if (address.isEmpty()) {
+                System.out.println("Address cannot be empty. Please enter a valid address.");
+            }
+        } while (address.isEmpty());
+
+        return address;
     }
 
     /**
@@ -280,19 +286,10 @@ public class RegisterGreenSpaceUI implements Runnable {
 
     private boolean showsDataRequestsValidation() {
         System.out.printf("\nName: %s\nAddress: %s\nArea: %sha\nTypology: %s\nGreen Space Manager: %s\n", name, address, area, typology, greenSpaceManager);
-        return requestConfirmation();
-    }
-
-    /** This method prompts the user for confirmation on the displayed green space data.
-     * It keeps prompting the user until a valid confirmation (Y or N) is entered
-     * and returns true if the user confirms (Y), false otherwise.
-     *
-     * @return True if the user confirms the data, false otherwise.
-     */
-
-    private boolean requestConfirmation() {
         return Utils.requestConfirmation();
     }
+
+
 
     /**
      * Prints information about all registered green spaces using the GreenSpaceRepository.
