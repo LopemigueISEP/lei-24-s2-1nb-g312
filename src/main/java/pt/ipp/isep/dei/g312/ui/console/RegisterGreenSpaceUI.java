@@ -6,6 +6,7 @@ import pt.ipp.isep.dei.g312.domain.Employee;
 import pt.ipp.isep.dei.g312.domain.GreenSpace;
 import pt.ipp.isep.dei.g312.repository.Repositories;
 import pt.ipp.isep.dei.g312.ui.console.utils.Result;
+import pt.ipp.isep.dei.g312.ui.console.utils.Utils;
 
 
 import java.util.Optional;
@@ -77,7 +78,7 @@ public class RegisterGreenSpaceUI implements Runnable {
         name = requestGreenSpaceName();
         // confirm that the green space is not registered
         if (controller.existsGreenSpace(name)) {
-            System.out.println("Green Space " + name + " already exists in the system, insert a different one.");
+            System.out.println(STR."Green Space \{name} already exists in the system, insert a different one.");
             System.out.println();
 
             while (true) {
@@ -104,7 +105,11 @@ public class RegisterGreenSpaceUI implements Runnable {
             area = requetGreenSpaceArea();
             typology = selectTypology();
             greenSpaceManager = requestGreenSpaceManager();
-            showsDataRequestsValidation();
+
+            if (!requestConfirmation()) {
+                return new Result("Green space registration cancelled ", true);
+
+            }
         }
         return new Result();
     }
@@ -123,18 +128,8 @@ public class RegisterGreenSpaceUI implements Runnable {
             Employee employee = controller.matchEmployeeByRole();
             if (employee != null) {
                 greenSpaceManager = employee.getName();
-                System.out.println("Green Space Manager: " + greenSpaceManager);
+                System.out.printf("Green Space Manager: %s", greenSpaceManager);
 
-                // Optionally, allow user to edit the pre-filled value
-                System.out.print("Press Enter to confirm, or enter a different name: ");
-                Scanner scanner = new Scanner(System.in);
-                String userInput = scanner.nextLine();
-
-                if (!userInput.isEmpty()) {
-                    greenSpaceManager = userInput.toUpperCase();
-                }
-            } else {
-                System.out.println("Error retrieving logged-in user information.");
             }
         } else {
             // If not logged in, prompt for input as usual
@@ -243,7 +238,6 @@ public class RegisterGreenSpaceUI implements Runnable {
     }
     /**
      * Prompts the user to select a typology for the green space and returns the chosen typology.
-     *
      * This method presents the available green space typologies to the user (GARDEN, MEDIUM_SIZED_PARK, LARGE_SIZED_PARK)
      * and keeps prompting the user until a valid selection (1, 2, or 3) is entered. It then returns the corresponding typology
      * as a String.
@@ -255,7 +249,7 @@ public class RegisterGreenSpaceUI implements Runnable {
 
         System.out.println("Select Green Space Type:");
         for (int i = 0; i < GreenSpaceTypology.values().length; i++) {
-            System.out.println((i + 1) + ". " + GreenSpaceTypology.values()[i]);
+            System.out.println(STR."\{i + 1}. \{GreenSpaceTypology.values()[i]}");
         }
 
         while (true) {
@@ -296,31 +290,7 @@ public class RegisterGreenSpaceUI implements Runnable {
      */
 
     private boolean requestConfirmation() {
-        String dados ="";
-        final String CONFIRMAR = "y";
-        final String REJEITAR = "n";
-        boolean resposta = false;
-
-        do {
-            try {
-                Scanner input = new Scanner(System.in);
-                System.out.print("\nThe data is correct? [Y/N]");
-                dados = input.nextLine().toLowerCase();
-                if(!dados.matches("[YyNn]+")){
-                    System.out.print("Inserted character is incorrect");
-                }
-            }catch (Exception e){
-                System.out.println("Error reading Y/N in UI");
-            }
-        }while (!dados.equals(CONFIRMAR) && !dados.equals(REJEITAR));
-
-
-
-        if(dados.equals(CONFIRMAR)){
-            resposta = true;
-        }
-
-        return resposta;
+        return Utils.requestConfirmation();
     }
 
     /**

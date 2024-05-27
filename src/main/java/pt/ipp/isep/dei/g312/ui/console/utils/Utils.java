@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -173,6 +174,33 @@ public class Utils {
 
         return value - 1;
     }
+
+    public static boolean requestConfirmation() {
+        String dados = "";
+        final String CONFIRMAR = "y";
+        final String REJEITAR = "n";
+        boolean resposta = false;
+
+        do {
+            try {
+                Scanner input = new Scanner(System.in);
+                System.out.print("\nThe data is correct? [Y/N]");
+                dados = input.nextLine().toLowerCase();
+                if (!dados.matches("[YyNn]+")) {
+                    System.out.print("Inserted character is incorrect");
+                }
+            } catch (Exception e) {
+                System.out.println("Error reading Y/N in UI");
+            }
+        } while (!dados.equals(CONFIRMAR) && !dados.equals(REJEITAR));
+
+        if (dados.equals(CONFIRMAR)) {
+            resposta = true;
+        }
+
+        return resposta;
+    }
+
 
     static public void raiseInvalidInput() {
         System.out.println("Invalid Input!");
