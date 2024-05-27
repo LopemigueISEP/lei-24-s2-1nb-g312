@@ -7,9 +7,9 @@ public class ToDoList implements Comparable<ToDoList>{
     private String name;
     private String greenSpace;
 
-    private final String status = "Pending";
+    private final String status = "Pending"; // Encapsulate status as it's final
 
-    public ToDoList(String name, String status, String greenSpace) {
+    public ToDoList(String name, String greenSpace) {
         this.name = name;
         this.greenSpace = greenSpace;
     }
@@ -33,12 +33,16 @@ public class ToDoList implements Comparable<ToDoList>{
         this.greenSpace = greenSpace;
     }
 
-
-    public static ToDoList addEntryToDoList(String name, String status, String greenSpace, boolean userValidation) {
+    public boolean add(ToDoList toDoEntryList) {
+        // This method is not intended for adding entries to the repository
+        // It's meant for internal logic within the ToDoList class (if needed)
+        return false;
+    }
+    public static ToDoList addEntryToDoList(String name, String greenSpace, boolean userValidation) {
         if (userValidation) {
-            ToDoList toDoList = new ToDoList(name, status, greenSpace);
-            if (Repositories.getInstance().getToDoRepository().addEntryToDoList(toDoList)) {
-                return toDoList;
+            ToDoList toDoEntryList = new ToDoList(name, greenSpace);
+            if (Repositories.getInstance().getToDoRepository().addEntryToDoList(toDoEntryList)) {
+                return toDoEntryList;
             } else {
                 // Handle case where adding to repository fails (e.g., log error)
                 return null;
@@ -51,16 +55,12 @@ public class ToDoList implements Comparable<ToDoList>{
 
     @Override
     public ToDoList clone() {
-        return new ToDoList(this.name, this.status, this.greenSpace);
+        return new ToDoList(this.name,  this.greenSpace);
     }
 
     @Override
     public int compareTo(ToDoList o) {
         return this.name.compareTo(o.getName());
-    }
-
-    public boolean add(ToDoList toDoList) {
-        return true;
     }
 }
 

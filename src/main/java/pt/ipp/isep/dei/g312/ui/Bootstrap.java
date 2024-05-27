@@ -95,11 +95,11 @@ public class Bootstrap implements Runnable {
 
     private void addEntryToDoList() {
         ToDoRepository toDoRepository = Repositories.getInstance().getToDoRepository();
-        toDoRepository.addEntryToDoList(new ToDoList("Cut Grass", "Pending", "Avioso"));
-        toDoRepository.addEntryToDoList(new ToDoList("Repair Water", "Pending", "Avioso"));
-        toDoRepository.addEntryToDoList(new ToDoList("Cut Trees", "Pending", "Bela Vista"));
-        toDoRepository.addEntryToDoList(new ToDoList("Repair Walking Trails", "Pending", "Bela Vista"));
-        toDoRepository.addEntryToDoList(new ToDoList("Repair Toillets", "Pending", "Bela Vista"));
+        toDoRepository.addEntryToDoList(new ToDoList("Cut Grass",  "Avioso"));
+        toDoRepository.addEntryToDoList(new ToDoList("Repair Water",  "Avioso"));
+        toDoRepository.addEntryToDoList(new ToDoList("Cut Trees",  "Bela Vista"));
+        toDoRepository.addEntryToDoList(new ToDoList("Repair Walking Trails",  "Bela Vista"));
+        toDoRepository.addEntryToDoList(new ToDoList("Repair Toillets",  "Bela Vista"));
 
 
     }

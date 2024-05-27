@@ -35,11 +35,9 @@ public class AddNewEntryAgendaUI implements Runnable {
             GreenSpace selectedGreenSpace = selectGreenSpace();
 
             if (selectedGreenSpace != null) {
-                System.out.printf("The selected Green Space was: %s\n", selectedGreenSpace);
-                System.out.println();
 
-                List<ToDoList> toDoListEntries = controller.getToDoListEntries(selectedGreenSpace);
-                ToDoList selectedEntry = selectToDoListEntry(toDoListEntries);
+                List<ToDoList> toDoEntryList = controller.getToDoListEntries(selectedGreenSpace);
+                ToDoList selectedEntry = selectToDoListEntry(toDoEntryList);
 
                 if (selectedEntry != null) {
                     System.out.printf("The selected To-Do List entry was: %s\n", selectedEntry);
@@ -60,7 +58,6 @@ public class AddNewEntryAgendaUI implements Runnable {
                     System.out.println("No To-Do List entry selected. Entry not added.");
                 }
 
-                System.out.println("\nDo you want to add another entry to the agenda? (y/n)");
                 continueAddingEntryToAgenda = getUserChoice();
             } else {
                 System.out.println("No Green Space selected. Entry not added.");
@@ -70,15 +67,15 @@ public class AddNewEntryAgendaUI implements Runnable {
         System.out.println("Exiting Add New Entry to Agenda menu.");
     }
 
-    public ToDoList selectToDoListEntry(List<ToDoList> toDoListEntries) {
-        if (toDoListEntries.isEmpty()) {
+    public ToDoList selectToDoListEntry(List<ToDoList> toDoEntryList) {
+        if (toDoEntryList.isEmpty()) {
             System.out.println("There are no To-Do List entries associated with the selected Green Space.");
             return null;
         }
 
         System.out.println("Please select a To-Do List entry:");
-        for (int i = 0; i < toDoListEntries.size(); i++) {
-            ToDoList entry = toDoListEntries.get(i);
+        for (int i = 0; i < toDoEntryList.size(); i++) {
+            ToDoList entry = toDoEntryList.get(i);
             System.out.printf("%d. %s\n", i + 1, entry); // Display entry details (e.g., title)
         }
 
@@ -94,13 +91,13 @@ public class AddNewEntryAgendaUI implements Runnable {
                 System.out.println("Invalid input. Please enter a number.");
                 choice = -1; // Set invalid choice to trigger another loop iteration
             }
-        } while (choice < 0 || choice > toDoListEntries.size());
+        } while (choice < 0 || choice > toDoEntryList.size());
 
         if (choice == 0) {
             return null; // User cancelled selection
         }
 
-        return toDoListEntries.get(choice - 1); // Return selected entry (adjust index for 0-based list)
+        return toDoEntryList.get(choice - 1); // Return selected entry (adjust index for 0-based list)
     }
 
     private GreenSpace selectGreenSpace() {
@@ -139,8 +136,16 @@ public class AddNewEntryAgendaUI implements Runnable {
             return null;
         }
 
-        return greenSpaces.get(choice - 1);
+        boolean displaySelectedGreenSpaceName = true; // Flag to control printing
+
+        GreenSpace selectedGreenSpace = greenSpaces.get(choice - 1);
+
+        if (displaySelectedGreenSpaceName) {
+            System.out.printf("The selected Green Space was: %s\n", selectedGreenSpace.getName());
+        }
+        return selectedGreenSpace;
     }
+
 
     private boolean showsDataRequestsValidation() {
         if (toDoList != null) {

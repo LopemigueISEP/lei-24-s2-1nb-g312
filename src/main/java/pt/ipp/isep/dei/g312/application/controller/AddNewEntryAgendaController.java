@@ -16,6 +16,7 @@ public class AddNewEntryAgendaController {
     private AgendaRepository agendaRepository;
     private AuthenticationRepository authRepository;
 
+
     public AddNewEntryAgendaController() {
         this.employeeRepository = getEmployeeRepository();
         this.greenSpaceRepository = getGreenSpaceRepository();
@@ -69,7 +70,7 @@ public class AddNewEntryAgendaController {
 
     public List<GreenSpace> getGreenSpaceList() {
         try {
-            Employee employee = matchEmployeeByRole();
+
             return greenSpaceRepository.getGreenSpaceList(); // Return all greenSpaces
         } catch (NullPointerException e) {
             System.out.println("Returning empty green space list.");
