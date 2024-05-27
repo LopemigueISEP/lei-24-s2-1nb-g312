@@ -1,10 +1,12 @@
 package pt.ipp.isep.dei.g312.application.controller;
 
+import pt.ipp.isep.dei.g312.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.g312.domain.Employee;
 import pt.ipp.isep.dei.g312.domain.GreenSpace;
 import pt.ipp.isep.dei.g312.domain.ToDoList;
 import pt.ipp.isep.dei.g312.repository.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -50,6 +52,16 @@ public class AddNewEntryAgendaController {
         return employeeRepository;
 
     }
+    public void addEntryToDoList(ToDoList toDoList) {
+        toDoRepository.addEntryToDoList(toDoList);
+    }
+
+    public boolean currentUserLogInValidation() {
+
+        boolean isLoggedIn = authRepository.validateUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_GSM);
+
+        return isLoggedIn;
+    }
 
     private ToDoRepository getToDoRepository() {
         if (toDoRepository == null) {
@@ -69,15 +81,36 @@ public class AddNewEntryAgendaController {
     }
 
     public List<GreenSpace> getGreenSpaceList() {
-        try {
+        if (!currentUserLogInValidation()) {
+            System.out.println("User is not logged in or does not have the required role.");
+            return Collections.emptyList();
+        }
 
-            return greenSpaceRepository.getGreenSpaceList(); // Return all greenSpaces
+        Employee loggedEmployee = matchEmployeeByRole();
+        if (loggedEmployee == null) {
+            System.out.println("Error retrieving logged-in employee information.");
+            return Collections.emptyList();
+        }
+
+        try {
+            List<GreenSpace> allGreenSpaces = greenSpaceRepository.getGreenSpaceList();
+            return filterGreenSpacesByManager(allGreenSpaces, loggedEmployee.getName());
         } catch (NullPointerException e) {
             System.out.println("Returning empty green space list.");
-
             return Collections.emptyList();
         }
     }
+
+    private List<GreenSpace> filterGreenSpacesByManager(List<GreenSpace> greenSpaces, String managerName) {
+        List<GreenSpace> filteredList = new ArrayList<>();
+        for (GreenSpace greenSpace : greenSpaces) {
+            if (greenSpace.getGreenSpaceManager().equalsIgnoreCase(managerName)) {
+                filteredList.add(greenSpace);
+            }
+        }
+        return filteredList;
+    }
+
     public Employee matchEmployeeByRole(){
         try {
             String rl = authRepository.getUserRole(authRepository.getCurrentUserSession().getUserRoles());
@@ -101,16 +134,14 @@ public class AddNewEntryAgendaController {
 
 
     public void addEntryAgenda(String startDate, ToDoList selectedEntry) {
-        // Implement logic to add the entry to the Agenda
-        // You might need additional methods or interactions with the AgendaRepository
-
         if (startDate == null || selectedEntry == null) {
             System.out.println("Invalid data. Entry cannot be added to Agenda.");
             return;
         }
-        agendaRepository.addEntryAgenda(startDate, selectedEntry); // Call repository method
-        System.out.println("Entry added to Agenda successfully!");
+        agendaRepository.addEntryAgenda(startDate, selectedEntry);
     }
+
+
 }
 
 
