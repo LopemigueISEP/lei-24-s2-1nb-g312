@@ -23,6 +23,7 @@ public class Bootstrap implements Runnable {
         addSkills();
         addJobs();
         addGreenSpaces();
+        addEntryToDoList();
 
         try {
 
@@ -83,12 +84,23 @@ public class Bootstrap implements Runnable {
     }
     private void addGreenSpaces() {
         GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
-        greenSpaceRepository.addGreenSpace(new GreenSpace("Cidade", "Porto", 99.6, "Large-sized park", "GSM"));
-        greenSpaceRepository.addGreenSpace(new GreenSpace("Avioso", "Maia", 43.4, "Medium-sized park", "ADMIN"));
-        greenSpaceRepository.addGreenSpace(new GreenSpace("Rabada", "Santo Tirso", 15.3, "Garden", "GSM"));
-        greenSpaceRepository.addGreenSpace(new GreenSpace("Bela Vista", "Lisboa", 259.6, "Large-sized park", "ADMIN"));
-        greenSpaceRepository.addGreenSpace(new GreenSpace("Azibo", "Bragança", 493.2, "Large-sized park", "GSM"));
-        greenSpaceRepository.addGreenSpace(new GreenSpace("Oriental", "Campanhã", 35.9, "Medium-sized park", "GSM"));
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Cidade", "Porto", 99.6, "Large-sized park", "GREEN SPACE MANAGER"));
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Avioso", "Maia", 43.4, "Medium-sized park", "MAIN ADMINISTRATOR"));
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Rabada", "Santo Tirso", 15.3, "Garden", "GREEN SPACE MANAGER"));
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Bela Vista", "Lisboa", 259.6, "Large-sized park", "MAIN ADMINISTRATOR"));
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Azibo", "Bragança", 493.2, "Large-sized park", "GREEN SPACE MANAGERr"));
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Oriental", "Campanhã", 35.9, "Medium-sized park", "GREEN SPACE MANAGER"));
+
+    }
+
+    private void addEntryToDoList() {
+        ToDoRepository toDoRepository = Repositories.getInstance().getToDoRepository();
+        toDoRepository.addEntryToDoList(new ToDoList("Cut Grass", "Pending", "Avioso"));
+        toDoRepository.addEntryToDoList(new ToDoList("Repair Water", "Pending", "Avioso"));
+        toDoRepository.addEntryToDoList(new ToDoList("Cut Trees", "Pending", "Bela Vista"));
+        toDoRepository.addEntryToDoList(new ToDoList("Repair Walking Trails", "Pending", "Bela Vista"));
+        toDoRepository.addEntryToDoList(new ToDoList("Repair Toillets", "Pending", "Bela Vista"));
+
 
     }
 

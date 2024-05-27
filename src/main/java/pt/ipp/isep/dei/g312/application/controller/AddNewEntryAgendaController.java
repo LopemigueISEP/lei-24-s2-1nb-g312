@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.g312.application.controller;
 
+import pt.ipp.isep.dei.g312.domain.Employee;
 import pt.ipp.isep.dei.g312.domain.GreenSpace;
 import pt.ipp.isep.dei.g312.domain.ToDoList;
 import pt.ipp.isep.dei.g312.repository.*;
@@ -13,12 +14,22 @@ public class AddNewEntryAgendaController {
     private GreenSpaceRepository greenSpaceRepository;
     private ToDoRepository toDoRepository;
     private AgendaRepository agendaRepository;
+    private AuthenticationRepository authRepository;
 
     public AddNewEntryAgendaController() {
         this.employeeRepository = getEmployeeRepository();
         this.greenSpaceRepository = getGreenSpaceRepository();
         this.toDoRepository = getToDoRepository();
         this.agendaRepository = getAgendaRepository();
+        this.authRepository = getAuthRepository();
+    }
+    private AuthenticationRepository getAuthRepository() {
+        if(authRepository == null){
+            Repositories repositories = Repositories.getInstance();
+            authRepository = repositories.getAuthenticationRepository();
+        }
+
+        return authRepository;
     }
 
     private GreenSpaceRepository getGreenSpaceRepository() {
@@ -58,6 +69,7 @@ public class AddNewEntryAgendaController {
 
     public List<GreenSpace> getGreenSpaceList() {
         try {
+            Employee employee = matchEmployeeByRole();
             return greenSpaceRepository.getGreenSpaceList(); // Return all greenSpaces
         } catch (NullPointerException e) {
             System.out.println("Returning empty green space list.");
@@ -65,15 +77,21 @@ public class AddNewEntryAgendaController {
             return Collections.emptyList();
         }
     }
-
-
-    public void printAllEmployeesAndHisSkills() {
-        employeeRepository.printRegisteredEmployeesAndHisSkills();
+    public Employee matchEmployeeByRole(){
+        try {
+            String rl = authRepository.getUserRole(authRepository.getCurrentUserSession().getUserRoles());
+            Employee employee = employeeRepository.getEmployFromJob(rl);
+            return employee;
+        }catch (Exception e){
+            System.out.println("Error in matching current user role");
+            return null;
+        }
     }
+
 
     public List<ToDoList> getToDoListEntries(GreenSpace selectedGreenSpace) {
         try {
-            return toDoRepository.getToDoListEntries(selectedGreenSpace);
+            return Collections.unmodifiableList(toDoRepository.getToDoListEntries());
         } catch (NullPointerException e) {
             System.out.println("Returning empty To-Do List entry list.");
             return Collections.emptyList();

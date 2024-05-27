@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.g312.ui.console;
 
 import pt.ipp.isep.dei.g312.application.controller.AddNewEntryAgendaController;
 import pt.ipp.isep.dei.g312.domain.*;
+import pt.ipp.isep.dei.g312.ui.console.utils.Utils;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 public class AddNewEntryAgendaUI implements Runnable {
 
     private final AddNewEntryAgendaController controller;
-    private ToDoList selectedEntry;
+    private ToDoList toDoList;
 
         public AddNewEntryAgendaUI() {
             controller = new AddNewEntryAgendaController();
@@ -142,8 +143,8 @@ public class AddNewEntryAgendaUI implements Runnable {
     }
 
     private boolean showsDataRequestsValidation() {
-        if (selectedEntry != null) {
-            System.out.printf("\nYou have selected the To-Do List entry: %s\n", selectedEntry); // Display selected entry details
+        if (toDoList != null) {
+            System.out.printf("\nYou have selected the To-Do List entry: %s\n", toDoList); // Display selected entry details
             System.out.println("Do you want to proceed with this entry? (y/n)");
             return requestConfirmation();
         } else {
@@ -163,31 +164,7 @@ public class AddNewEntryAgendaUI implements Runnable {
         return choice.equals("y"); // Return true if the input is "y" (case-insensitive)
     }
     private boolean requestConfirmation() {
-        String dados ="";
-        final String CONFIRMAR = "y";
-        final String REJEITAR = "n";
-        boolean resposta = false;
-
-        do {
-            try {
-                Scanner input = new Scanner(System.in);
-                System.out.print("\nThe data is correct? [Y/N]");
-                dados = input.nextLine().toLowerCase();
-                if(!dados.matches("[YyNn]+")){
-                    System.out.print("Inserted character is incorrect");
-                }
-            }catch (Exception e){
-                System.out.println("Error reading Y/N in UI");
-            }
-        }while (!dados.equals(CONFIRMAR) && !dados.equals(REJEITAR));
-
-
-
-        if(dados.equals(CONFIRMAR)){
-            resposta = true;
-        }
-
-        return resposta;
+        return Utils.requestConfirmation();
     }
 }
 
