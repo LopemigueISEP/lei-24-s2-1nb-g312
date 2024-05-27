@@ -11,6 +11,7 @@ public class Task implements Cloneable {
     TaskPeriod taskStartPeriod;
     int taskExpectedDuration;
     String type;
+    private String greenSpace;
     TaskUrgency urgency;
     TaskStatus status;
     Team assignedTeam;
@@ -18,12 +19,14 @@ public class Task implements Cloneable {
     int taskID;
 
 
+
     // constructor for to do list
-    public Task(String title, String description, int taskExpectedDuration, String type, TaskUrgency urgency, int taskID) {
+    public Task(String title, String description, int taskExpectedDuration, String type, String greenSpace, TaskUrgency urgency, int taskID) {
         this.title = title;
         this.description = description;
         this.taskExpectedDuration = taskExpectedDuration;
         this.type = type;
+        this.greenSpace = greenSpace;
         this.urgency = urgency;
         this.assignedVehicles = new ArrayList<>();
         this.taskID = taskID;
@@ -31,13 +34,14 @@ public class Task implements Cloneable {
 
     // constructor for clone
     public Task(String title, String description, Date date, TaskPeriod taskStartPeriod, int taskExpectedDuration,
-                String type, TaskUrgency urgency, TaskStatus status, Team assignedTeam, ArrayList<Vehicle> assignedVehicles, int taskID) {
+                String type, String greenSpace, TaskUrgency urgency, TaskStatus status, Team assignedTeam, ArrayList<Vehicle> assignedVehicles, int taskID) {
         this.title = title;
         this.description = description;
         this.date = date;
         this.taskStartPeriod = taskStartPeriod;
         this.taskExpectedDuration = taskExpectedDuration;
         this.type = type;
+        this.greenSpace = greenSpace;
         this.urgency = urgency;
         this.status = status;
         this.assignedTeam = assignedTeam;
@@ -91,6 +95,8 @@ public class Task implements Cloneable {
         return this.taskID;
     }
 
+    public String getDescription(){ return this.description; }
+
 
     public String getTitle(){
         return this.title;
@@ -100,7 +106,7 @@ public class Task implements Cloneable {
     // clone method
     public Task clone() {
         return new Task(this.title, this.description, this.date, this.taskStartPeriod, this.taskExpectedDuration,
-                this.type, this.urgency, this.status, this.assignedTeam, this.assignedVehicles, this.taskID);
+                this.type, this.greenSpace, this.urgency, this.status, this.assignedTeam, this.assignedVehicles, this.taskID);
     }
 
 

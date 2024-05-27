@@ -38,7 +38,7 @@ public class AgendaRepository {
     }
 
     //method to update task in the agenda
-    private boolean updateTask(Task task){
+    public boolean updateTask(Task task){
         int index = 0;
         for(Task t : agenda){
             if(t.getTaskID() == task.getTaskID()){
@@ -187,4 +187,21 @@ public class AgendaRepository {
 
     public void addEntryAgenda(String startDate, ToDoList selectedEntry) {
     }
+
+    // method to generate a list of planned tasks from the agenda
+    public List<Task> getPlannedTasks() {
+        List<Task> plannedTasks = new ArrayList<>();
+        for (Task task : agenda) {
+            if (task.getStatus() == TaskStatus.Planned) {
+                plannedTasks.add(task);
+            }
+        }
+        return plannedTasks;
+    }
+
+
+
+
+
+
 }

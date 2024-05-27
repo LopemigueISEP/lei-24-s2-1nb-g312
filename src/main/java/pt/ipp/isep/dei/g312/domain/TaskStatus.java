@@ -2,7 +2,7 @@ package pt.ipp.isep.dei.g312.domain;
 
 public enum TaskStatus {
 
-    Planed,
+    Planned,
     Postponed,
     Canceled,
     Done;
