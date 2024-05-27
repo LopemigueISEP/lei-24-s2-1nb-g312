@@ -5,21 +5,19 @@ import pt.ipp.isep.dei.g312.domain.Task;
 import pt.ipp.isep.dei.g312.domain.Team;
 import static pt.ipp.isep.dei.g312.ui.console.utils.Utils.*;
 
-import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 
-public class AssignTeamUI implements Runnable {
+public class AssignTeamToTaskInTheAgendaUI implements Runnable {
 
     private final AssignTeamController controller;
 
-    public AssignTeamUI() {
+    public AssignTeamToTaskInTheAgendaUI() {
         controller = new AssignTeamController();
     }
 
     @Override
     public void run() {
-        System.out.println("\n\n--- Assign a Team to a Task ------------------------");
+        System.out.println("\n\n--- Assign a Team to a Task in the Agenda ------------------------");
 
             Task task = requestTask();
             Team team = requestTeam(task);
@@ -29,8 +27,8 @@ public class AssignTeamUI implements Runnable {
     }
 
     private void submitData(Team team, Task task) {
-        boolean checkUpRegistered = controller.assignTeamToTask(team, task);
-        if (checkUpRegistered) {
+        boolean teamAssigned = controller.assignTeamToTask(team, task);
+        if (teamAssigned) {
             System.out.println("Team Assigned to task successfully");
         } else {
             System.out.println("Team not assigned. Please try again.");
@@ -40,6 +38,12 @@ public class AssignTeamUI implements Runnable {
     private Task requestTask(){
         int counter = 1;
         List<Task> taskList = controller.listUnfinishedTasks();
+
+        if (taskList.isEmpty()) {
+            System.out.println("No unplanned tasks found.");
+            System.exit(0);
+        }
+
         for(Task t : taskList){
             System.out.println(counter + ": " + t.getTaskID() + " - " + t.getTitle());
             counter++;
