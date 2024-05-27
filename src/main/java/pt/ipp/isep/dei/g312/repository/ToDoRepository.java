@@ -17,19 +17,11 @@ public class ToDoRepository {
         return new ArrayList<>(toDoEntryList); // Return a copy to avoid modification
     }
 
-    public boolean addEntryToDoList(ToDoList toDoEntryList) {
-        Optional<ToDoList> newEntry;
-        boolean operationSuccess = false;
-
-        if (containsToDoListWithName(String.valueOf(toDoEntryList))) {
-            newEntry = Optional.of(toDoEntryList.clone());
-            operationSuccess = toDoEntryList.add(newEntry.get());
-
+    public boolean addEntryToDoList(ToDoList toDoEntry) {
+        if (toDoEntry == null || containsToDoListWithName(toDoEntry.getTask())) {
+            return false;
         }
-        if (!operationSuccess) {
-            newEntry = Optional.empty();
-        }
-        return true;
+        return toDoEntryList.add(toDoEntry);
     }
 
 
@@ -40,7 +32,7 @@ public class ToDoRepository {
 
     public boolean containsToDoListWithName(String name) {
         for (ToDoList item : toDoEntryList) {
-            if (item.getName().equals(name)) {
+            if (item.getTask().equals(name)) {
                 return true;
             }
         }

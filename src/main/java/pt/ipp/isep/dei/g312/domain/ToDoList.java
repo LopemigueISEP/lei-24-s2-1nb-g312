@@ -4,22 +4,22 @@ package pt.ipp.isep.dei.g312.domain;
 import pt.ipp.isep.dei.g312.repository.Repositories;
 
 public class ToDoList implements Comparable<ToDoList>{
-    private String name;
+    private String task;
     private String greenSpace;
 
     private final String status = "Pending"; // Encapsulate status as it's final
 
-    public ToDoList(String name, String greenSpace) {
-        this.name = name;
+    public ToDoList(String task, String greenSpace) {
+        this.task = task;
         this.greenSpace = greenSpace;
     }
 
-    public String getName() {
-        return name;
+    public String getTask() {
+        return task;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTask(String task) {
+        this.task = task;
     }
 
     public String getStatus() {
@@ -38,9 +38,9 @@ public class ToDoList implements Comparable<ToDoList>{
         // It's meant for internal logic within the ToDoList class (if needed)
         return false;
     }
-    public static ToDoList addEntryToDoList(String name, String greenSpace, boolean userValidation) {
+    public static ToDoList addEntryToDoList(String task, String greenSpace, boolean userValidation) {
         if (userValidation) {
-            ToDoList toDoEntryList = new ToDoList(name, greenSpace);
+            ToDoList toDoEntryList = new ToDoList(task, greenSpace);
             if (Repositories.getInstance().getToDoRepository().addEntryToDoList(toDoEntryList)) {
                 return toDoEntryList;
             } else {
@@ -55,12 +55,17 @@ public class ToDoList implements Comparable<ToDoList>{
 
     @Override
     public ToDoList clone() {
-        return new ToDoList(this.name,  this.greenSpace);
+        return new ToDoList(this.task,  this.greenSpace);
     }
 
     @Override
     public int compareTo(ToDoList o) {
-        return this.name.compareTo(o.getName());
+        return this.task.compareTo(o.getTask());
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Task: %s, Green Space: %s", task, greenSpace);
     }
 }
 
