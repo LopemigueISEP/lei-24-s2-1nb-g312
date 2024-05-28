@@ -31,6 +31,14 @@ collaborators, checking the team availability is enough.
 > **Question:** How long should we rate the duration of tasks for team assignment?
 > 
 > **Answer:** The duration of the task should be rated in quarter or half a day for easier use.
+> 
+> **Question:**  Can a Team be assigned to multiple entries?
+> 
+> **Answer:** Yes.
+> 
+> 
+
+
 
 ### 1.3. Acceptance Criteria
 
@@ -51,9 +59,6 @@ assigned to a team.
 
 **Input Data:**
 
-* Typed data:
-
-
 * Selected data:
     * a task from the Agenda
     * a team to carry out the task
@@ -64,7 +69,6 @@ assigned to a team.
 
 ### 1.6. System Sequence Diagram (SSD)
 
-**_Other alternatives might exist._**
 
 #### Alternative One
 

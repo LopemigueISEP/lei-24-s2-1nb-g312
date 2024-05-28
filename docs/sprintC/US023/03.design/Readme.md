@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US023 - As a GSM, I want to assign a Team to an entry in the Agenda
 
 ## 3. Design - User Story Realization 
 
@@ -45,7 +45,7 @@ _**Note that SSD - Alternative Two is adopted.**_
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/us006-sequence-diagram-full.svg)
+![Sequence Diagram - Full](svg/us023-sequence-diagram-full.svg)
 
 ### Split Diagrams
 
@@ -73,4 +73,4 @@ It uses Interaction Occurrence (a.k.a. Interaction Use).
 
 ## 3.3. Class Diagram (CD)
 
-![Class Diagram](svg/us006-class-diagram.svg)
+![Class Diagram](svg/us023-class-diagram.svg)

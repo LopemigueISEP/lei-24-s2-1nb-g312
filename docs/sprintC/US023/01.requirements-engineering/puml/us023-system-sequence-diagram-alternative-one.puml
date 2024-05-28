@@ -15,13 +15,13 @@ activate GSM
     GSM -> System : asks to assign teams to tasks in the Agenda
     activate System
 
-        System -> GSM : shows list of available tasks in the Agenda ordered by park location \n and asks to select one
+        System -> GSM : shows list of available tasks in the Agenda \n and asks to select one
     deactivate System
 
     GSM -> System : selects a task from the list
     activate System
 
-        System --> GSM : shows list of available teams that can perform the selected task
+        System --> GSM : shows list of available teams that can perform the selected task on the task date
     deactivate System
 
     GSM -> System : selects a team and assigns it to the task
