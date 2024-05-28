@@ -3,6 +3,8 @@ package pt.ipp.isep.dei.g312.domain;
 import org.junit.jupiter.api.Test;
 
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GreenSpaceTest {
@@ -12,15 +14,19 @@ public class GreenSpaceTest {
         String address = "Minho";
         double area = 965.0;
         String typology = "Large-Sized Park";
-        String manager = "Luís Montenegro";
+        String greenSpaceManager = "Luís Montenegro";
+        boolean userValidation = true;
 
-        GreenSpace greenSpace = new GreenSpace(name, address, area, typology, manager);
 
-        assertEquals(name, greenSpace.getName());
-        assertEquals(address, greenSpace.getAddress());
-        assertEquals(area, greenSpace.getArea());
-        assertEquals(typology, greenSpace.getTypology());
-        assertEquals(manager, greenSpace.getGreenSpaceManager());
+        Optional<GreenSpace> result = GreenSpace.registerGreenSpace(name, address, area, typology, greenSpaceManager, userValidation);
+
+        // Assert
+        assertTrue(result.isPresent());
+        assertEquals(name, result.get().getName());
+        assertEquals(address, result.get().getAddress());
+        assertEquals(area, result.get().getArea(), 0.0);
+        assertEquals(typology, result.get().getTypology());
+        assertEquals(greenSpaceManager, result.get().getGreenSpaceManager());
     }
 
     @Test

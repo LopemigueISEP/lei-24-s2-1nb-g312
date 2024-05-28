@@ -24,6 +24,18 @@ class Employee {
     role
 }
 
+class Task {
+    taskID
+    title
+    description
+    date
+    taskStartPeriod
+    taskExpectedDuration
+    type
+    greenSpace
+    assignedTeam
+    assignedVehicles
+}
 class GreenSpacesManager{
 
 }
@@ -57,6 +69,9 @@ GreenSpacesManager "1" -- "1" Agenda : manages >
 ToDoList "1" -- "1" Agenda : entries >
 GreenSpacesManager "1" -- "1..*" GreenSpace : registers >
 ToDoList "1" -- "0..*" GreenSpace : has >
+Agenda "1" -- "0..*" Task : has >
+Task "1..*" - "1..*" GreenSpace: occurs >
+ToDoList "1" -- "0..*" Task : has >
 
 
 @enduml

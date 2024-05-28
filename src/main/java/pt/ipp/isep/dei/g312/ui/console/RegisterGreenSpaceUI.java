@@ -114,6 +114,7 @@ public class RegisterGreenSpaceUI implements Runnable {
      * Prompts the user for the green space manager's name and validates it.
      * This method iteratively prompts the user for the green space manager's name
      * until a valid name is entered. A valid name consists of uppercase letters and spaces only.
+     *
      * @return The validated green space manager's name entered by the user.
      */
     private String requestGreenSpaceManager() {
@@ -147,9 +148,9 @@ public class RegisterGreenSpaceUI implements Runnable {
     /**
      * This method prompts the user for the green space name and validates it to ensure it's not empty and only contains letters and spaces.
      * It keeps prompting the user until a valid name is entered.
+     *
      * @return The validated green space name entered by the user.
      */
-
     private String requestGreenSpaceName() {
         String greenSpaceName = "";
 
@@ -169,7 +170,7 @@ public class RegisterGreenSpaceUI implements Runnable {
     /**
      * Validates the provided green space name according to the defined criteria
      * (not empty, uppercase letters and spaces only).
-
+     *
      * @param greenSpaceName The name to validate.
      * @return True if the name is valid, false otherwise.
      */
@@ -187,7 +188,6 @@ public class RegisterGreenSpaceUI implements Runnable {
             return false;
         }
     }
-
     /**
      * This method prompts the user for the green space address and returns the entered value.
      *
@@ -279,11 +279,12 @@ public class RegisterGreenSpaceUI implements Runnable {
         }
     }
     /**
-     Presents the collected green space data for user confirmation and calls the requestConfirmation method to get user input.
-     This method displays a summary of the collected green space information, including name, address, area, typology,
-     and green space manager. It then calls the requestConfirmation method to get the user's confirmation on the data.
-     @return True if the user confirms the data, false otherwise. */
-
+     * Presents the collected green space data for user confirmation and calls the requestConfirmation method to get user input.
+     * This method displays a summary of the collected green space information and then calls the requestConfirmation method to get
+     * the user's confirmation on the data.
+     *
+     * @return True if the user confirms the data, false otherwise.
+     */
     private boolean showsDataRequestsValidation() {
         System.out.printf("\nName: %s\nAddress: %s\nArea: %sha\nTypology: %s\nGreen Space Manager: %s\n", name, address, area, typology, greenSpaceManager);
         return Utils.requestConfirmation();
