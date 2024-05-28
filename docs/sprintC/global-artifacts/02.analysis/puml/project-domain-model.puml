@@ -194,10 +194,10 @@ ToDoList "1" -- "0..*" GreenSpace : has >
 ToDoList "1" -- "1" Agenda : entries >
 Task "1" -- "1" Status : has >
 Task "1" -- "1" Urgency : has >
-Status "1" -- "1" Planned : is >
-Status "1" -- "1" Postponned : is >
-Status "1" -- "1" Canceled : is >
-Urgency "1" -- "1" High : is >
-Urgency "1" -- "1" Medium : is >
-Urgency "1" -- "1" Low : is >
+Status "1" -- "0..1" Planned : is >
+Status "1" -- "0..1" Postponned : is >
+Status "1" -- "0..1" Canceled : is >
+Urgency "1" -- "0..1" High : is >
+Urgency "1" -- "0..1" Medium : is >
+Urgency "1" -- "0..1" Low : is >
 @enduml
