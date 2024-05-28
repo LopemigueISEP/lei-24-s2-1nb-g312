@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US024 - As a GSM, I want to Postpone an entry in the Agenda to a specific future date.
 
 ## 3. Design - User Story Realization 
 
