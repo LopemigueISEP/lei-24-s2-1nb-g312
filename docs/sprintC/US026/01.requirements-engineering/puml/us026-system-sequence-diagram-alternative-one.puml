@@ -1,0 +1,41 @@
+
+
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) US026
+
+autonumber
+
+actor "GSM" as GSM
+participant ":System" as System
+
+activate GSM
+
+    GSM -> System : wants to assign one or more vehicles to an entry in the agenda
+    activate System
+
+        System --> GSM : shows available agenda entries and asks to select one
+    deactivate System
+
+    GSM -> System : selects one agenda entry
+    activate System
+
+        System --> GSM : shows available vehicles and asks to select at least one
+    deactivate System
+
+    GSM -> System : selects vehicles
+    activate System
+
+        System --> GSM : shows all data and requests confirmation
+    deactivate System
+
+    GSM -> System : confirms data
+    activate System
+
+        System --> GSM : displays operation success
+    deactivate System
+
+@enduml
