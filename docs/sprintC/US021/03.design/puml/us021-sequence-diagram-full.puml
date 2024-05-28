@@ -1,0 +1,35 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "GSM" as GSM
+activate GSM
+
+    GSM -> System : asks to add a new entry to the To-Do List
+    activate System
+
+        System --> GSM : shows green spaces to be selected
+    deactivate System
+
+    GSM -> System : selects green space
+    activate System
+
+        System --> GSM : requests data (tasks, urgency, expectedDuration)
+    deactivate System
+
+    GSM -> System : selects and types requested data
+    activate System
+
+        System --> GSM : shows all data and requests confirmation
+    deactivate System
+
+    GSM -> System : confirms data
+    activate System
+
+        System --> GSM : displays operation success
+    deactivate System
+@enduml

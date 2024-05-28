@@ -1,0 +1,94 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+class Employee{
+    -name : String
+    -birthdate : Date
+    -email : String
+    -phoneNumber : int
+    -admission date : Date
+    -taxpayerNumber : String
+    -address : String
+    -docNumber : String
+    -jobTitle : String
+
+    +registerSkill(skillName, skillDescription): Optional<Skill>
+    +validateSkill(skill): boolean
+    +add(skill): boolean
+}
+
+class ToDoEntry{
+-greenSpace: GreenSpace
+-task: Task
+-urgency: String
+-startDate: Date
+-endDate : Date
+}
+
+
+class ToDoListRepository{
+-toDoList: List<ToDoEntry>
++getToDoList(): List<ToDoEntry>
+}
+
+class AddEntryToDoListController{
+
+}
+
+class AddEntryToDoListUI{
+
+}
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getEmployeeRepository(); employeeRepository
+
+}
+class EmployeeRepository{
+
+
++getEmployee(): Employee
+
+}
+class TasksRepository{
+ +getTasks(): List<Task>
+ +getTodoTasks(): List<Task>
+ +getAgendaTasks(): List<Task>
+ +getTask(): Task
+}
+class GreenSpacesRepository{
++getGreenSpaces(): GreenSpace
+}
+
+AddEntryToDoListUI .>AddEntryToDoListController
+
+AddEntryToDoListController .> "1" Repositories
+
+Repositories "1" --> "1" Repositories : getInstance()
+Repositories "1" --> "1" EmployeeRepository
+Repositories "1" --> "1" TasksRepository
+Repositories "1" --> "1" GreenSpacesRepository
+
+AddEntryToDoListController ..>Employee
+
+EmployeeRepository "1" --> "1" Employee
+TasksRepository "1" --> "1" Employee: getTask()
+GreenSpacesRepository "1" --> "1" Employee: getGreenSpace()
+
+Employee --> ToDoEntry: registerToDoEntry()
+
+
+
+ToDoEntry --> ToDoListRepository: add()
+
+
+
+@enduml
