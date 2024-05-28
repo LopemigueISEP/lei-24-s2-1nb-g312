@@ -39,12 +39,24 @@ class ToDoList{
     expectedDuration
 }
 class Task {
-    reference
+    taskID
+    title
     description
-    duration
-    cost
-    status
+    date
+    taskStartPeriod
+    taskExpectedDuration
+    type
+    greenSpace
+    assignedTeam
+    assignedVehicles
 }
+
+class Status {
+}
+
+class Urgency{
+}
+
 class GreenSpace {
     typology
     area
@@ -128,7 +140,7 @@ class LargeSizedPark{
 }
 
 Organization "1" -- "1" Agenda : owns >
-Organization "1" -- "1..*" Employee : has >
+Organization "1" -- "1..*" Employee : recr >
 Employee "1" -- "1..*" HumanResourcesManager : is >
 Employee "1" -- "1..*" VehicleEquipmentFleetManager : is >
 Employee "1" -- "1..*" GreenSpacesManager : is >
@@ -180,5 +192,12 @@ GreenSpacesManager "1" -- "1..*" Team : assigns >
 ToDoList "1" -- "0..*" Task : has >
 ToDoList "1" -- "0..*" GreenSpace : has >
 ToDoList "1" -- "1" Agenda : entries >
-
+Task "1" -- "1" Status : has >
+Task "1" -- "1" Urgency : has >
+Status "1" -- "0..1" Planned : is >
+Status "1" -- "0..1" Postponned : is >
+Status "1" -- "0..1" Canceled : is >
+Urgency "1" -- "0..1" High : is >
+Urgency "1" -- "0..1" Medium : is >
+Urgency "1" -- "0..1" Low : is >
 @enduml

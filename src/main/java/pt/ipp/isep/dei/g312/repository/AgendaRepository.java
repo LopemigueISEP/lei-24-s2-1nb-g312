@@ -2,6 +2,8 @@ package pt.ipp.isep.dei.g312.repository;
 
 import pt.ipp.isep.dei.g312.domain.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -9,8 +11,11 @@ import java.util.*;
 public class AgendaRepository {
 
     public List<Task> agenda = new ArrayList<>();
+    private List<Task> agendaList;
 
-
+    public AgendaRepository() {
+        this.agendaList = new ArrayList<>();
+    }
     public Optional<Task> add(Task task) {
         Optional<Task> newTask = Optional.empty();
         boolean operationSuccess = false;
@@ -186,10 +191,8 @@ public class AgendaRepository {
         return this.agenda;
     }
 
-    public void addEntryAgenda(String startDate, ToDoList selectedEntry) {
-    }
 
-    // method to generate a list of planned tasks from the agenda
+
     public List<Task> getPlannedTasks() {
         List<Task> plannedTasks = new ArrayList<>();
         for (Task task : agenda) {
@@ -200,9 +203,28 @@ public class AgendaRepository {
         return plannedTasks;
     }
 
+    public void addEntryAgenda(String startDate, ToDoList selectedEntry, TaskStatus status) {
+        if (startDate == null || selectedEntry == null) {
+            System.out.println("Invalid data. Entry cannot be added to Agenda.");
+            return;
+        }
+        try {
+            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(startDate);
+            // Cria uma nova tarefa com os dados fornecidos
+            Task newTask = new Task(selectedEntry.getTask(), "", date, null, 0, selectedEntry.getGreenSpace(), "", null, status, null, 0, selectedEntry);
+            // Adiciona a nova tarefa à lista de agenda
+            agendaList.add(newTask);
+        } catch (ParseException e) {
+            System.out.println("Invalid date format. Entry cannot be added to Agenda.");
+        }
+    }
 
-
-
-
+    public void displayAgenda() {
+        for (Task task : agendaList) {
+            System.out.printf("Task: %s - GreenSpace: %s - Start Date: %s - Status: %s%n",
+                    task.getTitle(), task.getGreenSpace(), task.getDate(), task.getStatus());
+        }
+        System.out.println("---------------------------------------------------");
+    }
 
 }

@@ -17,11 +17,13 @@ public class Task implements Cloneable {
     Team assignedTeam;
     ArrayList<Vehicle> assignedVehicles;
     int taskID;
+    private ToDoList toDoListEntry;
+
 
 
 
     // constructor for to do list
-    public Task(String title, String description, int taskExpectedDuration, String type, String greenSpace, TaskUrgency urgency, int taskID) {
+    public Task(String title, String description, Date date, Object o, int taskExpectedDuration, String type, String greenSpace, TaskUrgency urgency, Object object, Object o1, int taskID, ToDoList toDoListEntry) {
         this.title = title;
         this.description = description;
         this.taskExpectedDuration = taskExpectedDuration;
@@ -30,11 +32,13 @@ public class Task implements Cloneable {
         this.urgency = urgency;
         this.assignedVehicles = new ArrayList<>();
         this.taskID = taskID;
+        this.toDoListEntry = toDoListEntry;
+
     }
 
     // constructor for clone
     public Task(String title, String description, Date date, TaskPeriod taskStartPeriod, int taskExpectedDuration,
-                String type, String greenSpace, TaskUrgency urgency, TaskStatus status, Team assignedTeam, ArrayList<Vehicle> assignedVehicles, int taskID) {
+                String type, String greenSpace, TaskUrgency urgency, TaskStatus status, Team assignedTeam, ArrayList<Vehicle> assignedVehicles, int taskID, ToDoList toDoListEntry) {
         this.title = title;
         this.description = description;
         this.date = date;
@@ -47,7 +51,10 @@ public class Task implements Cloneable {
         this.assignedTeam = assignedTeam;
         this.assignedVehicles = assignedVehicles;
         this.taskID = taskID;
+        this.toDoListEntry = toDoListEntry;
     }
+
+
 
     public void assignTeam(Team team) {
         this.assignedTeam = team;
@@ -102,12 +109,29 @@ public class Task implements Cloneable {
         return this.title;
     }
 
+    public ToDoList getToDoListEntry() {
+        return toDoListEntry;
+    }
+
+    public void setToDoListEntry(ToDoList toDoListEntry) {
+        this.toDoListEntry = toDoListEntry;
+    }
+
+    public String getGreenSpace() {
+        return this.greenSpace;
+    }
+
+
 
     // clone method
     public Task clone() {
         return new Task(this.title, this.description, this.date, this.taskStartPeriod, this.taskExpectedDuration,
-                this.type, this.greenSpace, this.urgency, this.status, this.assignedTeam, this.assignedVehicles, this.taskID);
+                this.type, this.greenSpace, this.urgency, this.status, this.assignedTeam, this.assignedVehicles, this.taskID, this.toDoListEntry);
     }
-
+    @Override
+    public String toString() {
+        return String.format("Task: %s - GreenSpace: %s - Start Date: %s - Status: %s",
+                title, greenSpace, date, status);
+    }
 
 }

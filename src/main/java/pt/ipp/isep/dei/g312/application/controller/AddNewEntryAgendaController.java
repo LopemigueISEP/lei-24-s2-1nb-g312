@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.g312.application.controller;
 import pt.ipp.isep.dei.g312.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.g312.domain.Employee;
 import pt.ipp.isep.dei.g312.domain.GreenSpace;
+import pt.ipp.isep.dei.g312.domain.TaskStatus;
 import pt.ipp.isep.dei.g312.domain.ToDoList;
 import pt.ipp.isep.dei.g312.repository.*;
 
@@ -133,14 +134,18 @@ public class AddNewEntryAgendaController {
     }
 
 
-    public void addEntryAgenda(String startDate, ToDoList selectedEntry) {
+    public void addEntryAgenda(String startDate, ToDoList selectedEntry, TaskStatus status) {
         if (startDate == null || selectedEntry == null) {
             System.out.println("Invalid data. Entry cannot be added to Agenda.");
             return;
         }
-        agendaRepository.addEntryAgenda(startDate, selectedEntry);
+        agendaRepository.addEntryAgenda(startDate, selectedEntry, status);
     }
 
+    public void printAgenda(){
+
+        Repositories.getInstance().getAgendaRepository().displayAgenda();
+    }
 
 }
 
