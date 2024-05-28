@@ -84,24 +84,39 @@ public class Bootstrap implements Runnable {
     }
     private void addGreenSpaces() {
         GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
-        greenSpaceRepository.addGreenSpace(new GreenSpace("Cidade", "Porto", 99.6, "Large-sized park", "Green Space Manager"));
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Parque da Cidade do Porto", "Porto", 99.6, "Large-sized park", "Green Space Manager"));
         greenSpaceRepository.addGreenSpace(new GreenSpace("Avioso", "Maia", 43.4, "Medium-sized park", "Main Administrator"));
         greenSpaceRepository.addGreenSpace(new GreenSpace("Rabada", "Santo Tirso", 15.3, "Garden", "Green Space Manager"));
         greenSpaceRepository.addGreenSpace(new GreenSpace("Bela Vista", "Lisboa", 259.6, "Large-sized park", "Main Administrator"));
         greenSpaceRepository.addGreenSpace(new GreenSpace("Azibo", "Bragança", 493.2, "Large-sized park", "Green Space Manager"));
         greenSpaceRepository.addGreenSpace(new GreenSpace("Oriental", "Campanhã", 35.9, "Medium-sized park", "Green Space Manager"));
-
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Parque Eduardo VII", "Lisboa", 26.0, "Large-sized park", "Green Space Manager"));
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Parque da Cidade do Porto", "Porto", 83.0, "Large-sized park", "Main Administrator"));
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Parque Florestal de Monsanto", "Lisboa", 900.0, "Large-sized park", "Main Administrator"));
     }
 
     private void addEntryToDoList() {
-        ToDoRepository toDoRepository = Repositories.getInstance().getToDoRepository();
-        toDoRepository.addEntryToDoList(new ToDoList("Cut Grass",  "Avioso"));
-        toDoRepository.addEntryToDoList(new ToDoList("Repair Water",  "Cidade"));
-        toDoRepository.addEntryToDoList(new ToDoList("Cut Trees",  "Bela Vista"));
-        toDoRepository.addEntryToDoList(new ToDoList("Repair Walking Trails",  "Bela Vista"));
-        toDoRepository.addEntryToDoList(new ToDoList("Repair Toillets",  "Cidade"));
-
-
+        ToDoListRepository toDoRepository = Repositories.getInstance().getToDoRepository();
+        toDoRepository.addEntryToDoList(new ToDoEntry("Repair Toilets", "Parque Eduardo VII"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Plant New Trees", "Parque Eduardo VII"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Clean Walking Trails", "Parque Eduardo VII"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Install Benches", "Parque Eduardo VII"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Maintain Playground", "Parque Eduardo VII"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Water Lawns", "Parque da Cidade do Porto"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Repair Fencing", "Parque da Cidade do Porto"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Paint Signage", "Parque da Cidade do Porto"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Clear Litter", "Parque da Cidade do Porto"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Upgrade Lighting", "Parque da Cidade do Porto"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Maintain Flower Beds", "Parque Florestal de Monsanto"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Trim Hedges", "Parque Florestal de Monsanto"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Repair Bridges", "Parque Florestal de Monsanto"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Inspect Playgrounds", "Parque Florestal de Monsanto"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Clean Pond", "Parque Florestal de Monsanto"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Check Irrigation Systems", "Avioso"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Mow Lawns", "Avioso"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Repair Paths", "Avioso"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Prune Trees", "Avioso"));
+        toDoRepository.addEntryToDoList(new ToDoEntry("Replace Trash Bins", "Avioso"));
     }
 
     private void addOrganization() {
