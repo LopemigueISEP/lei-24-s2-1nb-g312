@@ -28,17 +28,15 @@ class GreenSpace {
 
 class ToDoList{
     greenSpace
-    tasks
+    task
     urgency
-    expectedDuration
+    startDate
+    endDate
 }
 
 class Task {
     reference
     description
-    duration
-    cost
-    status
 }
 
 GreenSpacesManager "1" --- "1..*" ToDoList : manages >
