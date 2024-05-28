@@ -416,7 +416,7 @@ public class RegisterCollaboratorUI implements Runnable {
      */
     private Date getDate() {
         Scanner input = new Scanner(System.in);
-        SimpleDateFormat registerDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat registerDateFormat = new SimpleDateFormat("DD/MM/YYYY");
 
         while (true) {
 
