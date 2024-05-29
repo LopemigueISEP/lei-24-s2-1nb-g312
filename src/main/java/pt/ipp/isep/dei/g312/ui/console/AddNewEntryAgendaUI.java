@@ -4,10 +4,9 @@ import pt.ipp.isep.dei.g312.application.controller.AddNewEntryAgendaController;
 import pt.ipp.isep.dei.g312.domain.*;
 import pt.ipp.isep.dei.g312.ui.console.utils.Utils;
 
-import java.util.Calendar;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.regex.Pattern;
 
 
@@ -69,14 +68,18 @@ public class AddNewEntryAgendaUI implements Runnable {
     }
 
     private ToDoEntry selectToDoListEntry(List<ToDoEntry> toDoEntryList, GreenSpace selectedGreenSpace) {
-        List<ToDoEntry> filteredList = toDoEntryList.stream()
-                .filter(entry -> entry.getGreenSpace().equals(selectedGreenSpace.getName()))
-                .toList();
+        List<ToDoEntry> filteredList = new ArrayList<>();
+        for (ToDoEntry entry : toDoEntryList) {
+            if (entry.getGreenSpace().equals(selectedGreenSpace.getName())) {
+                filteredList.add(entry);
+            }
+        }
 
         if (filteredList.isEmpty()) {
             System.out.println("There are no To-Do List entries associated with the selected Green Space.");
             return null;
         }
+
         System.out.println();
         System.out.println("Please select a To-Do List entry:");
         for (int i = 0; i < filteredList.size(); i++) {
@@ -84,6 +87,7 @@ public class AddNewEntryAgendaUI implements Runnable {
             System.out.printf("%d. %s\n", i + 1, entry);
         }
         System.out.println();
+
         Scanner scanner = new Scanner(System.in);
         int choice = -1;
 
@@ -142,15 +146,35 @@ public class AddNewEntryAgendaUI implements Runnable {
         while (true) {
             System.out.print("Enter the start date (format DD/MM/YYYY): ");
             date = scanner.nextLine();
-            if (pattern.matcher(date).matches() && isValidCalendarDate(date)) {
+            if (pattern.matcher(date).matches() && isValidCalendarDate(date) && isDateAfterToday(date)) {
                 break;
             } else {
-                System.out.println("Invalid date format. Please enter a valid date in the format DD/MM/YYYY.");
+                System.out.println("Invalid date format or date is not after today. Please enter a valid date in the format DD/MM/YYYY and make sure it is after today's date.");
             }
         }
         return date;
     }
 
+    private boolean isDateAfterToday(String date) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date currentDate = new Date();
+            Date inputDate = sdf.parse(date);
+            return !inputDate.before(currentDate) || isSameDay(inputDate, currentDate);
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
+    private boolean isSameDay(Date date1, Date date2) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
+                cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH);
+    }
     private boolean isValidCalendarDate(String date) {
         try {
             int day = Integer.parseInt(date.substring(0, 2));
