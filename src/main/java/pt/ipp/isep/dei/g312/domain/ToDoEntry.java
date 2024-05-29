@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.g312.domain;
 
 
 import java.util.Date;
+import java.util.Objects;
 
 public class ToDoEntry implements Comparable<ToDoEntry> {
     private String task;
@@ -18,6 +19,8 @@ public class ToDoEntry implements Comparable<ToDoEntry> {
         this.status = status;
         this.endDate = endDate;
     }
+
+
     public ToDoEntry(String task, String greenSpace) {
         this(task, greenSpace, "PENDING", null, null);
     }
@@ -72,4 +75,23 @@ public class ToDoEntry implements Comparable<ToDoEntry> {
     public String toString() {
         return String.format("Task: %s, Green Space: %s", task, greenSpace);
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ToDoEntry toDoEntry = (ToDoEntry) o;
+        return task.equals(toDoEntry.task) &&
+                greenSpace.equals(toDoEntry.greenSpace) &&
+                status.equals(toDoEntry.status) &&
+                Objects.equals(startDate, toDoEntry.startDate) &&
+                Objects.equals(endDate, toDoEntry.endDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(task, greenSpace, status, startDate, endDate);
+    }
 }
+

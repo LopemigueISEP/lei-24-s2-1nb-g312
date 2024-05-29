@@ -4,10 +4,9 @@ import pt.ipp.isep.dei.g312.application.controller.AddNewEntryAgendaController;
 import pt.ipp.isep.dei.g312.domain.*;
 import pt.ipp.isep.dei.g312.ui.console.utils.Utils;
 
-import java.util.Calendar;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.regex.Pattern;
 
 
@@ -15,14 +14,10 @@ import java.util.regex.Pattern;
 public class AddNewEntryAgendaUI implements Runnable {
 
     private final AddNewEntryAgendaController controller;
-    private ToDoEntry toDoList;
+    private ToDoEntry selectedToDoEntry;
 
     public AddNewEntryAgendaUI() {
         controller = new AddNewEntryAgendaController();
-    }
-
-    public AddNewEntryAgendaController getController() {
-        return controller;
     }
 
     @Override
@@ -32,15 +27,11 @@ public class AddNewEntryAgendaUI implements Runnable {
 
         do {
             System.out.println("Please choose a Green Space managed by you:");
-            System.out.println();
-
-            // GreenSpace selection with validation
             GreenSpace selectedGreenSpace = selectGreenSpace();
 
             if (selectedGreenSpace != null) {
                 List<ToDoEntry> toDoEntryList = controller.getToDoListEntries(selectedGreenSpace);
                 ToDoEntry selectedEntry = selectToDoListEntry(toDoEntryList, selectedGreenSpace);
-                System.out.println();
                 if (selectedEntry != null) {
                     String startDate = getValidDate();
                     if (showsDataRequestsValidation(startDate)) {
@@ -59,47 +50,6 @@ public class AddNewEntryAgendaUI implements Runnable {
         System.out.println("Exit to Agenda Menu.");
     }
 
-    private ToDoEntry selectToDoListEntry(List<ToDoEntry> toDoEntryList, GreenSpace selectedGreenSpace) {
-        List<ToDoEntry> filteredList = toDoEntryList.stream()
-                .filter(entry -> entry.getGreenSpace().equals(selectedGreenSpace.getName()))
-                .toList();
-
-        if (filteredList.isEmpty()) {
-            System.out.println("There are no To-Do List entries associated with the selected Green Space.");
-            return null;
-        }
-        System.out.println();
-        System.out.println("Please select a To-Do List entry:");
-        for (int i = 0; i < filteredList.size(); i++) {
-            ToDoEntry entry = filteredList.get(i);
-            System.out.printf("%d. %s\n", i + 1, entry); // Display entry details (e.g., title)
-
-        }
-        System.out.println();
-        Scanner scanner = new Scanner(System.in);
-        int choice = -1;
-
-        while (choice < 0 || choice > filteredList.size()) {
-            System.out.print("Enter the number of the To-Do List entry you want to select (or 0 to cancel): ");
-            if (scanner.hasNextInt()) {
-                choice = scanner.nextInt();
-                if (choice < 0 || choice > filteredList.size()) {
-                    System.out.println("Invalid selection. Please try again.");
-                }
-            } else {
-                System.out.println("Invalid input. Please enter a number.");
-                scanner.next(); // Clear invalid input
-            }
-        }
-
-        if (choice == 0) {
-            return null; // User cancelled selection
-        }
-
-        toDoList = filteredList.get(choice - 1); // Assign selected entry to toDoList
-        return toDoList;
-    }
-
     private GreenSpace selectGreenSpace() {
         List<GreenSpace> greenSpaces = controller.getGreenSpaceList();
         if (greenSpaces.isEmpty()) {
@@ -112,23 +62,61 @@ public class AddNewEntryAgendaUI implements Runnable {
         System.out.print("Type your option (0 to cancel): ");
         int choice = getUserChoice(greenSpaces.size());
         if (choice == 0) {
-            return null; // Return null if user chooses to cancel
+            return null;
         }
         return greenSpaces.get(choice - 1);
     }
 
-    private boolean askUserIfContinue() {
-        if (toDoList != null) {
-            System.out.print("Do you want to add another entry? (Y/N): ");
-            Scanner scanner = new Scanner(System.in);
-            String choice = scanner.nextLine().trim().toLowerCase();
-            return choice.equals("y") || choice.equals("yes");
-        } else {
-            System.out.println("Do you want to choose another Green Space? (Y/N): ");
-            Scanner scanner = new Scanner(System.in);
-            String choice = scanner.nextLine().trim().toLowerCase();
-            return choice.equals("y") || choice.equals("yes");
+    private ToDoEntry selectToDoListEntry(List<ToDoEntry> toDoEntryList, GreenSpace selectedGreenSpace) {
+        List<ToDoEntry> filteredList = new ArrayList<>();
+        for (ToDoEntry entry : toDoEntryList) {
+            if (entry.getGreenSpace().equals(selectedGreenSpace.getName())) {
+                filteredList.add(entry);
+            }
         }
+
+        if (filteredList.isEmpty()) {
+            System.out.println("There are no To-Do List entries associated with the selected Green Space.");
+            return null;
+        }
+
+        System.out.println();
+        System.out.println("Please select a To-Do List entry:");
+        for (int i = 0; i < filteredList.size(); i++) {
+            ToDoEntry entry = filteredList.get(i);
+            System.out.printf("%d. %s\n", i + 1, entry);
+        }
+        System.out.println();
+
+        Scanner scanner = new Scanner(System.in);
+        int choice = -1;
+
+        while (choice < 0 || choice > filteredList.size()) {
+            System.out.print("Enter the number of the To-Do List entry you want to select (or 0 to cancel): ");
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                if (choice < 0 || choice > filteredList.size()) {
+                    System.out.println("Invalid selection. Please try again.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next();
+            }
+        }
+
+        if (choice == 0) {
+            return null;
+        }
+
+        selectedToDoEntry = filteredList.get(choice - 1);
+        return selectedToDoEntry;
+    }
+
+    private boolean askUserIfContinue() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Do you want to add another entry? (Y/N): ");
+        String choice = scanner.nextLine().trim().toLowerCase();
+        return choice.equals("y") || choice.equals("yes");
     }
 
     private int getUserChoice(int maxOption) {
@@ -144,7 +132,7 @@ public class AddNewEntryAgendaUI implements Runnable {
                 }
             } catch (InputMismatchException e) {
                 System.out.print("Invalid input. Please enter a number: ");
-                scanner.next(); // Clear invalid input
+                scanner.next();
             }
         }
         return choice;
@@ -158,15 +146,35 @@ public class AddNewEntryAgendaUI implements Runnable {
         while (true) {
             System.out.print("Enter the start date (format DD/MM/YYYY): ");
             date = scanner.nextLine();
-            if (pattern.matcher(date).matches() && isValidCalendarDate(date)) {
+            if (pattern.matcher(date).matches() && isValidCalendarDate(date) && isDateAfterToday(date)) {
                 break;
             } else {
-                System.out.println("Invalid date format. Please enter a valid date in the format DD/MM/YYYY.");
+                System.out.println("Invalid date format or date is not after today. Please enter a valid date in the format DD/MM/YYYY and make sure it is after today's date.");
             }
         }
         return date;
     }
 
+    private boolean isDateAfterToday(String date) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date currentDate = new Date();
+            Date inputDate = sdf.parse(date);
+            return !inputDate.before(currentDate) || isSameDay(inputDate, currentDate);
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
+    private boolean isSameDay(Date date1, Date date2) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
+                cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH);
+    }
     private boolean isValidCalendarDate(String date) {
         try {
             int day = Integer.parseInt(date.substring(0, 2));
@@ -175,7 +183,7 @@ public class AddNewEntryAgendaUI implements Runnable {
             Calendar calendar = Calendar.getInstance();
             calendar.setLenient(false);
             calendar.set(year, month - 1, day);
-            calendar.getTime(); // This will throw an exception if the date is invalid
+            calendar.getTime();
             return true;
         } catch (Exception e) {
             return false;
@@ -185,14 +193,17 @@ public class AddNewEntryAgendaUI implements Runnable {
     private boolean requestConfirmation() {
         return Utils.requestConfirmation();
     }
+
     private boolean showsDataRequestsValidation(String startDate) {
-        if (toDoList != null) {
-            System.out.printf("\nYou have selected the To-Do List entry: %s\n", toDoList); // Display selected entry details
-            System.out.printf("Start date: %s\n", startDate); // Added validation prompt for start date
-            return requestConfirmation(); // Chamando requestConfirmation sem parâmetros
+        if (selectedToDoEntry != null) {
+            System.out.printf("\nYou have selected the To-Do List entry: %s\n", selectedToDoEntry);
+            System.out.printf("Start date: %s\n", startDate);
+            return requestConfirmation();
         } else {
             System.out.println("No To-Do List entry selected.");
-            return false; // No confirmation needed if no entry is selected
+            return false;
         }
     }
+
+
 }

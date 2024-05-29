@@ -2,7 +2,6 @@ package pt.ipp.isep.dei.g312.repository;
 
 import pt.ipp.isep.dei.g312.domain.*;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -11,10 +10,12 @@ import java.util.*;
 public class AgendaRepository {
 
     public List<Task> agenda = new ArrayList<>();
-    private List<Task> agendaList;
+    public List<Agenda> agendaList = new ArrayList<>();
+
+
 
     public AgendaRepository() {
-        this.agendaList = new ArrayList<>();
+        this.agenda = new ArrayList<>();
     }
     public Optional<Task> add(Task task) {
         Optional<Task> newTask = Optional.empty();
@@ -203,24 +204,22 @@ public class AgendaRepository {
         return plannedTasks;
     }
 
-    public void addEntryAgenda(String startDate, ToDoEntry selectedEntry, TaskStatus status) {
-        if (startDate == null || selectedEntry == null) {
+    public void addEntryAgenda(Agenda agenda) {
+        if (agenda == null || agenda.getToDoEntry() == null || agenda.getStartDate() == null) {
             System.out.println("Invalid data. Entry cannot be added to Agenda.");
             return;
         }
-        try {
-            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(startDate);
-            Task newTask = new Task(selectedEntry.getTask(), selectedEntry.getGreenSpace(), date, status);
-            agendaList.add(newTask);
-        } catch (ParseException e) {
-            System.out.println("Invalid date format. Entry cannot be added to Agenda.");
-        }
+        agendaList.add(agenda);
     }
 
     public void displayAgenda() {
-        for (Task task : agendaList) {
+        Collections.sort(agendaList);
+
+        for (Agenda entry : agendaList) {
+            ToDoEntry selectedEntry = entry.getToDoEntry();
+            String startDate = new SimpleDateFormat("dd/MM/yyyy").format(entry.getStartDate());
             System.out.printf("Task: %s - GreenSpace: %s - Start Date: %s - Status: %s%n",
-                    task.getTitle(), task.getGreenSpace(), task.getStartDate(), task.getStatus());
+                    selectedEntry.getTask(), selectedEntry.getGreenSpace(), startDate, entry.getStatus());
         }
         System.out.println("---------------------------------------------------");
     }

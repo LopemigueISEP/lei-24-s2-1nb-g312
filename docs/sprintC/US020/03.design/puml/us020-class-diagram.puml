@@ -28,17 +28,24 @@ class RegisterGreenSpaceController {
 class Repositories {
      - Repositories()
      + getInstance() : Repositories
-     + getGreenSpaceRepository()
-
+     + getEmployeeRepository()
 
 }
 
-class GreenSpaceRepository {
-    -greenSpaceList : List<GreenSpace>
-    +getGreenSpace() : List<GreenSpace>
-    +addGreenSpace(greenSpace:GreenSpace) : boolean
-    +validateGreenSpace(greenSpace:GreenSpace) : Boolean
-    +printRegisteredGreenSpaces() : void
+class Employee {
+    name
+    birth date
+    contact (email/phone)
+    admission date
+    taxpayer number
+    address
+    ID doc type and number
+    role
+}
+
+class EmployeeRepository {
+    -employeeList : List<Employee>
+    +getEmployee(taxpayerNumber : String) : Optional<Employee>
 }
 
 
@@ -61,10 +68,13 @@ class GreenSpace {
 
 
 RegisterGreenSpaceController ..> Repositories: repositories
-RegisterGreenSpaceController ..> GreenSpaceRepository: greenSpaceRepository
-GreenSpaceRepository "1" --> "*" GreenSpace
-Repositories "1" --> "1" GreenSpaceRepository
+RegisterGreenSpaceController ..> Employee
 RegisterGreenSpaceUI .> RegisterGreenSpaceController
 Repositories -> Repositories : instance
+EmployeeRepository "1" --> "*" Employee
+Employee "1" --> "*" GreenSpace : register
+Repositories "1" --> "1" EmployeeRepository
+
+
 
 @enduml
