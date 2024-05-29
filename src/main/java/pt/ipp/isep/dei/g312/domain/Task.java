@@ -19,6 +19,7 @@ public class Task implements Cloneable {
     int taskID;
     private ToDoEntry toDoListEntry;
     Date startDate;
+    TaskPosition taskPosition;
 
 
 
