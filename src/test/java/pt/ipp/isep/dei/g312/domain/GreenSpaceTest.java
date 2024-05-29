@@ -18,7 +18,7 @@ public class GreenSpaceTest {
         boolean userValidation = true;
 
 
-        Optional<GreenSpace> result = GreenSpace.registerGreenSpace(name, address, area, typology, greenSpaceManager, userValidation);
+        Optional<GreenSpace> result = Employee.registerGreenSpace(name, address, area, typology, greenSpaceManager, userValidation);
 
         // Assert
         assertTrue(result.isPresent());
@@ -66,10 +66,10 @@ public class GreenSpaceTest {
     public void testRegisterGreenSpace_ValidPermissions() {
         // Simulate successful repository interaction (replace with actual mocking if needed) - valid
         GreenSpace greenSpace = new GreenSpace("Peneda/Gerês", "Minho", 965.0, "Large-Sized Park", "Luís Montenegro");
-        assertTrue(GreenSpace.registerGreenSpace(greenSpace.getName(), greenSpace.getAddress(), greenSpace.getArea(),
+        assertTrue(Employee.registerGreenSpace(greenSpace.getName(), greenSpace.getAddress(), greenSpace.getArea(),
                 greenSpace.getTypology(), greenSpace.getGreenSpaceManager(), true).isPresent());
         //invalid
-        assertFalse(GreenSpace.registerGreenSpace("Peneda/Gerês", "Minho", 965.0, "Large-Sized Park", "Luís Montenegro", false).isPresent());
+        assertFalse(Employee.registerGreenSpace("Peneda/Gerês", "Minho", 965.0, "Large-Sized Park", "Luís Montenegro", false).isPresent());
 
     }
 }
