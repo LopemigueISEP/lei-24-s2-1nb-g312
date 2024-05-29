@@ -53,9 +53,23 @@ class Agenda{
     status
 }
 
+class Task {
+    taskID
+    title
+    description
+    date
+    taskStartPeriod
+    taskExpectedDuration
+    type
+    greenSpace
+    assignedTeam
+    assignedVehicles
+}
+
 Employee "1" -- "1" GreenSpaceManager : is >
-GreenSpaceManager "1" - "1..*" Vehicle : assigns >
-Agenda "1" -- "1..*" Vehicle : has >
+GreenSpaceManager "1" -- "1..*" Vehicle : assigns >
+Agenda "1" - "1..*" Task : has >
+Task "1" -- "1..*" Vehicle : needs >
 GreenSpaceManager "1" - "1" Agenda : manages >
 
 @enduml

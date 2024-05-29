@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US026 - Assign one or more vehicles to an entry in the Agenda.
 
 ## 2. Analysis
 
