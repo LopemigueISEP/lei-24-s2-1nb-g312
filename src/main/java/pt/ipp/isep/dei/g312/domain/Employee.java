@@ -31,6 +31,7 @@ public class Employee implements Cloneable,Comparable<Employee> {
     //private List<Skill> skillsAdded;
 
 
+
     /**
      * Main constructor for creating an `Employee` object.
      * @param name              The employee's name.
@@ -345,7 +346,38 @@ public class Employee implements Cloneable,Comparable<Employee> {
         return true;
 
     }
+    /**
+     * Attempts to register a new green space with the provided information.
+     * This method checks user permissions before attempting to add the green space to the repository.
+     *
+     * @param name              The green space's name.
+     * @param address           The green space's address.
+     * @param area              The green space's area in square meters.
+     * @param typology          The green space's typology (e.g., Garden, Medium-Sized Park, Large-Sized Park).
+     * @param greenSpaceManager  The username of the employee managing the green space.
+     * @param userValidation     A flag indicating whether the user has the necessary permissions to register green spaces.
+     * @return An Optional containing the newly registered green space if successful, empty Optional otherwise.
+     */
+    public static Optional<GreenSpace> registerGreenSpace(String name, String address, double area, String typology, String greenSpaceManager, boolean userValidation) {
+        boolean validateAddedRepository;
+        try {
+            if (userValidation) {
+                GreenSpace greenSpace = new GreenSpace(name,address,area,typology, greenSpaceManager);
+                validateAddedRepository = Repositories.getInstance().getGreenSpaceRepository().addGreenSpace(greenSpace);
+                if (validateAddedRepository) {
+                    return Optional.of(greenSpace);
+                } else {
+                    return Optional.empty();
+                }
+            } else {
+                System.out.println("This user don't have permissions to register green spaces");
+                return Optional.empty();
+            }
+        } catch (Exception e) {
+            return Optional.empty();
+        }
 
+    }
     @Override
     public int compareTo(Employee o) {
         if (this.skills.size()>o.getSkills().size()){
@@ -357,4 +389,6 @@ public class Employee implements Cloneable,Comparable<Employee> {
             return 0;
         }
     }
+
+
 }

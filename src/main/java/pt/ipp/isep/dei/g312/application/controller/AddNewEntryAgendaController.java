@@ -1,14 +1,14 @@
 package pt.ipp.isep.dei.g312.application.controller;
 
 import pt.ipp.isep.dei.g312.application.controller.authorization.AuthenticationController;
-import pt.ipp.isep.dei.g312.domain.Employee;
-import pt.ipp.isep.dei.g312.domain.GreenSpace;
-import pt.ipp.isep.dei.g312.domain.TaskStatus;
-import pt.ipp.isep.dei.g312.domain.ToDoEntry;
+import pt.ipp.isep.dei.g312.domain.*;
 import pt.ipp.isep.dei.g312.repository.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
@@ -16,7 +16,7 @@ public class AddNewEntryAgendaController {
     private EmployeeRepository employeeRepository;
     private GreenSpaceRepository greenSpaceRepository;
     private ToDoListRepository toDoRepository;
-    private AgendaRepository agendaRepository;
+    private TaskRepository taskRepository;
     private AuthenticationRepository authRepository;
 
 
@@ -24,7 +24,7 @@ public class AddNewEntryAgendaController {
         this.employeeRepository = getEmployeeRepository();
         this.greenSpaceRepository = getGreenSpaceRepository();
         this.toDoRepository = getToDoRepository();
-        this.agendaRepository = getAgendaRepository();
+        this.taskRepository = getTaskRepository();
         this.authRepository = getAuthRepository();
     }
     private AuthenticationRepository getAuthRepository() {
@@ -53,9 +53,7 @@ public class AddNewEntryAgendaController {
         return employeeRepository;
 
     }
-    public void addEntryToDoList(ToDoEntry toDoList) {
-        toDoRepository.addEntryToDoList(toDoList);
-    }
+
 
     public boolean currentUserLogInValidation() {
 
@@ -72,12 +70,12 @@ public class AddNewEntryAgendaController {
         return toDoRepository;
 
     }
-    private AgendaRepository getAgendaRepository() {
-        if (agendaRepository == null) {
+    private TaskRepository getTaskRepository() {
+        if (taskRepository == null) {
             Repositories repositories = Repositories.getInstance();
-            agendaRepository = repositories.getAgendaRepository();
+            taskRepository = repositories.getTaskRepository();
         }
-        return agendaRepository;
+        return taskRepository;
 
     }
 
@@ -139,12 +137,20 @@ public class AddNewEntryAgendaController {
             System.out.println("Invalid data. Entry cannot be added to Agenda.");
             return;
         }
-        agendaRepository.addEntryAgenda(startDate, selectedEntry, status);
+        Date date;
+        try {
+            date = new SimpleDateFormat("dd/MM/yyyy").parse(startDate);
+        } catch (ParseException e) {
+            System.out.println("Invalid date format. Entry cannot be added to Agenda.");
+            return;
+        }
+        Agenda newEntry = new Agenda(date, selectedEntry, status);
+        taskRepository.addEntryAgenda(newEntry);
     }
 
     public void printAgenda(){
 
-        Repositories.getInstance().getAgendaRepository().displayAgenda();
+        Repositories.getInstance().getTaskRepository().displayAgenda();
     }
 
 }

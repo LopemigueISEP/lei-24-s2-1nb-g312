@@ -114,7 +114,7 @@ public class RegisterGreenSpaceController {
     public Optional<GreenSpace> registerGreenSpace(String name, String address, double area, String typology, String greenSpaceManager) {
         try {
             Employee employee = matchEmployeeByRole();
-            return GreenSpace.registerGreenSpace(name, address, area, typology, greenSpaceManager, currentUserLogInValidation());
+            return employee.registerGreenSpace(name, address, area, typology, greenSpaceManager, currentUserLogInValidation());
         }catch (Exception e){
             System.out.println("Error occurred while registering a green space");
             return Optional.empty();

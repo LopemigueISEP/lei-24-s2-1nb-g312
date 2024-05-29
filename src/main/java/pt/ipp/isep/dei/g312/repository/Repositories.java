@@ -1,8 +1,8 @@
 package pt.ipp.isep.dei.g312.repository;
 
 
-
-
+import pt.ipp.isep.dei.g312.domain.Agenda;
+import pt.ipp.isep.dei.g312.domain.Task;
 
 /**
  * Represents a collection of repositories and provides access to them.
@@ -20,9 +20,10 @@ public class Repositories {
 
     private final JobRepository jobRepository;
     private final CSVFileRepository csvFileRepository;
-    private final AgendaRepository agendaRepository;
+    private final TaskRepository taskRepository;
     private final GreenSpaceRepository greenSpaceRepository;
     private final ToDoListRepository toDoRepository;
+    private final AgendaRepository agendaRepository;
 
 
 
@@ -39,9 +40,10 @@ public class Repositories {
         skillRepository = new SkillRepository();
         teamRepository = new TeamRepository();
         csvFileRepository = new CSVFileRepository();
-        agendaRepository = new AgendaRepository();
+        taskRepository = new TaskRepository();
         greenSpaceRepository = new GreenSpaceRepository();
         toDoRepository = new ToDoListRepository();
+        agendaRepository = new AgendaRepository();
     }
 
     /**
@@ -134,13 +136,16 @@ public class Repositories {
         return csvFileRepository;
     }
 
-    public AgendaRepository getAgendaRepository() {return agendaRepository;
+    public TaskRepository getTaskRepository() {return taskRepository;
     }
     public GreenSpaceRepository getGreenSpaceRepository() {
         return greenSpaceRepository;
     }
     public ToDoListRepository getToDoRepository() {
         return toDoRepository;
+    }
+    public AgendaRepository getAgendaRepository() {
+        return agendaRepository;
     }
 
 }

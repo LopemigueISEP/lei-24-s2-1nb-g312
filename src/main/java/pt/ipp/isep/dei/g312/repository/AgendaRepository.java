@@ -2,7 +2,6 @@ package pt.ipp.isep.dei.g312.repository;
 
 import pt.ipp.isep.dei.g312.domain.*;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -11,31 +10,13 @@ import java.util.*;
 public class AgendaRepository {
 
     public List<Task> agenda = new ArrayList<>();
-    private List<Task> agendaList;
+    public List<Agenda> agendaList = new ArrayList<>();
 
-    public AgendaRepository() {
-        this.agendaList = new ArrayList<>();
-    }
-    public Optional<Task> add(Task task) {
-        Optional<Task> newTask = Optional.empty();
-        boolean operationSuccess = false;
 
-        if (validateTask(task)) {
-            newTask = Optional.of(task.clone());
-            operationSuccess = agenda.add(newTask.get());
-        }
-        if (!operationSuccess) {
-            newTask = Optional.empty();
-        }
-        return newTask;
-    }
+
+
 
     // TODO - Further implement this method to validate team availability
-    private boolean validateTask(Task task) {
-        boolean isValid = !agenda.contains(task);
-
-        return isValid;
-    }
 
     // method to assign a team to a task in the agenda
     public boolean assignTeamToTask(Team team, Task task) {
@@ -203,26 +184,6 @@ public class AgendaRepository {
         return plannedTasks;
     }
 
-    public void addEntryAgenda(String startDate, ToDoEntry selectedEntry, TaskStatus status) {
-        if (startDate == null || selectedEntry == null) {
-            System.out.println("Invalid data. Entry cannot be added to Agenda.");
-            return;
-        }
-        try {
-            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(startDate);
-            Task newTask = new Task(selectedEntry.getTask(), selectedEntry.getGreenSpace(), date, status);
-            agendaList.add(newTask);
-        } catch (ParseException e) {
-            System.out.println("Invalid date format. Entry cannot be added to Agenda.");
-        }
-    }
 
-    public void displayAgenda() {
-        for (Task task : agendaList) {
-            System.out.printf("Task: %s - GreenSpace: %s - Start Date: %s - Status: %s%n",
-                    task.getTitle(), task.getGreenSpace(), task.getStartDate(), task.getStatus());
-        }
-        System.out.println("---------------------------------------------------");
-    }
 
 }
