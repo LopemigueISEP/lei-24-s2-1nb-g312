@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.g312.domain;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class Task implements Cloneable {
 
@@ -20,6 +21,7 @@ public class Task implements Cloneable {
     private ToDoEntry toDoListEntry;
     Date startDate;
     TaskPosition taskPosition;
+    private ToDoEntry toDoEntry;
 
 
 
@@ -69,6 +71,11 @@ public class Task implements Cloneable {
         this.assignedVehicles = new ArrayList<>();
         this.taskID = 0;
         this.toDoListEntry = null;
+    }
+    public Task(Date startDate, ToDoEntry toDoEntry, TaskStatus status) {
+        this.startDate = startDate;
+        this.toDoEntry = toDoEntry;
+        this.status = status;
     }
 
     public void assignTeam(Team team) {
@@ -139,7 +146,9 @@ public class Task implements Cloneable {
         return this.greenSpace;
     }
 
-
+    public ToDoEntry getToDoEntry() {
+        return toDoEntry;
+    }
 
     // clone method
     public Task clone() {
@@ -150,6 +159,22 @@ public class Task implements Cloneable {
     public String toString() {
         return String.format("Task: %s - GreenSpace: %s - Start Date: %s - Status: %s",
                 title, greenSpace, date, status);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Agenda agenda = (Agenda) o;
+        return Objects.equals(startDate, agenda.getStartDate()) &&
+                Objects.equals(toDoEntry, agenda.getToDoEntry());
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(startDate, toDoEntry);
+    }
+    public int compareTo(Task other) {
+        return this.startDate.compareTo(other.startDate);
     }
 
 }

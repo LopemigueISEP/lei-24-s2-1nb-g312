@@ -36,14 +36,7 @@ public class Agenda implements Comparable<Agenda>{
     public String toString() {
         return STR."Agenda{startDate=\{startDate}, toDoListEntry=\{toDoEntry}\{'}'}";
     }
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Agenda agenda = (Agenda) o;
-        return Objects.equals(startDate, agenda.startDate) &&
-                Objects.equals(toDoEntry, agenda.toDoEntry);
-    }
+
 
     @Override
     public int hashCode() {

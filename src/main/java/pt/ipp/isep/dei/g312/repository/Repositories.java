@@ -1,9 +1,6 @@
 package pt.ipp.isep.dei.g312.repository;
 
 
-import pt.ipp.isep.dei.g312.domain.Agenda;
-import pt.ipp.isep.dei.g312.domain.Task;
-
 /**
  * Represents a collection of repositories and provides access to them.
  */

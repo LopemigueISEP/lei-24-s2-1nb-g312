@@ -10,7 +10,7 @@ import java.util.*;
 public class AgendaRepository {
 
     public List<Task> agenda = new ArrayList<>();
-    public List<Agenda> agendaList = new ArrayList<>();
+
 
 
 
