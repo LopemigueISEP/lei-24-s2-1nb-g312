@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.g312.ui.gui.AddEntryToDoListController">
+   <children>
+      <ButtonBar layoutX="125.0" layoutY="105.0" prefHeight="40.0" prefWidth="200.0">
+        <buttons>
+          <Button fx:id="back" mnemonicParsing="false" onAction="#returnBack" text="Back" />
+        </buttons>
+      </ButtonBar>
+      <Label layoutX="97.0" layoutY="39.0" prefHeight="17.0" prefWidth="278.0" text="Isto é a entrada 19 o miguel tem sono" />
+   </children>
+</AnchorPane>

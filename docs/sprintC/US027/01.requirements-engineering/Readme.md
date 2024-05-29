@@ -1,34 +1,39 @@
-# US006 - Create a Task 
+# US027 - As a GSM, I need to list all green spaces managed by me.
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As an organization employee, I want to create a new task in order to be further published.
+As a GSM, I need to list all green spaces managed by me.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
->	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
+> Transcribed: _Green Spaces Manager (GSM) - the person responsible for managing the green spaces in charge of the organization._ 
 
->	As long as it is not published, access to the task is exclusive to the employees of the respective organization. 
+> Justification: The GSM must check if the green spaces under his management have changed. 
 
-**From the client clarifications:**
+>The list of green spaces must be sorted by size in descending order (area in hectares should be used). 
 
-> **Question:** Which is the unit of measurement used to estimate duration?
->
-> **Answer:** Duration is estimated in days.
+[//]: # (> **Question:** Which is the unit of measurement used to estimate duration?)
 
-> **Question:** Monetary data is expressed in any particular currency?
->
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
+[//]: # (>)
+
+[//]: # (> **Answer:** Duration is estimated in days.)
+
+[//]: # ()
+[//]: # (> **Question:** Monetary data is expressed in any particular currency?)
+
+[//]: # (>)
+
+[//]: # (> **Answer:** Monetary data &#40;e.g. estimated cost of a task&#41; is indicated in POT &#40;virtual currency internal to the platform&#41;.)
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All required fields must be filled in.
-* **AC2:** The task reference must have at least 5 alphanumeric characters.
+* **AC1:** The list of green spaces must be sorted by size in descending order (area in hectares should be used). The sorting algorithm to be used by the application must be defined through a configuration file. At least two sorting algorithms should be available.
+* **AC2:** The list of green spaces must show the typology of each green space.
 * **AC3:** When creating a task with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
 
 ### 1.4. Found out Dependencies

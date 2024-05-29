@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.g312.ui.gui.TestUI">
+   <children>
+      <ButtonBar layoutX="200.0" layoutY="223.0" prefHeight="40.0" prefWidth="200.0">
+        <buttons>
+          <Button mnemonicParsing="false" text="Button" />
+        </buttons>
+      </ButtonBar>
+      <Label layoutX="160.0" layoutY="64.0" prefHeight="17.0" prefWidth="241.0" text="Isto é a entrada 21" />
+   </children>
+</AnchorPane>
