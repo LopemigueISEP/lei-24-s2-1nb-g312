@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US23 - Assign a Team to an entry in the Agenda
 
 ## 4. Tests 
 

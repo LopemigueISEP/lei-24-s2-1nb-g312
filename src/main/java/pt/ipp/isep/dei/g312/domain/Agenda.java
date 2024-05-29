@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class Agenda {
     private Date startDate;
-    private ToDoList toDoListEntry;
+    private ToDoEntry toDoListEntry;
 
-    public Agenda(Date startDate, ToDoList toDoListEntry) {
+    public Agenda(Date startDate, ToDoEntry toDoListEntry) {
         this.startDate = startDate;
         this.toDoListEntry = toDoListEntry;
     }
@@ -15,7 +15,7 @@ public class Agenda {
         return startDate;
     }
 
-    public ToDoList getToDoListEntry() {
+    public ToDoEntry getToDoListEntry() {
         return toDoListEntry;
     }
 

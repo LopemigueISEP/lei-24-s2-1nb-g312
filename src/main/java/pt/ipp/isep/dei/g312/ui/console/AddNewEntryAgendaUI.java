@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 public class AddNewEntryAgendaUI implements Runnable {
 
     private final AddNewEntryAgendaController controller;
-    private ToDoList toDoList;
+    private ToDoEntry toDoList;
 
     public AddNewEntryAgendaUI() {
         controller = new AddNewEntryAgendaController();
@@ -38,29 +38,29 @@ public class AddNewEntryAgendaUI implements Runnable {
             GreenSpace selectedGreenSpace = selectGreenSpace();
 
             if (selectedGreenSpace != null) {
-                List<ToDoList> toDoEntryList = controller.getToDoListEntries(selectedGreenSpace);
-                ToDoList selectedEntry = selectToDoListEntry(toDoEntryList, selectedGreenSpace); // Corrigido para incluir selectedGreenSpace
+                List<ToDoEntry> toDoEntryList = controller.getToDoListEntries(selectedGreenSpace);
+                ToDoEntry selectedEntry = selectToDoListEntry(toDoEntryList, selectedGreenSpace);
+                System.out.println();
                 if (selectedEntry != null) {
                     String startDate = getValidDate();
                     if (showsDataRequestsValidation(startDate)) {
-                        controller.addEntryAgenda(startDate, selectedEntry, TaskStatus.Pending);                        System.out.println("Entry added to agenda successfully!");
+                        controller.addEntryAgenda(startDate, selectedEntry, TaskStatus.Planned);
+                        System.out.println("Entry added to Agenda!");
                     } else {
                         System.out.println("Entry addition cancelled.");
                     }
-                } else {
-                    System.out.println("No To-Do List entry selected. Entry not added.");
                 }
             } else {
-                System.out.println("No Green Space selected. Entry not added.");
+                System.out.println("No Green Space selected.");
             }
             continueAddingEntryToAgenda = askUserIfContinue();
         } while (continueAddingEntryToAgenda);
 
-        System.out.println("Exiting Add New Entry to Agenda menu.");
+        System.out.println("Exit to Agenda Menu.");
     }
 
-    private ToDoList selectToDoListEntry(List<ToDoList> toDoEntryList, GreenSpace selectedGreenSpace) {
-        List<ToDoList> filteredList = toDoEntryList.stream()
+    private ToDoEntry selectToDoListEntry(List<ToDoEntry> toDoEntryList, GreenSpace selectedGreenSpace) {
+        List<ToDoEntry> filteredList = toDoEntryList.stream()
                 .filter(entry -> entry.getGreenSpace().equals(selectedGreenSpace.getName()))
                 .toList();
 
@@ -68,13 +68,14 @@ public class AddNewEntryAgendaUI implements Runnable {
             System.out.println("There are no To-Do List entries associated with the selected Green Space.");
             return null;
         }
-
+        System.out.println();
         System.out.println("Please select a To-Do List entry:");
         for (int i = 0; i < filteredList.size(); i++) {
-            ToDoList entry = filteredList.get(i);
+            ToDoEntry entry = filteredList.get(i);
             System.out.printf("%d. %s\n", i + 1, entry); // Display entry details (e.g., title)
-        }
 
+        }
+        System.out.println();
         Scanner scanner = new Scanner(System.in);
         int choice = -1;
 
@@ -110,14 +111,24 @@ public class AddNewEntryAgendaUI implements Runnable {
         }
         System.out.print("Type your option (0 to cancel): ");
         int choice = getUserChoice(greenSpaces.size());
-        return choice == 0 ? null : greenSpaces.get(choice - 1);
+        if (choice == 0) {
+            return null; // Return null if user chooses to cancel
+        }
+        return greenSpaces.get(choice - 1);
     }
 
     private boolean askUserIfContinue() {
-        System.out.print("Do you want to add another entry? (y/n): ");
-        Scanner scanner = new Scanner(System.in);
-        String choice = scanner.nextLine().trim().toLowerCase();
-        return choice.equals("y") || choice.equals("yes");
+        if (toDoList != null) {
+            System.out.print("Do you want to add another entry? (Y/N): ");
+            Scanner scanner = new Scanner(System.in);
+            String choice = scanner.nextLine().trim().toLowerCase();
+            return choice.equals("y") || choice.equals("yes");
+        } else {
+            System.out.println("Do you want to choose another Green Space? (Y/N): ");
+            Scanner scanner = new Scanner(System.in);
+            String choice = scanner.nextLine().trim().toLowerCase();
+            return choice.equals("y") || choice.equals("yes");
+        }
     }
 
     private int getUserChoice(int maxOption) {

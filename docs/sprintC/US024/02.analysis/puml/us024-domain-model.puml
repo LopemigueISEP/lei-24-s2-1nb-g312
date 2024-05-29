@@ -5,6 +5,19 @@ skinparam shadowing false
 
 skinparam classAttributeIconSize 0
 
+class Employee {
+    name
+    birth date
+    contact (email/phone)
+    admission date
+    taxpayer number
+    address
+    ID doc type and number
+    role
+}
+
+
+
 class Agenda {
     appointments
     alerts
@@ -12,26 +25,46 @@ class Agenda {
 }
 
 class Task {
-    reference
+    taskID
+    title
     description
-    duration
-    cost
-    status
+    date
+    taskStartPeriod
+    taskExpectedDuration
+    type
+    greenSpace
+    assignedTeam
+    assignedVehicles
 }
 
+class Status {
+}
+
+class Urgency{
+}
 
 class GreenSpacesManager{
 
 }
 
+
+
 class Team{
 }
 
-GreenSpacesManager "1" --- "1" Task : creates >
+Employee "1" -- "1..*" GreenSpacesManager : is >
 Agenda "1" -- "0..*" Task : has >
 Team "1" -- "1" Task : executes >
 GreenSpacesManager "1" -- "1" Agenda : manages >
 GreenSpacesManager "1" --- "1..*" Team : assigns >
+Task "1" -- "1" Status : has >
+Task "1" -- "1" Urgency : has >
+Status "1" -- "0..1" Planned : is >
+Status "1" -- "0..1" Postponned : is >
+Status "1" -- "0..1" Canceled : is >
+Urgency "1" -- "0..1" High : is >
+Urgency "1" -- "0..1" Medium : is >
+Urgency "1" -- "0..1" Low : is >
 
 
 @enduml

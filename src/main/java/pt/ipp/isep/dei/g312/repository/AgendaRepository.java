@@ -203,16 +203,14 @@ public class AgendaRepository {
         return plannedTasks;
     }
 
-    public void addEntryAgenda(String startDate, ToDoList selectedEntry, TaskStatus status) {
+    public void addEntryAgenda(String startDate, ToDoEntry selectedEntry, TaskStatus status) {
         if (startDate == null || selectedEntry == null) {
             System.out.println("Invalid data. Entry cannot be added to Agenda.");
             return;
         }
         try {
             Date date = new SimpleDateFormat("dd/MM/yyyy").parse(startDate);
-            // Cria uma nova tarefa com os dados fornecidos
-            Task newTask = new Task(selectedEntry.getTask(), "", date, null, 0, selectedEntry.getGreenSpace(), "", null, status, null, 0, selectedEntry);
-            // Adiciona a nova tarefa à lista de agenda
+            Task newTask = new Task(selectedEntry.getTask(), selectedEntry.getGreenSpace(), date, status);
             agendaList.add(newTask);
         } catch (ParseException e) {
             System.out.println("Invalid date format. Entry cannot be added to Agenda.");
@@ -222,7 +220,7 @@ public class AgendaRepository {
     public void displayAgenda() {
         for (Task task : agendaList) {
             System.out.printf("Task: %s - GreenSpace: %s - Start Date: %s - Status: %s%n",
-                    task.getTitle(), task.getGreenSpace(), task.getDate(), task.getStatus());
+                    task.getTitle(), task.getGreenSpace(), task.getStartDate(), task.getStatus());
         }
         System.out.println("---------------------------------------------------");
     }

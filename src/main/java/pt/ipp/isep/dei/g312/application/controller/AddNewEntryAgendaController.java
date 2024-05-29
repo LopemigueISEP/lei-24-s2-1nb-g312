@@ -4,7 +4,7 @@ import pt.ipp.isep.dei.g312.application.controller.authorization.AuthenticationC
 import pt.ipp.isep.dei.g312.domain.Employee;
 import pt.ipp.isep.dei.g312.domain.GreenSpace;
 import pt.ipp.isep.dei.g312.domain.TaskStatus;
-import pt.ipp.isep.dei.g312.domain.ToDoList;
+import pt.ipp.isep.dei.g312.domain.ToDoEntry;
 import pt.ipp.isep.dei.g312.repository.*;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.List;
 public class AddNewEntryAgendaController {
     private EmployeeRepository employeeRepository;
     private GreenSpaceRepository greenSpaceRepository;
-    private ToDoRepository toDoRepository;
+    private ToDoListRepository toDoRepository;
     private AgendaRepository agendaRepository;
     private AuthenticationRepository authRepository;
 
@@ -53,7 +53,7 @@ public class AddNewEntryAgendaController {
         return employeeRepository;
 
     }
-    public void addEntryToDoList(ToDoList toDoList) {
+    public void addEntryToDoList(ToDoEntry toDoList) {
         toDoRepository.addEntryToDoList(toDoList);
     }
 
@@ -64,7 +64,7 @@ public class AddNewEntryAgendaController {
         return isLoggedIn;
     }
 
-    private ToDoRepository getToDoRepository() {
+    private ToDoListRepository getToDoRepository() {
         if (toDoRepository == null) {
             Repositories repositories = Repositories.getInstance();
             toDoRepository = repositories.getToDoRepository();
@@ -124,9 +124,9 @@ public class AddNewEntryAgendaController {
     }
 
 
-    public List<ToDoList> getToDoListEntries(GreenSpace selectedGreenSpace) {
+    public List<ToDoEntry> getToDoListEntries(GreenSpace selectedGreenSpace) {
         try {
-            return Collections.unmodifiableList(toDoRepository.getToDoListEntries());
+            return Collections.unmodifiableList(toDoRepository.getToDoList());
         } catch (NullPointerException e) {
             System.out.println("Returning empty To-Do List entry list.");
             return Collections.emptyList();
@@ -134,7 +134,7 @@ public class AddNewEntryAgendaController {
     }
 
 
-    public void addEntryAgenda(String startDate, ToDoList selectedEntry, TaskStatus status) {
+    public void addEntryAgenda(String startDate, ToDoEntry selectedEntry, TaskStatus status) {
         if (startDate == null || selectedEntry == null) {
             System.out.println("Invalid data. Entry cannot be added to Agenda.");
             return;

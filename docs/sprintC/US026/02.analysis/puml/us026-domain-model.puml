@@ -1,0 +1,61 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'left to right direction
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+title US026 Domain Model
+
+'class Platform {
+'  -description
+'}
+
+class Employee {
+    name
+    birthdate
+    email/phone
+    admisson date
+    VAT number
+    address
+    role
+}
+
+class Vehicle{
+    registrationPlate
+    brand
+    model
+    type
+    tare
+    grossWeight
+    currentKm
+    registerDate
+    acquisitionDate
+    checkupKmFrequency
+    lastCheckupDate
+}
+
+class GreenSpaceManager{
++addVehicleToAgendaEntry()
+
+}
+
+class Agenda{
+    name
+    description
+    duration
+    startDate
+    status
+}
+
+Employee "1" -- "1" GreenSpaceManager : is >
+GreenSpaceManager "1" - "1..*" Vehicle : assigns >
+Agenda "1" -- "1..*" Vehicle : has >
+GreenSpaceManager "1" - "1" Agenda : manages >
+
+@enduml

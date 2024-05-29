@@ -17,13 +17,14 @@ public class Task implements Cloneable {
     Team assignedTeam;
     ArrayList<Vehicle> assignedVehicles;
     int taskID;
-    private ToDoList toDoListEntry;
+    private ToDoEntry toDoListEntry;
+    Date startDate;
 
 
 
 
     // constructor for to do list
-    public Task(String title, String description, Date date, Object o, int taskExpectedDuration, String type, String greenSpace, TaskUrgency urgency, Object object, Object o1, int taskID, ToDoList toDoListEntry) {
+    public Task(String title, String description, Date date, Date startDate, Object o, int taskExpectedDuration, String type, String greenSpace, TaskUrgency urgency, Object object, Object o1, int taskID, ToDoEntry toDoListEntry) {
         this.title = title;
         this.description = description;
         this.taskExpectedDuration = taskExpectedDuration;
@@ -33,12 +34,13 @@ public class Task implements Cloneable {
         this.assignedVehicles = new ArrayList<>();
         this.taskID = taskID;
         this.toDoListEntry = toDoListEntry;
+        this.startDate = startDate;
 
     }
 
     // constructor for clone
     public Task(String title, String description, Date date, TaskPeriod taskStartPeriod, int taskExpectedDuration,
-                String type, String greenSpace, TaskUrgency urgency, TaskStatus status, Team assignedTeam, ArrayList<Vehicle> assignedVehicles, int taskID, ToDoList toDoListEntry) {
+                String type, String greenSpace, TaskUrgency urgency, TaskStatus status, Team assignedTeam, ArrayList<Vehicle> assignedVehicles, int taskID, ToDoEntry toDoListEntry) {
         this.title = title;
         this.description = description;
         this.date = date;
@@ -54,7 +56,19 @@ public class Task implements Cloneable {
         this.toDoListEntry = toDoListEntry;
     }
 
-
+    public Task(String title, String greenSpace, Date startDate, TaskStatus status) {
+        this.title = title;
+        this.greenSpace = greenSpace;
+        this.startDate = startDate;
+        this.status = status;
+        this.description = "";
+        this.taskExpectedDuration = 0;
+        this.type = "";
+        this.urgency = TaskUrgency.Medium; // Default urgency
+        this.assignedVehicles = new ArrayList<>();
+        this.taskID = 0;
+        this.toDoListEntry = null;
+    }
 
     public void assignTeam(Team team) {
         this.assignedTeam = team;
@@ -89,6 +103,9 @@ public class Task implements Cloneable {
     public Date getDate(){
         return this.date;
     }
+    public Date getStartDate(){
+        return this.startDate;
+    }
 
     public TaskPeriod getTaskStartPeriod(){
         return this.taskStartPeriod;
@@ -109,11 +126,11 @@ public class Task implements Cloneable {
         return this.title;
     }
 
-    public ToDoList getToDoListEntry() {
+    public ToDoEntry getToDoListEntry() {
         return toDoListEntry;
     }
 
-    public void setToDoListEntry(ToDoList toDoListEntry) {
+    public void setToDoListEntry(ToDoEntry toDoListEntry) {
         this.toDoListEntry = toDoListEntry;
     }
 

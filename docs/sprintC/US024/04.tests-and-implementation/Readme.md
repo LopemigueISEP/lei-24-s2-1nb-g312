@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US24 - Postpone an entry in the Agenda to a specific future date
 
 ## 4. Tests 
 
