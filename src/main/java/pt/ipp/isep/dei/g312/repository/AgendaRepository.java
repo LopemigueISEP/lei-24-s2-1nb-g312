@@ -14,29 +14,9 @@ public class AgendaRepository {
 
 
 
-    public AgendaRepository() {
-        this.agenda = new ArrayList<>();
-    }
-    public Optional<Task> add(Task task) {
-        Optional<Task> newTask = Optional.empty();
-        boolean operationSuccess = false;
 
-        if (validateTask(task)) {
-            newTask = Optional.of(task.clone());
-            operationSuccess = agenda.add(newTask.get());
-        }
-        if (!operationSuccess) {
-            newTask = Optional.empty();
-        }
-        return newTask;
-    }
 
     // TODO - Further implement this method to validate team availability
-    private boolean validateTask(Task task) {
-        boolean isValid = !agenda.contains(task);
-
-        return isValid;
-    }
 
     // method to assign a team to a task in the agenda
     public boolean assignTeamToTask(Team team, Task task) {
@@ -204,24 +184,6 @@ public class AgendaRepository {
         return plannedTasks;
     }
 
-    public void addEntryAgenda(Agenda agenda) {
-        if (agenda == null || agenda.getToDoEntry() == null || agenda.getStartDate() == null) {
-            System.out.println("Invalid data. Entry cannot be added to Agenda.");
-            return;
-        }
-        agendaList.add(agenda);
-    }
 
-    public void displayAgenda() {
-        Collections.sort(agendaList);
-
-        for (Agenda entry : agendaList) {
-            ToDoEntry selectedEntry = entry.getToDoEntry();
-            String startDate = new SimpleDateFormat("dd/MM/yyyy").format(entry.getStartDate());
-            System.out.printf("Task: %s - GreenSpace: %s - Start Date: %s - Status: %s%n",
-                    selectedEntry.getTask(), selectedEntry.getGreenSpace(), startDate, entry.getStatus());
-        }
-        System.out.println("---------------------------------------------------");
-    }
 
 }

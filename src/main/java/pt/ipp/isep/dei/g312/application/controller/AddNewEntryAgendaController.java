@@ -16,7 +16,7 @@ public class AddNewEntryAgendaController {
     private EmployeeRepository employeeRepository;
     private GreenSpaceRepository greenSpaceRepository;
     private ToDoListRepository toDoRepository;
-    private AgendaRepository agendaRepository;
+    private TaskRepository taskRepository;
     private AuthenticationRepository authRepository;
 
 
@@ -24,7 +24,7 @@ public class AddNewEntryAgendaController {
         this.employeeRepository = getEmployeeRepository();
         this.greenSpaceRepository = getGreenSpaceRepository();
         this.toDoRepository = getToDoRepository();
-        this.agendaRepository = getAgendaRepository();
+        this.taskRepository = getTaskRepository();
         this.authRepository = getAuthRepository();
     }
     private AuthenticationRepository getAuthRepository() {
@@ -70,12 +70,12 @@ public class AddNewEntryAgendaController {
         return toDoRepository;
 
     }
-    private AgendaRepository getAgendaRepository() {
-        if (agendaRepository == null) {
+    private TaskRepository getTaskRepository() {
+        if (taskRepository == null) {
             Repositories repositories = Repositories.getInstance();
-            agendaRepository = repositories.getAgendaRepository();
+            taskRepository = repositories.getTaskRepository();
         }
-        return agendaRepository;
+        return taskRepository;
 
     }
 
@@ -145,12 +145,12 @@ public class AddNewEntryAgendaController {
             return;
         }
         Agenda newEntry = new Agenda(date, selectedEntry, status);
-        agendaRepository.addEntryAgenda(newEntry);
+        taskRepository.addEntryAgenda(newEntry);
     }
 
     public void printAgenda(){
 
-        Repositories.getInstance().getAgendaRepository().displayAgenda();
+        Repositories.getInstance().getTaskRepository().displayAgenda();
     }
 
 }
