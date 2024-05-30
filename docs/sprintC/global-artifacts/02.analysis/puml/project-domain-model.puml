@@ -161,6 +161,7 @@ GreenSpacesManager "1" --- "1" GreenSpacesUserPortal : manages >
 GreenSpacesManager "1" --- "1..*" AssemblyPoint : manages >
 GreenSpacesManager "1" --- "1..*" EvacuationRoute : manages >
 GreenSpacesManager "1" --- "1..*" ToDoList : manages >
+GreenSpacesManager "1" --- "1..*" Vehicle: assigns
 Collaborator "1" -- "1" Job : has >
 Collaborator "1" -- "0..*" Skill : has >
 Collaborator "1..*" -- "1" Team : has >

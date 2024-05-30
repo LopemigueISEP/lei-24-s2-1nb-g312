@@ -16,46 +16,27 @@ hide methods
 '  -description
 '}
 
-class Organization {
-    name
-    vatNumber
-    website
-    phoneNumber
-    email
-}
-
-class Task {
-    reference
-    description
-    informalDesc
-    technicalDesc
-    duration
-    cost
-}
-
-class Category {
-    description
-}
-
 class Employee {
     name
-    email
-    position
-    phone
+    birthdate
+    email/phone
+    admisson date
+    VAT number
+    address
+    role
 }
 
-'class User {
-'    name
-'    email
-'    password
-'}
+class GreenSpaceManager{
+}
 
-'Platform "1" -- "*" Organization : has registered >
-'Platform "1" -- "*" Category : defines >
-Organization "1" - "0..*" Employee : has >
-Organization "1" - "0..*" Task: owns >
-'Task "*" -- "1" Employee: created by >
-Employee "1" -- "*" Task : creates >
-'Employee "0..1" -- "1" User: acts as >
-Task "*" - "1" Category: cataloged as >
+
+class GreenSpace{
+
+}
+
+
+Employee "1..*" -- "1..*" GreenSpaceManager : is >
+GreenSpaceManager "1" -- "1..*" GreenSpace: manages >
+
+
 @enduml

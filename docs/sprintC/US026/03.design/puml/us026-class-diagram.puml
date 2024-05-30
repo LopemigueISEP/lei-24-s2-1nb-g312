@@ -1,0 +1,85 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class AssignVehicleToAgendaEntryUI{
+}
+
+class AssignVehicleToAgendaEntryController{
+}
+
+class Employee {
++assignVehicleToTask()
+}
+
+class Task{
+}
+
+class TaskRepository {
+}
+
+class EmployeeRepository {
+}
+
+class VehicleRepository{
+}
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getTaskRepository()
+    + getEmployeeRepository()
+    + getVehicleRepository()
+
+}
+
+
+
+
+
+Repositories --> Repositories : instance
+
+
+AssignVehicleToAgendaEntryUI ..> AssignVehicleToAgendaEntryController
+
+AssignVehicleToAgendaEntryController ..> Repositories : repositories
+
+
+Repositories "1"--> "1" TaskRepository
+Repositories "1"--> "1" EmployeeRepository
+Repositories "1"--> "1" VehicleRepository
+
+TaskRepository "1"--> "*" Employee
+EmployeeRepository "1"--> "*" Employee
+VehicleRepository "1"--> "*" Employee
+
+Employee "1" --> "*"Task
+
+
+AssignVehicleToAgendaEntryController ..> Employee
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@enduml
