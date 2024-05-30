@@ -20,6 +20,7 @@ public class AssignTeamToTaskInTheAgendaUI implements Runnable {
         System.out.println("\n\n--- Assign a Team to a Task in the Agenda ------------------------");
 
             Task task = requestTask();
+
             Team team = requestTeam(task);
 
             submitData(team, task);
@@ -40,26 +41,30 @@ public class AssignTeamToTaskInTheAgendaUI implements Runnable {
         List<Task> taskList = controller.listUnfinishedTasks();
 
         if (taskList.isEmpty()) {
-            System.out.println("No unplanned tasks found.");
+            System.out.println("Pending status tasks not found.");
             System.exit(0);
         }
 
         for(Task t : taskList){
-            System.out.println(counter + ": " + t.getTaskID() + " - " + t.getTitle());
+            System.out.println(counter + ": " + t.getTitle());
             counter++;
         }
-        int index = readIntegerFromConsole("Enter task index") - 1;
+        int index = readIntegerFromConsole("Enter task index :") - 1;
         return taskList.get(index);
     }
 
     private Team requestTeam(Task task) {
         int counter = 1;
         List<Team> availableTeams = controller.listAvailableTeams(task);
+        if (availableTeams.isEmpty()) {
+            System.out.println("No available teams found.");
+            System.exit(0);
+        }
         for(Team t : availableTeams){
             System.out.println(counter + ": " + t.toString());
             counter++;
         }
-        int index = readIntegerFromConsole("Enter team index") - 1;
+        int index = readIntegerFromConsole("Enter team index :") - 1;
         return availableTeams.get(index);
     }
 }

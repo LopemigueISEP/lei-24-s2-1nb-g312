@@ -59,7 +59,7 @@ public class PostponeTaskInTheAgendaUI implements Runnable {
             counter++;
         }
 
-        int index = readIntegerFromConsole("Enter task index") - 1;
+        int index = readIntegerFromConsole("Enter task index :") - 1;
         return plannedTaskList.get(index);
     }
 

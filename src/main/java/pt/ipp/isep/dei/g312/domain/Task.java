@@ -61,7 +61,7 @@ public class Task implements Cloneable {
         this.taskPosition = taskPosition;
     }
 
-    //TODO: para que são estes contrutores?
+    //TODO: para que são estes construtores?
     public Task(String title, String greenSpace, Date startDate, TaskStatus status) {
         this.title = title;
         this.greenSpace = greenSpace;
