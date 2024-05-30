@@ -98,10 +98,10 @@ public class TaskRepository {
             if (startDate.after(teamTaskEndDate) || endDate.before(teamTaskStartDate)) {
                 return true;
             }
-            if (startDate.equals(teamTaskEndDate) && startingTaskPeriod.equals(TaskPeriod.AFTERNOON) && teamTaskEndPeriod.equals(TaskPeriod.MORNING)) {
+            if (startDate.equals(teamTaskEndDate) && startingTaskPeriod.equals(TaskPeriod.Afternoon) && teamTaskEndPeriod.equals(TaskPeriod.Morning)) {
                 return true;
             }
-            if (endDate.equals(teamTaskStartDate) && endPeriod.equals(TaskPeriod.MORNING) && teamTaskStartingTaskPeriod.equals(TaskPeriod.AFTERNOON)) {
+            if (endDate.equals(teamTaskStartDate) && endPeriod.equals(TaskPeriod.Morning) && teamTaskStartingTaskPeriod.equals(TaskPeriod.Afternoon)) {
                 return true;
             }
 
@@ -118,7 +118,7 @@ public class TaskRepository {
             endDate = startDate;
         }
         if (taskDuration == 2) { // if it occupies a whole day ("2 half days")
-            if (startingTaskPeriod.equals(TaskPeriod.MORNING)) {
+            if (startingTaskPeriod.equals(TaskPeriod.Morning)) {
                 endDate = startDate;
             } else {
                 calendar.add(Calendar.DAY_OF_YEAR, 1); // afternoon
@@ -127,7 +127,7 @@ public class TaskRepository {
         }
 
         if (taskDuration >= 3) {
-            if (startingTaskPeriod.equals(TaskPeriod.MORNING)) {
+            if (startingTaskPeriod.equals(TaskPeriod.Morning)) {
                 if (taskDuration % 2 == 0) {
                     calendar.add(Calendar.DAY_OF_YEAR, ((taskDuration / 2) - 1)); // if starts in the morning - if pair number of task duration (number of half days), it takes 3 days, counting with the starting day (adds only 2 days to the calendar if takes for example 6 days)
                     endDate = calendar.getTime();
@@ -160,27 +160,27 @@ public class TaskRepository {
             endPeriod = startingTaskPeriod;
         }
         if (taskDuration == 2) { // if it occupies a whole day ("2 half days")
-            if (startingTaskPeriod.equals(TaskPeriod.MORNING)) {
-                endPeriod = TaskPeriod.AFTERNOON;
+            if (startingTaskPeriod.equals(TaskPeriod.Morning)) {
+                endPeriod = TaskPeriod.Afternoon;
             } else {
-                endPeriod = TaskPeriod.MORNING;
+                endPeriod = TaskPeriod.Morning;
             }
         }
 
         if (taskDuration >= 3) {
-            if (startingTaskPeriod.equals(TaskPeriod.MORNING)) {
+            if (startingTaskPeriod.equals(TaskPeriod.Morning)) {
                 if (taskDuration % 2 == 0) {
-                    endPeriod = TaskPeriod.AFTERNOON;
+                    endPeriod = TaskPeriod.Afternoon;
                 } else {
-                    endPeriod = TaskPeriod.MORNING;
+                    endPeriod = TaskPeriod.Morning;
                 }
 
             } else { //afternoon
 
                 if (taskDuration % 2 == 0) {
-                    endPeriod = TaskPeriod.MORNING;
+                    endPeriod = TaskPeriod.Morning;
                 } else {
-                    endPeriod = TaskPeriod.AFTERNOON;
+                    endPeriod = TaskPeriod.Afternoon;
                 }
             }
         }
