@@ -20,7 +20,6 @@ public class Repositories {
     private final TaskRepository taskRepository;
     private final GreenSpaceRepository greenSpaceRepository;
     private final ToDoListRepository toDoRepository;
-    private final AgendaRepository agendaRepository;
 
 
 
@@ -40,7 +39,6 @@ public class Repositories {
         taskRepository = new TaskRepository();
         greenSpaceRepository = new GreenSpaceRepository();
         toDoRepository = new ToDoListRepository();
-        agendaRepository = new AgendaRepository();
     }
 
     /**
@@ -140,9 +138,6 @@ public class Repositories {
     }
     public ToDoListRepository getToDoRepository() {
         return toDoRepository;
-    }
-    public AgendaRepository getAgendaRepository() {
-        return agendaRepository;
     }
 
 }

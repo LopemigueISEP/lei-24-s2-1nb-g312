@@ -27,7 +27,7 @@ public class Task implements Cloneable {
 
 
     // constructor for to do list
-    public Task(String title, String description, Date date, Date startDate, Object o, int taskExpectedDuration, String type, String greenSpace, TaskUrgency urgency, Object object, Object o1, int taskID, ToDoEntry toDoListEntry) {
+    public Task(String title, String description, Date date, Date startDate, Object o, int taskExpectedDuration, String type, String greenSpace, TaskUrgency urgency, Object object, Object o1, int taskID, ToDoEntry toDoListEntry, TaskPosition taskPosition) {
         this.title = title;
         this.description = description;
         this.taskExpectedDuration = taskExpectedDuration;
@@ -38,12 +38,13 @@ public class Task implements Cloneable {
         this.taskID = taskID;
         this.toDoListEntry = toDoListEntry;
         this.startDate = startDate;
+        this.taskPosition = taskPosition;
 
     }
 
     // constructor for clone
     public Task(String title, String description, Date date, TaskPeriod taskStartPeriod, int taskExpectedDuration,
-                String type, String greenSpace, TaskUrgency urgency, TaskStatus status, Team assignedTeam, ArrayList<Vehicle> assignedVehicles, int taskID, ToDoEntry toDoListEntry) {
+                String type, String greenSpace, TaskUrgency urgency, TaskStatus status, Team assignedTeam, ArrayList<Vehicle> assignedVehicles, int taskID, ToDoEntry toDoListEntry, TaskPosition taskPosition) {
         this.title = title;
         this.description = description;
         this.date = date;
@@ -57,8 +58,10 @@ public class Task implements Cloneable {
         this.assignedVehicles = assignedVehicles;
         this.taskID = taskID;
         this.toDoListEntry = toDoListEntry;
+        this.taskPosition = taskPosition;
     }
 
+    //TODO: para que são estes contrutores?
     public Task(String title, String greenSpace, Date startDate, TaskStatus status) {
         this.title = title;
         this.greenSpace = greenSpace;
@@ -149,11 +152,14 @@ public class Task implements Cloneable {
     public ToDoEntry getToDoEntry() {
         return toDoEntry;
     }
+    public TaskPosition getTaskPosition() {
+        return taskPosition;
+    }
 
     // clone method
     public Task clone() {
         return new Task(this.title, this.description, this.date, this.taskStartPeriod, this.taskExpectedDuration,
-                this.type, this.greenSpace, this.urgency, this.status, this.assignedTeam, this.assignedVehicles, this.taskID, this.toDoListEntry);
+                this.type, this.greenSpace, this.urgency, this.status, this.assignedTeam, this.assignedVehicles, this.taskID, this.toDoListEntry, this.taskPosition);
     }
     @Override
     public String toString() {
@@ -178,3 +184,5 @@ public class Task implements Cloneable {
     }
 
 }
+
+
