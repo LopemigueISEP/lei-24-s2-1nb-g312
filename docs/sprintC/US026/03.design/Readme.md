@@ -11,21 +11,23 @@
 | Step 1  		 | 	... interacting with the actor?              | AssignVehicleToAgendaEntryUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
 | 			  		 | 	... coordinating the US?                     | AssignVehicleToAgendaEntryController | Controller                                                                                                    |
 | 			  		 | ... knowing the user using the system?        | EmployeeRepository                   | IE: knows the GSM                                                                                             |
-| Step 2  		 | 	... show available agenda entries?						     | Agenda                               | I.E: Agenda is a repository that knows all its entries.                                                       |
-| Step 3  		 | ...validating selected data?	                                             | AssignVehicleToAgendaEntryUI                                      | Pure Fabrication                                                                                              |
+| Step 2  		 | 	... show available agenda entries?						     | TaskRepository                       | I.E: Knows all entries (tasks).                                                                               |
+| Step 3  		 | ...validating selected data?	                 | AssignVehicleToAgendaEntryUI         | Pure Fabrication                                                                                              |
 | Step 4  		 | 	...shows available vehicles?                 | VehicleRepository                    | IE: Knows all the vehicles.                                                                                   |
-| Step 5  		 | ...validating selected data?	                                             | AssignVehicleToAgendaEntryUI                                      | Pure Fabrication                                                                 |
+| Step 5  		 | ...validating selected data?	                 | AssignVehicleToAgendaEntryUI         | Pure Fabrication                                                                                              |
 | Step 6  		 | 							                                       |                                      |                                                                                                               |              
-| Step 7  		 | 	... validating all data (local validation)?  | Agenda                               | IE: owns its data.                                                                                            | 
-| 			  		 | 	... validating all data (global validation)? | Agenda                               | IE: knows all agenda entries.                                                                                 | 
-| 			  		 | 	... saving the selected data?                | Agenda                               | IE: owns all agenda entries.                                                                                  | 
-| Step 8  		 | 	... informing operation success?             | AssignVehicleToAgendaEntryUI                          | IE: is responsible for user interactions.                                                                     | 
+| Step 7  		 | 	... assign vehicle to agenda entry?          | Employee                             | IE: knows vehicles and tasks                                                                                  |
+|   		 | 	... validating all data (local validation)?  | Task                                 | IE: owns its data.                                                                                            | 
+| 			  		 | 	... validating all data (global validation)? | TaskRepository                       | IE: knows all agenda entries.                                                                                 | 
+| 			  		 | 	... saving the selected data?                | TaskRepository                       | IE: owns all agenda entries.                                                                                  | 
+| Step 8  		 | 	... informing operation success?             | AssignVehicleToAgendaEntryUI         | IE: is responsible for user interactions.                                                                     | 
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are: 
 
-* Agenda
+* Task
+* Employee
 
 Other software classes (i.e. Pure Fabrication) identified: 
 
@@ -33,11 +35,11 @@ Other software classes (i.e. Pure Fabrication) identified:
 * AssignVehicleToAgendaEntryController
 * EmployeeRepository
 * VehicleRepository
+* TaskRepository
 
 
 ## 3.2. Sequence Diagram (SD)
 
-_**Note that SSD - Alternative Two is adopted.**_
 
 ### Full Diagram
 

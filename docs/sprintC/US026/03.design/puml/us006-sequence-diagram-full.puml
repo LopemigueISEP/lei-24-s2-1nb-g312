@@ -5,13 +5,18 @@ skinparam shadowing false
 
 autonumber
 
+title Sequence Diagram (SD) US026
+
 'hide footbox
-actor "Organization Employee" as ADM
-participant ":CreateTaskUI" as UI
-participant ":CreateTaskController" as CTRL
+actor "GSM" as GSM
+participant ":AssignVehicleToAgendaEntryUI" as UI
+participant ":AssignVehicleToAgendaEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "taskCategoryRepository:\nTaskCategoryRepository" as TaskCategoryRepository
+participant "employeeRepository:\nEmployeeRepository" as EmployeeRepository
+participant "taskRepository:\nTaskRepository" as TaskRepository
+participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
+
 participant ":ApplicationSession" as _APP
 participant "appSession\n:ApplicationSession" as APP
 participant "currentSession\n:UserSession" as SESSAO
@@ -19,9 +24,9 @@ participant "organizationRepository:\nOrganizationRepository" as OrganizationRep
 participant "organization\n:Organization" as ORG
 participant "task\n:Task" as TAREFA
 
-activate ADM
+activate GSM
 
-        ADM -> UI : asks to create a new task
+        GSM -> UI : asks to create a new task
 
         activate UI
 
@@ -44,31 +49,31 @@ activate ADM
                     PLAT --> CTRL: taskCategoryRepository
                 deactivate PLAT
 
-                CTRL -> TaskCategoryRepository : getTaskCategories()
-                activate TaskCategoryRepository
+                CTRL -> EmployeeRepository : getTaskCategories()
+                activate EmployeeRepository
 
-                    TaskCategoryRepository --> CTRL : taskCategoryList
-                deactivate TaskCategoryRepository
+                    EmployeeRepository --> CTRL : taskCategoryList
+                deactivate EmployeeRepository
 
                 CTRL --> UI : taskCategoryList
             deactivate CTRL
 
-            UI --> ADM : shows task category list\n and asks to sleect one
+            UI --> GSM : shows task category list\n and asks to sleect one
         deactivate UI
 
-    ADM -> UI : selects a task category
+    GSM -> UI : selects a task category
     activate UI
 
-        UI --> ADM : requests data
+        UI --> GSM : requests data
     deactivate UI
 
-    ADM -> UI : types requested data (reference, description, \ninformal description, technical description,\nduration, cost)
+    GSM -> UI : types requested data (reference, description, \ninformal description, technical description,\nduration, cost)
     activate UI
 
-        UI --> ADM : shows selected category and requested data
+        UI --> GSM : shows selected category and requested data
     deactivate UI
 
-    ADM -> UI : submits data
+    GSM -> UI : submits data
     activate UI
 
         UI -> CTRL : createTask(reference,\ndescription,\ninformalDescription,\ntechnicalDescription,\nduration, cost,\ntaskCategoryDescription)
@@ -89,11 +94,11 @@ activate ADM
                     PLAT -> CTRL : taskCategoryRepository
                 deactivate PLAT
 
-                CTRL -> TaskCategoryRepository : getTaskCategoryByDescription(taskCategoryDescription)
-                activate TaskCategoryRepository
+                CTRL -> EmployeeRepository : getTaskCategoryByDescription(taskCategoryDescription)
+                activate EmployeeRepository
 
-                    TaskCategoryRepository --> CTRL : taskCategory
-                deactivate TaskCategoryRepository
+                    EmployeeRepository --> CTRL : taskCategory
+                deactivate EmployeeRepository
                     CTRL --> CTRL : taskCategory
             deactivate CTRL
 
@@ -172,9 +177,9 @@ activate ADM
 
             CTRL --> UI: task
             deactivate CTRL
-            UI --> ADM: displays operation success
+            UI --> GSM: displays operation success
     deactivate UI
 
-deactivate ADM
+deactivate GSM
 
 @enduml

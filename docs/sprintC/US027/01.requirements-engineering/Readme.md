@@ -34,7 +34,6 @@ As a GSM, I need to list all green spaces managed by me.
 
 * **AC1:** The list of green spaces must be sorted by size in descending order (area in hectares should be used). The sorting algorithm to be used by the application must be defined through a configuration file. At least two sorting algorithms should be available.
 * **AC2:** The list of green spaces must show the typology of each green space.
-* **AC3:** When creating a task with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
 
 ### 1.4. Found out Dependencies
 
