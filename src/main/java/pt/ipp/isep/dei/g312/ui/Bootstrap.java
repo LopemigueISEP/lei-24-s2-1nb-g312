@@ -8,8 +8,14 @@ import pt.ipp.isep.dei.g312.ui.console.utils.Utils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+
 
 
 public class Bootstrap implements Runnable {
@@ -29,6 +35,8 @@ public class Bootstrap implements Runnable {
 
             addVehicles();
             addEmployes();
+            addTasks();
+            addTeams();
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
@@ -64,6 +72,55 @@ public class Bootstrap implements Runnable {
         jobRepository.addJobRep(new Job("Heavy Vehicle Driver", "Who drives vehicles up to 3500 tare weight"));
 
     }
+
+    private void addTeams() {
+        TeamRepository teamRepository = Repositories.getInstance().getTeamRepository();
+        EmployeeRepository employeeRepository = Repositories.getInstance().getEmployeeRepository();
+
+        // Get employees to form teams
+        List<Employee> allEmployees = employeeRepository.getEmployees();
+
+        // Create a sample team with some employees
+        List<Employee> teamMembers = new ArrayList<>();
+        teamMembers.add(allEmployees.get(0)); // Add first employee
+        teamMembers.add(allEmployees.get(1)); // Add second employee
+
+        Team team = new Team(teamMembers);
+
+        // Add the team to the repository
+        Optional<Team> addedTeam = teamRepository.add(team);
+    }
+
+    private void addTasks() throws ParseException {
+        TaskRepository taskRepository = Repositories.getInstance().getTaskRepository();
+
+        // Creating a sample date
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = dateFormat.parse("01/06/2024");
+
+        // Creating other sample parameters
+        String title = "Sample Task";
+        String description = "This is a sample task description.";
+        TaskPeriod taskStartPeriod = TaskPeriod.Morning;
+        int taskExpectedDuration = 1;
+        String type = "Type A";
+        String greenSpace = "Central Park";
+        TaskUrgency urgency = TaskUrgency.High;
+        TaskStatus status = TaskStatus.Planned;
+        Team assignedTeam = null;
+        ArrayList<Vehicle> assignedVehicles = null;
+        int taskID = 1;
+        ToDoEntry toDoListEntry = new ToDoEntry("Entry 1", "Entry description");
+        TaskPosition taskPosition = TaskPosition.Agenda;
+
+        // Creating the task
+        Task task = new Task(title, description, date, taskStartPeriod, taskExpectedDuration, type, greenSpace, urgency, status, assignedTeam, assignedVehicles, taskID, toDoListEntry, taskPosition);
+
+        // Adding the task to the repository
+        Optional<Task> task1 = taskRepository.add(task);
+
+    }
+
 
 
     private void addVehicles() throws ParseException {
