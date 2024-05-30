@@ -150,7 +150,7 @@ public class TaskRepository {
         return endDate;
     }
 
-    private TaskPeriod findEndPeriod(Date startDate, TaskPeriod startingTaskPeriod, int taskDuration) {
+    /**private TaskPeriod findEndPeriod(Date startDate, TaskPeriod startingTaskPeriod, int taskDuration) {
         TaskPeriod endPeriod = null;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(startDate);
@@ -185,16 +185,44 @@ public class TaskRepository {
             }
         }
         return endPeriod;
+    }*/
+
+    private TaskPeriod findEndPeriod(Date startDate, TaskPeriod startingTaskPeriod, int taskDuration) {
+        TaskPeriod endPeriod = startingTaskPeriod;
+
+        if (taskDuration == 1) {
+            endPeriod = startingTaskPeriod;
+        } else if (taskDuration == 2) {
+            endPeriod = startingTaskPeriod == TaskPeriod.Morning ? TaskPeriod.Afternoon : TaskPeriod.Morning;
+        } else if (taskDuration >= 3) {
+            endPeriod = (taskDuration % 2 == 0) ?
+                    (startingTaskPeriod == TaskPeriod.Morning ? TaskPeriod.Afternoon : TaskPeriod.Morning) :
+                    startingTaskPeriod;
+        }
+        return endPeriod;
     }
 
     // method to get all tasks assigned to a team (ignoring tasks with status canceled or done)
-    public List<Task> getAllTeamTasks(Team team) {
+    /**public List<Task> getAllTeamTasks(Team team) {
         List<Task> teamTasks = new ArrayList<>();
         for (Task task : getAgenda()) {
             if (task.getAssignedTeam().equals(team)) {
                 if (!task.getStatus().equals(TaskStatus.Canceled) || !task.getStatus().equals(TaskStatus.Done)) {
                     teamTasks.add(task);
 
+                }
+            }
+        }
+        return teamTasks;
+    }*/
+
+    public List<Task> getAllTeamTasks(Team team) {
+        List<Task> teamTasks = new ArrayList<>();
+        for (Task task : getAgenda()) {
+            Team assignedTeam = task.getAssignedTeam();
+            if (assignedTeam != null && assignedTeam.equals(team)) {
+                if (!task.getStatus().equals(TaskStatus.Canceled) && !task.getStatus().equals(TaskStatus.Done)) {
+                    teamTasks.add(task);
                 }
             }
         }

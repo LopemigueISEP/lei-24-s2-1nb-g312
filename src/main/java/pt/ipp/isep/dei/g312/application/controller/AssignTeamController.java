@@ -38,11 +38,24 @@ public class AssignTeamController {
         return false;
     }
 
-    public List<Team> listAvailableTeams(Task task) {
+    /**public List<Team> listAvailableTeams(Task task) {
         List<Team> availableTeams = new ArrayList<>();
         for (Team team : teamRepository.getAllTeams()) {
             List<Task> teamTasks = taskRepository.getAllTeamTasks(team);
             if (taskRepository.teamAvailability(teamTasks, task)) {
+                availableTeams.add(team);
+            }
+        }
+        return availableTeams;
+    } */
+
+    public List<Team> listAvailableTeams(Task task) {
+        List<Team> availableTeams = new ArrayList<>();
+        for (Team team : teamRepository.getAllTeams()) {
+            List<Task> teamTasks = taskRepository.getAllTeamTasks(team);
+            boolean isAvailable = taskRepository.teamAvailability(teamTasks, task);
+            System.out.println("Team " + team.toString() + " is available: " + isAvailable);
+            if (isAvailable) {
                 availableTeams.add(team);
             }
         }
