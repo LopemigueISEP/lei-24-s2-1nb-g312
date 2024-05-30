@@ -15,10 +15,10 @@
 | 		             | 	...temporarily keeping requested data?       | RegisterGreenSpaceUI         | Pure Fabrication                                                                                              |
 | Step 4  		     | 	                                             |                              |                                                                                                               |
 | Step 5         | 	...temporarily keeping requested data?       | RegisterGreenSpaceUI         | Pure Fabrication                                                                                              |
-| 	              | 	... creating Vehicle Object?                 | GreenSpace                   | Creator                                                                                                       |
+| 	              | 	... creating Green Space Object?             | Employee                     | Creator (Rule 1): the Employee aggregates instances of green space.                                           |
 | 		             | 	... validating all data (local validation)?  | GreenSpace                   | IE: object created has its own data                                                                           |
-| 		             | 	... validating all data (global validation)? | GreenSpace                   | 	IE: knows all its GreenSpaces instances                                                                      |
-| 		             | 	... saving inputted data?                    | GreenSpaceRepository         | IE: object created has its own data                                                                           |
+| 		             | 	... validating all data (global validation)? | Employee                     | 	IE: knows all its GreenSpaces instances                                                                      |
+| 		             | 	... saving inputted data?                    | GreenSpaceRepository         | IE: owns all its green spaces.                                                                                |
 | Step 6 		      | 	... informing operation success?             | RegisterGreenSpaceUI         | IE: is responsible for user interactions.                                                                     | 
 
 ### Systematization ##

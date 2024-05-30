@@ -14,38 +14,37 @@ class RegisterGreenSpaceUI {
 }
 
 class RegisterGreenSpaceController {
-
-    + registerGreenSpace(name: String, address: String, area: double, typology : String, greenSpaceManager: String)
+    + getEmployeeRepository() : employeeRepository
+    + registerGreenSpace(name: String, address: String, area: double, typology : String, greenSpaceManager: String) : Optional<GreenSpace>
     + existsGreenSpace(name : String) : Boolean
-    + getGreenSpaceRepository() : GreenSpaceRepository
-    + getAuthRepository() : AuthRepository
-    + getEmployeeRepository() : GreenSpaceRepository
-    + currentUserLogInValidation : boolean
-    + matchEmployeeByRole() : Employee
 
 }
 
 class Repositories {
      - Repositories()
      + getInstance() : Repositories
-     + getEmployeeRepository()
+     + getEmployeeRepository() : employeeRepository
 
 }
 
 class Employee {
-    name
-    birth date
-    contact (email/phone)
-    admission date
-    taxpayer number
-    address
-    ID doc type and number
-    role
+    -name : String
+    -birthdate : Date
+    -email : String
+    -phoneNumber : int
+    -admission date : Date
+    -taxpayerNumber : String
+    -address : String
+    -docNumber : String
+    -jobTitle : String
+    +registerGreenSpace(name: String, address: String, area: double, typology : String, greenSpaceManager: String) : Optional<GreenSpace>
+    +addGreenSpace(greenSpace) : boolean
+    +validateGreenSPace(greenSpace) : boolean
+
 }
 
 class EmployeeRepository {
-    -employeeList : List<Employee>
-    +getEmployee(taxpayerNumber : String) : Optional<Employee>
+    +getEmployee() : employee
 }
 
 
@@ -56,11 +55,6 @@ class GreenSpace {
         -area : double
         -typology : String
         - greenSpaceManager : String
-
-    +registerGreenSpace(name: String, address: String, area: double, typology : String, greenSpaceManager: String) : Optional<GreenSpace>
-    +GreenSpace()
-    +clone() : GreenSpace
-    +compareTo(o:GreenSpace) : int
 }
 
 
@@ -72,7 +66,7 @@ RegisterGreenSpaceController ..> Employee
 RegisterGreenSpaceUI .> RegisterGreenSpaceController
 Repositories -> Repositories : instance
 EmployeeRepository "1" --> "*" Employee
-Employee "1" --> "*" GreenSpace : register
+Employee "1" --> "*" GreenSpace : registerGreenSpace
 Repositories "1" --> "1" EmployeeRepository
 
 
