@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.g312.domain;
 
 import pt.ipp.isep.dei.g312.repository.Repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 public class GreenSpace implements Comparable<GreenSpace> {
@@ -69,7 +70,15 @@ public class GreenSpace implements Comparable<GreenSpace> {
     public GreenSpace clone() {
         return new GreenSpace(this.name, this.address, this.area, this.typology, this.greenSpaceManager);
     }
+    public static void printRegisteredGreenSpaces(List<GreenSpace> greenSpaces) {
+        System.out.println("\n\n------------------ Green Spaces List --------------------");
+        System.out.printf("%25s -  %s - %s\n",  "Green Space name", "Type", "Manager");
+        System.out.println("-----------------------------------------------------------");
 
+        for (GreenSpace greenSpace : greenSpaces) {
+            System.out.printf("%25s -  %s - %s\n", greenSpace.getName(), greenSpace.getTypology(), greenSpace.getGreenSpaceManager());
+        }
+    }
 
     /**
      * Implements the Comparable interface to define an ordering for GreenSpace objects.

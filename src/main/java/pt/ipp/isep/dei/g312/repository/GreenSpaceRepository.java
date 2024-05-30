@@ -67,14 +67,14 @@ public class GreenSpaceRepository {
      * Prints a formatted list of all `GreenSpace` objects currently stored in the repository.
      */
     public void printRegisteredGreenSpaces() {
+        System.out.println("\n\n------------------ Green Spaces List --------------------");
+        System.out.printf("%25s -  %s - %s\n",  "Green Space name", "Type", "Manager");
+        System.out.println("-----------------------------------------------------------");
 
         for (GreenSpace greenSpace : greenSpaceList) {
-            if (greenSpace != null) {
-                System.out.printf("%25s -  %s - %s\n", greenSpace.getName(), greenSpace.getTypology(), greenSpace.getGreenSpaceManager());
-            }
+            System.out.printf("%25s -  %s - %s\n", greenSpace.getName(), greenSpace.getTypology(), greenSpace.getGreenSpaceManager());
         }
-            System.out.println("---------------------------------------------------");
-        }
-
+        System.out.println("-----------------------------------------------------------"); // Adiciona uma linha após o loop
+    }
 
 }

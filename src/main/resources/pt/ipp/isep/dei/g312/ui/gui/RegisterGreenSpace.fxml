@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.g312.application.controller.RegisterGreenSpaceController" alignment="CENTER">
+<VBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.g312.application.controller.RegisterGreenSpaceController"  alignment="CENTER" prefHeight="720.0" prefWidth="720.0" minHeight="-Infinity" minWidth="-Infinity" maxHeight="-Infinity" maxWidth="-Infinity">
     <children>
         <GridPane alignment="CENTER" hgap="10" vgap="10" prefHeight="728.0" prefWidth="720.0">
             <padding>

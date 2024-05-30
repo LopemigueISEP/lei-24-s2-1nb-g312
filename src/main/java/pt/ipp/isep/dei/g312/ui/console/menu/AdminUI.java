@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.g312.ui.console.*;
 import pt.ipp.isep.dei.g312.ui.console.utils.Utils;
 import pt.ipp.isep.dei.g312.ui.gui.AddEntryToDoListUI;
 import pt.ipp.isep.dei.g312.ui.gui.RegisterGreenSpaceUI;
+import pt.ipp.isep.dei.g312.ui.gui.ShowListOfGreenSpacesUI;
 import pt.ipp.isep.dei.g312.ui.gui.TestUI;
 
 import java.util.ArrayList;
