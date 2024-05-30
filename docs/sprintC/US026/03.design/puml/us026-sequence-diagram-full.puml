@@ -1,0 +1,158 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+title Sequence Diagram (SD) US026
+
+'hide footbox
+actor "GSM" as GSM
+participant ":AssignVehicleToAgendaEntryUI" as UI
+participant ":AssignVehicleToAgendaEntryController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "employeeRepository:\nEmployeeRepository" as EmployeeRepository
+participant "taskRepository:\nTaskRepository" as TaskRepository
+participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
+participant "employee:Employee" as employee
+
+
+activate GSM
+
+        GSM -> UI : asks to assign one or more vehicles \nto an entry in the agenda
+
+        activate UI
+
+'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+
+
+            UI -> CTRL : getAvailableTasks()
+            activate CTRL
+
+                CTRL -> RepositorySingleton : getInstance()
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
+
+                CTRL -> PLAT : getTaskRepository()
+                activate PLAT
+
+                    PLAT --> CTRL: taskRepository
+                deactivate PLAT
+
+                CTRL -> TaskRepository : getAvailableTasks()
+                activate TaskRepository
+
+                    TaskRepository --> CTRL : availableTasksList
+                deactivate TaskRepository
+
+                CTRL --> UI : availableTasksList
+            deactivate CTRL
+
+            UI --> GSM : shows available agenda entries \nand asks to select one
+        deactivate UI
+
+    GSM -> UI : selects one agenda entry
+    activate UI
+
+
+        UI -> CTRL : getAvailableVehicles()
+                    activate CTRL
+
+                        CTRL -> RepositorySingleton : getInstance()
+                        activate RepositorySingleton
+
+                            RepositorySingleton --> CTRL: repositories
+                        deactivate RepositorySingleton
+
+                        CTRL -> PLAT : getVehicleRepository()
+                        activate PLAT
+
+                            PLAT --> CTRL: vehicleRepository
+                        deactivate PLAT
+
+                        CTRL -> VehicleRepository : getAvailableVehicles()
+                        activate VehicleRepository
+
+                            VehicleRepository --> CTRL : availableVehiclesList
+                        deactivate VehicleRepository
+
+                        CTRL --> UI : availableVehiclesList
+                    deactivate CTRL
+
+
+
+
+        UI --> GSM : shows available vehicles and asks to select at least one
+    deactivate UI
+
+    GSM -> UI : selects vehicles
+    activate UI
+
+        UI --> GSM : shows all data and requests confirmation
+    deactivate UI
+
+    GSM -> UI : submits data
+    activate UI
+
+        UI -> CTRL : assignVehicleToTask()
+        activate CTRL
+
+             CTRL->CTRL: getEmployeeFromRepository()
+
+                    activate CTRL
+                    CTRL -> RepositorySingleton : getInstance()
+                    activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL : repositories
+                    deactivate RepositorySingleton
+
+                    CTRL -> PLAT : getEmployeeRepositories()
+                    activate PLAT
+
+
+                    PLAT --> CTRL : EmployeeRepositories
+                    deactivate PLAT
+
+
+                    CTRL -> EmployeeRepository: getEmployee()
+                    activate EmployeeRepository
+                    EmployeeRepository -->CTRL: employee
+                    deactivate EmployeeRepository
+
+                CTRL-->CTRL: employee
+                deactivate CTRL
+
+                |||
+
+
+                CTRL -> "employee" : assignVehicleToTask(employee, task, vehicles)
+                    activate "employee"
+
+                    "employee" ->"task"** : assignVehicleToTask(employee, task, vehicles)
+
+                    "employee" -> "employee": validateTask(task)
+                    "employee" -> "employee": addTask(task)
+
+                    "employee" --> CTRL: task
+                    deactivate "employee"
+
+
+
+
+
+
+
+
+            CTRL --> UI: task
+            deactivate CTRL
+            UI --> GSM: displays operation success
+    deactivate UI
+
+deactivate GSM
+
+@enduml
