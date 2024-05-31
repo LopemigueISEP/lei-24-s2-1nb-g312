@@ -37,6 +37,7 @@ public class RegisterGreenSpaceController {
     @FXML
     private ListView<String> greenSpacesListView;
 
+
     private GreenSpaceRepository greenSpaceRepository;
     private AuthenticationRepository authRepository;
     private EmployeeRepository employeeRepository;

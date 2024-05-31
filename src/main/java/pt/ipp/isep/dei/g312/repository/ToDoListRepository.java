@@ -1,6 +1,8 @@
 package pt.ipp.isep.dei.g312.repository;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import pt.ipp.isep.dei.g312.domain.ToDoEntry;
 import java.util.ArrayList;
 
@@ -11,8 +13,8 @@ public class ToDoListRepository {
 
     private List<ToDoEntry> toDoList = new ArrayList<>();
 
-    public List<ToDoEntry> getToDoList() {
-        return new ArrayList<>(toDoList); // Return a copy to avoid modification
+    public ObservableList<ToDoEntry> getToDoList() {
+        return FXCollections.observableArrayList(toDoList); // Return an ObservableList
     }
 
     public boolean addEntryToDoList(ToDoEntry toDoEntry) {
@@ -21,7 +23,6 @@ public class ToDoListRepository {
         }
         return toDoList.add(toDoEntry);
     }
-
 
     public boolean containsToDoListWithName(String name) {
         for (ToDoEntry item : toDoList) {
