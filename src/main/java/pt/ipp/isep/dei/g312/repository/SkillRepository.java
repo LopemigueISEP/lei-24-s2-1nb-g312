@@ -147,10 +147,7 @@ public class SkillRepository implements Serializable {
             
             in.close();
             file.close();
-            System.out.println("Object has been deserialized");
 
-
-            // System.out.println("z = " + object1.z);
         }
 
         catch (IOException ex) {

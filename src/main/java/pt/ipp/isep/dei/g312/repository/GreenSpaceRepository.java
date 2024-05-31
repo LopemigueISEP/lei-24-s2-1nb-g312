@@ -3,7 +3,9 @@ package pt.ipp.isep.dei.g312.repository;
 
 
 import pt.ipp.isep.dei.g312.domain.GreenSpace;
+import pt.ipp.isep.dei.g312.domain.Skill;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.Optional;
  * It provides functionalities to manage green spaces, including adding, retrieving, validating, and printing them.
  */
 public class GreenSpaceRepository {
-    private List<GreenSpace> greenSpaceList = new ArrayList<>();
+    private final List<GreenSpace> greenSpaceList = new ArrayList<>();
 
     /**
      * Retrieves a list of all GreenSpace objects currently stored in the repository.
@@ -77,4 +79,65 @@ public class GreenSpaceRepository {
         System.out.println("-----------------------------------------------------------"); // Adiciona uma linha após o loop
     }
 
+    public void serializateData() {
+
+        String filename = this.getClass().getSimpleName()+".bin";
+
+        // Serialization
+        try {
+
+            // Saving of object in a file
+            FileOutputStream file = new FileOutputStream
+                    (filename);
+            ObjectOutputStream out = new ObjectOutputStream
+                    (file);
+
+            // Method for serialization of object
+            out.writeObject(this);
+
+
+            out.close();
+            file.close();
+
+            System.out.println(this.getClass().getSimpleName()+" Has Been Serialized successfully! ");
+        } catch (FileNotFoundException ex) {
+            System.out.println("IOException is caught");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void getSeralizatedData() {
+        String filename = this.getClass().getSimpleName()+".bin";
+
+        try {
+
+            // Reading the object from a file
+            FileInputStream file = new FileInputStream
+                    (filename);
+            ObjectInputStream in = new ObjectInputStream
+                    (file);
+
+            // Method for deserialization of object
+            GreenSpaceRepository greenSpace = (GreenSpaceRepository) in.readObject();
+
+            for (GreenSpace g :
+                    greenSpace.getGreenSpaceList()) {
+                this.addGreenSpace(g);
+            }
+
+            in.close();
+            file.close();
+
+        }
+
+        catch (IOException ex) {
+            System.out.println("IOException is caught");
+        }
+
+        catch (ClassNotFoundException ex) {
+            System.out.println("ClassNotFoundException" +
+                    " is caught");
+        }
+    }
 }
