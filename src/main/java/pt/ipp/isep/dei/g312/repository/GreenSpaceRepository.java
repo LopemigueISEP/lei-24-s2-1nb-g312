@@ -15,7 +15,7 @@ import java.util.Optional;
  * This class represents a repository for `GreenSpace` objects.
  * It provides functionalities to manage green spaces, including adding, retrieving, validating, and printing them.
  */
-public class GreenSpaceRepository {
+public class GreenSpaceRepository implements Serializable {
     private final List<GreenSpace> greenSpaceList = new ArrayList<>();
 
     /**

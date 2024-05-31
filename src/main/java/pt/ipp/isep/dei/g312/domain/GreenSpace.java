@@ -2,10 +2,11 @@ package pt.ipp.isep.dei.g312.domain;
 
 import pt.ipp.isep.dei.g312.repository.Repositories;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public class GreenSpace implements Comparable<GreenSpace> {
+public class GreenSpace implements Comparable<GreenSpace>, Serializable {
     private String name;
     private String address;
     private double area;

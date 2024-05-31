@@ -46,6 +46,7 @@ public class Bootstrap implements Runnable {
      */
     public void saveSeralization(){
         Repositories.getInstance().getSkillRepository().serializateData();
+        Repositories.getInstance().getGreenSpaceRepository().serializateData();
     }
 
     private void addEmployes() {
@@ -148,15 +149,15 @@ public class Bootstrap implements Runnable {
     private void addGreenSpaces() {
         GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
         greenSpaceRepository.getSeralizatedData();
-        greenSpaceRepository.addGreenSpace(new GreenSpace("Parque da Cidade do Porto", "Porto", 99.6, "Large-sized park", "Green Space Manager"));
-        greenSpaceRepository.addGreenSpace(new GreenSpace("Avioso", "Maia", 43.4, "Medium-sized park", "Main Administrator"));
-        greenSpaceRepository.addGreenSpace(new GreenSpace("Rabada", "Santo Tirso", 15.3, "Garden", "Green Space Manager"));
-        greenSpaceRepository.addGreenSpace(new GreenSpace("Bela Vista", "Lisboa", 259.6, "Large-sized park", "Main Administrator"));
-        greenSpaceRepository.addGreenSpace(new GreenSpace("Azibo", "Bragança", 493.2, "Large-sized park", "Green Space Manager"));
-        greenSpaceRepository.addGreenSpace(new GreenSpace("Oriental", "Campanhã", 35.9, "Medium-sized park", "Green Space Manager"));
-        greenSpaceRepository.addGreenSpace(new GreenSpace("Parque Eduardo VII", "Lisboa", 26.0, "Large-sized park", "Green Space Manager"));
-        greenSpaceRepository.addGreenSpace(new GreenSpace("Parque da Cidade do Porto", "Porto", 83.0, "Large-sized park", "Main Administrator"));
-        greenSpaceRepository.addGreenSpace(new GreenSpace("Parque Florestal de Monsanto", "Lisboa", 900.0, "Large-sized park", "Main Administrator"));
+//        greenSpaceRepository.addGreenSpace(new GreenSpace("Parque da Cidade do Porto", "Porto", 99.6, "Large-sized park", "Green Space Manager"));
+//        greenSpaceRepository.addGreenSpace(new GreenSpace("Avioso", "Maia", 43.4, "Medium-sized park", "Main Administrator"));
+//        greenSpaceRepository.addGreenSpace(new GreenSpace("Rabada", "Santo Tirso", 15.3, "Garden", "Green Space Manager"));
+//        greenSpaceRepository.addGreenSpace(new GreenSpace("Bela Vista", "Lisboa", 259.6, "Large-sized park", "Main Administrator"));
+//        greenSpaceRepository.addGreenSpace(new GreenSpace("Azibo", "Bragança", 493.2, "Large-sized park", "Green Space Manager"));
+//        greenSpaceRepository.addGreenSpace(new GreenSpace("Oriental", "Campanhã", 35.9, "Medium-sized park", "Green Space Manager"));
+//        greenSpaceRepository.addGreenSpace(new GreenSpace("Parque Eduardo VII", "Lisboa", 26.0, "Large-sized park", "Green Space Manager"));
+//        greenSpaceRepository.addGreenSpace(new GreenSpace("Parque da Cidade do Porto", "Porto", 83.0, "Large-sized park", "Main Administrator"));
+//        greenSpaceRepository.addGreenSpace(new GreenSpace("Parque Florestal de Monsanto", "Lisboa", 900.0, "Large-sized park", "Main Administrator"));
     }
 
     private void addOrganization() {
