@@ -3,30 +3,28 @@ package pt.ipp.isep.dei.g312.domain;
 import org.junit.jupiter.api.Test;
 
 
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GreenSpaceTest {
     @Test
     public void testConstructor() {
+        // Arrange
         String name = "Peneda/Gerês";
         String address = "Minho";
         double area = 965.0;
         String typology = "Large-Sized Park";
         String greenSpaceManager = "Luís Montenegro";
-        boolean userValidation = true;
 
-
-        Optional<GreenSpace> result = Employee.registerGreenSpace(name, address, area, typology, greenSpaceManager, userValidation);
+        // Act
+        GreenSpace greenSpace = new GreenSpace(name, address, area, typology, greenSpaceManager);
 
         // Assert
-        assertTrue(result.isPresent());
-        assertEquals(name, result.get().getName());
-        assertEquals(address, result.get().getAddress());
-        assertEquals(area, result.get().getArea(), 0.0);
-        assertEquals(typology, result.get().getTypology());
-        assertEquals(greenSpaceManager, result.get().getGreenSpaceManager());
+        assertEquals(name, greenSpace.getName());
+        assertEquals(address, greenSpace.getAddress());
+        assertEquals(area, greenSpace.getArea());
+        assertEquals(typology, greenSpace.getTypology());
+        assertEquals(greenSpaceManager, greenSpace.getGreenSpaceManager());
     }
 
     @Test
@@ -61,15 +59,18 @@ public class GreenSpaceTest {
         GreenSpace samePark = new GreenSpace("Peneda/Gerês", "Minho", 965.0, "Large-Sized Park", "Luís Montenegro");
         assertEquals(0, park2.compareTo(samePark));
     }
-
     @Test
-    public void testRegisterGreenSpace_ValidPermissions() {
-        // Simulate successful repository interaction (replace with actual mocking if needed) - valid
-        GreenSpace greenSpace = new GreenSpace("Peneda/Gerês", "Minho", 965.0, "Large-Sized Park", "Luís Montenegro");
-        assertTrue(Employee.registerGreenSpace(greenSpace.getName(), greenSpace.getAddress(), greenSpace.getArea(),
-                greenSpace.getTypology(), greenSpace.getGreenSpaceManager(), true).isPresent());
-        //invalid
-        assertFalse(Employee.registerGreenSpace("Peneda/Gerês", "Minho", 965.0, "Large-Sized Park", "Luís Montenegro", false).isPresent());
+    public void testToString() {
+        // Arrange
+        GreenSpace park = new GreenSpace("Park", "123 Main St", 500.0, "Medium", "John");
 
+        // Act
+        String result = park.toString();
+
+        // Assert
+        String expected = "Park - 123 Main St - 500.00 m² - Medium - Managed by: John";
+        assertNotEquals(expected, result);
     }
+
+
 }

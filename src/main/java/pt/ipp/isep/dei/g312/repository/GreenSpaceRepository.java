@@ -1,9 +1,6 @@
 package pt.ipp.isep.dei.g312.repository;
 
-
-
 import pt.ipp.isep.dei.g312.domain.GreenSpace;
-import pt.ipp.isep.dei.g312.domain.Skill;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -34,23 +31,16 @@ public class GreenSpaceRepository implements Serializable {
      * and the list is sorted by name.
      *
      * @param greenSpace The `GreenSpace` object to add.
-     * @return True if the green space was added successfully, false otherwise.
+     * @return An Optional containing the added `GreenSpace` object if it was added successfully, or an empty Optional if it was not added.
      */
-
-    public boolean addGreenSpace(GreenSpace greenSpace) {
-        Optional<GreenSpace> newGreenSpace;
-        boolean operationSuccess = false;
-
+    public Optional<GreenSpace> addGreenSpace(GreenSpace greenSpace) {
         if (validateGreenSpace(greenSpace)) {
-            newGreenSpace = Optional.of(greenSpace.clone());
-            operationSuccess = greenSpaceList.add(newGreenSpace.get());
+            GreenSpace newGreenSpace = greenSpace.clone();
+            greenSpaceList.add(newGreenSpace);
             Collections.sort(greenSpaceList);
-
+            return Optional.of(newGreenSpace);
         }
-        if (!operationSuccess) {
-            newGreenSpace = Optional.empty();
-        }
-        return true;
+        return Optional.empty();
     }
 
     /**
@@ -60,25 +50,43 @@ public class GreenSpaceRepository implements Serializable {
      * @return True if the green space is valid (not already present), false otherwise.
      */
     public boolean validateGreenSpace(GreenSpace greenSpace) {
-        boolean isValid = !greenSpaceList.contains(greenSpace);
-
-        return isValid;
+        return !greenSpaceList.contains(greenSpace);
     }
 
     /**
-     * Prints a formatted list of all `GreenSpace` objects currently stored in the repository.
+     * Checks if a green space with the given name already exists in the repository.
+     *
+     * @param name The name of the green space to check.
+     * @return True if a green space with the given name exists, false otherwise.
      */
-    public void printRegisteredGreenSpaces() {
-        System.out.println("\n\n------------------ Green Spaces List --------------------");
-        System.out.printf("%25s -  %s - %s\n",  "Green Space name", "Type", "Manager");
-        System.out.println("-----------------------------------------------------------");
-
-        for (GreenSpace greenSpace : greenSpaceList) {
-            System.out.printf("%25s -  %s - %s\n", greenSpace.getName(), greenSpace.getTypology(), greenSpace.getGreenSpaceManager());
+    public boolean existsWithName(String name) {
+        List<GreenSpace> greenSpaces = getGreenSpaceList();
+        for (GreenSpace greenSpace : greenSpaces) {
+            if (greenSpace.getName().equalsIgnoreCase(name)) {
+                return true;
+            }
         }
-        System.out.println("-----------------------------------------------------------"); // Adiciona uma linha após o loop
+        return false;
     }
+    /**
+     * Checks if a green space with the given address already exists in the repository.
+     *
+     * @param address The address of the green space to check.
+     * @return True if a green space with the given address exists, false otherwise.
+     */
 
+    public boolean existsWithAddress(String address) {
+        List<GreenSpace> greenSpaces = getGreenSpaceList();
+        for (GreenSpace greenSpace : greenSpaces) {
+            if (greenSpace.getAddress().equalsIgnoreCase(address)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
+     * Serialize data and save it to a file.
+     */
     public void serializateData() {
 
         String filename = this.getClass().getSimpleName()+".bin";
@@ -107,6 +115,9 @@ public class GreenSpaceRepository implements Serializable {
         }
     }
 
+    /**
+     * Deserialize data from a file and add it to the repository.
+     */
     public void getSeralizatedData() {
         String filename = this.getClass().getSimpleName()+".bin";
 
@@ -140,4 +151,5 @@ public class GreenSpaceRepository implements Serializable {
                     " is caught");
         }
     }
+
 }

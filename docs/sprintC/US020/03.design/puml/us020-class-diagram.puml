@@ -4,10 +4,10 @@ skinparam packageStyle rectangle
 skinparam shadowing false
 skinparam linetype polyline
 'skinparam linetype orto
+
 skinparam classAttributeIconSize 0
 
 'left to right direction
-
 
 class RegisterGreenSpaceUI {
 
@@ -16,7 +16,6 @@ class RegisterGreenSpaceUI {
 class RegisterGreenSpaceController {
     + getEmployeeRepository() : employeeRepository
     + registerGreenSpace(name: String, address: String, area: double, typology : String, greenSpaceManager: String) : Optional<GreenSpace>
-    + existsGreenSpace(name : String) : Boolean
 
 }
 

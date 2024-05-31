@@ -18,7 +18,7 @@
 | 	              | 	... creating Green Space Object?             | Employee                     | Creator (Rule 1): the Employee aggregates instances of green space.                                           |
 | 		             | 	... validating all data (local validation)?  | GreenSpace                   | IE: object created has its own data                                                                           |
 | 		             | 	... validating all data (global validation)? | Employee                     | 	IE: knows all its GreenSpaces instances                                                                      |
-| 		             | 	... saving inputted data?                    | GreenSpaceRepository         | IE: owns all its green spaces.                                                                                |
+| 		             | 	... saving inputted data?                    | GreenSpace         | IE: object created has its own data.                                                                                |
 | Step 6 		      | 	... informing operation success?             | RegisterGreenSpaceUI         | IE: is responsible for user interactions.                                                                     | 
 
 ### Systematization ##
@@ -26,13 +26,13 @@
 According to the taken rationale, the conceptual classes promoted to software classes are: 
 
 * GreenSpace
+* Employee
 
 
 Other software classes (i.e. Pure Fabrication) identified: 
 
 * RegisterGreenSpaceUI  
 * RegisterGreenSpaceController
-* GreenSpaceRepository
 * EmployeeRepository
 
 

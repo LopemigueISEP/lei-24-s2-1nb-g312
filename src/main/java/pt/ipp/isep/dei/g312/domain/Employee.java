@@ -322,6 +322,14 @@ public class Employee implements Cloneable,Comparable<Employee> {
         return this.name;
     }
 
+
+    /**
+     * Attempts to add the employee to a team if they possess the required skills and are not already part of the team.
+     *
+     * @param skillSetNeeded The list of skills needed for the team.
+     * @param teamEmployees  The list of employees already in the team.
+     * @return True if the employee is suitable for addition to the team, false otherwise.
+     */
     public boolean addEmployeeIfSuitable(List<Skill> skillSetNeeded, List<Employee> teamEmployees) {
         for (Skill employeeSkill :
                         this.getSkills()) {
@@ -334,7 +342,12 @@ public class Employee implements Cloneable,Comparable<Employee> {
                 }
         return false;
     }
-
+    /**
+     * Validates whether the employee can be added to the team by checking if they are already part of it.
+     *
+     * @param teamEmployees The list of employees already in the team.
+     * @return True if the employee can be added to the team, false otherwise.
+     */
     public boolean validateAddToTeam(List<Employee> teamEmployees) {
         for (Employee employee :
                 teamEmployees) {
@@ -347,37 +360,40 @@ public class Employee implements Cloneable,Comparable<Employee> {
 
     }
     /**
-     * Attempts to register a new green space with the provided information.
-     * This method checks user permissions before attempting to add the green space to the repository.
+     * Registers a new green space if the user has permission to do so.
      *
-     * @param name              The green space's name.
-     * @param address           The green space's address.
-     * @param area              The green space's area in square meters.
-     * @param typology          The green space's typology (e.g., Garden, Medium-Sized Park, Large-Sized Park).
-     * @param greenSpaceManager  The username of the employee managing the green space.
-     * @param userValidation     A flag indicating whether the user has the necessary permissions to register green spaces.
-     * @return An Optional containing the newly registered green space if successful, empty Optional otherwise.
+     * @param name             The name of the green space.
+     * @param address          The address of the green space.
+     * @param area             The area of the green space.
+     * @param typology         The typology of the green space.
+     * @param greenSpaceManager The manager of the green space.
+     * @param userValidation   A boolean indicating whether the user has permission to register green spaces.
+     * @return An Optional containing the registered GreenSpace object if registration is successful and user has permission, otherwise an empty Optional.
      */
     public static Optional<GreenSpace> registerGreenSpace(String name, String address, double area, String typology, String greenSpaceManager, boolean userValidation) {
-        boolean validateAddedRepository;
         try {
             if (userValidation) {
-                GreenSpace greenSpace = new GreenSpace(name,address,area,typology, greenSpaceManager);
-                validateAddedRepository = Repositories.getInstance().getGreenSpaceRepository().addGreenSpace(greenSpace);
-                if (validateAddedRepository) {
-                    return Optional.of(greenSpace);
-                } else {
-                    return Optional.empty();
-                }
+                GreenSpace greenSpace = new GreenSpace(name, address, area, typology, greenSpaceManager);
+                Optional<GreenSpace> addedGreenSpace = Repositories.getInstance().getGreenSpaceRepository().addGreenSpace(greenSpace);
+                return addedGreenSpace;
             } else {
-                System.out.println("This user don't have permissions to register green spaces");
+                System.out.println("This user doesn't have permissions to register green spaces");
                 return Optional.empty();
             }
         } catch (Exception e) {
+            System.err.println("Error occurred while registering a green space: " + e.getMessage());
             return Optional.empty();
         }
-
     }
+
+    /**
+     * Compares this employee with another based on their skills.
+     *
+     * @param o The Employee object to compare with.
+     * @return A negative integer if this employee has fewer skills than the specified employee,
+     *         zero if they have the same number of skills, or a positive integer if this employee
+     *         has more skills than the specified employee.
+     */
     @Override
     public int compareTo(Employee o) {
         if (this.skills.size()>o.getSkills().size()){

@@ -1,11 +1,11 @@
 package pt.ipp.isep.dei.g312.domain;
 
-import pt.ipp.isep.dei.g312.repository.Repositories;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Optional;
 
+/**
+ * Represents a green space entity.
+ */
 public class GreenSpace implements Comparable<GreenSpace>, Serializable {
     private String name;
     private String address;
@@ -20,7 +20,7 @@ public class GreenSpace implements Comparable<GreenSpace>, Serializable {
      * @param address           The green space's address.
      * @param area              The green space's area in square meters.
      * @param typology          The green space's typology (e.g., Garden, Medium-Sized Park, Large-Sized Park).
-     * @param greenSpaceManager  The username of the employee managing the green space.
+     * @param greenSpaceManager The username of the employee managing the green space.
      */
 
     public GreenSpace(String name, String address, double area, String typology, String greenSpaceManager){
@@ -66,24 +66,14 @@ public class GreenSpace implements Comparable<GreenSpace>, Serializable {
      *
      * @return A new `GreenSpace` object that is a copy of the current instance.
      */
-
     @Override
     public GreenSpace clone() {
         return new GreenSpace(this.name, this.address, this.area, this.typology, this.greenSpaceManager);
     }
-    public static void printRegisteredGreenSpaces(List<GreenSpace> greenSpaces) {
-        System.out.println("\n\n------------------ Green Spaces List --------------------");
-        System.out.printf("%25s -  %s - %s\n",  "Green Space name", "Type", "Manager");
-        System.out.println("-----------------------------------------------------------");
 
-        for (GreenSpace greenSpace : greenSpaces) {
-            System.out.printf("%25s -  %s - %s\n", greenSpace.getName(), greenSpace.getTypology(), greenSpace.getGreenSpaceManager());
-        }
-    }
 
     /**
-     * Implements the Comparable interface to define an ordering for GreenSpace objects.
-     * This method compares green spaces by their names.
+     * Compares this green space with another based on their names.
      *
      * @param o The GreenSpace object to compare with.
      * @return A negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the specified object.
@@ -91,5 +81,15 @@ public class GreenSpace implements Comparable<GreenSpace>, Serializable {
     @Override
     public int compareTo(GreenSpace o) {
         return this.name.compareTo(o.getName());
+    }
+
+    /**
+     * Returns a string representation of the green space.
+     *
+     * @return A string representation of the green space.
+     */
+    @Override
+    public String toString() {
+        return String.format("%s - %s - %.2f m² - %s - Managed by: %s", name, address, area, typology, greenSpaceManager);
     }
 }
