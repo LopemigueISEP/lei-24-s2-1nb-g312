@@ -40,7 +40,7 @@ public class AdminUI implements Runnable {
         options.add(new MenuItem("Assign Team to an entry in Agenda", new AssignTeamToTaskInTheAgendaUI()));
         options.add(new MenuItem("Postpone an entry in the Agenda to a specific future date", new PostponeTaskInTheAgendaUI()));
         options.add(new MenuItem("Cancel an entry in the Agenda", new RunTimeTestingKruskalAlgorithmUI()));
-        options.add(new MenuItem("Assign vehicles to an entry in the Agenda", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("Assign vehicles to an entry in the Agenda", new AssignVehicleToAgendaEntryGUI()));
         options.add(new MenuItem("List all green spaces managed by GSM", new RunTimeTestingKruskalAlgorithmUI()));
 
         int option = 0;
