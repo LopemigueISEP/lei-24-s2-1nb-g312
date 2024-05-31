@@ -121,7 +121,7 @@ public class RegisterGreenSpaceController {
         }
 
         // Agora podemos prosseguir com o processamento do botão de registro
-        String name = nameField.getText();
+        String name = nameField.getText().toUpperCase();
         String address = addressField.getText();
         double area;
         try {
@@ -184,14 +184,11 @@ public class RegisterGreenSpaceController {
     }
 
     private void updateGreenSpacesListView() {
-        // Verifique se greenSpaceRepository é nulo
         if (greenSpaceRepository == null) {
-            // Se greenSpaceRepository for nulo, imprima uma mensagem de erro e retorne
             System.err.println("GreenSpaceRepository is null");
             return;
         }
 
-        // Verifique se greenSpacesListView é nulo
         if (greenSpacesListView == null) {
             return;
         }
@@ -199,26 +196,28 @@ public class RegisterGreenSpaceController {
         List<GreenSpace> greenSpaces = greenSpaceRepository.getGreenSpaceList();
         greenSpacesListView.getItems().clear();
 
-        List<String> greenSpaceNames = new ArrayList<>();
+        List<String> greenSpaceInfos = new ArrayList<>();
 
-        // Adicione os nomes dos espaços verdes à lista (em maiúsculas)
+        // Adiciona o cabeçalho na primeira linha
+        greenSpaceInfos.add(String.format("%-60s | %-50s | %-50s", "Name", "Type", "Manager"));
+
         for (GreenSpace greenSpace : greenSpaces) {
             // Formata a informação para exibir na lista
-            String formattedName = String.format("%-50s", "Name: " + greenSpace.getName());
-            String formattedType = String.format("%-50s", "Type: " + greenSpace.getTypology());
-            String formattedManager = String.format("%-50s", "Manager: " + greenSpace.getGreenSpaceManager());
+            String formattedName = String.format("%-60s", greenSpace.getName().toUpperCase());
+            String formattedType = String.format("%-50s", greenSpace.getTypology());
+            String formattedManager = String.format("%-50s", greenSpace.getGreenSpaceManager());
 
             // Concatena as informações formatadas
-            String formattedInfo = formattedName + formattedType + formattedManager;
+            String formattedInfo = String.format("%-60s | %-50s | %-50s", formattedName, formattedType, formattedManager);
 
             // Adiciona o item formatado à lista
-            greenSpacesListView.getItems().add(formattedInfo);
+            greenSpaceInfos.add(formattedInfo);
         }
 
-        // Ordene a lista de nomes dos espaços verdes em ordem alfabética
-        Collections.sort(greenSpaceNames);
+        // Ordene a lista de nomes dos espaços verdes em ordem alfabética, excluindo o cabeçalho
+        Collections.sort(greenSpaceInfos.subList(1, greenSpaceInfos.size()));
 
         // Preencha a lista de exibição com os nomes dos espaços verdes ordenados
-        greenSpacesListView.getItems().addAll(greenSpaceNames);
+        greenSpacesListView.getItems().addAll(greenSpaceInfos);
     }
 }
