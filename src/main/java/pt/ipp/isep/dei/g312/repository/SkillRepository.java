@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.g312.domain.Employee;
 import pt.ipp.isep.dei.g312.domain.Skill;
 
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Optional;
  * The SkillRepository class manages a collection of skills.
  * It provides methods for adding, validating, and retrieving skills.
  */
-public class SkillRepository {
+public class SkillRepository implements Serializable {
 
     private final List<Skill> listOfSkills;
 
@@ -91,6 +92,74 @@ public class SkillRepository {
         skillList= Optional.of(listSkills);
         return skillList;
     }
+    /**
+     * Serializes the SkillRepository object to a file.
+     */
+    public void serializateData() {
+
+        String filename = this.getClass().getSimpleName()+".bin";
+
+        // Serialization
+        try {
+
+            // Saving of object in a file
+            FileOutputStream file = new FileOutputStream
+                    (filename);
+            ObjectOutputStream out = new ObjectOutputStream
+                    (file);
+
+            // Method for serialization of object
+            out.writeObject(this);
 
 
+            out.close();
+            file.close();
+
+            System.out.println(this.getClass().getSimpleName()+" Has Been Serialized successfully! ");
+        } catch (FileNotFoundException ex) {
+            System.out.println("IOException is caught");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Deserializes the SkillRepository object from a file and adds the skills to the current repository.
+     */
+    public void getSeralizatedData() {
+        String filename = this.getClass().getSimpleName()+".bin";
+
+        try {
+
+            // Reading the object from a file
+            FileInputStream file = new FileInputStream
+                    (filename);
+            ObjectInputStream in = new ObjectInputStream
+                    (file);
+
+            // Method for deserialization of object
+            SkillRepository skillRepo = (SkillRepository) in.readObject();
+
+            for (Skill s :
+                    skillRepo.getSkills().get()) {
+                this.addSkillRep(s);
+            }
+            
+            in.close();
+            file.close();
+            System.out.println("Object has been deserialized");
+
+
+            // System.out.println("z = " + object1.z);
+        }
+
+        catch (IOException ex) {
+            System.out.println("IOException is caught");
+        }
+
+        catch (ClassNotFoundException ex) {
+            System.out.println("ClassNotFoundException" +
+                    " is caught");
+        }
+    }
 }

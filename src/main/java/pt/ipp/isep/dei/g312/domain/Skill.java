@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.g312.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Represents a skill that has a skill name and description.
  * Provides methods to access and modify the skill attributes, and implements Comparable to enable sorting by skill name.
  */
-public class Skill implements Comparable<Skill>{
+public class Skill implements Comparable<Skill>, Serializable {
 
     private String skillName;
     private String skillDescription;

@@ -42,6 +42,13 @@ public class Bootstrap implements Runnable {
         }
     }
 
+    /**
+     * TODO:Adicionar aqui todos os repositórios
+     */
+    public void saveSeralization(){
+        Repositories.getInstance().getSkillRepository().serializateData();
+    }
+
     private void addEmployes() {
         EmployeeRepository employeeRepository = Repositories.getInstance().getEmployeeRepository();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -59,10 +66,10 @@ public class Bootstrap implements Runnable {
 
     private void addSkills() {
         SkillRepository skillRepository = Repositories.getInstance().getSkillRepository();
-        skillRepository.addSkillRep(new Skill("Prune", "Prune trees, shrubs and plants"));
-        skillRepository.addSkillRep(new Skill("Light Vehicle license", "Driver able to drive vehicles up to 1500 tare weight"));
-        skillRepository.addSkillRep(new Skill("Heavy Vehicle license", "Driver able to drive vehicles up to 3500 tare weight"));
-
+        skillRepository.getSeralizatedData();
+//        skillRepository.addSkillRep(new Skill("Prune", "Prune trees, shrubs and plants"));
+//        skillRepository.addSkillRep(new Skill("Light Vehicle license", "Driver able to drive vehicles up to 1500 tare weight"));
+//        skillRepository.addSkillRep(new Skill("Heavy Vehicle license", "Driver able to drive vehicles up to 3500 tare weight"));
     }
 
     private void addJobs() {

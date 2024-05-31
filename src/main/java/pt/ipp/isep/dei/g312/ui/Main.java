@@ -10,10 +10,18 @@ public class Main {
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.run();
 
+
         try {
             JavaFXInitializer.initialize();
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                System.out.println("\nMusgoSublime is being shut down....");
+                System.out.println("\nSaving Data...");
+                bootstrap.saveSeralization();
+            }));
             MainMenuUI menu = new MainMenuUI();
             menu.run();
+
+            System.exit(0);
         } catch (Exception e) {
             e.printStackTrace();
         }
