@@ -87,7 +87,7 @@ activate GSM
 
 
 
-        UI --> GSM : shows available vehicles and asks to select at least one
+        UI --> GSM : shows available vehicles and asks \nto select at least one
     deactivate UI
 
     GSM -> UI : selects vehicles

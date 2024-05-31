@@ -1,0 +1,104 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+title Sequence Diagram (SD) US027
+
+'hide footbox
+actor "GSM" as GSM
+participant ":ListGreenSpacesManagedUI" as UI
+participant ":ListGreenSpacesManagedController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "employeeRepository:\nEmployeeRepository" as EmployeeRepository
+participant "employee" as employee
+participant "GreenSpaces" as GreenSpaces
+participant "GreenSpace" as GreenSpace
+
+activate GSM
+
+        GSM -> UI : asks to list all green spaces managed by him
+
+        activate UI
+
+'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+
+
+            UI -> CTRL : listGreenSpacesManaged()
+            activate CTRL
+
+                CTRL->CTRL: getEmployeeFromRepository()
+
+                    activate CTRL
+                    CTRL -> RepositorySingleton : getInstance()
+                    activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL : repositories
+                    deactivate RepositorySingleton
+
+                    CTRL -> PLAT : getEmployeeRepositories()
+                    activate PLAT
+
+
+                    PLAT --> CTRL : EmployeeRepositories
+                    deactivate PLAT
+
+
+                    CTRL -> EmployeeRepository: getEmployee()
+                    activate EmployeeRepository
+                    EmployeeRepository -->CTRL: employee
+                    deactivate EmployeeRepository
+
+                CTRL-->CTRL: employee
+                deactivate CTRL
+
+                |||
+
+
+
+
+
+
+
+
+
+
+
+                CTRL -> "employee" : listGreenSpacesManaged(employee)
+                    activate "employee"
+
+                    "employee" ->"GreenSpaces" : getGreenSpacesManaged(employee)
+
+                    activate GreenSpaces
+                         GreenSpaces -> GreenSpace: getGreenSpace()
+                         activate GreenSpace
+                         GreenSpace --> GreenSpaces: greenSpace
+                         deactivate GreenSpace
+                         GreenSpaces -->employee: greenSpaces
+
+
+                    deactivate GreenSpaces
+
+                    "employee" --> CTRL: greenSpaces
+
+                    deactivate "employee"
+
+
+
+
+
+
+
+
+                    CTRL --> UI: greenSpaces
+            deactivate CTRL
+            UI --> GSM: displays greenSpaces
+    deactivate UI
+
+deactivate GSM
+
+@enduml
