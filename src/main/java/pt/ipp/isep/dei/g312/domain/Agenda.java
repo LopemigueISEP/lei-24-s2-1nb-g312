@@ -32,10 +32,10 @@ public class Agenda implements Comparable<Agenda>{
     public Agenda clone() {
         return new Agenda(this.startDate,  this.toDoEntry, this.status);
     }
-    @Override
-    public String toString() {
-        return STR."Agenda{startDate=\{startDate}, toDoListEntry=\{toDoEntry}\{'}'}";
-    }
+//    @Override
+//    public String toString() {
+//        return STR."Agenda{startDate=\{startDate}, toDoListEntry=\{toDoEntry}\{'}'}";
+//    }
 
 
     @Override

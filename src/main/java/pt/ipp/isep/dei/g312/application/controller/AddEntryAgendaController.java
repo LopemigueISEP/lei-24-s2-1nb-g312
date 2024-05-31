@@ -32,40 +32,40 @@ public class AddEntryAgendaController {
 
     private final EmployeeRepository employeeRepository = Repositories.getInstance().getEmployeeRepository();
     private final GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
-    private final ToDoListRepository toDoRepository = Repositories.getInstance().getToDoRepository();
+//    private final ToDoListRepository toDoRepository = Repositories.getInstance().getToDoRepository();TODO:@Andre Rever
     private final TaskRepository taskRepository = Repositories.getInstance().getTaskRepository();
     private final AuthenticationRepository authRepository = Repositories.getInstance().getAuthenticationRepository();
     private ToDoEntry selectedToDoEntry;
 
     @FXML
     private void initialize() {
-        initializeComboBoxes();
+//        initializeComboBoxes();TODO:@Andre Rever
         btnSubmit.setOnAction(event -> addTodoList());
         errorMessageLabel.setVisible(true); // Set label to visible
 
 
     }
 
-    private void initializeComboBoxes() {
-        ObservableList<GreenSpace> greenSpaces = FXCollections.observableArrayList(getGreenSpaceList());
-        ObservableList<String> greenSpaceNames = getGreenSpaceNames(greenSpaces);
-        cmbGreenSpace.setItems(greenSpaceNames);
-        cmbGreenSpace.setPromptText("Choose GreenSpace");
-
-        cmbGreenSpace.setOnAction(event -> updateToDoList());
-
-        cmbTask.setPromptText("Choose Task");
-
-        // Obtém a lista de tarefas associadas ao espaço verde selecionado e adiciona à cmbTask
-        cmbGreenSpace.setOnAction(event -> {
-            String selectedGreenSpace = cmbGreenSpace.getValue();
-            if (selectedGreenSpace != null) {
-                List<ToDoEntry> toDoEntryList = getToDoListEntries(selectedGreenSpace);
-                cmbTask.getItems().clear(); // Limpa a ComboBox de tarefas antes de adicionar novas tarefas
-                cmbTask.getItems().addAll(toDoEntryList);
-            }
-        });
-    }
+//    private void initializeComboBoxes() {
+//        ObservableList<GreenSpace> greenSpaces = FXCollections.observableArrayList(getGreenSpaceList());
+//        ObservableList<String> greenSpaceNames = getGreenSpaceNames(greenSpaces);
+//        cmbGreenSpace.setItems(greenSpaceNames);
+//        cmbGreenSpace.setPromptText("Choose GreenSpace");
+//
+//        cmbGreenSpace.setOnAction(event -> updateToDoList());
+//
+//        cmbTask.setPromptText("Choose Task");
+//
+//        // Obtém a lista de tarefas associadas ao espaço verde selecionado e adiciona à cmbTask
+//        cmbGreenSpace.setOnAction(event -> {
+//            String selectedGreenSpace = cmbGreenSpace.getValue();
+//            if (selectedGreenSpace != null) {
+//                List<ToDoEntry> toDoEntryList = getToDoListEntries(selectedGreenSpace);
+//                cmbTask.getItems().clear(); // Limpa a ComboBox de tarefas antes de adicionar novas tarefas
+//                cmbTask.getItems().addAll(toDoEntryList);TODO:@Andre Rever
+//            }
+//        });
+//    }
 
     private List<GreenSpace> getGreenSpaceList() {
         if (!currentUserLogInValidation()) {
@@ -121,22 +121,22 @@ public class AddEntryAgendaController {
         }
         previousSelectedGreenSpace = selectedGreenSpace; // Atualiza o parque previamente selecionado
 
-        if (selectedGreenSpace != null) {
-            List<ToDoEntry> toDoEntryList = getToDoListEntries(selectedGreenSpace);
-            cmbTask.getItems().clear(); // Limpa a ComboBox de tarefas antes de adicionar novas tarefas
-            cmbTask.getItems().addAll(toDoEntryList);
-        }
+//        if (selectedGreenSpace != null) {
+//            List<ToDoEntry> toDoEntryList = getToDoListEntries(selectedGreenSpace);TODO:@Andre Rever
+//            cmbTask.getItems().clear(); // Limpa a ComboBox de tarefas antes de adicionar novas tarefas
+//            cmbTask.getItems().addAll(toDoEntryList);
+//        }
     }
 
-    private List<ToDoEntry> getToDoListEntries(String selectedGreenSpace) {
-        List<ToDoEntry> tasksByGreenSpace = new ArrayList<>();
-        for (ToDoEntry entry : toDoRepository.getToDoList()) {
-            if (entry.getGreenSpace().equals(selectedGreenSpace)) {
-                tasksByGreenSpace.add(entry);
-            }
-        }
-        return Collections.unmodifiableList(tasksByGreenSpace);
-    }
+//    private List<ToDoEntry> getToDoListEntries(String selectedGreenSpace) {
+//        List<ToDoEntry> tasksByGreenSpace = new ArrayList<>();
+//        for (ToDoEntry entry : toDoRepository.getToDoList()) {
+//            if (entry.getGreenSpace().equals(selectedGreenSpace)) {
+//                tasksByGreenSpace.add(entry);
+//            }
+//        }
+//        return Collections.unmodifiableList(tasksByGreenSpace);
+//    }TODO:@Andre Rever
     private ObservableList<String> getGreenSpaceNames(List<GreenSpace> greenSpaces) {
         ObservableList<String> greenSpaceNames = FXCollections.observableArrayList();
         for (GreenSpace greenSpace : greenSpaces) {
