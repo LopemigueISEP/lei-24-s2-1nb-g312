@@ -1,0 +1,21 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - US027
+
+autonumber
+
+actor GSM as GSM
+participant ":System" as System
+
+activate GSM
+
+    GSM -> System : asks to list all green spaces managed by him
+    activate System
+
+        System --> GSM : displays requested data
+    deactivate System
+
+@enduml

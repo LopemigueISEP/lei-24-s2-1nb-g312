@@ -34,44 +34,35 @@ As a GSM, I need to list all green spaces managed by me.
 
 * **AC1:** The list of green spaces must be sorted by size in descending order (area in hectares should be used). The sorting algorithm to be used by the application must be defined through a configuration file. At least two sorting algorithms should be available.
 * **AC2:** The list of green spaces must show the typology of each green space.
-* **AC3:** When creating a task with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - Create a task category" as there must be at least one task category to classify the task being created.
+* There is a dependency on "US003 - As an HRM, I want to register a collaborator with a job and
+  fundamental characteristics" as there must exist at least one GSM that manage the listed Greenspaces.
+* There is a dependency on "US020 - As a Green Space Manager (GSM), I want to register a green
+  space (garden, medium-sized park or large-sized park) and its respective
+  area" because it's where the listed GreenSpaces are created.
 
 ### 1.5 Input and Output Data
 
-**Input Data:**
-
-* Typed data:
-    * a reference
-    * a designation 
-    * an informal description
-    * a technical description
-    * an estimated duration
-    * an estimated cost
+[//]: # (**Input Data:**)
 	
-* Selected data:
-    * a task category 
+[//]: # (* Selected data:)
+
+[//]: # (    * a employee that is a GSM )
 
 **Output Data:**
 
-* List of existing task categories
-* (In)Success of the operation
+* List of parks managed by the GSM
 
-### 1.6. System Sequence Diagram (SSD)
 
-**_Other alternatives might exist._**
+
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us006-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us027-system-sequence-diagram-alternative-one.svg)
 
-#### Alternative Two
 
-![System Sequence Diagram - Alternative Two](svg/us006-system-sequence-diagram-alternative-two.svg)
 
 ### 1.7 Other Relevant Remarks
 
-* The created task stays in a "not published" state in order to distinguish from "published" tasks.

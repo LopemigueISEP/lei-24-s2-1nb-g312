@@ -1,0 +1,42 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'left to right direction
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+'title Domain Model
+
+'class Platform {
+'  -description
+'}
+
+class Employee {
+    name
+    birthdate
+    email/phone
+    admisson date
+    VAT number
+    address
+    role
+}
+
+class GreenSpaceManager{
+}
+
+
+class GreenSpace{
+- manager
+}
+
+
+Employee "1..*" -- "1..*" GreenSpaceManager : is >
+GreenSpaceManager "1" -- "1..*" GreenSpace: manages >
+
+
+@enduml

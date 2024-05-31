@@ -2,30 +2,30 @@ package pt.ipp.isep.dei.g312.application.controller;
 
 import pt.ipp.isep.dei.g312.domain.Task;
 import pt.ipp.isep.dei.g312.domain.Team;
-import pt.ipp.isep.dei.g312.repository.AgendaRepository;
 import pt.ipp.isep.dei.g312.repository.Repositories;
+import pt.ipp.isep.dei.g312.repository.TaskRepository;
 
 import java.util.Date;
 import java.util.List;
 
 public class PostponeTaskInTheAgendaController {
 
-    private final AgendaRepository agendaRepository;
+    private final TaskRepository taskRepository;
 
-    public PostponeTaskInTheAgendaController() { this.agendaRepository = getAgendaRepository(); }
+    public PostponeTaskInTheAgendaController() { this.taskRepository = getTaskRepository(); }
 
-    private AgendaRepository getAgendaRepository() { return Repositories.getInstance().getAgendaRepository(); }
+    private TaskRepository getTaskRepository() { return Repositories.getInstance().getTaskRepository(); }
 
-    public List<Task> listPlannedTasks() { return agendaRepository.getPlannedTasks(); }
+    public List<Task> listPlannedTasks() { return taskRepository.getPlannedTasks(); }
 
-    public List<Task> getTeamTasks(Team team) { return agendaRepository.getAllTeamTasks(team); }
+    public List<Task> getTeamTasks(Team team) { return taskRepository.getAllTeamTasks(team); }
 
     public boolean postponeTask(Task task, Date newDate) {
         Team assignedTeam = task.getAssignedTeam();
         task.setTaskDate(newDate);
 
-        if (agendaRepository.teamAvailability(getTeamTasks(assignedTeam), task)) {
-            return agendaRepository.updateTask(task);
+        if (taskRepository.teamAvailability(getTeamTasks(assignedTeam), task)) {
+            return taskRepository.updateTask(task);
         } else {
             return false;
         }

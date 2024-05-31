@@ -4,6 +4,8 @@ package pt.ipp.isep.dei.g312.ui.console.menu;
 import pt.ipp.isep.dei.g312.ui.console.*;
 import pt.ipp.isep.dei.g312.ui.console.utils.Utils;
 import pt.ipp.isep.dei.g312.ui.gui.AddEntryToDoListUI;
+import pt.ipp.isep.dei.g312.ui.gui.RegisterGreenSpaceUI;
+import pt.ipp.isep.dei.g312.ui.gui.ShowListOfGreenSpacesUI;
 import pt.ipp.isep.dei.g312.ui.gui.TestUI;
 
 import java.util.ArrayList;
@@ -38,8 +40,8 @@ public class AdminUI implements Runnable {
         options.add(new MenuItem("Show To-Do List", new RunTimeTestingKruskalAlgorithmUI()));
         options.add(new MenuItem("Add entry to the Agenda ", new TestUI()));
         options.add(new MenuItem("Show Agenda", new RunTimeTestingKruskalAlgorithmUI()));
-        options.add(new MenuItem("Assign Team to an entry in Agenda", new RunTimeTestingKruskalAlgorithmUI()));
-        options.add(new MenuItem("Postpone an entry in the Agenda to a specific future date", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("Assign Team to an entry in Agenda", new AssignTeamToTaskInTheAgendaUI()));
+        options.add(new MenuItem("Postpone an entry in the Agenda to a specific future date", new PostponeTaskInTheAgendaUI()));
         options.add(new MenuItem("Cancel an entry in the Agenda", new RunTimeTestingKruskalAlgorithmUI()));
         options.add(new MenuItem("Assign vehicles to an entry in the Agenda", new RunTimeTestingKruskalAlgorithmUI()));
         options.add(new MenuItem("List all green spaces managed by GSM", new RunTimeTestingKruskalAlgorithmUI()));

@@ -11,7 +11,9 @@ participant RegisterGreenSpaceUI as UI
 participant RegisterGreenSpaceController as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "greenSpaceRepository:\nGreenSpaceRepository" as GreenSpaceRepository
+participant "employeeRepository:\nEmployeeRepository" as EMPLREP
+
+participant "employee\n:Employee" as EMP
 participant "green Space:\nGreen Space" as GREENSPACE
 activate GSM
 
@@ -34,22 +36,50 @@ activate UI
 
 UI -> CTRL : registerGreenSpace(name, address, area, typology, manager)
 activate CTRL
+CTRL->CTRL: getEmployeeFromRepository()
 
-CTRL -> GREENSPACE : registerGreenSpace(name, address, area, typology, manager)
-activate GREENSPACE
+                activate CTRL
+                CTRL -> RepositorySingleton : getInstance()
+                activate RepositorySingleton
 
-GREENSPACE -> GREENSPACE : validateGreenSpace(name)
-GREENSPACE -> GREENSPACE : registerGreenSpace
+                RepositorySingleton --> CTRL : repositories
+                deactivate RepositorySingleton
 
-GREENSPACE -> GreenSpaceRepository : greenSpace
-deactivate GREENSPACE
-activate GreenSpaceRepository
-GreenSpaceRepository -> GreenSpaceRepository : add(greenSpace)
-GreenSpaceRepository -> CTRL : greenSpace
-deactivate GreenSpaceRepository
-CTRL -> UI : greenSpace
-deactivate CTRL
-UI -> GSM : operation success
-deactivate UI
+                CTRL -> PLAT : getEmployeeRepositories()
+                activate PLAT
 
+
+                PLAT --> CTRL : EmployeeRepositories
+                deactivate PLAT
+
+
+                CTRL -> EMPLREP: getEmployee()
+                activate EMPLREP
+                EMPLREP -->CTRL: employee
+                deactivate EMPLREP
+
+            CTRL-->CTRL: employee
+            deactivate CTRL
+
+            |||
+            CTRL -> EMP : registerGreenSpace(name, address, area, typology, manager)
+            activate EMP
+
+            EMP ->GREENSPACE** : registerGreenSpace(name, address, area, typology, manager)
+
+            EMP -> EMP: validateGreenSpace(name)
+            EMP -> EMP: addGreenSpace(name)
+
+            EMP --> CTRL: greenSpace
+            deactivate EMP
+
+
+
+            CTRL --> UI: greenSpace
+            deactivate CTRL
+
+            UI --> GSM: displays operation success
+            deactivate UI
+
+deactivate GSM
 @enduml

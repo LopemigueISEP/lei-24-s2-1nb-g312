@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.g312.application.controller.RegisterGreenSpaceController"  alignment="CENTER" prefHeight="720.0" prefWidth="720.0" minHeight="-Infinity" minWidth="-Infinity" maxHeight="-Infinity" maxWidth="-Infinity">
+    <children>
+        <GridPane alignment="CENTER" hgap="10" vgap="10" prefHeight="728.0" prefWidth="720.0">
+            <padding>
+                <Insets bottom="25" left="25" right="25" top="25" />
+            </padding>
+
+            <!-- Colunas -->
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" percentWidth="20.0" />
+                <ColumnConstraints percentWidth="60.0" />
+                <ColumnConstraints hgrow="SOMETIMES" percentWidth="20.0" />
+            </columnConstraints>
+
+            <!-- Linhas -->
+            <rowConstraints>
+                <RowConstraints percentHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints percentHeight="12.0" vgrow="SOMETIMES" />
+                <RowConstraints percentHeight="12.0" vgrow="SOMETIMES" />
+                <RowConstraints percentHeight="12.0" vgrow="SOMETIMES" />
+                <RowConstraints percentHeight="12.0" vgrow="SOMETIMES" />
+                <RowConstraints percentHeight="12.0" vgrow="SOMETIMES" />
+                <RowConstraints percentHeight="20.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+
+            <!-- Título -->
+            <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="US20 - Register a Green Space " GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                <font>
+                    <Font name="Tahoma Bold" size="12.0" />
+                </font>
+            </Label>
+
+            <!-- Campos de entrada -->
+            <TextField fx:id="nameField" promptText="Enter Green Space Name" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <TextField fx:id="addressField" promptText="Enter Address" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <TextField fx:id="areaField" promptText="Enter Area (ha)" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+
+            <!-- ComboBox para a tipologia -->
+            <ComboBox fx:id="typologyChoiceBox" prefHeight="25.0" prefWidth="728.0" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+
+            <!-- Label para a indicação do gestor -->
+            <HBox GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                <Label text="Managed by: " style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+                <Label fx:id="greenSpaceManagerLabel" text="Manager's Name" style="-fx-font-size: 14px;" />
+            </HBox>
+
+            <!-- Botão para registrar -->
+            <Button onAction="#handleRegisterButtonAction" text="Register" prefHeight="25.0" prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                <font>
+                    <Font name="Tahoma Bold" size="12.0" />
+                </font>
+            </Button>
+
+            <!-- Label para exibir mensagens -->
+            <Label fx:id="messageLabel" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+
+        </GridPane>
+    </children>
+</VBox>
