@@ -1,0 +1,82 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+class Employee{
+    -name : String
+    -birthdate : Date
+    -email : String
+    -phoneNumber : int
+    -admission date : Date
+    -taxpayerNumber : String
+    -address : String
+    -docNumber : String
+    -jobTitle : String
+
++ addEntryAgenda(startDate, toDoListEntries)
+   +validate(entryAgenda)
+
+}
+
+class Task{
+-greenSpace: GreenSpace
+-toDoListEntries : toDoEntries
+-startDate: Date
++validate(entryAgenda)
+}
+
+
+class AddEntryAgendaController{
+
+}
+
+class AddEntryAgendaUI{
+
+}
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getEmployeeRepository(); employeeRepository
+     + getGreenSpaceRepository(); getGreenSpaceRepository
+     + getTaskRepository(); getTaskRepository
+
+}
+class EmployeeRepository{
+
+
++getEmployee(): Employee
+
+}
+class TasksRepository{
+ +getToDoListEntries(): List<ToDoEntries>
+}
+class GreenSpacesRepository{
++getGreenSpacesList(): GreenSpace
+}
+
+AddEntryAgendaUI .>AddEntryAgendaController
+
+AddEntryAgendaController .> "1" Repositories
+
+Repositories "1" --> "1" Repositories : getInstance()
+Repositories "1" --> "1" EmployeeRepository
+Repositories "1" --> "1" TasksRepository
+Repositories "1" --> "1" GreenSpacesRepository
+
+AddEntryAgendaController ..>Employee
+
+EmployeeRepository "1" --> "1" Employee
+TasksRepository "1" --> "1" Employee
+GreenSpacesRepository "1" --> "1" Employee
+
+Employee --> Task: registers
+
+
+@enduml

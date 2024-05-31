@@ -13,9 +13,8 @@ participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "greenSpaceRepository:\nGreenSpaceRepository" as GreenSpaceRepository
 participant "employeeRepository:\nEmployeeRepository" as EmployeeRepository
-participant "toDoListRepository:\nToDoListRepository" as ToDoListRepository
-participant "agendaRepository:\nAgendaRepository" as AgendaRepository
-participant "agenda\n:Agenda" as TAREFA
+participant "taskRepository:\nTaskRepository" as TaskRepository
+participant "task\n:Task" as TAREFA
 
 activate ADM
 ref over ADM, UI : This action assumes that the user has already logged in
@@ -69,11 +68,11 @@ UI -> CTRL : getToDoListEntries()
                     PLAT --> CTRL: toDoListRepository
                 deactivate PLAT
 
-                CTRL -> ToDoListRepository : getToDoListEntries()
-                activate ToDoListRepository
+                CTRL -> TaskRepository : getToDoListEntries()
+                activate TaskRepository
 
-                    ToDoListRepository --> CTRL : toDoListEntries
-                deactivate ToDoListRepository
+                    TaskRepository --> CTRL : toDoListEntries
+                deactivate TaskRepository
 
                 CTRL --> UI : toDoListEntries
             deactivate CTRL
@@ -106,12 +105,12 @@ UI -> CTRL : getToDoListEntries()
 
                 TAREFA -> TAREFA : addEntryAgenda
 
-                TAREFA -> AgendaRepository : entryAgenda
+                TAREFA -> TaskRepository : entryAgenda
                 deactivate TAREFA
-                activate AgendaRepository
-                AgendaRepository -> AgendaRepository : validate(entryAgenda)
-                AgendaRepository -> CTRL : entryAgenda
-                deactivate AgendaRepository
+                activate TaskRepository
+                TaskRepository -> TaskRepository : validate(entryAgenda)
+                TaskRepository -> CTRL : entryAgenda
+                deactivate TaskRepository
                 CTRL -> UI : entryAgenda
                 deactivate CTRL
             UI --> ADM: displays operation success
