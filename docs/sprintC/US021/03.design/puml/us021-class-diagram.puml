@@ -33,11 +33,6 @@ class ToDoEntry{
 }
 
 
-class ToDoListRepository{
--toDoList: List<ToDoEntry>
-+getToDoList(): List<ToDoEntry>
-}
-
 class AddEntryToDoListController{
 
 }
@@ -80,15 +75,10 @@ Repositories "1" --> "1" GreenSpacesRepository
 AddEntryToDoListController ..>Employee
 
 EmployeeRepository "1" --> "1" Employee
-TasksRepository "1" --> "1" Employee: getTask()
-GreenSpacesRepository "1" --> "1" Employee: getGreenSpace()
+TasksRepository "1" --> "1" Employee
+GreenSpacesRepository "1" --> "1" Employee
 
-Employee --> ToDoEntry: registerToDoEntry()
-
-
-
-ToDoEntry --> ToDoListRepository: add()
-
+Employee --> ToDoEntry: registers
 
 
 @enduml
