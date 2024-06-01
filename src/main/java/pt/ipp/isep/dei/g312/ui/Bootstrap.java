@@ -102,14 +102,14 @@ public class Bootstrap implements Runnable {
         TaskRepository taskRepository = Repositories.getInstance().getTaskRepository();
 
         // Creating a sample date
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = dateFormat.parse("01/06/2024");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH");
+        Date startDate = dateFormat.parse("01/06/2024 - 14");
+        Date endDate = dateFormat.parse("02/06/2024 - 13");
 
         // Creating other sample parameters
         String title = "Sample Task";
         String description = "This is a sample task description.";
-        TaskPeriod taskStartPeriod = TaskPeriod.Morning;
-        int taskExpectedDuration = 1;
+        int taskExpectedDuration = 8; //hours
         String type = "Type A";
         String greenSpace = "Central Park";
         TaskUrgency urgency = TaskUrgency.High;
@@ -117,15 +117,11 @@ public class Bootstrap implements Runnable {
         Team assignedTeam = null;
         ArrayList<Vehicle> assignedVehicles = null;
         int taskID = 1;
-        ToDoEntry toDoListEntry = new ToDoEntry("Entry 1", "Entry description");
         TaskPosition taskPosition = TaskPosition.Agenda;
 
-        // Creating the task
-        Task task = new Task(title, description, date, taskStartPeriod, taskExpectedDuration, type, greenSpace, urgency, status, assignedTeam, assignedVehicles, taskID, toDoListEntry, taskPosition);
-
         // Adding the task to the repository
-        Optional<Task> task1 = taskRepository.add(task);
-
+        Task task = new Task(title, description, taskExpectedDuration, type, greenSpace, urgency, status, assignedTeam, assignedVehicles, taskID, startDate, endDate, taskPosition);
+        taskRepository.addTask(task);
     }
 
 

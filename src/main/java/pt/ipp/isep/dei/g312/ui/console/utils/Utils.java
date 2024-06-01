@@ -71,6 +71,22 @@ public class Utils {
         } while (true);
     }
 
+    static public Date readDateHourFromConsole(String prompt) {
+        do {
+            try {
+                String strDate = readLineFromConsole(prompt);
+
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy - HH");
+
+                Date date = df.parse(strDate);
+
+                return date;
+            } catch (ParseException ex) {
+                Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, "Incorrect date Format", ex);
+            }
+        } while (true);
+    }
+
     static public boolean confirm(String message) {
         String input;
         do {

@@ -36,7 +36,7 @@ public class AdminUI implements Runnable {
         options.add(new MenuItem("Add entry to the To-Do List", new AddEntryToDoListUI()));
         options.add(new MenuItem("Show To-Do List", new RunTimeTestingKruskalAlgorithmUI()));
         options.add(new MenuItem("Add entry to the Agenda ", new AddEntryToAgendaUI()));
-        options.add(new MenuItem("Show Agenda", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("Show Agenda", new ShowListOfAgendaUI()));
         options.add(new MenuItem("Assign Team to an entry in Agenda", new AssignTeamToTaskInTheAgendaUI()));
         options.add(new MenuItem("Postpone an entry in the Agenda to a specific future date", new PostponeTaskInTheAgendaUI()));
         options.add(new MenuItem("Cancel an entry in the Agenda", new RunTimeTestingKruskalAlgorithmUI()));

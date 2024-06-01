@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.g312.ui.console;
 
 import pt.ipp.isep.dei.g312.application.controller.AssignTeamController;
+import pt.ipp.isep.dei.g312.domain.Employee;
 import pt.ipp.isep.dei.g312.domain.Task;
 import pt.ipp.isep.dei.g312.domain.Team;
 import static pt.ipp.isep.dei.g312.ui.console.utils.Utils.*;
@@ -28,9 +29,16 @@ public class AssignTeamToTaskInTheAgendaUI implements Runnable {
     }
 
     private void submitData(Team team, Task task) {
-        boolean teamAssigned = controller.assignTeamToTask(team, task);
-        if (teamAssigned) {
+        if (controller.assignTeamToTask(team, task)) {
             System.out.println("Team Assigned to task successfully");
+            for(Employee e : team.getTeamEmployees()){
+                if(controller.validEmail(e.getEmail())){
+                    System.out.println("Assignment email sent to " + e.getEmail());
+                }
+                else{
+                    System.out.println("Assignment email could not be sent to " + e.getEmail());
+                }
+            }
         } else {
             System.out.println("Team not assigned. Please try again.");
         }

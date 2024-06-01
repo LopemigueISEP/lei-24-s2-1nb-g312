@@ -386,6 +386,40 @@ public class Employee implements Cloneable,Comparable<Employee> {
         }
     }
 
+    // method for the employee to register a task for the todolist
+    public static Optional<Task> registerTask(String title, String description, int taskExpectedDuration, String type, String greenSpace, TaskUrgency urgency, int taskID, TaskPosition taskPosition, boolean userValidation) {
+        try {
+            if (userValidation) {
+                Task task = new Task(title, description, taskExpectedDuration, type, greenSpace, urgency, taskID, taskPosition);
+                Optional<Task> addedTask = Repositories.getInstance().getTaskRepository().addTask(task);
+                return addedTask;
+            } else {
+                System.out.println("This user doesn't have permissions to register tasks");
+                return Optional.empty();
+            }
+        } catch (Exception e) {
+            System.out.println("Error occurred while registering a task: " + e.getMessage());
+            return Optional.empty();
+        }
+    }
+
+    // method for the employee to assign a team to a task in the agenda
+    public static Optional<Task> assignTeamToTask(Team team, Task task) {
+        task.assignTeam(team);
+        task.setTaskStatus(TaskStatus.Planned);
+        return Repositories.getInstance().getTaskRepository().updateTask(task);
+    }
+
+    public static Optional <Task> posponedTask(Task task, Date newStartDate){
+        task.setTaskStartDate(newStartDate);
+        task.setTaskStatus(TaskStatus.Postponed);
+        task.assignTeam(null);
+        return Repositories.getInstance().getTaskRepository().updateTask(task);
+    }
+
+
+
+
     /**
      * Compares this employee with another based on their skills.
      *

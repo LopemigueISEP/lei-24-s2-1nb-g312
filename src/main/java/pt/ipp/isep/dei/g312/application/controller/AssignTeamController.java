@@ -7,19 +7,27 @@ import pt.ipp.isep.dei.g312.repository.Repositories;
 import pt.ipp.isep.dei.g312.repository.TaskRepository;
 import pt.ipp.isep.dei.g312.repository.TeamRepository;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class AssignTeamController {
 
     private TeamRepository teamRepository;
     private TaskRepository taskRepository;
 
+    private List<String> emailServices = new ArrayList<>();
+
 
 
     public AssignTeamController() {
         this.taskRepository = getTaskRepository();
-        this.teamRepository = getTeamRepository();}
+        this.teamRepository = getTeamRepository();
+        this.emailServices = loadValidEmailServices("src/main/resources/config.properties");
+    }
+
 
     //method to get the vehicle repository
     private TeamRepository getTeamRepository() { return Repositories.getInstance().getTeamRepository(); }
@@ -29,32 +37,19 @@ public class AssignTeamController {
 
     public boolean assignTeamToTask(Team team, Task task) {
         //TODO check if email service is valid
-        if (taskRepository.assignTeamToTask(team, task)){
-            for(Employee e : team.getTeamEmployees()){
-                System.out.println(e.getEmail());
-            }
+        if (Employee.assignTeamToTask(team, task).isPresent()){
             return true;
         }
         return false;
     }
 
-    /**public List<Team> listAvailableTeams(Task task) {
-        List<Team> availableTeams = new ArrayList<>();
-        for (Team team : teamRepository.getAllTeams()) {
-            List<Task> teamTasks = taskRepository.getAllTeamTasks(team);
-            if (taskRepository.teamAvailability(teamTasks, task)) {
-                availableTeams.add(team);
-            }
-        }
-        return availableTeams;
-    } */
+
 
     public List<Team> listAvailableTeams(Task task) {
         List<Team> availableTeams = new ArrayList<>();
         for (Team team : teamRepository.getAllTeams()) {
             List<Task> teamTasks = taskRepository.getAllTeamTasks(team);
             boolean isAvailable = taskRepository.teamAvailability(teamTasks, task);
-            System.out.println("Team " + team.toString() + " is available: " + isAvailable);
             if (isAvailable) {
                 availableTeams.add(team);
             }
@@ -74,6 +69,37 @@ public class AssignTeamController {
         return tasklist;
     }
 
+    //TODO transfer to proper controller of show agenda
+    public List<Task> getAgenda(){
+        return taskRepository.getAgenda();
+    }
 
+    public List<String> loadValidEmailServices(String filePath) {
+        Properties properties = new Properties();
+
+        try (FileInputStream input = new FileInputStream(filePath)) {
+            properties.load(input);
+
+            String validEmail = properties.getProperty("ValidEmail");
+            if (validEmail != null && !validEmail.isEmpty()) {
+                String[] services = validEmail.split(",");
+                for (String service : services) {
+                    emailServices.add(service.trim());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return emailServices;
+    }
+    public boolean validEmail(String email){
+
+        if(emailServices.contains(email.split("@")[1])){
+            return true;
+        }
+
+        return false;
+    }
 
 }
