@@ -6,13 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.g312.application.controller.AddEntryAgendaController;
-import pt.ipp.isep.dei.g312.application.controller.RegisterGreenSpaceController;
 
 import java.io.IOException;
 
 
 /**
- * This class represents the main entry point for the Show List Of Green Spaces UI application.
+ * This class represents the main entry point for the Show List Of Agenda UI application.
  * It extends the JavaFX Application class and initializes the UI by loading the FXML file and setting up the controller.
  */
 public class ShowListOfAgendaUI extends Application {
@@ -33,7 +32,7 @@ public class ShowListOfAgendaUI extends Application {
     @Override
     public void start(Stage primaryStage) {
         Platform.setImplicitExit(false);
-        FXMLLoader fxmlLoader = new FXMLLoader(ShowListOfAgendaUI.class.getResource("ShowListOfGreenSpaces.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ShowListOfAgendaUI.class.getResource("ShowListOfAgenda.fxml"));
         try {
             Scene scene = new Scene(fxmlLoader.load());
             primaryStage.setTitle("MusgoSublime");

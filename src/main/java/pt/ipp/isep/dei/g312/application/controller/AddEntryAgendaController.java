@@ -28,6 +28,8 @@ public class AddEntryAgendaController {
 
     @FXML
     private Label errorMessageLabel;
+    @FXML
+    private ListView<String> agendaTasksListView;
 
     private final EmployeeRepository employeeRepository = Repositories.getInstance().getEmployeeRepository();
     private final GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
@@ -70,7 +72,7 @@ public class AddEntryAgendaController {
     }
     @FXML
     public void initializeShowListOfAgendaUI() {
-        printTasks();
+        updateAgendaList();
     }
     private List<GreenSpace> getGreenSpaceList() {
         if (!currentUserLogInValidation()) {
@@ -118,7 +120,6 @@ public class AddEntryAgendaController {
     }
 
     private List<Task> getTaskList(String selectedGreenSpaceName) {
-        // Encontrar o GreenSpace correspondente ao nome selecionado
         GreenSpace selectedGreenSpace = null;
         List<GreenSpace> greenSpaces = greenSpaceRepository.getGreenSpaceList();
         for (GreenSpace greenSpace : greenSpaces) {
@@ -132,7 +133,6 @@ public class AddEntryAgendaController {
 
             return taskRepository.getTasksByGreenSpace(selectedGreenSpace);
         } else {
-            // Se o GreenSpace não foi encontrado, retornar uma lista vazia
             return Collections.emptyList();
         }
     }
@@ -143,9 +143,8 @@ public class AddEntryAgendaController {
         }
         return greenSpaceNames;
     }
-
     @FXML
-    private void addTaskToAgenda() {
+    public void addTaskToAgenda() {
         String selectedGreenSpace = cmbGreenSpace.getValue();
         Task selectedTask = cmbTask.getValue();
         String startDate = textStartDate.getText();
@@ -153,16 +152,19 @@ public class AddEntryAgendaController {
         if (selectedGreenSpace != null && selectedTask != null && startDate != null && !startDate.isEmpty()) {
             try {
                 Date selectedDate = new SimpleDateFormat("dd/MM/yyyy").parse(startDate);
-                // Allow adding tasks for today's date
-                if (!selectedDate.before(new Date())) {
+                // Allow adding tasks for today's date or future dates
+                if (!selectedDate.before(new Date(System.currentTimeMillis() - 1))) {
                     selectedTask.setTaskStartDate(selectedDate);
                     selectedTask.setTaskStatus(TaskStatus.Planned);
                     taskRepository.addTask(selectedTask);
                     System.out.println("Task added to agenda!");
                     textStartDate.clear();
                     errorMessageLabel.setVisible(false); // Hide error message if successful
+
+                    // Atualize a ListView após adicionar a tarefa à agenda
+                    updateAgendaList();
                 } else {
-                    errorMessageLabel.setText("Please enter a future date.");
+                    errorMessageLabel.setText("Please enter today's date or a future date.");
                     errorMessageLabel.setVisible(true);
                 }
             } catch (ParseException e) {
@@ -174,9 +176,26 @@ public class AddEntryAgendaController {
             errorMessageLabel.setVisible(true);
         }
     }
+    private void updateAgendaList() {
+        if (agendaTasksListView == null) {
+            return;
+        }
 
-    public void printTasks() {
+        agendaTasksListView.getItems().clear();
+
+        agendaTasksListView.getItems().add(String.format("%-30s | %-30s | %-30s | %-30s", "Title", "Green Space", "Start Date", "Status"));
+
         List<Task> agendaTasks = taskRepository.getAgenda();
-        taskRepository.displayTasks(agendaTasks);
+
+        for (Task task : agendaTasks) {
+            String title = task.getTitle();
+            String greenSpace = task.getGreenSpace().getName(); // Obtenha o nome do green space associado à tarefa
+            String startDate = new SimpleDateFormat("dd/MM/yyyy").format(task.getStartDate());
+            String status = task.getStatus().toString();
+
+            String entry = String.format("%-30s | %-30s | %-30s | %-30s", title, greenSpace, startDate, status);
+            agendaTasksListView.getItems().add(entry);
+        }
     }
+
 }

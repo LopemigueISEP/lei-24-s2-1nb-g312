@@ -71,7 +71,7 @@ public class RegisterGreenSpaceController {
      */
     @FXML
     public void initializeShowListGreenSpacesUI() {
-        updateGreenSpacesListView();
+        updateGreenSpacesList();
     }
     /**
      * Retrieves the GreenSpaceRepository instance.
@@ -175,7 +175,7 @@ public class RegisterGreenSpaceController {
                     name, address, area, typology, greenSpaceManager);
             if (registeredGreenSpace.isPresent()) {
                 messageLabel.setText("Green space registered successfully!");
-                updateGreenSpacesListView();
+                updateGreenSpacesList();
             } else {
                 messageLabel.setText("Failed to register green space. An error occurred.");
             }
@@ -224,14 +224,14 @@ public class RegisterGreenSpaceController {
             GreenSpace greenSpace = new GreenSpace(name, address, area, typology, greenSpaceManager);
             return Employee.registerGreenSpace(name, address, area, typology, greenSpaceManager, true);
         } catch (Exception e) {
-            System.err.println("Error occurred while registering a green space: " + e.getMessage());
+            System.err.println(STR."Error occurred while registering a green space: \{e.getMessage()}");
             return Optional.empty();
         }
     }
     /**
      * Updates the list view of green spaces with the latest data.
      */
-    private void updateGreenSpacesListView() {
+    private void updateGreenSpacesList() {
         if (greenSpacesListView == null) {
             return;
         }

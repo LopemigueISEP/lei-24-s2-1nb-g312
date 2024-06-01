@@ -125,14 +125,7 @@ public class TaskRepository {
         return tasksByGreenSpace;
     }
 
-    public void displayTasks(List<Task> tasks) {
-        for (Task task : tasks) {
-            String startDate = new SimpleDateFormat("dd/MM/yyyy").format(task.getStartDate());
-            System.out.printf("Task: %s - GreenSpace: %s - Start Date: %s - Status: %s%n",
-                    task.getTitle(), task.getGreenSpace().getName(), startDate, task.getStatus());
-        }
-        System.out.println("---------------------------------------------------");
-    }
+
 
     private boolean validateTask(Task task){
         return true;

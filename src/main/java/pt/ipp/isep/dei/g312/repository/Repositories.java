@@ -130,9 +130,18 @@ public class Repositories {
     public CSVFileRepository getcsvFileRepository() {
         return csvFileRepository;
     }
-
+    /**
+     * Retrieves the TaskRepository object associated with this controller.
+     *
+     * @return The TaskRepository object.
+     */
     public TaskRepository getTaskRepository() {return taskRepository;
     }
+    /**
+     * Retrieves the GreenSpaceRepository object associated with this controller.
+     *
+     * @return The GreenSpaceRepository object.
+     */
     public GreenSpaceRepository getGreenSpaceRepository() {
         return greenSpaceRepository;
     }
