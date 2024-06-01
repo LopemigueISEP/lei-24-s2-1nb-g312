@@ -31,12 +31,10 @@ public class PostponeTaskInTheAgendaUI implements Runnable {
     }
 
     private void submitData(Task task, Date newDate) {
-        boolean taskPostponed = controller.postponeTask(task, newDate);
-        if (taskPostponed) {
+        if (controller.postponeTask(task, newDate).isPresent()) {
             System.out.println("Task postponed successfully.");
         } else {
-            System.out.println("Failed to postpone task. Team availability:");
-            printTeamAvailability(task.getAssignedTeam());
+            System.out.println("Failed to postpone task.");
         }
     }
 
@@ -55,7 +53,7 @@ public class PostponeTaskInTheAgendaUI implements Runnable {
                     "Title: " + t.getTitle() + ", " +
                     "Team: " + t.getAssignedTeam() + ", " +
                     "Description: " + t.getDescription() + ", " +
-                    "Date: " + t.getDate());
+                    "Date: " + t.getStartDate());
             counter++;
         }
 
@@ -64,14 +62,7 @@ public class PostponeTaskInTheAgendaUI implements Runnable {
     }
 
     private Date requestNewDate() {
-        return  readDateFromConsole("New Date (dd/MM/yyyy): ");
-    }
-
-    private void printTeamAvailability(Team team) {
-        List<Task> teamTasks = controller.getTeamTasks(team);
-        for (Task teamTask : teamTasks) {
-            System.out.println("Team is booked from " + teamTask.getDate() + " for " + teamTask.getDuration() + " days.");
-        }
+        return  readDateHourFromConsole("New Date (dd/MM/yyyy - HH): ");
     }
 
 }
