@@ -18,11 +18,9 @@ public class Task implements Cloneable {
     Team assignedTeam;
     ArrayList<Vehicle> assignedVehicles;
     int taskID;
-    private ToDoEntry toDoListEntry;
     Date startDate;
     Date endDate;
     TaskPosition taskPosition;
-    private ToDoEntry toDoEntry; //TODO: para que serve isto? era quando TODOList era um objeto?
 
 
     // constructor for to do list
@@ -72,12 +70,11 @@ public class Task implements Cloneable {
         this.urgency = TaskUrgency.Medium; // Default urgency
         this.assignedVehicles = new ArrayList<>();
         this.taskID = 0;
-        this.toDoListEntry = null;
+
     }
 
-    public Task(Date startDate, ToDoEntry toDoEntry, TaskStatus status) {
+    public Task(Date startDate, TaskStatus status) {
         this.startDate = startDate;
-        this.toDoEntry = toDoEntry;
         this.status = status;
     }
 
@@ -132,21 +129,13 @@ public class Task implements Cloneable {
         return this.title;
     }
 
-    public ToDoEntry getToDoListEntry() {
-        return toDoListEntry;
-    }
 
-    public void setToDoListEntry(ToDoEntry toDoListEntry) {
-        this.toDoListEntry = toDoListEntry;
-    }
 
     public GreenSpace getGreenSpace() {
         return this.greenSpace;
     }
 
-    public ToDoEntry getToDoEntry() {
-        return toDoEntry;
-    }
+
 
     public TaskPosition getTaskPosition() {
         return taskPosition;
@@ -209,19 +198,8 @@ public String toString() {
             title, greenSpace, startDate, status);
 }
 
-@Override
-public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Agenda agenda = (Agenda) o;
-    return Objects.equals(startDate, agenda.getStartDate()) &&
-            Objects.equals(toDoEntry, agenda.getToDoEntry());
-}
 
-@Override
-public int hashCode() {
-    return Objects.hash(startDate, toDoEntry);
-}
+
 
 public int compareTo(Task other) {
     return this.startDate.compareTo(other.startDate);
