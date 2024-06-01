@@ -104,10 +104,25 @@ public class AddEntryAgendaController {
         return filteredList;
     }
 
-    private List<Task> getTaskList(String selectedGreenSpace) {
-        return taskRepository.getTasksByGreenSpace(selectedGreenSpace);
-    }
+    private List<Task> getTaskList(String selectedGreenSpaceName) {
+        // Encontrar o GreenSpace correspondente ao nome selecionado
+        GreenSpace selectedGreenSpace = null;
+        List<GreenSpace> greenSpaces = greenSpaceRepository.getGreenSpaceList();
+        for (GreenSpace greenSpace : greenSpaces) {
+            if (greenSpace.getName().equals(selectedGreenSpaceName)) {
+                selectedGreenSpace = greenSpace;
+            }
+        }
 
+        // Verificar se o GreenSpace foi encontrado
+        if (selectedGreenSpace != null) {
+            // Obter a lista de tarefas do GreenSpace encontrado
+            return taskRepository.getTasksByGreenSpace(selectedGreenSpace);
+        } else {
+            // Se o GreenSpace não foi encontrado, retornar uma lista vazia
+            return Collections.emptyList();
+        }
+    }
     private ObservableList<String> getGreenSpaceNames(List<GreenSpace> greenSpaces) {
         ObservableList<String> greenSpaceNames = FXCollections.observableArrayList();
         for (GreenSpace greenSpace : greenSpaces) {
@@ -148,6 +163,7 @@ public class AddEntryAgendaController {
     }
 
     public void printTasks() {
-        taskRepository.displayTasks();
+        List<Task> agendaTasks = taskRepository.getAgenda();
+        taskRepository.displayTasks(agendaTasks);
     }
 }

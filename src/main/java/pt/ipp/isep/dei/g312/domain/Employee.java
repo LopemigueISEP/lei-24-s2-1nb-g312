@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.g312.domain;
 
+import pt.ipp.isep.dei.g312.repository.GreenSpaceRepository;
 import pt.ipp.isep.dei.g312.repository.Repositories;
 import pt.ipp.isep.dei.g312.repository.SkillRepository;
 
@@ -387,12 +388,21 @@ public class Employee implements Cloneable,Comparable<Employee> {
     }
 
     // method for the employee to register a task for the todolist
-    public static Optional<Task> registerTask(String title, String description, int taskExpectedDuration, String type, String greenSpace, TaskUrgency urgency, int taskID, TaskPosition taskPosition, boolean userValidation) {
+    public static Optional<Task> registerTask(String title, String description, int taskExpectedDuration, String type, String greenSpaceName, TaskUrgency urgency, int taskID, TaskPosition taskPosition, boolean userValidation) {
         try {
             if (userValidation) {
-                Task task = new Task(title, description, taskExpectedDuration, type, greenSpace, urgency, taskID, taskPosition);
-                Optional<Task> addedTask = Repositories.getInstance().getTaskRepository().addTask(task);
-                return addedTask;
+                // Obter o GreenSpace correspondente ao nome fornecido
+                GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
+                Optional<GreenSpace> greenSpaceOptional = greenSpaceRepository.getGreenSpaceByName(greenSpaceName);
+                if (greenSpaceOptional.isPresent()) {
+                    GreenSpace greenSpace = greenSpaceOptional.get();
+                    Task task = new Task(title, description, taskExpectedDuration, type, greenSpace, urgency, taskID, taskPosition);
+                    Optional<Task> addedTask = Repositories.getInstance().getTaskRepository().addTask(task);
+                    return addedTask;
+                } else {
+                    System.out.println("GreenSpace with name " + greenSpaceName + " not found.");
+                    return Optional.empty();
+                }
             } else {
                 System.out.println("This user doesn't have permissions to register tasks");
                 return Optional.empty();

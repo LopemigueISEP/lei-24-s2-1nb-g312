@@ -9,7 +9,6 @@ import java.util.*;
 // Agenda is a repository of tasks, not a conceptual class.
 public class TaskRepository {
     public List<Task> taskList = new ArrayList<>(); //isto passa a ser uma lista de tasks, passa a chamar-se taskList
-    public List<Agenda> agendaList = new ArrayList<>(); // isto é para eliminar?
 
     public Optional<Task> addTask(Task task) {
         if (existsTask(task)) {
@@ -116,6 +115,24 @@ public class TaskRepository {
         }
         return pendingTasks;
     }
+    public List<Task> getTasksByGreenSpace(GreenSpace greenSpace) {
+        List<Task> tasksByGreenSpace = new ArrayList<>();
+        for (Task task : taskList) {
+            if (task.getGreenSpace().equals(greenSpace)) {
+                tasksByGreenSpace.add(task);
+            }
+        }
+        return tasksByGreenSpace;
+    }
+
+    public void displayTasks(List<Task> tasks) {
+        for (Task task : tasks) {
+            String startDate = new SimpleDateFormat("dd/MM/yyyy").format(task.getStartDate());
+            System.out.printf("Task: %s - GreenSpace: %s - Start Date: %s - Status: %s%n",
+                    task.getTitle(), task.getGreenSpace().getName(), startDate, task.getStatus());
+        }
+        System.out.println("---------------------------------------------------");
+    }
 
     private boolean validateTask(Task task){
         return true;
@@ -126,27 +143,6 @@ public class TaskRepository {
         boolean isValid = !taskList.contains(task);
 
         return isValid;
-    }
-
-    //TODO métodos que usam class Agenda, são para editar/eliminar?
-    public void addEntryAgenda(Agenda agenda) {
-        if (agenda == null || agenda.getToDoEntry() == null || agenda.getStartDate() == null) {
-            System.out.println("Invalid data. Entry cannot be added to Agenda.");
-            return;
-        }
-        agendaList.add(agenda);
-    }
-
-    public void displayAgenda() {
-        Collections.sort(agendaList);
-
-        for (Agenda entry : agendaList) {
-            ToDoEntry selectedEntry = entry.getToDoEntry();
-            String startDate = new SimpleDateFormat("dd/MM/yyyy").format(entry.getStartDate());
-            System.out.printf("Task: %s - GreenSpace: %s - Start Date: %s - Status: %s%n",
-                    selectedEntry.getTask(), selectedEntry.getGreenSpace(), startDate, entry.getStatus());
-        }
-        System.out.println("---------------------------------------------------");
     }
 
 }

@@ -100,6 +100,7 @@ public class Bootstrap implements Runnable {
 
     private void addTasks() throws ParseException {
         TaskRepository taskRepository = Repositories.getInstance().getTaskRepository();
+        GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
 
         // Creating a sample date
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH");
@@ -111,7 +112,7 @@ public class Bootstrap implements Runnable {
         String description = "This is a sample task description.";
         int taskExpectedDuration = 8; //hours
         String type = "Type A";
-        String greenSpace = "Central Park";
+        String greenSpaceName = "Central Park";
         TaskUrgency urgency = TaskUrgency.High;
         TaskStatus status = TaskStatus.Planned;
         Team assignedTeam = null;
@@ -119,12 +120,17 @@ public class Bootstrap implements Runnable {
         int taskID = 1;
         TaskPosition taskPosition = TaskPosition.Agenda;
 
-        // Adding the task to the repository
-        Task task = new Task(title, description, taskExpectedDuration, type, greenSpace, urgency, status, assignedTeam, assignedVehicles, taskID, startDate, endDate, taskPosition);
-        taskRepository.addTask(task);
+        // Obtendo o GreenSpace pelo nome
+        Optional<GreenSpace> greenSpaceOptional = greenSpaceRepository.getGreenSpaceByName(greenSpaceName);
+        if (greenSpaceOptional.isPresent()) {
+            GreenSpace greenSpace = greenSpaceOptional.get();
+
+            // Adicionando a tarefa ao repositório
+            Task task = new Task(title, description, taskExpectedDuration, type, greenSpace, urgency, status, assignedTeam, assignedVehicles, taskID, startDate, endDate, taskPosition);
+            taskRepository.addTask(task);
+        } else {
+        }
     }
-
-
 
     private void addVehicles() throws ParseException {
         VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();

@@ -12,7 +12,7 @@ public class Task implements Cloneable {
 
     int taskExpectedDuration; //expected hours duration
     String type;
-    private String greenSpace; //TODO change to greenspace object, instead of string
+    private GreenSpace greenSpace;
     TaskUrgency urgency;
     TaskStatus status;
     Team assignedTeam;
@@ -26,7 +26,7 @@ public class Task implements Cloneable {
 
 
     // constructor for to do list
-    public Task(String title, String description, int taskExpectedDuration, String type, String greenSpace, TaskUrgency urgency, int taskID, TaskPosition taskPosition) {
+    public Task(String title, String description, int taskExpectedDuration, String type, GreenSpace greenSpace, TaskUrgency urgency, int taskID, TaskPosition taskPosition) {
         this.title = title;
         this.description = description;
         this.taskExpectedDuration = taskExpectedDuration;
@@ -44,7 +44,7 @@ public class Task implements Cloneable {
     // constructor for clone
 
 
-    public Task(String title, String description, int taskExpectedDuration, String type, String greenSpace, TaskUrgency urgency, TaskStatus status, Team assignedTeam, ArrayList<Vehicle> assignedVehicles, int taskID, Date startDate, Date endDate, TaskPosition taskPosition) {
+    public Task(String title, String description, int taskExpectedDuration, String type, GreenSpace greenSpace, TaskUrgency urgency, TaskStatus status, Team assignedTeam, ArrayList<Vehicle> assignedVehicles, int taskID, Date startDate, Date endDate, TaskPosition taskPosition) {
         this.title = title;
         this.description = description;
         this.taskExpectedDuration = taskExpectedDuration;
@@ -61,7 +61,7 @@ public class Task implements Cloneable {
     }
 
     //TODO: para que são estes construtores?
-    public Task(String title, String greenSpace, Date startDate, TaskStatus status) {
+    public Task(String title, GreenSpace greenSpace, Date startDate, TaskStatus status) {
         this.title = title;
         this.greenSpace = greenSpace;
         this.startDate = startDate;
@@ -140,7 +140,7 @@ public class Task implements Cloneable {
         this.toDoListEntry = toDoListEntry;
     }
 
-    public String getGreenSpace() {
+    public GreenSpace getGreenSpace() {
         return this.greenSpace;
     }
 

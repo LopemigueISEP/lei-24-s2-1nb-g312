@@ -85,6 +85,20 @@ public class GreenSpaceRepository implements Serializable {
         return false;
     }
     /**
+     * Retrieves a GreenSpace object from the repository based on its name.
+     *
+     * @param name The name of the GreenSpace to retrieve.
+     * @return An Optional containing the GreenSpace object if found, or an empty Optional if not found.
+     */
+    public Optional<GreenSpace> getGreenSpaceByName(String name) {
+        for (GreenSpace greenSpace : greenSpaceList) {
+            if (greenSpace.getName().equalsIgnoreCase(name)) {
+                return Optional.of(greenSpace);
+            }
+        }
+        return Optional.empty();
+    }
+    /**
      * Serialize data and save it to a file.
      */
     public void serializateData() {
