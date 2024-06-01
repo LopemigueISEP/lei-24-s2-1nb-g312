@@ -34,8 +34,18 @@ public class AddEntryAgendaController {
     private final TaskRepository taskRepository = Repositories.getInstance().getTaskRepository();
     private final AuthenticationRepository authRepository = Repositories.getInstance().getAuthenticationRepository();
 
+
+
     @FXML
-    private void initialize() {
+    public void initialize(boolean addEntryAgendaUI) {
+        if (addEntryAgendaUI) {
+            initializeAddEntryAgendaUI();
+        } else {
+            initializeShowListOfAgendaUI();
+        }
+    }
+    @FXML
+    public void initializeAddEntryAgendaUI() {
         initializeComboBoxes();
         btnSubmit.setOnAction(event -> addTaskToAgenda());
         errorMessageLabel.setVisible(false); // Set label to not visible initially
@@ -58,7 +68,10 @@ public class AddEntryAgendaController {
 
         cmbTask.setPromptText("Choose Task");
     }
-
+    @FXML
+    public void initializeShowListOfAgendaUI() {
+        printTasks();
+    }
     private List<GreenSpace> getGreenSpaceList() {
         if (!currentUserLogInValidation()) {
             System.err.println("User is not logged in or does not have the required role.");
@@ -114,9 +127,9 @@ public class AddEntryAgendaController {
             }
         }
 
-        // Verificar se o GreenSpace foi encontrado
+
         if (selectedGreenSpace != null) {
-            // Obter a lista de tarefas do GreenSpace encontrado
+
             return taskRepository.getTasksByGreenSpace(selectedGreenSpace);
         } else {
             // Se o GreenSpace não foi encontrado, retornar uma lista vazia
