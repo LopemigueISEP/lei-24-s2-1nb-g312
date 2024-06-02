@@ -4,12 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
 import pt.ipp.isep.dei.g312.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.g312.domain.*;
 import pt.ipp.isep.dei.g312.repository.*;
 
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 public class AddEntryAgendaController {
@@ -21,15 +23,15 @@ public class AddEntryAgendaController {
     private ComboBox<Task> cmbTask;
 
     @FXML
-    private TextField textStartDate;
-
-    @FXML
     private Button btnSubmit;
 
     @FXML
     private Label errorMessageLabel;
     @FXML
     private ListView<String> agendaTasksListView;
+    @FXML
+    private DatePicker datePicker;
+
 
     private final EmployeeRepository employeeRepository = Repositories.getInstance().getEmployeeRepository();
     private final GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
@@ -51,6 +53,16 @@ public class AddEntryAgendaController {
         initializeComboBoxes();
         btnSubmit.setOnAction(event -> addTaskToAgenda());
         errorMessageLabel.setVisible(false); // Set label to not visible initially
+
+
+        datePicker.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate tomorrow = LocalDate.now().plusDays(1);
+                setDisable(empty || date.isBefore(tomorrow));
+            }
+        });
+
     }
 
     private void initializeComboBoxes() {
@@ -74,6 +86,7 @@ public class AddEntryAgendaController {
     public void initializeShowListOfAgendaUI() {
         updateAgendaList();
     }
+
     private List<GreenSpace> getGreenSpaceList() {
         if (!currentUserLogInValidation()) {
             System.err.println("User is not logged in or does not have the required role.");
@@ -82,7 +95,6 @@ public class AddEntryAgendaController {
 
         Employee loggedEmployee = matchEmployeeByRole();
         if (loggedEmployee == null) {
-            System.err.println("Error retrieving logged-in employee information.");
             return Collections.emptyList();
         }
 
@@ -147,28 +159,22 @@ public class AddEntryAgendaController {
     public void addTaskToAgenda() {
         String selectedGreenSpace = cmbGreenSpace.getValue();
         Task selectedTask = cmbTask.getValue();
-        String startDate = textStartDate.getText();
+        LocalDate selectedDate = datePicker.getValue();
 
-        if (selectedGreenSpace != null && selectedTask != null && startDate != null && !startDate.isEmpty()) {
-            try {
-                Date selectedDate = new SimpleDateFormat("dd/MM/yyyy").parse(startDate);
-                // Allow adding tasks for today's date or future dates
-                if (!selectedDate.before(new Date(System.currentTimeMillis() - 1))) {
-                    selectedTask.setTaskStartDate(selectedDate);
-                    selectedTask.setTaskStatus(TaskStatus.Planned);
-                    taskRepository.addTask(selectedTask);
-                    System.out.println("Task added to agenda!");
-                    textStartDate.clear();
-                    errorMessageLabel.setVisible(false); // Hide error message if successful
+        if (selectedGreenSpace != null && selectedTask != null && selectedDate != null) {
+            Date date = java.sql.Date.valueOf(selectedDate);
+            // Allow adding tasks for today's date or future dates
+            if (!date.before(new Date(System.currentTimeMillis() - 1))) {
+                selectedTask.setTaskStartDate(date);
+                selectedTask.setTaskStatus(TaskStatus.Planned);
+                taskRepository.addTask(selectedTask);
+                System.out.println("Task added to agenda!");
+                errorMessageLabel.setVisible(false); // Hide error message if successful
 
-                    // Atualize a ListView após adicionar a tarefa à agenda
-                    updateAgendaList();
-                } else {
-                    errorMessageLabel.setText("Please enter today's date or a future date.");
-                    errorMessageLabel.setVisible(true);
-                }
-            } catch (ParseException e) {
-                errorMessageLabel.setText("Invalid date format. Please enter the date in the format dd/MM/yyyy.");
+                // Atualize a ListView após adicionar a tarefa à agenda
+                updateAgendaList();
+            } else {
+                errorMessageLabel.setText("Please enter today's date or a future date.");
                 errorMessageLabel.setVisible(true);
             }
         } else {

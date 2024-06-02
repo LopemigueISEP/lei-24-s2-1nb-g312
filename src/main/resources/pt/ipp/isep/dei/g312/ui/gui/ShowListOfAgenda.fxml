@@ -23,21 +23,22 @@
                         <PropertyValueFactory property="taskName" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Start Date">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="startDate" />
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn text="End Date">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="endDate" />
-                    </cellValueFactory>
-                </TableColumn>
                 <TableColumn text="Description">
                     <cellValueFactory>
                         <PropertyValueFactory property="description" />
                     </cellValueFactory>
                 </TableColumn>
+                <TableColumn text="Start Date">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="startDate" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Status">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="status" />
+                    </cellValueFactory>
+                </TableColumn>
+
             </columns>
         </TableView>
     </children>

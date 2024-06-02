@@ -29,7 +29,10 @@
                 </Label>
                 <ComboBox fx:id="cmbGreenSpace" editable="true" prefHeight="25.0" prefWidth="921.0" promptText="Choose GreenSpace" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                 <ComboBox fx:id="cmbTask" editable="true" prefHeight="25.0" prefWidth="921.0" promptText="Choose Task" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-                <TextField fx:id="textStartDate" promptText="Start Date (DD/MM/YYYY)" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+                <HBox GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                    <DatePicker fx:id="datePicker" prefHeight="25.0" prefWidth="200.0" promptText="Choose Date" />
+                    <TextField fx:id="textStartTime" promptText="Start Time (HH:MM)" />
+                </HBox>
                 <Button fx:id="btnSubmit" mnemonicParsing="false" onAction="#addTaskToAgenda" prefHeight="25.0" prefWidth="149.0" text="Submit" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="TOP">
                     <font>
                         <Font name="Tahoma Bold" size="12.0" />
