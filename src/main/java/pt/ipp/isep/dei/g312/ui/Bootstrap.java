@@ -57,7 +57,7 @@ public class Bootstrap implements Runnable {
             employeeRepository.addEmployee(new Employee("Employee",  dateFormat.parse("01/01/1950"), "employee@this.app", 919017113,  dateFormat.parse("01/01/1968"), "246597858", "Porto", "12345678", "EMPLOYEE"));
             employeeRepository.addEmployee(new Employee("Human Resources Manager",  dateFormat.parse("01/01/1950"), "HRM@this.app", 919017113,  dateFormat.parse("01/01/1968"), "246597857", "Porto", "12345678", "HRM"));
             employeeRepository.addEmployee(new Employee("Vehicle and Equipment Fleet Manager", dateFormat.parse("01/01/1950"), "VFM@this.app", 919017113,  dateFormat.parse("01/01/1968"), "246597856", "Porto", "12345678", "VFM"));
-            employeeRepository.addEmployee(new Employee("Green Space Manager",  dateFormat.parse("01/01/1950"), "GSM1@this.app", 919017113,  dateFormat.parse("01/01/1968"), "246597855", "Porto", "12345678", "GSM"));
+            employeeRepository.addEmployee(new Employee("Green Space Manager",  dateFormat.parse("01/01/1950"), "GSM@this.app", 919017113,  dateFormat.parse("01/01/1968"), "246597855", "Porto", "12345678", "GSM"));
 
         } catch (ParseException e) {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, "Incorrect date Format", e);

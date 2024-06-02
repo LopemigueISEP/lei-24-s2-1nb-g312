@@ -1,27 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.g312.application.controller.AddEntryAgendaController">
     <padding>
         <Insets bottom="50" left="50" right="50" top="50" />
     </padding>
     <children>
-        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="720.0" spacing="10">
-            <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Agenda">
-                <font>
-                    <Font name="Tahoma" size="12.0" />
-                </font>
-            </Label>
-            <!-- Adicione um ListView para exibir as tarefas da agenda -->
-            <ListView fx:id="agendaTasksListView" prefWidth="500.0" VBox.vgrow="ALWAYS">
-                <VBox.margin>
-                    <Insets bottom="50" left="50" right="50" top="50" />
-                </VBox.margin>
-            </ListView>
-        </VBox>
+        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Agenda List" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <font>
+                <Font name="Tahoma Bold" size="12.0" />
+            </font>
+        </Label>
+
+        <TableView fx:id="agendaTableView" prefWidth="600.0" prefHeight="500.0" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn text="Task Name">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="taskName" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Start Date">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="startDate" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="End Date">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="endDate" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Description">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="description" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
     </children>
 </VBox>
+
+
