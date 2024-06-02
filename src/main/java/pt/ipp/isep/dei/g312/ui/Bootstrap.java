@@ -85,22 +85,27 @@ public class Bootstrap implements Runnable {
     }
 
     private void addTeams() {
-        TeamRepository teamRepository = Repositories.getInstance().getTeamRepository();
-        EmployeeRepository employeeRepository = Repositories.getInstance().getEmployeeRepository();
+            TeamRepository teamRepository = Repositories.getInstance().getTeamRepository();
+            EmployeeRepository employeeRepository = Repositories.getInstance().getEmployeeRepository();
+            employeeRepository.getSeralizatedData();
 
-        // Get employees to form teams
-        List<Employee> allEmployees = employeeRepository.getEmployees();
+            // Get employees to form teams
+            List<Employee> allEmployees = employeeRepository.getEmployees();
 
-        // Create a sample team with some employees
-        List<Employee> teamMembers = new ArrayList<>();
-        teamMembers.add(allEmployees.get(0)); // Add first employee
-        teamMembers.add(allEmployees.get(1)); // Add second employee
+            // Verifica se a lista de funcionários não está vazia antes de acessá-la
+            if (!allEmployees.isEmpty()) {
+                // Create a sample team with some employees
+                List<Employee> teamMembers = new ArrayList<>();
+                teamMembers.add(allEmployees.get(0)); // Add first employee
+                teamMembers.add(allEmployees.get(1)); // Add second employee
 
-        Team team = new Team(teamMembers);
+                Team team = new Team(teamMembers);
 
-        // Add the team to the repository
-        Optional<Team> addedTeam = teamRepository.add(team);
-    }
+                // Add the team to the repository
+                Optional<Team> addedTeam = teamRepository.add(team);
+            }
+        }
+
 
     private void addTasks() throws ParseException {
         TaskRepository taskRepository = Repositories.getInstance().getTaskRepository();
