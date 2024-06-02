@@ -1,6 +1,8 @@
 package pt.ipp.isep.dei.g312.ui.gui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.g312.application.controller.AssignVehicleToAgendaEntryController;
 import pt.ipp.isep.dei.g312.domain.Task;
@@ -17,12 +20,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AssignVehicleToAgendaEntryGUI extends Application {
+
+public class AssignVehicleToAgendaEntryGUI extends Application implements Initializable{
 
     @FXML
-    public ComboBox cmbTask;
+    public ComboBox<Task> cmbTask;
     @FXML
-    public ComboBox cmbVehicles;
+    private ListView<String> listViewVehicles;
     @FXML
     private AssignVehicleToAgendaEntryController controller;
 
@@ -30,10 +34,7 @@ public class AssignVehicleToAgendaEntryGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        controller = new AssignVehicleToAgendaEntryController();
-        cmbTask = new ComboBox<>();
-        cmbVehicles = new ComboBox<>();
-
+        Platform.setImplicitExit(false);
 
         FXMLLoader fxmlLoader = new FXMLLoader(AddEntryToDoListUI.class.getResource("AssignVehicleToAgendaEntryGUI.fxml"));
         Scene scene;
@@ -47,26 +48,31 @@ public class AssignVehicleToAgendaEntryGUI extends Application {
             throw new RuntimeException(e);
         }
 
+    }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        controller = new AssignVehicleToAgendaEntryController();
         loadData();
     }
 
+
     private void loadData(){
 
-
-        //TODO: confirmar se isto está a atualizar os dados
-
-        //for(Task task : controller.getAvailableTasks()) {
-        //    cmbTask.getItems().add(task);
-        //}
-        cmbTask.getItems().clear();
-        //cmbTask.setItems(controller.getAvailableTasks());
+        ObservableList<Task> tasks = FXCollections.observableList(controller.getAvailableTasks());
+        cmbTask.setItems(tasks);
 
 
+        ObservableList<String> vehicles = FXCollections.observableArrayList();
 
-        for(Vehicle vehicle : controller.getAvailableVehicles()){
-            cmbVehicles.getItems().add(vehicle.getRegistrationPlate());
+        vehicles.add(String.format("%-15s      %-15s   %-15s %-15s","PLATE","BRAND","MODEL","CURRENT_KM"));
+
+        for (Vehicle vehicle : controller.getAvailableVehicles()) {
+
+            vehicles.add(String.format("%-15s    %-15s    %-15s   %-15.0f",vehicle.getRegistrationPlate(), vehicle.getBrand(), vehicle.getModel(), vehicle.getCurrentKm()));
         }
+        listViewVehicles.setItems(vehicles);
+        listViewVehicles.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.MULTIPLE);
     }
 
 
@@ -77,10 +83,9 @@ public class AssignVehicleToAgendaEntryGUI extends Application {
     @FXML
     public void ClickBtnSubmit() {
         cmbTask.getSelectionModel().clearSelection();
-        cmbVehicles.getSelectionModel().clearSelection();
+        listViewVehicles.getSelectionModel().clearSelection();
 
 
     }
-
 
 }
