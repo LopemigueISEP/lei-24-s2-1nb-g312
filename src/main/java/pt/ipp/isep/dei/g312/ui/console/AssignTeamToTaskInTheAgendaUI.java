@@ -66,7 +66,6 @@ public class AssignTeamToTaskInTheAgendaUI implements Runnable {
         List<Team> availableTeams = controller.listAvailableTeams(task);
         if (availableTeams.isEmpty()) {
             System.out.println("No available teams found.");
-            System.exit(0);
         }
         for(Team t : availableTeams){
             System.out.println(counter + ": " + t.toString());
