@@ -37,20 +37,6 @@ public class RegisterGreenSpaceController {
     @FXML
     private TableView<GreenSpace> greenSpacesTableView;
 
-    @FXML
-    private TableColumn<GreenSpace, String> nameColumn;
-
-    @FXML
-    private TableColumn<GreenSpace, String> addressColumn;
-
-    @FXML
-    private TableColumn<GreenSpace, Double> areaColumn;
-
-    @FXML
-    private TableColumn<GreenSpace, String> typologyColumn;
-
-    @FXML
-    private TableColumn<GreenSpace, String> managerColumn;
 
     private GreenSpaceRepository greenSpaceRepository;
     private AuthenticationRepository authRepository;
