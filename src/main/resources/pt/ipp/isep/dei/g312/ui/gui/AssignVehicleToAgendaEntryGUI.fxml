@@ -17,14 +17,21 @@
                         <Font name="Tahoma Bold" size="12.0" />
                     </font>
                 </Label>
-                <Button fx:id="btnSubmit" mnemonicParsing="false" onAction="#ClickBtnSubmit" prefHeight="25.0" prefWidth="149.0" text="Submit" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                <Button fx:id="btnSubmit" mnemonicParsing="false" onAction="#ClickBtnSubmit" prefHeight="25.0" prefWidth="149.0" text="Submit" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                     <font>
                         <Font name="Tahoma Bold" size="12.0" />
                     </font>
                 </Button>
 
-                <ComboBox fx:id="cmbTask" editable="true" prefHeight="25.0" prefWidth="609.0" promptText="Choose Task" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-                <ListView fx:id="listViewVehicles" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="169.0" prefWidth="481.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2" GridPane.valignment="TOP" />
+                <ComboBox fx:id="cmbTask" editable="true" onAction="#cmbTaskOnAction" prefHeight="25.0" prefWidth="609.0" promptText="Choose Task" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                <ListView fx:id="listViewVehicles" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="169.0" prefWidth="481.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="TOP" />
+            <ListView fx:id="listViewAssignedVehicles" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" text="Available Vehicles" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="Tahoma" size="15.0" />
+               </font>
+            </Label>
+            <Label contentDisplay="CENTER" text="Already Assigned Vehicles" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
 
             </children>
             <columnConstraints>
@@ -34,12 +41,13 @@
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints percentHeight="20.0" vgrow="SOMETIMES" />
-                <RowConstraints percentHeight="12.0" vgrow="SOMETIMES" />
-                <RowConstraints percentHeight="12.0" vgrow="SOMETIMES" />
-                <RowConstraints percentHeight="12.0" vgrow="SOMETIMES" />
-                <RowConstraints percentHeight="12.0" vgrow="SOMETIMES" />
-                <RowConstraints percentHeight="12.0" vgrow="SOMETIMES" />
                 <RowConstraints percentHeight="20.0" vgrow="SOMETIMES" />
+                <RowConstraints percentHeight="12.0" vgrow="SOMETIMES" />
+                <RowConstraints percentHeight="12.0" vgrow="SOMETIMES" />
+                <RowConstraints percentHeight="12.0" vgrow="SOMETIMES" />
+                <RowConstraints percentHeight="12.0" vgrow="SOMETIMES" />
+                <RowConstraints percentHeight="12.0" vgrow="SOMETIMES" />
+            <RowConstraints percentHeight="20.0" vgrow="SOMETIMES" />
             </rowConstraints>
         </GridPane>
     </children>

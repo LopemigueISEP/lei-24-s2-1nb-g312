@@ -116,20 +116,23 @@ public class Bootstrap implements Runnable {
         TaskUrgency urgency = TaskUrgency.High;
         TaskStatus status = TaskStatus.Planned;
         Team assignedTeam = null;
-        ArrayList<Vehicle> assignedVehicles = null;
+        ArrayList<Vehicle> assignedVehicles = new ArrayList<>();
         int taskID = 1;
         TaskPosition taskPosition = TaskPosition.Agenda;
 
+        GreenSpace greenSpace = new GreenSpace("greenTeste","casota", 200,"cenas","GSMM" );
+        Task task = new Task(title, description, taskExpectedDuration, type, greenSpace, urgency, status, assignedTeam, assignedVehicles, taskID, startDate, endDate, taskPosition);
+        taskRepository.addTask(task);
         // Obtendo o GreenSpace pelo nome
-        Optional<GreenSpace> greenSpaceOptional = greenSpaceRepository.getGreenSpaceByName(greenSpaceName);
-        if (greenSpaceOptional.isPresent()) {
-            GreenSpace greenSpace = greenSpaceOptional.get();
-
-            // Adicionando a tarefa ao repositório
-            Task task = new Task(title, description, taskExpectedDuration, type, greenSpace, urgency, status, assignedTeam, assignedVehicles, taskID, startDate, endDate, taskPosition);
-            taskRepository.addTask(task);
-        } else {
-        }
+//        Optional<GreenSpace> greenSpaceOptional = greenSpaceRepository.getGreenSpaceByName(greenSpaceName);
+//        if (greenSpaceOptional.isPresent()) {
+//            GreenSpace greenSpace = greenSpaceOptional.get();
+//
+//            // Adicionando a tarefa ao repositório
+//            Task task = new Task(title, description, taskExpectedDuration, type, greenSpace, urgency, status, assignedTeam, assignedVehicles, taskID, startDate, endDate, taskPosition);
+//            taskRepository.addTask(task);
+//        } else {
+//        }
     }
 
     private void addVehicles() throws ParseException {

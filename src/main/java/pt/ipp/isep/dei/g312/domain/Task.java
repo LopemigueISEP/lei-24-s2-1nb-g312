@@ -129,7 +129,7 @@ public class Task implements Cloneable {
         return this.title;
     }
 
-
+    public ArrayList<Vehicle> getAssignedVehicles(){return this.assignedVehicles;}
 
     public GreenSpace getGreenSpace() {
         return this.greenSpace;

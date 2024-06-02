@@ -48,11 +48,11 @@ public class AssignVehicleToAgendaEntryController {
         return vehicleRepository;
     }
 
-    //TODO: Está a buscar todas as tasks e não apenas as disponiveis
+    //TODO: Está a buscar as planned tasks, verificar se existem mais a incluir
     public List<Task> getAvailableTasks(){
         List<Task> listaAvailableTasks;
         try{
-            listaAvailableTasks = taskRepository.getTaskList();
+            listaAvailableTasks = taskRepository.getPlannedTasks();
 
 
         }catch (Exception e) {
@@ -71,6 +71,26 @@ public class AssignVehicleToAgendaEntryController {
             throw new RuntimeException(e);
         }
         return listaAvailableVehicles;
+    }
+
+    public List<Vehicle> getTaskAssignedVehicles(Task task){
+        List<Vehicle> taskAssignedVehicles = new ArrayList<>();
+        try {
+            taskAssignedVehicles = task.getAssignedVehicles();
+        }catch (NullPointerException npe){
+            taskAssignedVehicles = new ArrayList<>();
+        }
+
+        return taskAssignedVehicles;
+    }
+
+    //TODO: Implementar alertas para as mensagens de excepções
+    public void assignVehicleToTask(Vehicle vehicle, Task task){
+        try {
+            task.assignVehicle(vehicle);
+        }catch (NullPointerException nullPointerException){
+            System.out.println("Erro no controller - Método assign Vehicle to task - Não iniciou a lista de veiculos");
+        }
     }
 
 }
