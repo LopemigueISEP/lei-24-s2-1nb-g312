@@ -114,7 +114,7 @@ public class Bootstrap implements Runnable {
         String type = "Type A";
         String greenSpaceName = "Central Park";
         TaskUrgency urgency = TaskUrgency.High;
-        TaskStatus status = TaskStatus.Planned;
+        TaskStatus status = TaskStatus.Pending;
         Team assignedTeam = null;
         ArrayList<Vehicle> assignedVehicles = new ArrayList<>();
         int taskID = 1;
@@ -133,6 +133,26 @@ public class Bootstrap implements Runnable {
 //            taskRepository.addTask(task);
 //        } else {
 //        }
+
+        Date startDate2 = dateFormat.parse("01/06/2024 - 14");
+        Date endDate2 = dateFormat.parse("02/06/2024 - 13");
+
+        // Task 2
+        String title2 = "Sample Task 2 for testing";
+        String description2 = "This is a sample task description.";
+        int taskExpectedDuration2 = 8; //hours
+        String type2 = "Type A";
+        String greenSpaceName2 = "Central Park";
+        TaskUrgency urgency2 = TaskUrgency.High;
+        TaskStatus status2 = TaskStatus.Pending;
+        Team assignedTeam2 = null;
+        ArrayList<Vehicle> assignedVehicles2 = new ArrayList<>();
+        int taskID2 = 2;
+        TaskPosition taskPosition2 = TaskPosition.Agenda;
+
+        Task task2 = new Task(title2, description2, taskExpectedDuration2, type2, greenSpace, urgency2, status2, assignedTeam2, assignedVehicles2, taskID2, startDate2, endDate2, taskPosition2);
+        taskRepository.addTask(task2);
+
     }
 
     private void addVehicles() throws ParseException {
