@@ -50,7 +50,8 @@ public class AddEntryAgendaController {
     }
     @FXML
     public void initializeAddEntryAgendaUI() {
-        initializeComboBoxes();
+        String userEmail = getUserEmail();
+        initializeComboBoxes(userEmail);
         btnSubmit.setOnAction(event -> addTaskToAgenda());
         errorMessageLabel.setVisible(false); // Set label to not visible initially
 
@@ -65,8 +66,8 @@ public class AddEntryAgendaController {
 
     }
 
-    private void initializeComboBoxes() {
-        ObservableList<GreenSpace> greenSpaces = FXCollections.observableArrayList(getGreenSpaceList());
+    private void initializeComboBoxes(String userEmail) {
+        ObservableList<GreenSpace> greenSpaces = FXCollections.observableArrayList(getGreenSpaceList(userEmail));
         ObservableList<String> greenSpaceNames = getGreenSpaceNames(greenSpaces);
         cmbGreenSpace.setItems(greenSpaceNames);
         cmbGreenSpace.setPromptText("Choose GreenSpace");
@@ -87,20 +88,15 @@ public class AddEntryAgendaController {
         updateAgendaList();
     }
 
-    private List<GreenSpace> getGreenSpaceList() {
+    private List<GreenSpace> getGreenSpaceList(String userEmail) {
         if (!currentUserLogInValidation()) {
             System.err.println("User is not logged in or does not have the required role.");
             return Collections.emptyList();
         }
 
-        Employee loggedEmployee = matchEmployeeByRole();
-        if (loggedEmployee == null) {
-            return Collections.emptyList();
-        }
-
         try {
             List<GreenSpace> allGreenSpaces = greenSpaceRepository.getGreenSpaceList();
-            return filterGreenSpacesByManager(allGreenSpaces, loggedEmployee.getName());
+            return filterGreenSpacesByManager(allGreenSpaces, userEmail);
         } catch (NullPointerException e) {
             System.err.println("Returning empty green space list.");
             return Collections.emptyList();
@@ -203,5 +199,12 @@ public class AddEntryAgendaController {
             agendaTasksListView.getItems().add(entry);
         }
     }
-
+    private String getUserEmail() {
+        try {
+            return authRepository.getCurrentUserSession().getUserId().getEmail();
+        } catch (Exception e) {
+            System.err.println("Error getting current user's email: " + e.getMessage());
+            return null;
+        }
+    }
 }

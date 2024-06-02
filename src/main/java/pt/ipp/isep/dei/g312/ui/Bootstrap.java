@@ -120,7 +120,7 @@ public class Bootstrap implements Runnable {
         int taskID = 1;
         TaskPosition taskPosition = TaskPosition.Agenda;
 
-        GreenSpace greenSpace = new GreenSpace("greenTeste","casota", 200,"cenas","GSMM" );
+        GreenSpace greenSpace = new GreenSpace("greenTeste","casota", 200,"cenas","GSM@this.app" );
         Task task = new Task(title, description, taskExpectedDuration, type, greenSpace, urgency, status, assignedTeam, assignedVehicles, taskID, startDate, endDate, taskPosition);
         taskRepository.addTask(task);
         // Obtendo o GreenSpace pelo nome
