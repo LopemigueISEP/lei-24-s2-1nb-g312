@@ -186,6 +186,8 @@ public class Task implements Cloneable {
         this.endDate = calculateEndDate();
     }
 
+    public Date getEndDate() {return this.endDate;}
+
     // method to check if two tasks overlap
     public boolean taskOverlap(Task other) {
         if (this.startDate.compareTo(other.endDate) >= 0 || this.endDate.compareTo(other.startDate) <= 0) {

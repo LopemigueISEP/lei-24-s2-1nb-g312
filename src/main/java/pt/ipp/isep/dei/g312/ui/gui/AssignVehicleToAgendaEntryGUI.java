@@ -87,7 +87,7 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
 
         vehicles.add(String.format("%-15s      %-15s   %-15s %-15s","PLATE","BRAND","MODEL","CURRENT_KM"));
 
-        for (Vehicle vehicle : controller.getAvailableVehicles()) {
+        for (Vehicle vehicle : controller.getAvailableVehicles(taskSelecionada)) {
             String descricaoVeiculo = (String.format("%-15s    %-15s    %-15s   %-15.0f",vehicle.getRegistrationPlate(), vehicle.getBrand(), vehicle.getModel(), vehicle.getCurrentKm()));
             vehicles.add(descricaoVeiculo);
             vehicleMap.put(descricaoVeiculo,vehicle);
@@ -128,6 +128,7 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
 
         List<String> selectedVehiclesDescriptions = listViewVehicles.getSelectionModel().getSelectedItems();
         if (selectedVehiclesDescriptions.isEmpty()) {
+            System.out.println("Necessita selecionar pelo menos 1 veiculo para adicionar");
             return;
         }
 

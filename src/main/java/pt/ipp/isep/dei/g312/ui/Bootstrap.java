@@ -8,6 +8,7 @@ import pt.ipp.isep.dei.g312.ui.console.utils.Utils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -164,8 +165,13 @@ public class Bootstrap implements Runnable {
         Task task4 = new Task("GrandaTask","O Miguel já pagava uns finos ao pessoal",3,"Type A",greenSpace,TaskUrgency.Medium,TaskStatus.Postponed,assignedTeam,new ArrayList<>(),3,startDate,endDate,TaskPosition.Agenda);
         taskRepository.addTask(task4);
 
-        Task task5 = new Task("TaskSemNomeDeJeito","Vou-me despedir para ficar a dormir o dia todo",5,"Type A",greenSpace,TaskUrgency.Low,TaskStatus.Pending,assignedTeam,new ArrayList<>(),3,startDate,endDate,TaskPosition.Agenda);
-        taskRepository.addTask(task4);
+
+        Date task5startDate = dateFormat.parse("16/06/2024 - 14");
+
+        Date task5EndDate = dateFormat.parse("17/06/2024 - 13");
+
+        Task task5 = new Task("TaskSemNomeDeJeito","Vou-me despedir para ficar a dormir o dia todo",5,"Type A",greenSpace,TaskUrgency.Low,TaskStatus.Pending,assignedTeam,new ArrayList<>(),3,task5startDate,task5EndDate,TaskPosition.Agenda);
+        taskRepository.addTask(task5);
     }
 
     private void addVehicles() throws ParseException {

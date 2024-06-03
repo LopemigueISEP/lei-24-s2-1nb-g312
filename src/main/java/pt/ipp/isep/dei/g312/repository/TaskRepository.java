@@ -149,4 +149,41 @@ public class TaskRepository {
         return isValid;
     }
 
+    public List<Vehicle> getVehicleAvaiability(Task taskSelecionada, List<Vehicle> vehicles) {
+        Boolean checkAvailable;
+        List<Vehicle> listaVeiculosDisponiveis = new ArrayList<>();
+
+        for(Vehicle vehicle: vehicles){
+            if(vehicle!=null){
+                checkAvailable = true;
+                for(Task task: getAllAgendaTasksExceptDoneCanceled()){
+                    if(task != null){
+                        for (Vehicle taskVehicle: task.getAssignedVehicles()){
+                            if(taskVehicle != null && taskVehicle == vehicle){
+                               if(!(taskSelecionada.getStartDate().compareTo(task.getEndDate())>=0 || taskSelecionada.getEndDate().compareTo(task.getStartDate())<=0)){
+                                   checkAvailable = false;
+                                   break;
+                               }
+                            }
+
+                        }
+
+                    }
+                    if(!checkAvailable){
+                        break;
+                    }
+
+                }
+                if(checkAvailable) {
+                    listaVeiculosDisponiveis.add(vehicle);
+
+                }
+            }
+
+
+
+
+        }
+        return listaVeiculosDisponiveis;
+    }
 }

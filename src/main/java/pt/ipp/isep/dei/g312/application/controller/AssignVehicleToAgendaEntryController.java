@@ -48,7 +48,7 @@ public class AssignVehicleToAgendaEntryController {
         return vehicleRepository;
     }
 
-    //TODO: Está a buscar as planned tasks, verificar se existem mais a incluir
+    //TODO: Está a buscar as todas as tasks da agenda excepto as done e canceled
     public List<Task> getAvailableTasks(){
         List<Task> listaAvailableTasks;
         try{
@@ -62,11 +62,16 @@ public class AssignVehicleToAgendaEntryController {
     }
 
 
-    //TODO: Está a buscar todos os veiculos e não apenas os disponiveis
-    public List<Vehicle> getAvailableVehicles(){
+    //TODO: Está a buscar todos os veiculos e não apenas os disponiveis - em alteração
+    public List<Vehicle> getAvailableVehicles(Task taskSelecionada){
+
         List<Vehicle> listaAvailableVehicles;
         try {
-            listaAvailableVehicles = vehicleRepository.getVehicles();
+
+
+            listaAvailableVehicles = taskRepository.getVehicleAvaiability(taskSelecionada, vehicleRepository.getVehicles());
+
+
         }catch (Exception e) {
             throw new RuntimeException(e);
         }
