@@ -30,31 +30,33 @@ public class AddEntryToDoListController {
     private GreenSpaceRepository greenSpaceRepository;
     private TaskRepository taskRepository;
 
-    @FXML
-    protected void initialize() {
+    public AddEntryToDoListController(){
         getGreenSpaceRepository();
         getTaskRepository();
+    }
+
+    @FXML
+    protected void initialize() {
         getGreenSpaces();
         getTaskUrgencies();
 
     }
 
-    private GreenSpaceRepository getGreenSpaceRepository() {
+    private void getGreenSpaceRepository() {
         if (greenSpaceRepository == null) {
             Repositories repositories = Repositories.getInstance();
             greenSpaceRepository = repositories.getGreenSpaceRepository();
 
         }
-        return greenSpaceRepository;
+
     }
 
-    private TaskRepository getTaskRepository() {
+    private void getTaskRepository() {
         if (taskRepository == null) {
             Repositories repositories = Repositories.getInstance();
             taskRepository = repositories.getTaskRepository();
 
         }
-        return taskRepository;
     }
 
 
