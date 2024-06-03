@@ -30,6 +30,16 @@ public class GreenSpace implements Comparable<GreenSpace>, Serializable {
         this.typology = typology;
         this.greenSpaceManager = greenSpaceManager;
     }
+
+    public GreenSpace(GreenSpace greenSpace) {
+        this.name = greenSpace.getName();
+        this.address = greenSpace.getAddress();
+        this.area = greenSpace.getArea();
+        this.typology = greenSpace.getTypology();
+        this.greenSpaceManager = greenSpace.getGreenSpaceManager();
+
+    }
+
     public String getName() {
         return name;
     }

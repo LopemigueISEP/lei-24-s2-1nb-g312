@@ -225,4 +225,12 @@ public class Utils {
     static public void raiseAlertMessage(String message){
         System.out.printf("\nAlert: %s !\n",message);
     }
+
+    public static boolean isInt(String str){
+        if (str == null || str.isEmpty()) {
+            return false;
+        }
+        String regex = "-?\\d+";
+        return str.matches(regex);
+    }
 }

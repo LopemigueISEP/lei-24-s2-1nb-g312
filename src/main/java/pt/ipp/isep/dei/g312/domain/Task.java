@@ -7,35 +7,32 @@ import java.util.Objects;
 
 public class Task implements Cloneable {
 
-    String title;
-    String description;
-
-    int taskExpectedDuration; //expected hours duration
-    String type;
+    private String title;
+    private String description;
+    private Date date;
+    private int taskExpectedDuration; //expected hours duration
+    private String type;
     private GreenSpace greenSpace;
-    TaskUrgency urgency;
-    TaskStatus status;
-    Team assignedTeam;
-    ArrayList<Vehicle> assignedVehicles;
-    int taskID;
-    Date startDate;
-    Date endDate;
-    TaskPosition taskPosition;
+    private TaskUrgency urgency;
+    private TaskStatus status;
+    private Team assignedTeam;
+    private ArrayList<Vehicle> assignedVehicles;
+    private int taskID;
+    private Date startDate;
+    private Date endDate;
+    private TaskPosition taskPosition;
 
 
     // constructor for to do list
-    public Task(String title, String description, int taskExpectedDuration, String type, GreenSpace greenSpace, TaskUrgency urgency, int taskID, TaskPosition taskPosition) {
+    public Task(String title, String description, TaskUrgency urgency, int taskExpectedDuration, GreenSpace greenSpace, TaskPosition taskPosition) {
         this.title = title;
         this.description = description;
         this.taskExpectedDuration = taskExpectedDuration;
-        this.type = type;
         this.greenSpace = greenSpace;
         this.urgency = urgency;
         this.assignedVehicles = new ArrayList<>();
-        this.taskID = taskID;
-        //this.toDoListEntry = toDoListEntry;
-        //this.startDate = startDate;
         this.taskPosition = taskPosition;
+
 
     }
 
@@ -67,7 +64,7 @@ public class Task implements Cloneable {
         this.description = "";
         this.taskExpectedDuration = 0;
         this.type = "";
-        this.urgency = TaskUrgency.Medium; // Default urgency
+        this.urgency = TaskUrgency.MEDIUM; // Default urgency
         this.assignedVehicles = new ArrayList<>();
         this.taskID = 0;
 
@@ -78,6 +75,17 @@ public class Task implements Cloneable {
         this.status = status;
     }
 
+    public Task(String title, String description, int taskExpectedDuration, String type, GreenSpace greenSpace, TaskUrgency urgency, int taskID, TaskPosition taskPosition) {
+        this.title = title;
+        this.description = description;
+        this.taskExpectedDuration = taskExpectedDuration;
+        this.type = type;
+        this.greenSpace = greenSpace;
+        this.urgency = urgency;
+        this.taskID = taskID;
+        this.taskPosition = taskPosition;
+    }
+
     public void assignTeam(Team team) {
         this.assignedTeam = team;
     }
@@ -85,7 +93,6 @@ public class Task implements Cloneable {
     public void assignVehicle(Vehicle vehicle) {
         this.assignedVehicles.add(vehicle);
     }
-
 
 
     public void setTaskStartDate(Date date) {
@@ -137,12 +144,13 @@ public class Task implements Cloneable {
         this.title = title;
     }
 
-    public ArrayList<Vehicle> getAssignedVehicles(){return this.assignedVehicles;}
-
-    public GreenSpace getGreenSpace() {
-        return this.greenSpace;
+    public ArrayList<Vehicle> getAssignedVehicles() {
+        return this.assignedVehicles;
     }
 
+    public GreenSpace getGreenSpace() {
+        return new GreenSpace(this.greenSpace);
+    }
 
 
     public TaskPosition getTaskPosition() {
@@ -197,24 +205,20 @@ public class Task implements Cloneable {
     }
 
 
-// clone method
-public Task clone() {
-    return new Task(this.title, this.description, this.taskExpectedDuration, this.type, this.greenSpace, this.urgency, this.status, this.assignedTeam, this.assignedVehicles, this.taskID, this.startDate, this.endDate, this.taskPosition);
-}
+    // clone method
+    public Task clone() {
+        return new Task(this.title, this.description, this.taskExpectedDuration, this.type, this.greenSpace, this.urgency, this.status, this.assignedTeam, this.assignedVehicles, this.taskID, this.startDate, this.endDate, this.taskPosition);
+    }
 
-@Override
-public String toString() {
-    return String.format("Task: %s - GreenSpace: %s - Start Date: %s - Status: %s",
-            title, greenSpace, startDate, status);
-}
+    @Override
+    public String toString() {
+        return String.format("Task: %s - GreenSpace: %s - Start Date: %s - Status: %s",
+                title, greenSpace, startDate, status);
+    }
 
-
-
-
-public int compareTo(Task other) {
-    return this.startDate.compareTo(other.startDate);
-}
-
+    public int compareTo(Task other) {
+        return this.startDate.compareTo(other.startDate);
+    }
 
 
 }

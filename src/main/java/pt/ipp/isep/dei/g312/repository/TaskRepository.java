@@ -129,7 +129,7 @@ public class TaskRepository {
     public List<Task> getTasksByGreenSpace(GreenSpace greenSpace) {
         List<Task> tasksByGreenSpace = new ArrayList<>();
         for (Task task : taskList) {
-            if (task.getGreenSpace().getName().equals(greenSpace.getName())) {
+            if (task.getGreenSpace().equals(greenSpace)) {
                 tasksByGreenSpace.add(task);
             }
         }
@@ -147,6 +147,20 @@ public class TaskRepository {
         boolean isValid = !taskList.contains(task);
 
         return isValid;
+    }
+
+    public Optional<Task> add(Task task) {
+        Optional<Task> newTask=Optional.empty();
+        boolean operationSuccess=false;
+
+        if (validateTask(task) && existsTask(task)){
+            newTask=Optional.of(task.clone());
+            operationSuccess=taskList.add(newTask.get());
+        }
+        if (!operationSuccess){
+            newTask=Optional.empty();
+        }
+        return newTask;
     }
 
     public List<Vehicle> getVehicleAvaiability(Task taskSelecionada, List<Vehicle> vehicles) {

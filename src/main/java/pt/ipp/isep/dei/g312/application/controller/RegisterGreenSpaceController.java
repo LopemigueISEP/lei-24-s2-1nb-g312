@@ -41,7 +41,11 @@ public class RegisterGreenSpaceController {
     private GreenSpaceRepository greenSpaceRepository;
     private AuthenticationRepository authRepository;
     private EmployeeRepository employeeRepository;
-
+    /**
+     * Initializes the controller.
+     *
+     * @param registerGreenSpaceUI Flag indicating whether to initialize the UI for registering green spaces or showing a list of green spaces.
+     */
     @FXML
     public void initialize(boolean registerGreenSpaceUI) {
         greenSpaceRepository = getGreenSpaceRepository();
@@ -53,14 +57,18 @@ public class RegisterGreenSpaceController {
             initializeShowListGreenSpacesUI();
         }
     }
-
+    /**
+     * Initializes the UI for registering a green space.
+     */
     @FXML
     public void initializeRegisterGreenSpaceUI() {
         typologyChoiceBox.setPromptText("Select Green Space Type");
         typologyChoiceBox.getItems().addAll("Garden", "Medium-Sized Park", "Large-Sized Park");
         setGreenSpaceManager();
     }
-
+    /**
+     * Initializes the UI for showing a list of green spaces.
+     */
     @FXML
     public void initializeShowListGreenSpacesUI() {
         updateGreenSpacesList();
@@ -77,7 +85,11 @@ public class RegisterGreenSpaceController {
         }
         return greenSpaceRepository;
     }
-
+    /**
+     * Retrieves the AuthenticationRepository instance.
+     *
+     * @return The AuthenticationRepository instance.
+     */
     private AuthenticationRepository getAuthRepository() {
         if (authRepository == null) {
             Repositories repositories = Repositories.getInstance();
@@ -85,7 +97,11 @@ public class RegisterGreenSpaceController {
         }
         return authRepository;
     }
-
+    /**
+     * Retrieves the EmployeeRepository instance.
+     *
+     * @return The EmployeeRepository instance.
+     */
     private EmployeeRepository getEmployeeRepository() {
         if (employeeRepository == null) {
             Repositories repositories = Repositories.getInstance();
@@ -93,11 +109,19 @@ public class RegisterGreenSpaceController {
         }
         return employeeRepository;
     }
-
+    /**
+     * Validates if the current user is logged in and has the required role for registering a green space.
+     *
+     * @return True if the current user is logged in and has the required role, false otherwise.
+     */
     private boolean currentUserLogInValidation() {
         return authRepository.validateUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_GSM);
     }
-
+    /**
+     * Matches the current user with the corresponding employee based on their role.
+     *
+     * @return The matched Employee object.
+     */
     private Employee matchEmployeeByRole() {
         try {
             String rl = authRepository.getUserRole(authRepository.getCurrentUserSession().getUserRoles());
@@ -107,7 +131,9 @@ public class RegisterGreenSpaceController {
             return null;
         }
     }
-
+    /**
+     * Sets the green space manager label based on the current user's role.
+     */
     private void setGreenSpaceManager() {
         if (currentUserLogInValidation()) {
             greenSpaceManagerLabel.setText(Objects.requireNonNull(matchEmployeeByRole()).getEmail());
@@ -115,7 +141,9 @@ public class RegisterGreenSpaceController {
             greenSpaceManagerLabel.setText("Not Logged In");
         }
     }
-
+    /**
+     * Handles the action when the register button is clicked.
+     */
     public void handleRegisterButtonAction() {
         if (!validateInput()) {
             return;
@@ -155,7 +183,11 @@ public class RegisterGreenSpaceController {
             messageLabel.setText("You do not have permission to register green spaces.");
         }
     }
-
+    /**
+     * Validates the input fields for registering a green space.
+     *
+     * @return True if the input is valid, false otherwise.
+     */
     private boolean validateInput() {
         if (nameField.getText().trim().isEmpty() ||
                 addressField.getText().trim().isEmpty() ||
@@ -177,7 +209,16 @@ public class RegisterGreenSpaceController {
 
         return true;
     }
-
+    /**
+     * Registers a new green space with the provided details.
+     *
+     * @param name             The name of the green space.
+     * @param address          The address of the green space.
+     * @param area             The area of the green space.
+     * @param typology         The typology of the green space.
+     * @param greenSpaceManager The manager of the green space.
+     * @return An Optional containing the registered GreenSpace if successful, or empty otherwise.
+     */
     public Optional<GreenSpace> registerGreenSpace(String name, String address, double area, String typology, String greenSpaceManager) {
         try {
             GreenSpace greenSpace = new GreenSpace(name, address, area, typology, greenSpaceManager);
@@ -187,7 +228,9 @@ public class RegisterGreenSpaceController {
             return Optional.empty();
         }
     }
-
+    /**
+     * Updates the list view of green spaces with the latest data.
+     */
     private void updateGreenSpacesList() {
         if (greenSpacesTableView == null) {
             return;
