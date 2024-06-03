@@ -78,6 +78,11 @@ public class RegisterGreenSpaceController {
         this.authRepository = getAuthRepository();
         this.employeeRepository = getEmployeeRepository();
     }
+    /**
+     * Retrieves the GreenSpaceRepository instance.
+     *
+     * @return The GreenSpaceRepository instance.
+     */
     private GreenSpaceRepository getGreenSpaceRepository() {
         if (greenSpaceRepository == null) {
             Repositories repositories = Repositories.getInstance();
@@ -239,7 +244,14 @@ public class RegisterGreenSpaceController {
         ObservableList<GreenSpace> greenSpaces = FXCollections.observableArrayList(greenSpaceRepository.getGreenSpaceList());
         greenSpacesTableView.setItems(greenSpaces);
     }
-
+    /**
+     * Parses the given string to a {@code double} representing an area.
+     * This method attempts to convert the input string to a {@code double} value.
+     *
+     * @param areaText the string to be parsed as a {@code double}.
+     * @return the parsed {@code double} value.
+     * @throws NumberFormatException if the string cannot be parsed as a {@code double}.
+     */
     private double parseAreaField(String areaText) throws NumberFormatException {
         return Double.parseDouble(areaText);
     }

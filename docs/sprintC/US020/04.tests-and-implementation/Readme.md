@@ -146,7 +146,7 @@ public void start(Stage primaryStage) {
     public Optional<GreenSpace> registerGreenSpace(String name, String address, double area, String typology, String greenSpaceManager) {
     try {
         GreenSpace greenSpace = new GreenSpace(name, address, area, typology, greenSpaceManager);
-        return Employee.registerGreenSpace(name, address, area, typology, greenSpaceManager, true);
+        return greenSpaceRepository.addGreenSpace(greenSpace);
     } catch (Exception e) {
         System.err.println("Error occurred while registering a green space: " + e.getMessage());
         return Optional.empty();

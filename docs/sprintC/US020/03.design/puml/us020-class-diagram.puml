@@ -14,7 +14,15 @@ class RegisterGreenSpaceUI {
 }
 
 class RegisterGreenSpaceController {
+    + initializeRegisterGreenSpaceUI () : void
+    + handleRegisterButtonAction() : void
+    + parseAreaField(areaText : String) : double
+    + validateInput() : void
     + getEmployeeRepository() : employeeRepository
+    + getAuthRepository() : authenticationRepository
+    + currentUserLogInValidation() : boolean
+    + matchEmployeeByRole() : Employee
+    + setGreenSpaceManager() : void
     + registerGreenSpace(name: String, address: String, area: double, typology : String, greenSpaceManager: String) : Optional<GreenSpace>
 
 }
@@ -23,6 +31,7 @@ class Repositories {
      - Repositories()
      + getInstance() : Repositories
      + getEmployeeRepository() : employeeRepository
+     + getAuthRepository() : authenticationRepository
 
 }
 
@@ -37,8 +46,8 @@ class Employee {
     -docNumber : String
     -jobTitle : String
     +registerGreenSpace(name: String, address: String, area: double, typology : String, greenSpaceManager: String) : Optional<GreenSpace>
-    +addGreenSpace(greenSpace) : boolean
-    +validateGreenSPace(greenSpace) : boolean
+    +addGreenSpace(greenSpace) : Optional<GreenSpace>
+    +validateGreenSpace(greenSpace) : boolean
 
 }
 
@@ -46,7 +55,9 @@ class EmployeeRepository {
     +getEmployee() : employee
 }
 
-
+class AuthenticationRepository {
+    +getCurrentUserSession() : UserSession
+}
 
 class GreenSpace {
         -name : String
@@ -65,8 +76,11 @@ RegisterGreenSpaceController ..> Employee
 RegisterGreenSpaceUI .> RegisterGreenSpaceController
 Repositories -> Repositories : instance
 EmployeeRepository "1" --> "*" Employee
+AuthenticationRepository "1" --> "*" Employee
 Employee "1" --> "*" GreenSpace : registerGreenSpace
 Repositories "1" --> "1" EmployeeRepository
+Repositories "1" --> "1" AuthenticationRepository
+
 
 
 

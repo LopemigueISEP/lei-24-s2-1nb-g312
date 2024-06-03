@@ -15,10 +15,10 @@ activate GSM
     GSM -> System : asks to register a new green space
     activate System
 
-        System --> GSM : requests typed data
+        System --> GSM : requests typed data (name, address, area, typology, manager)
     deactivate System
 
-    GSM -> System : types requested data (name, address, area, typology, manager)
+    GSM -> System : types requested data
     activate System
 
 

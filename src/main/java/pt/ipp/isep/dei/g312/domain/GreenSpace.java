@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.g312.domain;
 
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Represents a green space entity.
@@ -23,7 +24,7 @@ public class GreenSpace implements Comparable<GreenSpace>, Serializable {
      * @param greenSpaceManager The username of the employee managing the green space.
      */
 
-    public GreenSpace(String name, String address, double area, String typology, String greenSpaceManager){
+    public GreenSpace(String name, String address, double area, String typology, String greenSpaceManager) {
         this.name = name;
         this.address = address;
         this.area = area;
@@ -43,30 +44,39 @@ public class GreenSpace implements Comparable<GreenSpace>, Serializable {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getAddress() {
         return address;
     }
+
     public void setAddress(String address) {
         this.address = address;
     }
+
     public double getArea() {
         return area;
     }
+
     public void setArea(Double area) {
         this.area = area;
     }
+
     public void setTypology(String typology) {
         this.typology = typology;
     }
+
     public String getTypology() {
         return typology;
     }
+
     public String getGreenSpaceManager() {
         return greenSpaceManager;
     }
+
     public void setGreenSpaceManager(String greenSpaceManager) {
         this.greenSpaceManager = greenSpaceManager;
     }
@@ -101,5 +111,24 @@ public class GreenSpace implements Comparable<GreenSpace>, Serializable {
     @Override
     public String toString() {
         return String.format("%s - %s - %.2f m² - %s - Managed by: %s", name, address, area, typology, greenSpaceManager);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GreenSpace that = (GreenSpace) o;
+        return Double.compare(that.area, area) == 0 &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(typology, that.typology) &&
+                Objects.equals(greenSpaceManager, that.greenSpaceManager);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, address, area, typology, greenSpaceManager);
+
+
     }
 }
