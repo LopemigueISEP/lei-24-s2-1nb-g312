@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+
+/**
+ * Controller class to manage the assignment of vehicles to agenda entries.
+ */
 public class AssignVehicleToAgendaEntryController {
 
 
@@ -18,6 +23,10 @@ public class AssignVehicleToAgendaEntryController {
     private TaskRepository taskRepository;
     private VehicleRepository vehicleRepository;
 
+
+    /**
+     * Constructor to initialize repositories.
+     */
     public AssignVehicleToAgendaEntryController(){
         try {
             this.employeeRepository = getEmployeeRepository();
@@ -28,6 +37,12 @@ public class AssignVehicleToAgendaEntryController {
         }
     }
 
+
+    /**
+     * Gets the EmployeeRepository, initializing it if necessary.
+     *
+     * @return the EmployeeRepository instance
+     */
     private EmployeeRepository getEmployeeRepository() {
         try {
             if (employeeRepository == null) {
@@ -40,6 +55,12 @@ public class AssignVehicleToAgendaEntryController {
         }
     }
 
+
+    /**
+     * Gets the TaskRepository, initializing it if necessary.
+     *
+     * @return the TaskRepository instance
+     */
     private TaskRepository getTaskRepository(){
         try{
             if(taskRepository == null){
@@ -52,6 +73,12 @@ public class AssignVehicleToAgendaEntryController {
         }
     }
 
+
+    /**
+     * Gets the VehicleRepository, initializing it if necessary.
+     *
+     * @return the VehicleRepository instance
+     */
     private VehicleRepository getVehicleRepository(){
         try {
             if (vehicleRepository == null) {
@@ -64,12 +91,15 @@ public class AssignVehicleToAgendaEntryController {
         }
     }
 
-    //Está a buscar todas as tasks da agenda excepto as done e canceled
+    /**
+     * Retrieves all available tasks except those that are done or canceled.
+     *
+     * @return a list of available tasks
+     */
     public List<Task> getAvailableTasks(){
         List<Task> listAvailableTasks;
         try{
             listAvailableTasks = taskRepository.getAllAgendaTasksExceptDoneCanceled();
-
 
         }catch (NullPointerException nullPointerException) {
             listAvailableTasks = new ArrayList<>();
@@ -78,12 +108,16 @@ public class AssignVehicleToAgendaEntryController {
             throw new RuntimeException("error in getAvailableTasks in AssignVehicleToAgendaEntryController",e);
         }
 
-
         return listAvailableTasks;
     }
 
 
-
+    /**
+     * Retrieves all available vehicles that can assign to a selected task.
+     *
+     * @param taskSelected the selected task
+     * @return a list of available vehicles
+     */
     public List<Vehicle> getAvailableVehicles(Task taskSelected){
 
         List<Vehicle> listAvailableVehicles;
@@ -98,6 +132,13 @@ public class AssignVehicleToAgendaEntryController {
         return listAvailableVehicles;
     }
 
+
+    /**
+     * Retrieves all vehicles assigned to a specific task.
+     *
+     * @param task the task to get assigned vehicles for
+     * @return a list of assigned vehicles
+     */
     public List<Vehicle> getTaskAssignedVehicles(Task task){
         List<Vehicle> taskAssignedVehicles;
 
@@ -115,6 +156,12 @@ public class AssignVehicleToAgendaEntryController {
     }
 
 
+    /**
+     * Assigns a vehicle to a specific task.
+     *
+     * @param vehicle the vehicle to assign
+     * @param task the task to assign the vehicle to
+     */
     public void assignVehicleToTask(Vehicle vehicle, Task task){
         try {
             task.assignVehicle(vehicle);

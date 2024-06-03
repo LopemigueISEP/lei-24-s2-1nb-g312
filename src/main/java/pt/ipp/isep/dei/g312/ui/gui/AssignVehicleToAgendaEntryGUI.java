@@ -26,6 +26,9 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 
+/**
+ * GUI class to manage the assignment of vehicles to agenda entries.
+ */
 public class AssignVehicleToAgendaEntryGUI extends Application implements Initializable{
 
     @FXML
@@ -42,6 +45,13 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
     private Map<String,Task> taskMap;
     private Task selectedTask = null;
 
+
+    /**
+     * Starts the GUI application.
+     *
+     * @param primaryStage the primary stage for this application
+     * @throws Exception if the FXML file cannot be loaded
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         Platform.setImplicitExit(false);
@@ -60,6 +70,13 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
 
     }
 
+
+    /**
+     * Initializes the controller and loads available tasks.
+     *
+     * @param url the location used to resolve relative paths for the root object
+     * @param resourceBundle the resources used to localize the root object
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -77,6 +94,9 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
 
 
 
+    /**
+     * Loads available tasks and populates the ComboBox with them.
+     */
     private void loadAvailableTasks() {
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy - HH");
@@ -94,6 +114,11 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
     }
 
 
+    /**
+     * Loads available vehicles for the selected task and populates the ListView with them.
+     *
+     * @param taskSelecionada the selected task
+     */
     private void loadAvailableVehicles(Task taskSelecionada){
         try {
             ObservableList<String> vehicles = FXCollections.observableArrayList();
@@ -112,6 +137,12 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
         }
     }
 
+
+    /**
+     * Loads assigned vehicles for the selected task and populates the ListView with them.
+     *
+     * @param task the selected task
+     */
     private void loadAssignedVehicles(Task task){
         try {
             ObservableList<String> assignedVehicles = FXCollections.observableArrayList();
@@ -131,6 +162,10 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
         }
     }
 
+
+    /**
+     * Handles the submit button click event, assigning selected vehicles to the selected task.
+     */
     @FXML
     public void ClickBtnSubmit() {
         try {
@@ -166,6 +201,12 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
         }
     }
 
+
+    /**
+     * Handles the task ComboBox action event, loading vehicles for the selected task.
+     *
+     * @param actionEvent the action event
+     */
     public void cmbTaskOnAction(ActionEvent actionEvent) {
         try {
 
