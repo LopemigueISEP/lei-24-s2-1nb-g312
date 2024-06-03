@@ -38,6 +38,7 @@ public class AddEntryToDoListController {
         getTaskUrgencies();
 
     }
+
     private GreenSpaceRepository getGreenSpaceRepository() {
         if (greenSpaceRepository == null) {
             Repositories repositories = Repositories.getInstance();
@@ -46,6 +47,7 @@ public class AddEntryToDoListController {
         }
         return greenSpaceRepository;
     }
+
     private TaskRepository getTaskRepository() {
         if (taskRepository == null) {
             Repositories repositories = Repositories.getInstance();
@@ -116,17 +118,43 @@ public class AddEntryToDoListController {
         } else {
             GreenSpace selectedGreenSpace = (GreenSpace) cmbGreenSpace.getValue();
             Task task = new Task(textTaskTitle.getText(), textTaskDescr.getText(), (TaskUrgency) cmbUrgency.getValue(), Integer.parseInt(textExpectedDuration.getText()), (GreenSpace) cmbGreenSpace.getValue(), TaskPosition.ToDoList);
-            Optional<Task> newTask = taskRepository.add(task);
-            if (newTask.isPresent()) {
-                if (addAnotherTask()) {
-                    resetAllFields();
+            if (confirmsData()) {
+                Optional<Task> newTask = taskRepository.add(task);
+                if (newTask.isPresent()) {
+                    if (addAnotherTask()) {
+                        resetAllFields();
+                    } else {
+                        Stage stage = (Stage) lblAllFields.getScene().getWindow();
+                        stage.close();
+                    }
                 } else {
-                    Stage stage = (Stage) lblAllFields.getScene().getWindow();
-                    stage.close();
+                    lblAllFields.setText("Task already exists.");
+                    lblAllFields.setVisible(true);
                 }
+            }
+            else {
+                resetAllFields();
             }
         }
 
+    }
+
+    private boolean confirmsData() {
+        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,
+                "Confirm submission?",
+                yes,
+                no);
+
+        alert.setTitle("Task confirmation");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.orElse(yes) == yes) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void resetAllFields() {
@@ -141,7 +169,7 @@ public class AddEntryToDoListController {
     }
 
     private boolean verifyEmptyFields() {
-        return  cmbGreenSpace.getValue() == null
+        return cmbGreenSpace.getValue() == null
                 || textTaskTitle.getText().isEmpty()
                 || textTaskDescr.getText().isEmpty()
                 || cmbUrgency.getValue() == null
