@@ -83,9 +83,9 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
 
             ObservableList<String> tasks = FXCollections.observableArrayList();
             for (Task task : controller.getAvailableTasks()) {
-                String descricaoTask = String.format("%s | %s | %s | Start: %sh | Finish: %sh", task.getTitle(), task.getGreenSpace().getName(), task.getStatus(), simpleDateFormat.format(task.getStartDate()), simpleDateFormat.format(task.getEndDate()));
-                tasks.add(descricaoTask);
-                taskMap.put(descricaoTask, task);
+                String descriptionTask = String.format("%s | %s | %s | Start: %sh | Finish: %sh", task.getTitle(), task.getGreenSpace().getName(), task.getStatus(), simpleDateFormat.format(task.getStartDate()), simpleDateFormat.format(task.getEndDate()));
+                tasks.add(descriptionTask);
+                taskMap.put(descriptionTask, task);
             }
             cmbTask.setItems(tasks);
         }catch (Exception e){
@@ -101,9 +101,9 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
             //vehicles.add(String.format("%-15s      %-15s   %-15s %-15s","PLATE","BRAND","MODEL","CURRENT_KM"));
 
             for (Vehicle vehicle : controller.getAvailableVehicles(taskSelecionada)) {
-                String descricaoVeiculo = (String.format("Plate: %-15s    Brand: %-10s    %-15s   CurrentKm: %-15.0f", vehicle.getRegistrationPlate(), vehicle.getBrand(), vehicle.getModel(), vehicle.getCurrentKm()));
-                vehicles.add(descricaoVeiculo);
-                vehicleMap.put(descricaoVeiculo, vehicle);
+                String descriptionVehicle = (String.format("Plate: %-15s    Brand: %-10s    %-15s   CurrentKm: %-15.0f", vehicle.getRegistrationPlate(), vehicle.getBrand(), vehicle.getModel(), vehicle.getCurrentKm()));
+                vehicles.add(descriptionVehicle);
+                vehicleMap.put(descriptionVehicle, vehicle);
             }
             listViewVehicles.setItems(vehicles);
             listViewVehicles.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.MULTIPLE);
@@ -118,8 +118,8 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
 
             try {
                 for (Vehicle vehicle : controller.getTaskAssignedVehicles(task)) {
-                    String descricaoVeiculo = (String.format("%-15s    %-15s    %-15s   %-15.0f", vehicle.getRegistrationPlate(), vehicle.getBrand(), vehicle.getModel(), vehicle.getCurrentKm()));
-                    assignedVehicles.add(descricaoVeiculo);
+                    String descriptionVehicle = (String.format("%-15s    %-15s    %-15s   %-15.0f", vehicle.getRegistrationPlate(), vehicle.getBrand(), vehicle.getModel(), vehicle.getCurrentKm()));
+                    assignedVehicles.add(descriptionVehicle);
                 }
             } catch (NullPointerException nullPointerException) {
                 throw new RuntimeException("error in TaskAssignedVehiclesList in GUI",nullPointerException);
@@ -172,13 +172,13 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
             label_NeedToSelectVehicle.setText("");
             label_NeedToChoseTask.setText("");
 
-            String strSelecionada = cmbTask.getValue();
-            if( strSelecionada != null){
-                Task taskSelecionada = taskMap.get(strSelecionada);
-                if(taskSelecionada!=null) {
-                    loadAvailableVehicles(taskSelecionada);
-                    loadAssignedVehicles(taskSelecionada);
-                    selectedTask = taskSelecionada;
+            String strSelected = cmbTask.getValue();
+            if( strSelected != null){
+                Task taskSelected = taskMap.get(strSelected);
+                if(taskSelected!=null) {
+                    loadAvailableVehicles(taskSelected);
+                    loadAssignedVehicles(taskSelected);
+                    selectedTask = taskSelected;
                 }
             }
         }catch (Exception e) {
