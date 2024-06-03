@@ -155,6 +155,17 @@ public class Bootstrap implements Runnable {
         Task task2 = new Task(title2, description2, taskExpectedDuration2, type2, greenSpace, urgency2, status2, assignedTeam2, assignedVehicles2, taskID2, startDate2, endDate2, taskPosition2);
         taskRepository.addTask(task2);
 
+
+        //task3
+
+        Task task3 = new Task("Tascão","descrição do tasco lá do sitio",3,"Type A",greenSpace,TaskUrgency.Medium,TaskStatus.Planned,assignedTeam,new ArrayList<>(),3,startDate,endDate,TaskPosition.Agenda);
+        taskRepository.addTask(task3);
+
+        Task task4 = new Task("GrandaTask","O Miguel já pagava uns finos ao pessoal",3,"Type A",greenSpace,TaskUrgency.Medium,TaskStatus.Postponed,assignedTeam,new ArrayList<>(),3,startDate,endDate,TaskPosition.Agenda);
+        taskRepository.addTask(task4);
+
+        Task task5 = new Task("TaskSemNomeDeJeito","Vou-me despedir para ficar a dormir o dia todo",5,"Type A",greenSpace,TaskUrgency.Low,TaskStatus.Pending,assignedTeam,new ArrayList<>(),3,startDate,endDate,TaskPosition.Agenda);
+        taskRepository.addTask(task4);
     }
 
     private void addVehicles() throws ParseException {

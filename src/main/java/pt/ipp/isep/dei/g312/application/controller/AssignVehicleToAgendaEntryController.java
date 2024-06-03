@@ -52,7 +52,7 @@ public class AssignVehicleToAgendaEntryController {
     public List<Task> getAvailableTasks(){
         List<Task> listaAvailableTasks;
         try{
-            listaAvailableTasks = taskRepository.getPlannedTasks();
+            listaAvailableTasks = taskRepository.getAllAgendaTasksExceptDoneCanceled();
 
 
         }catch (Exception e) {

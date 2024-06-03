@@ -94,6 +94,17 @@ public class TaskRepository {
         return teamTasks;
     }
 
+    public List<Task> getAllAgendaTasksExceptDoneCanceled(){
+        List<Task> tasksExcept = new ArrayList<>();
+        for(Task task : getAgenda()){
+            if(task.getStatus() != TaskStatus.Done && task.getStatus() != TaskStatus.Canceled){
+                tasksExcept.add(task);
+            }
+        }
+        return tasksExcept;
+    }
+
+
     // method to get a list of planned status tasks
     public List<Task> getPlannedTasks() {
         List<Task> plannedTasks = new ArrayList<>();
