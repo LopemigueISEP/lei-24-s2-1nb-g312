@@ -22,12 +22,12 @@
                 <RowConstraints percentHeight="20.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="US22 - Add Entry To Agenda" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="US22 - Add Entry To Agenda" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
                     <font>
                         <Font name="Tahoma Bold" size="12.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="cmbGreenSpace" editable="true" prefHeight="25.0" prefWidth="921.0" promptText="Choose GreenSpace" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                <ComboBox fx:id="cmbGreenSpace" prefHeight="25.0" prefWidth="921.0" promptText="Choose GreenSpace" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                 <ComboBox fx:id="cmbTask" editable="true" prefHeight="25.0" prefWidth="921.0" promptText="Choose Task" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                 <HBox GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP">
                     <DatePicker fx:id="datePicker" prefHeight="25.0" prefWidth="200.0" promptText="Choose Date" />
@@ -38,7 +38,7 @@
                         <Font name="Tahoma Bold" size="12.0" />
                     </font>
                 </Button>
-                <Label fx:id="errorMessageLabel" text="" prefHeight="20.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.halignment="CENTER" />
+                <Label fx:id="errorMessageLabel" prefHeight="20.0" text="" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
             </children>
         </GridPane>
     </children>

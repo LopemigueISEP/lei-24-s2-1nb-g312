@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.g312.application.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -17,54 +18,69 @@ import java.util.*;
 public class AddEntryAgendaController {
 
     @FXML
-    private ComboBox<String> cmbGreenSpace;
+    private ComboBox cmbGreenSpace;
 
     @FXML
-    private ComboBox<String> cmbTask; // ComboBox<String>
-
-    @FXML
-    private Button btnSubmit;
+    private ComboBox cmbTask;
 
     @FXML
     private Label errorMessageLabel;
-    @FXML
-    private ListView<String> agendaTasksListView;
+
     @FXML
     private DatePicker datePicker;
     @FXML
     private TableView<Task> agendaTableView;
 
-    @FXML
-    private TableColumn<Task, String> taskNameColumn;
 
-    @FXML
-    private TableColumn<Task, String> descriptionColumn;
+    private  GreenSpaceRepository greenSpaceRepository;
+    private  TaskRepository taskRepository;
+    private  AuthenticationRepository authRepository;
 
-    @FXML
-    private TableColumn<Task, String> startDateColumn;
 
-    @FXML
-    private TableColumn<Task, String> statusColumn;
+    public AddEntryAgendaController(){
+        getGreenSpaceRepository();
+        getTaskRepository();
+        getAuthRepository();
+    }
 
-    private final EmployeeRepository employeeRepository = Repositories.getInstance().getEmployeeRepository();
-    private final GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
-    private final TaskRepository taskRepository = Repositories.getInstance().getTaskRepository();
-    private final AuthenticationRepository authRepository = Repositories.getInstance().getAuthenticationRepository();
+    private void getGreenSpaceRepository() {
+        if (greenSpaceRepository == null) {
+            Repositories repositories = Repositories.getInstance();
+            greenSpaceRepository = repositories.getGreenSpaceRepository();
 
-    @FXML
-    public void initialize(boolean addEntryAgendaUI) {
-        if (addEntryAgendaUI) {
-            initializeAddEntryAgendaUI();
-        } else {
-            initializeShowListOfAgendaUI();
         }
+
+    }
+
+    private void getTaskRepository() {
+        if (taskRepository == null) {
+            Repositories repositories = Repositories.getInstance();
+            taskRepository = repositories.getTaskRepository();
+
+        }
+    }
+
+    private void getAuthRepository(){
+        if(authRepository == null) {
+            Repositories repositories = Repositories.getInstance();
+            authRepository = repositories.getAuthenticationRepository();
+        }
+    }
+
+    @FXML
+    public void initialize() {
+
+//        if (addEntryAgendaUI) {
+            initializeAddEntryAgendaUI();
+//        } else {
+//            //initializeShowListOfAgendaUI();
+//        }
     }
 
     @FXML
     public void initializeAddEntryAgendaUI() {
         String userEmail = getUserEmail();
         initializeComboBoxes(userEmail);
-        btnSubmit.setOnAction(event -> addTaskToAgenda());
         errorMessageLabel.setVisible(false); // Set label to not visible initially
 
         datePicker.setDayCellFactory(picker -> new DateCell() {
@@ -77,60 +93,23 @@ public class AddEntryAgendaController {
     }
 
     private void initializeComboBoxes(String userEmail) {
-        ObservableList<GreenSpace> greenSpaces = FXCollections.observableArrayList(getGreenSpaceList(userEmail));
-        ObservableList<String> greenSpaceNames = FXCollections.observableArrayList();
-        greenSpaces.forEach(greenSpace -> greenSpaceNames.add(greenSpace.getName()));
-        cmbGreenSpace.setItems(greenSpaceNames);
+        cmbGreenSpace.setItems(FXCollections.observableArrayList(greenSpaceRepository.getGreenSpaceList()));
+        cmbGreenSpace.setCellFactory(listView -> new GreenSpaceComboNames());
+        cmbGreenSpace.setButtonCell(new GreenSpaceComboNames());
 
-        cmbGreenSpace.setOnAction(event -> {
-            String selectedGreenSpace = cmbGreenSpace.getValue();
-            if (selectedGreenSpace != null) {
-                List<Task> taskList = getTaskList(selectedGreenSpace);
-                taskList.sort((task1, task2) -> {
-                    // Comparar grau de urgência
-                    int urgencyComparison = task1.getUrgency().compareTo(task2.getUrgency());
 
-                    // Se os graus de urgência forem iguais, ordenar por título
-                    if (urgencyComparison == 0) {
-                        return task1.getTitle().compareTo(task2.getTitle());
-                    } else {
-                        return urgencyComparison;
-                    }
-                });
-
-                ObservableList<String> taskNames = FXCollections.observableArrayList();
-                taskList.forEach(task -> taskNames.add(task.getTitle()));
-                cmbTask.setItems(taskNames);
-            }
-        });
     }
-    @FXML
-    public void initializeShowListOfAgendaUI() {
-        taskNameColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        startDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-        updateAgendaList();
-    }
+private void initializeTaskComboBox(GreenSpace greenSpace){
+    cmbTask.setItems(FXCollections.observableArrayList(taskRepository.getTasksByGreenSpace(greenSpace)));
+    cmbTask.setCellFactory(listView -> new AddEntryAgendaController.TaskComboNames());
+    cmbTask.setButtonCell(new AddEntryAgendaController.TaskComboNames());
+}
 
-    private List<Task> getTaskList(String selectedGreenSpaceName) {
-        List<GreenSpace> greenSpaces = greenSpaceRepository.getGreenSpaceList();
-        List<Task> taskList = new ArrayList<>();
-        for (GreenSpace greenSpace : greenSpaces) {
-            if (greenSpace.getName().contains(selectedGreenSpaceName)) {
-                taskList.addAll(taskRepository.getTasksByGreenSpace(greenSpace));
-            }
-        }
-        return taskList;
-    }
-    @FXML
-    public void addTaskToAgenda() {
-        String selectedGreenSpace = cmbGreenSpace.getValue();
-        String selectedTaskTitle = cmbTask.getValue();
-        LocalDate selectedDate = datePicker.getValue();
-
-        if (selectedGreenSpace != null && selectedTaskTitle != null && selectedDate != null) {
-            Task selectedTask = getTaskByTitle(selectedTaskTitle);
+    public void addTaskToAgenda(ActionEvent actionEvent) {
+        if (cmbGreenSpace.getValue() != null && cmbTask.getValue() != null && datePicker.getValue() != null) {
+            GreenSpace selectedGreenSpace = (GreenSpace) cmbGreenSpace.getValue();
+            Task selectedTask = (Task) cmbTask.getValue();
+            LocalDate selectedDate = datePicker.getValue();
             if (selectedTask != null) {
                 Date date = java.sql.Date.valueOf(selectedDate);
                 if (!date.before(new Date(System.currentTimeMillis() - 1))) {
@@ -156,42 +135,47 @@ public class AddEntryAgendaController {
         errorMessageLabel.setVisible(true);
     }
 
-    private Task getTaskByTitle(String title) {
-        for (Task task : taskRepository.getTaskList()) {
-            if (task.getTitle().equals(title)) {
-                return task;
-            }
-        }
-        return null;
-    }
-
     private void updateAgendaList() {
         List<Task> agendaTasks = taskRepository.getAgenda();
         agendaTableView.setItems(FXCollections.observableArrayList(agendaTasks));
     }
 
-    private List<GreenSpace> getGreenSpaceList(String userEmail) {
-        if (currentUserLogInValidation()) {
-            List<GreenSpace> allGreenSpaces = Repositories.getInstance().getGreenSpaceRepository().getGreenSpaceList();
-            return filterGreenSpacesByManager(allGreenSpaces, userEmail);
+    private class GreenSpaceComboNames extends ListCell<GreenSpace> {
+
+        @Override
+        public void updateItem(GreenSpace item, boolean empty) {
+            super.updateItem(item, empty);
+            if (item != null) {
+
+                setText(item.getName());
+                initializeTaskComboBox(item);
+
+            } else if (empty || item == null) {
+                setText("Choose GreenSpace");
+            } else {
+                setText(null);
+            }
+
         }
-        return Collections.emptyList();
-    }
 
-    private boolean currentUserLogInValidation() {
-        return authRepository.validateUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_GSM);
     }
+    private static class TaskComboNames extends ListCell<Task> {
 
-    private List<GreenSpace> filterGreenSpacesByManager(List<GreenSpace> greenSpaces, String managerName) {
-        List<GreenSpace> filteredList = new ArrayList<>();
-        for (GreenSpace greenSpace : greenSpaces) {
-            if (greenSpace.getGreenSpaceManager().equalsIgnoreCase(managerName)) {
-                filteredList.add(greenSpace);
+        @Override
+        public void updateItem(Task item, boolean empty) {
+            super.updateItem(item, empty);
+            if (item != null) {
+
+                setText(item.getTitle());
+
+            } else if (empty || item == null) {
+                setText("Choose Task");
+            } else {
+                setText(null);
             }
         }
-        return filteredList;
-    }
 
+    }
     private String getUserEmail() {
         try {
             return authRepository.getCurrentUserSession().getUserId().getEmail();
@@ -200,4 +184,7 @@ public class AddEntryAgendaController {
             return null;
         }
     }
+
+
+
 }
