@@ -10,7 +10,7 @@ import pt.ipp.isep.dei.g312.application.controller.authorization.AuthenticationC
 import pt.ipp.isep.dei.g312.domain.*;
 import pt.ipp.isep.dei.g312.repository.*;
 
-import java.text.SimpleDateFormat;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -78,28 +78,32 @@ public class AddEntryAgendaController {
 
     private void initializeComboBoxes(String userEmail) {
         ObservableList<GreenSpace> greenSpaces = FXCollections.observableArrayList(getGreenSpaceList(userEmail));
-        ObservableList<String> greenSpaceNames = getGreenSpaceNames(greenSpaces);
+        ObservableList<String> greenSpaceNames = FXCollections.observableArrayList();
+        greenSpaces.forEach(greenSpace -> greenSpaceNames.add(greenSpace.getName()));
         cmbGreenSpace.setItems(greenSpaceNames);
+
         cmbGreenSpace.setOnAction(event -> {
             String selectedGreenSpace = cmbGreenSpace.getValue();
             if (selectedGreenSpace != null) {
                 List<Task> taskList = getTaskList(selectedGreenSpace);
-                ObservableList<String> taskNames = getTaskNames(taskList);
+                taskList.sort((task1, task2) -> {
+                    // Comparar grau de urgência
+                    int urgencyComparison = task1.getUrgency().compareTo(task2.getUrgency());
+
+                    // Se os graus de urgência forem iguais, ordenar por título
+                    if (urgencyComparison == 0) {
+                        return task1.getTitle().compareTo(task2.getTitle());
+                    } else {
+                        return urgencyComparison;
+                    }
+                });
+
+                ObservableList<String> taskNames = FXCollections.observableArrayList();
+                taskList.forEach(task -> taskNames.add(task.getTitle()));
                 cmbTask.setItems(taskNames);
             }
         });
-
-        cmbTask.setPromptText("Choose Task");
     }
-
-    private ObservableList<String> getTaskNames(List<Task> tasks) {
-        ObservableList<String> taskNames = FXCollections.observableArrayList();
-        for (Task task : tasks) {
-            taskNames.add(task.getTitle()); // Supondo que 'title' é o nome da tarefa
-        }
-        return taskNames;
-    }
-
     @FXML
     public void initializeShowListOfAgendaUI() {
         taskNameColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -109,19 +113,69 @@ public class AddEntryAgendaController {
         updateAgendaList();
     }
 
-    private List<GreenSpace> getGreenSpaceList(String userEmail) {
-        if (!currentUserLogInValidation()) {
-            System.err.println("User is not logged in or does not have the required role.");
-            return Collections.emptyList();
+    private List<Task> getTaskList(String selectedGreenSpaceName) {
+        List<GreenSpace> greenSpaces = greenSpaceRepository.getGreenSpaceList();
+        List<Task> taskList = new ArrayList<>();
+        for (GreenSpace greenSpace : greenSpaces) {
+            if (greenSpace.getName().contains(selectedGreenSpaceName)) {
+                taskList.addAll(taskRepository.getTasksByGreenSpace(greenSpace));
+            }
         }
+        return taskList;
+    }
+    @FXML
+    public void addTaskToAgenda() {
+        String selectedGreenSpace = cmbGreenSpace.getValue();
+        String selectedTaskTitle = cmbTask.getValue();
+        LocalDate selectedDate = datePicker.getValue();
 
-        try {
-            List<GreenSpace> allGreenSpaces = greenSpaceRepository.getGreenSpaceList();
-            return filterGreenSpacesByManager(allGreenSpaces, userEmail);
-        } catch (NullPointerException e) {
-            System.err.println("Returning empty green space list.");
-            return Collections.emptyList();
+        if (selectedGreenSpace != null && selectedTaskTitle != null && selectedDate != null) {
+            Task selectedTask = getTaskByTitle(selectedTaskTitle);
+            if (selectedTask != null) {
+                Date date = java.sql.Date.valueOf(selectedDate);
+                if (!date.before(new Date(System.currentTimeMillis() - 1))) {
+                    if (!taskRepository.getAgenda().contains(selectedTask)) {
+                        selectedTask.setTaskStartDate(date);
+                        selectedTask.setTaskStatus(TaskStatus.Pending);
+                        taskRepository.addTask(selectedTask);
+                        errorMessageLabel.setVisible(false);
+                        updateAgendaList();
+                        return;
+                    } else {
+                        errorMessageLabel.setText("Task already exists in the agenda!");
+                    }
+                } else {
+                    errorMessageLabel.setText("Please enter today's date or a future date.");
+                }
+            } else {
+                errorMessageLabel.setText("Selected task not found!");
+            }
+        } else {
+            errorMessageLabel.setText("Please fill all fields!");
         }
+        errorMessageLabel.setVisible(true);
+    }
+
+    private Task getTaskByTitle(String title) {
+        for (Task task : taskRepository.getTaskList()) {
+            if (task.getTitle().equals(title)) {
+                return task;
+            }
+        }
+        return null;
+    }
+
+    private void updateAgendaList() {
+        List<Task> agendaTasks = taskRepository.getAgenda();
+        agendaTableView.setItems(FXCollections.observableArrayList(agendaTasks));
+    }
+
+    private List<GreenSpace> getGreenSpaceList(String userEmail) {
+        if (currentUserLogInValidation()) {
+            List<GreenSpace> allGreenSpaces = Repositories.getInstance().getGreenSpaceRepository().getGreenSpaceList();
+            return filterGreenSpacesByManager(allGreenSpaces, userEmail);
+        }
+        return Collections.emptyList();
     }
 
     private boolean currentUserLogInValidation() {
@@ -138,87 +192,6 @@ public class AddEntryAgendaController {
         return filteredList;
     }
 
-    private List<Task> getTaskList(String selectedGreenSpaceName) {
-        GreenSpace selectedGreenSpace = null;
-        List<GreenSpace> greenSpaces = greenSpaceRepository.getGreenSpaceList();
-        for (GreenSpace greenSpace : greenSpaces) {
-            if (greenSpace.getName().equals(selectedGreenSpaceName)) {
-                selectedGreenSpace = greenSpace;
-            }
-        }
-
-        if (selectedGreenSpace != null) {
-            List<Task> taskList = taskRepository.getTasksByGreenSpace(selectedGreenSpace);
-            if (!taskList.isEmpty()) {
-                return taskList;
-            } else {
-                System.err.println("A lista de tarefas associadas ao espaço verde selecionado está vazia.");
-                return Collections.emptyList();
-            }
-        } else {
-            System.err.println("O espaço verde selecionado é nulo.");
-            return Collections.emptyList();
-        }
-    }
-
-    private ObservableList<String> getGreenSpaceNames(List<GreenSpace> greenSpaces) {
-        ObservableList<String> greenSpaceNames = FXCollections.observableArrayList();
-        for (GreenSpace greenSpace : greenSpaces) {
-            greenSpaceNames.add(greenSpace.getName());
-        }
-        return greenSpaceNames;
-    }
-
-    @FXML
-    public void addTaskToAgenda() {
-        String selectedGreenSpace = cmbGreenSpace.getValue();
-        String selectedTaskTitle = cmbTask.getValue(); // Obtém o título da tarefa selecionada
-        LocalDate selectedDate = datePicker.getValue();
-
-        if (selectedGreenSpace != null && selectedTaskTitle != null && selectedDate != null) {
-            Task selectedTask = getTaskByTitle(selectedTaskTitle); // Converte o título para o objeto Task
-            if (selectedTask != null) {
-                Date date = java.sql.Date.valueOf(selectedDate);
-                // Allow adding tasks for today's date or future dates
-                if (!date.before(new Date(System.currentTimeMillis() - 1))) {
-                    selectedTask.setTaskStartDate(date);
-                    selectedTask.setTaskStatus(TaskStatus.Planned);
-                    taskRepository.addTask(selectedTask);
-                    System.out.println("Task added to agenda!");
-                    errorMessageLabel.setVisible(false); // Hide error message if successful
-
-                    // Update the ListView after adding the task to the agenda
-                    updateAgendaList();
-                } else {
-                    errorMessageLabel.setText("Please enter today's date or a future date.");
-                    errorMessageLabel.setVisible(true);
-                }
-            } else {
-                errorMessageLabel.setText("Selected task not found!");
-                errorMessageLabel.setVisible(true);
-            }
-        } else {
-            errorMessageLabel.setText("Please fill all fields!");
-            errorMessageLabel.setVisible(true);
-        }
-    }
-
-    private Task getTaskByTitle(String title) {
-        for (Task task : taskRepository.getTaskList()) {
-            if (task.getTitle().equals(title)) {
-                return task;
-            }
-        }
-        return null;
-    }
-
-    private void updateAgendaList() {
-        if (agendaTableView != null) {
-            List<Task> agendaTasks = taskRepository.getAgenda();
-            agendaTableView.setItems(FXCollections.observableArrayList(agendaTasks));
-        } else {
-        }
-    }
     private String getUserEmail() {
         try {
             return authRepository.getCurrentUserSession().getUserId().getEmail();

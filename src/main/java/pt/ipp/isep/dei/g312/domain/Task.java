@@ -157,6 +157,10 @@ public class Task implements Cloneable {
         return taskPosition;
     }
 
+    public TaskUrgency getUrgency() {
+        return this.urgency;
+    }
+
     // method to calculate end date of a task in date using day and hour
     private Date calculateEndDate() {
 
