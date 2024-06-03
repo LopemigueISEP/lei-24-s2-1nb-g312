@@ -121,7 +121,7 @@ public class RegisterGreenSpaceController {
             return;
         }
 
-        String name = nameField.getText().trim().toUpperCase();
+        String name = nameField.getText().trim();
         String address = addressField.getText().trim();
         double area;
         try {

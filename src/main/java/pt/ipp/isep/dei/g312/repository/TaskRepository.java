@@ -118,7 +118,7 @@ public class TaskRepository {
     public List<Task> getTasksByGreenSpace(GreenSpace greenSpace) {
         List<Task> tasksByGreenSpace = new ArrayList<>();
         for (Task task : taskList) {
-            if (task.getGreenSpace().equals(greenSpace)) {
+            if (task.getGreenSpace().getName().equals(greenSpace.getName())) {
                 tasksByGreenSpace.add(task);
             }
         }
