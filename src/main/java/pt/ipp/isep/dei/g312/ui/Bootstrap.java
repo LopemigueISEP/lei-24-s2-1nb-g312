@@ -47,6 +47,7 @@ public class Bootstrap implements Runnable {
     public void saveSeralization(){
         Repositories.getInstance().getSkillRepository().serializateData();
         Repositories.getInstance().getGreenSpaceRepository().serializateData();
+        Repositories.getInstance().getJobRepository().serializateData();
     }
 
     private void addEmployes() {
@@ -74,9 +75,10 @@ public class Bootstrap implements Runnable {
 
     private void addJobs() {
         JobRepository jobRepository = Repositories.getInstance().getJobRepository();
-        jobRepository.addJobRep(new Job("Pruner", "Who can all types of plants"));
-        jobRepository.addJobRep(new Job("Light Vehicle Driver", "Who drives vehicles up to 1500 tare weight"));
-        jobRepository.addJobRep(new Job("Heavy Vehicle Driver", "Who drives vehicles up to 3500 tare weight"));
+        jobRepository.getSeralizatedData();
+//        jobRepository.addJobRep(new Job("Pruner", "Who can all types of plants"));
+//        jobRepository.addJobRep(new Job("Light Vehicle Driver", "Who drives vehicles up to 1500 tare weight"));
+//        jobRepository.addJobRep(new Job("Heavy Vehicle Driver", "Who drives vehicles up to 3500 tare weight"));
 
     }
 
