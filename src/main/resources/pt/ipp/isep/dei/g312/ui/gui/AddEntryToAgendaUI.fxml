@@ -27,8 +27,8 @@
                         <Font name="Tahoma Bold" size="12.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="cmbGreenSpace" prefHeight="25.0" prefWidth="921.0" promptText="Choose GreenSpace" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-                <ComboBox fx:id="cmbTask" editable="true" prefHeight="25.0" prefWidth="921.0" promptText="Choose Task" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                <ComboBox fx:id="cmbGreenSpace" onAction="#getTasks" prefHeight="25.0" prefWidth="921.0" promptText="Choose GreenSpace" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                <ComboBox fx:id="cmbTask" prefHeight="25.0" prefWidth="921.0" promptText="Choose Task" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                 <HBox GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP">
                     <DatePicker fx:id="datePicker" prefHeight="25.0" prefWidth="200.0" promptText="Choose Date" />
                     <TextField fx:id="textStartTime" promptText="Start Time (HH:MM)" />
