@@ -19,82 +19,109 @@ public class AssignVehicleToAgendaEntryController {
     private VehicleRepository vehicleRepository;
 
     public AssignVehicleToAgendaEntryController(){
-        this.employeeRepository = getEmployeeRepository();
-        this.taskRepository = getTaskRepository();
-        this.vehicleRepository = getVehicleRepository();
+        try {
+            this.employeeRepository = getEmployeeRepository();
+            this.taskRepository = getTaskRepository();
+            this.vehicleRepository = getVehicleRepository();
+        }catch (Exception e){
+            throw new RuntimeException("error in initializing repositories",e);
+        }
     }
 
     private EmployeeRepository getEmployeeRepository() {
-        if(employeeRepository == null){
-            Repositories repositories = Repositories.getInstance();
-            employeeRepository = repositories.getEmployeeRepository();
+        try {
+            if (employeeRepository == null) {
+                Repositories repositories = Repositories.getInstance();
+                employeeRepository = repositories.getEmployeeRepository();
+            }
+            return employeeRepository;
+        }catch (Exception e){
+            throw new RuntimeException("error in getting Employee Repository",e);
         }
-        return employeeRepository;
     }
 
     private TaskRepository getTaskRepository(){
-        if(taskRepository == null){
-            Repositories repositories = Repositories.getInstance();
-            taskRepository = repositories.getTaskRepository();
+        try{
+            if(taskRepository == null){
+                Repositories repositories = Repositories.getInstance();
+                taskRepository = repositories.getTaskRepository();
+            }
+            return taskRepository;
+        }catch (Exception e){
+            throw new RuntimeException("error in getting Task Repository",e);
         }
-        return taskRepository;
     }
 
     private VehicleRepository getVehicleRepository(){
-        if(vehicleRepository == null){
-            Repositories repositories = Repositories.getInstance();
-            vehicleRepository = repositories.getVehicleRepository();
-        }
-        return vehicleRepository;
-    }
-
-    //TODO: Está a buscar as todas as tasks da agenda excepto as done e canceled
-    public List<Task> getAvailableTasks(){
-        List<Task> listaAvailableTasks;
-        try{
-            listaAvailableTasks = taskRepository.getAllAgendaTasksExceptDoneCanceled();
-
-
-        }catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return listaAvailableTasks;
-    }
-
-
-    //TODO: Está a buscar todos os veiculos e não apenas os disponiveis - em alteração
-    public List<Vehicle> getAvailableVehicles(Task taskSelecionada){
-
-        List<Vehicle> listaAvailableVehicles;
         try {
-
-
-            listaAvailableVehicles = taskRepository.getVehicleAvaiability(taskSelecionada, vehicleRepository.getVehicles());
-
-
-        }catch (Exception e) {
-            throw new RuntimeException(e);
+            if (vehicleRepository == null) {
+                Repositories repositories = Repositories.getInstance();
+                vehicleRepository = repositories.getVehicleRepository();
+            }
+            return vehicleRepository;
+        }catch (Exception e){
+            throw new RuntimeException("error in getting Vehicle Repository",e);
         }
-        return listaAvailableVehicles;
+    }
+
+    //Está a buscar todas as tasks da agenda excepto as done e canceled
+    public List<Task> getAvailableTasks(){
+        List<Task> listAvailableTasks;
+        try{
+            listAvailableTasks = taskRepository.getAllAgendaTasksExceptDoneCanceled();
+
+
+        }catch (NullPointerException nullPointerException) {
+            listAvailableTasks = new ArrayList<>();
+            throw new RuntimeException("no data in tasksExceptDoneCanceled in AssignVehicleToAgendaEntryController",nullPointerException);
+        }catch (Exception e){
+            throw new RuntimeException("error in getAvailableTasks in AssignVehicleToAgendaEntryController",e);
+        }
+
+
+        return listAvailableTasks;
+    }
+
+
+
+    public List<Vehicle> getAvailableVehicles(Task taskSelected){
+
+        List<Vehicle> listAvailableVehicles;
+        try {
+            listAvailableVehicles = taskRepository.getVehicleAvaiability(taskSelected, vehicleRepository.getVehicles());
+        }catch (NullPointerException nullPointerException) {
+            listAvailableVehicles = new ArrayList<>();
+            throw new RuntimeException("no data in getVehicleAvaiability in AssignVehicleToAgendaEntryController",nullPointerException);
+        }catch (Exception e) {
+            throw new RuntimeException("error in getAvailableVehicles in AssignVehicleToAgendaEntryController",e);
+        }
+        return listAvailableVehicles;
     }
 
     public List<Vehicle> getTaskAssignedVehicles(Task task){
-        List<Vehicle> taskAssignedVehicles = new ArrayList<>();
+        List<Vehicle> taskAssignedVehicles;
+
         try {
             taskAssignedVehicles = task.getAssignedVehicles();
+
         }catch (NullPointerException npe){
             taskAssignedVehicles = new ArrayList<>();
+            throw new RuntimeException("no data in getAssignedVehicles in getTaskAssignedVehicles",npe);
+        }catch (Exception e){
+            throw new RuntimeException("error in getTaskAssignedVehicles in AssignVehicleToAgendaEntryController",e);
         }
 
         return taskAssignedVehicles;
     }
 
-    //TODO: Implementar alertas para as mensagens de excepções
+
     public void assignVehicleToTask(Vehicle vehicle, Task task){
         try {
             task.assignVehicle(vehicle);
         }catch (NullPointerException nullPointerException){
-            System.out.println("Erro no controller - Método assign Vehicle to task - Não iniciou a lista de veiculos");
+            throw  new RuntimeException("doesn't found the vehicle list in task",nullPointerException);
+        }catch (Exception e){
+            throw new RuntimeException("error in assigneVehicleToTask in AssignVehicleToAgendaEntryController", e);
         }
     }
 
