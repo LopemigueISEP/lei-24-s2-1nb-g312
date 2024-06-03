@@ -1,10 +1,12 @@
 package pt.ipp.isep.dei.g312.domain;
 
+import java.io.Serializable;
+
 /**
  * Represents a job that has a job name and description.
  * Provides methods to access and modify the job attributes, and implements Comparable to enable sorting by job name.
  */
-public class Job implements Comparable<Job>{
+public class Job implements Comparable<Job>, Serializable {
 
     private String jobName;
     private String jobDescription;
