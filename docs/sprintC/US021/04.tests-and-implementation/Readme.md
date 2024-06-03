@@ -23,40 +23,60 @@ _It is also recommended to organize this content by subsections._
 
 
 ## 5. Construction (Implementation)
-
-### Class CreateTaskController 
-
+### Class AddEntryToDoListUI
 ```java
-public Task createTask(String reference, String description, String informalDescription, String technicalDescription,
-                       Integer duration, Double cost, String taskCategoryDescription) {
-
-	TaskCategory taskCategory = getTaskCategoryByDescription(taskCategoryDescription);
-
-	Employee employee = getEmployeeFromSession();
-	Organization organization = getOrganizationRepository().getOrganizationByEmployee(employee);
-
-	newTask = organization.createTask(reference, description, informalDescription, technicalDescription, duration,
-                                      cost,taskCategory, employee);
-    
-	return newTask;
+public AddEntryToDoListUI(){
+    addEntryToDoListController= new AddEntryToDoListController();
 }
 ```
 
-### Class Organization
+### Class RegisterSkillController
 
 ```java
-public Optional<Task> createTask(String reference, String description, String informalDescription,
-                                 String technicalDescription, Integer duration, Double cost, TaskCategory taskCategory,
-                                 Employee employee) {
-    
-    Task task = new Task(reference, description, informalDescription, technicalDescription, duration, cost,
-                         taskCategory, employee);
-
-    addTask(task);
-        
-    return task;
+public AddEntryToDoListController(){
+    getGreenSpaceRepository();
+    getTaskRepository();
 }
 ```
+
+### Class GreenSpace
+
+```java
+public GreenSpace(String name, String address, double area, String typology, String greenSpaceManager){
+    this.name = name;
+    this.address = address;
+    this.area = area;
+    this.typology = typology;
+    this.greenSpaceManager = greenSpaceManager;
+}
+
+public GreenSpace(GreenSpace greenSpace) {
+    this.name = greenSpace.getName();
+    this.address = greenSpace.getAddress();
+    this.area = greenSpace.getArea();
+    this.typology = greenSpace.getTypology();
+    this.greenSpaceManager = greenSpace.getGreenSpaceManager();
+
+}
+
+```
+
+### Class Task
+
+```java
+public Task(String title, String description, TaskUrgency urgency, int taskExpectedDuration, GreenSpace greenSpace, TaskPosition taskPosition) {
+    this.title = title;
+    this.description = description;
+    this.taskExpectedDuration = taskExpectedDuration;
+    this.greenSpace = greenSpace;
+    this.urgency = urgency;
+    this.assignedVehicles = new ArrayList<>();
+    this.taskPosition = taskPosition;
+
+
+}
+```
+
 
 
 ## 6. Integration and Demo 

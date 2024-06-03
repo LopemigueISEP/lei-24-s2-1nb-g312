@@ -14,16 +14,10 @@ activate Employee
     Employee -> System : asks to add a new entry to the To-Do List
     activate System
 
-        System --> Employee : shows green spaces to be selected
+        System --> Employee : shows green spaces and task urgency to be selected\n and requests data (taskTitle, taskDescription, expectedDuration)
     deactivate System
 
-    Employee -> System : selects green space
-    activate System
-
-        System --> Employee : requests data (tasks, urgency, expectedDuration)
-    deactivate System
-
-    Employee -> System : selects and types requested data
+    Employee -> System : selects green space and task urgency\n and types requested data
     activate System
 
         System --> Employee : shows all data and requests confirmation

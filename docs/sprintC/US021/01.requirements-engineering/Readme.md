@@ -41,10 +41,12 @@ and Low), and the approximate expected duration.
 **Input Data:**
 
 * Typed data:
-    * a expectedDuration
+    * taskTitle
+    * taskDescription
+    * expectedDuration
 	
 * Selected data:
-    * tasks
+    * greenSpaces
     * urgency
       * High
       * Medium
@@ -52,7 +54,6 @@ and Low), and the approximate expected duration.
 
 **Output Data:**
 
-* List of added entries
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)

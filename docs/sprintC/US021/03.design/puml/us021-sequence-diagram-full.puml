@@ -7,22 +7,56 @@ autonumber
 
 'hide footbox
 actor "GSM" as GSM
+participant ":AddEntryToDoListUI" as UI
+participant ":AddEntryToDoListController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "greenSpacesRepository\n:GreenSpacesRepository" as GreenSpacesRepository
+participant "taskUrgency\n:TaskUrgency" as TaskUrgency
+
+
+ref over GSM, UI : This action assumes that the user has already logged in
 activate GSM
 
-    GSM -> System : asks to add a new entry to the To-Do List
-    activate System
+    GSM -> UI : asks to add a new entry to the To-Do List
+    activate UI
+        UI -> CTRL: getGreenSpaces()
+        activate CTRL
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
 
-        System --> GSM : shows green spaces to be selected
-    deactivate System
+                RepositorySingleton --> CTRL: repositories
+            deactivate RepositorySingleton
 
-    GSM -> System : selects green space
-    activate System
+            CTRL -> PLAT : getGreenSpacesRepository()
+            activate PLAT
 
-        System --> GSM : requests data (tasks, urgency, expectedDuration)
-    deactivate System
+                PLAT --> CTRL: greenSpacesRepository
+            deactivate PLAT
+            CTRL -> GreenSpacesRepository: getGreenSpaceList()
+            activate GreenSpacesRepository
+                GreenSpacesRepository --> CTRL: greenSpaceList
+            deactivate GreenSpacesRepository
 
-    GSM -> System : selects and types requested data
-    activate System
+            CTRL --> UI : greenSpaceList
+        deactivate CTRL
+
+        UI -> CTRL: getTaskUrgencies()
+        activate CTRL
+            CTRL -> TaskUrgency : getTaskUrgencies()
+            activate TaskUrgency
+                TaskUrgency -> CTRL: taskUrgency
+            deactivate TaskUrgency
+        CTRL -> UI : taskUrgency
+        deactivate CTRL
+    UI --> GSM : shows green spaces and task urgency to be selected\n and requests data (taskTitle, taskDescription, expectedDuration)
+    deactivate UI
+
+    GSM -> UI : selects green space and task urgency\n and types requested data
+    activate UI
+
+
+    deactivate UI
 
         System --> GSM : shows all data and requests confirmation
     deactivate System
@@ -32,4 +66,5 @@ activate GSM
 
         System --> GSM : displays operation success
     deactivate System
+
 @enduml

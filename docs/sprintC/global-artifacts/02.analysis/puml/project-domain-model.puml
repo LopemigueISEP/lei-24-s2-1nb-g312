@@ -34,7 +34,7 @@ class Agenda {
 }
 class ToDoList{
     greenSpace
-    tasks
+    task
     urgency
     expectedDuration
 }

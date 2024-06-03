@@ -18,18 +18,7 @@ class Employee{
     -address : String
     -docNumber : String
     -jobTitle : String
-
-    +registerSkill(skillName, skillDescription): Optional<Skill>
-    +validateSkill(skill): boolean
-    +add(skill): boolean
-}
-
-class ToDoEntry{
--greenSpace: GreenSpace
--task: Task
--urgency: String
--startDate: Date
--endDate : Date
+    -skills : List<Skill>
 }
 
 
@@ -44,8 +33,8 @@ class AddEntryToDoListUI{
 class Repositories {
     - Repositories()
     + getInstance() : Repositories
-    + getEmployeeRepository(); employeeRepository
-
+    + getEmployeeRepository(): employeeRepository
+    + getGreenSpaceRepository(): greenSpacesRepository
 }
 class EmployeeRepository{
 
@@ -58,9 +47,26 @@ class TasksRepository{
  +getTodoTasks(): List<Task>
  +getAgendaTasks(): List<Task>
  +getTask(): Task
+ +add() : Optional<Task>
 }
 class GreenSpacesRepository{
 +getGreenSpaces(): GreenSpace
+}
+
+class Task{
+    -title: String
+    -description: String
+    -date: Date
+    -taskStartPeriod: TaskPeriod
+    taskExpectedDuration: int
+    type: String
+    greenSpace: GreenSpace
+    urgency: TaskUrgency
+    status: TaskStatus
+    assignedTeam: Team
+    assignedVehicles: List<Vehicle>
+    startDate: Date
+    taskPosition: TaskPosition
 }
 
 AddEntryToDoListUI .>AddEntryToDoListController
@@ -69,16 +75,16 @@ AddEntryToDoListController .> "1" Repositories
 
 Repositories "1" --> "1" Repositories : getInstance()
 Repositories "1" --> "1" EmployeeRepository
-Repositories "1" --> "1" TasksRepository
+
 Repositories "1" --> "1" GreenSpacesRepository
 
 AddEntryToDoListController ..>Employee
 
 EmployeeRepository "1" --> "1" Employee
-TasksRepository "1" --> "1" Employee
 GreenSpacesRepository "1" --> "1" Employee
 
-Employee --> ToDoEntry: registers
+Employee --> Task: registers
 
+Task "1" --> "1" TasksRepository: add
 
 @enduml

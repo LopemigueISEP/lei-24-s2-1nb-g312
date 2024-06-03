@@ -19,6 +19,7 @@ class GreenSpace {
     area
     address
     name
+    manager
     numberOfEquipments
     waterConsumption
     equipmentUsed
@@ -30,13 +31,20 @@ class ToDoList{
     greenSpace
     task
     urgency
-    startDate
-    endDate
+    expectedDuration
 }
 
 class Task {
-    reference
+    taskID
+    title
     description
+    date
+    taskStartPeriod
+    taskExpectedDuration
+    type
+    greenSpace
+    assignedTeam
+    assignedVehicles
 }
 
 GreenSpacesManager "1" --- "1..*" ToDoList : manages >
