@@ -1,16 +1,17 @@
 package pt.ipp.isep.dei.g312.domain;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 
 public class Task implements Cloneable {
 
     private String title;
     private String description;
-    private Date date;
+    private LocalDate selectedDate;
     private int taskExpectedDuration; //expected hours duration
+    private int startTime;
     private String type;
     private GreenSpace greenSpace;
     private TaskUrgency urgency;
@@ -21,6 +22,7 @@ public class Task implements Cloneable {
     private Date startDate;
     private Date endDate;
     private TaskPosition taskPosition;
+    private Task selectedTask;
 
 
     /**
@@ -40,6 +42,16 @@ public class Task implements Cloneable {
             this.description = description;
             this.taskExpectedDuration = taskExpectedDuration;
             this.urgency = urgency;
+            this.taskPosition = taskPosition;
+        }
+
+    }
+    public Task(GreenSpace selectedGreenSpace, Task selectedTask, LocalDate selectedDate, int startTime, TaskPosition taskPosition) {
+        if (taskPosition.equals(TaskPosition.AGENDA)) {
+            this.greenSpace = selectedGreenSpace;
+            this.selectedTask = selectedTask;
+            this.selectedDate = selectedDate;
+            this.startTime = startTime;
             this.taskPosition = taskPosition;
         }
 

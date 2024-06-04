@@ -132,17 +132,10 @@ public class TaskRepository {
         }
         return pendingTasks;
     }
-    public List<Task> getTasksByGreenSpace(GreenSpace greenSpace) {
-        List<Task> tasksByGreenSpace = new ArrayList<>();
-        for (Task task : taskList) {
-            if (task.getGreenSpace().equals(greenSpace)) {
-                tasksByGreenSpace.add(task);
-            }
-        }
-        return tasksByGreenSpace;
+
+    public List<Task> getTasksByGreenSpace() {
+        return new ArrayList<>(taskList);
     }
-
-
 
     private boolean validateTask(Task task){
         return true;
