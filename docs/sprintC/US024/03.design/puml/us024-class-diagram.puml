@@ -12,28 +12,25 @@ skinparam classAttributeIconSize 0
 class GSMUI{
 }
 
-class AssignTeamToTaskInTheAgendaUI{
+class PostponeTaskInTheAgendaUI{
 +run()
-+AssignTeamController()
++PostponeTaskInTheAgendaController()
 -requestTask()
--requestTeam()
--submitData(team, task)
+-requestNewDate()
+-submitData(task, newDate)
 }
 
-class AssignTeamController{
-+assignTeamController()
-+assignTeamToTask()
-+listAvailableTeams()
-+listUnfinishedTasks()
-+getAgenda()
-+loadValidEmailServices()
-+validEmail()
+class PostponeTaskInTheAgendaController {
+- taskRepository
++PostponeTaskInTheAgendaController()
 -getTaskRepository()
--getTeamRepository()
++listPlannedTasks()
++getTeamTasks()
++postponeTask(task, newDate)
 }
 
 class Employee {
-+assignTeamToTask(team, task)
++postponeTask(team, newStartDate)
 }
 
 class Task{
@@ -50,13 +47,13 @@ class Task{
 -taskID : int
 -taskPosition : EnumName
 
-+assignTeam()
++setTaskStartDate()
 +setTaskStatus()
++assignTeam()
 +getTaskPosition()
 +setEndDate()
 +taskOverlap()
 -calculateEndDate()
-
 }
 
 class TaskRepository {
@@ -89,14 +86,14 @@ class Tasks {
 
 
 
-GSMUI "1" ..> "1" AssignTeamToTaskInTheAgendaUI
+GSMUI "1" ..> "1" PostponeTaskInTheAgendaUI
 
 Repositories --> Repositories : instance
 
 
-AssignTeamToTaskInTheAgendaUI ..> AssignTeamController
+PostponeTaskInTheAgendaUI ..> PostponeTaskInTheAgendaController
 
-AssignTeamController ..> Repositories
+PostponeTaskInTheAgendaController ..> Repositories
 
 
 Repositories "1"--> "1" TaskRepository
@@ -108,7 +105,7 @@ TeamRepository "1"--> "*" Employee
 Employee "1" --> "*"Task
 
 
-AssignTeamController ..> Employee
+PostponeTaskInTheAgendaController ..> Employee
 
 TaskRepository "1" --> "1" Tasks : list tasks
 Tasks "1" --> "*" Task
