@@ -2,10 +2,7 @@ package pt.ipp.isep.dei.g312.ui.console.menu;
 
 import pt.ipp.isep.dei.g312.ui.console.*;
 import pt.ipp.isep.dei.g312.ui.console.utils.Utils;
-import pt.ipp.isep.dei.g312.ui.gui.AddEntryToAgendaUI;
-import pt.ipp.isep.dei.g312.ui.gui.RegisterGreenSpaceUI;
-import pt.ipp.isep.dei.g312.ui.gui.ShowListOfAgendaUI;
-import pt.ipp.isep.dei.g312.ui.gui.ShowListOfGreenSpacesUI;
+import pt.ipp.isep.dei.g312.ui.gui.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +25,7 @@ public class GSMUI implements Runnable {
         options.add(new MenuItem("Postpone an entry in the Agenda to a specific future date", new RunTimeTestingKruskalAlgorithmUI()));
         options.add(new MenuItem("Cancel an entry in the Agenda", new RunTimeTestingKruskalAlgorithmUI()));
         options.add(new MenuItem("Assign vehicles to an entry in the Agenda", new RunTimeTestingKruskalAlgorithmUI()));
-        options.add(new MenuItem("List all green spaces managed by GSM", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("List all green spaces managed by Me", new ListGreenSpacesManagedByMeGUI()));
 
 
         int option = 0;
