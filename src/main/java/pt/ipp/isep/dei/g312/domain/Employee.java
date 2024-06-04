@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei.g312.domain;
 
-import pt.ipp.isep.dei.g312.repository.GreenSpaceRepository;
 import pt.ipp.isep.dei.g312.repository.Repositories;
 import pt.ipp.isep.dei.g312.repository.SkillRepository;
 
@@ -420,7 +419,7 @@ public class Employee implements Cloneable, Comparable<Employee> {
         return Repositories.getInstance().getTaskRepository().updateTask(task);
     }
 
-    public static Optional<Task> posponedTask(Task task, Date newStartDate) {
+    public static Optional<Task> postponedTask(Task task, Date newStartDate) {
         task.setTaskStartDate(newStartDate);
         task.setTaskStatus(TaskStatus.Postponed);
         task.assignTeam(null);
