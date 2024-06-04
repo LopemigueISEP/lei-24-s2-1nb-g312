@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.g312.application.controller.AddEntryAgendaController">
-    <padding>
-        <Insets bottom="50" left="50" right="50" top="50" />
-    </padding>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.g312.application.controller.ShowAgendaController">
     <children>
-        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Agenda List">
-            <font>
-                <Font name="Tahoma Bold" size="12.0" />
-            </font>
-        </Label>
-        <TableView fx:id="agendaTableView" prefWidth="600.0" prefHeight="500.0" VBox.vgrow="ALWAYS">
-            <columns>
-                <TableColumn fx:id="taskNameColumn" text="Task Name">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="title" />
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="descriptionColumn" text="Description">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="description" />
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="startDateColumn" text="Start Date">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="startDate" />
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="statusColumn" text="Status">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="status" />
-                    </cellValueFactory>
-                </TableColumn>
-            </columns>
-        </TableView>
+        <GridPane layoutX="5.0" layoutY="5.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label alignment="CENTER" text="Agenda List" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                    <font>
+                        <Font name="Tahoma Bold" size="18.0" />
+                    </font>
+                    <GridPane.margin>
+                        <Insets />
+                    </GridPane.margin>
+                    <padding>
+                        <Insets top="50.0" />
+                    </padding>
+                </Label>
+                <TableView fx:id="TableView_TaskAgenda" prefHeight="300.0" prefWidth="524.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="6">
+                    <columns>
+                        <TableColumn fx:id="column_greenSpaceName" prefWidth="106.0" text="GS Name" />
+                        <TableColumn fx:id="column_TaskName" prefWidth="132.0" text="Task" />
+                        <TableColumn fx:id="column_StartDate" prefWidth="132.0" text="Start Date" />
+                        <TableColumn fx:id="column_Status" prefWidth="153.0" text="Status" />
+                    </columns>
+                </TableView>
+            </children>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" percentWidth="15.0" />
+                <ColumnConstraints percentWidth="80.0" />
+                <ColumnConstraints hgrow="SOMETIMES" percentWidth="15.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints percentHeight="20.0" />  <RowConstraints percentHeight="80.0" />  </rowConstraints>
+        </GridPane>
     </children>
-</VBox>
+</AnchorPane>

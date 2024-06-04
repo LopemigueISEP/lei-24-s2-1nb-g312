@@ -132,7 +132,7 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
             lblAllFields.setText("Please fill out all required information.");
             lblAllFields.setVisible(true);
         } else if (!isInt(textStartTime.getText())) {
-            lblAllFields.setText("Expected start date shoulb in format HH:MM");
+            lblAllFields.setText("Expected start time should in format HHMM");
             lblAllFields.setVisible(true);
         } else {
 
@@ -152,7 +152,7 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
                         stage.close();
                     }
                 } else {
-                    lblAllFields.setText("Task already exists.");
+                    lblAllFields.setText("Task already in agenda.");
                     lblAllFields.setVisible(true);
                 }
             }
@@ -177,7 +177,7 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
                 yes,
                 no);
 
-        alert.setTitle("Task confirmation");
+        alert.setTitle("Agenda Entry confirmation");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.orElse(yes) == yes) {
@@ -191,11 +191,11 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
         ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
         ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                "Task added to to-do list, do you wish to add another?",
+                "Task added to agenda, do you wish to add another?",
                 yes,
                 no);
 
-        alert.setTitle("Task successfully created");
+        alert.setTitle("Task successfully added");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.orElse(yes) == yes) {
