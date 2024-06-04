@@ -23,16 +23,25 @@ public class Task implements Cloneable {
     private TaskPosition taskPosition;
 
 
-    // constructor for to do list
-    public Task(String title, String description, TaskUrgency urgency, int taskExpectedDuration, GreenSpace greenSpace, TaskPosition taskPosition) {
-        this.title = title;
-        this.description = description;
-        this.taskExpectedDuration = taskExpectedDuration;
-        this.greenSpace = greenSpace;
-        this.urgency = urgency;
-        this.assignedVehicles = new ArrayList<>();
-        this.taskPosition = taskPosition;
-
+    /**
+     * Constructor for creating a task in the to-do list.
+     *
+     * @param greenSpace          the GreenSpace object associated with the task
+     * @param title               the title of the task
+     * @param description         the description of the task
+     * @param urgency             the urgency level of the task
+     * @param taskExpectedDuration the expected duration of the task in minutes
+     * @param taskPosition        the position of the task, should be TaskPosition.ToDoList
+     */
+    public Task( GreenSpace greenSpace, String title, String description, TaskUrgency urgency, int taskExpectedDuration, TaskPosition taskPosition) {
+        if (taskPosition.equals(TaskPosition.TODOLIST)) {
+            this.greenSpace = greenSpace;
+            this.title = title;
+            this.description = description;
+            this.taskExpectedDuration = taskExpectedDuration;
+            this.urgency = urgency;
+            this.taskPosition = taskPosition;
+        }
 
     }
 

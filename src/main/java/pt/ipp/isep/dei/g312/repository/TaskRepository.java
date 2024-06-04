@@ -26,7 +26,7 @@ public class TaskRepository {
     public List<Task> getAgenda(){
         ArrayList<Task> agenda = new ArrayList<>();
         for (Task t : taskList){
-            if (t.getTaskPosition() == TaskPosition.Agenda){
+            if (t.getTaskPosition().equals(TaskPosition.AGENDA)){
                 agenda.add(t);
             }
         }
@@ -37,7 +37,7 @@ public class TaskRepository {
     public List<Task> getToDoList(){
         ArrayList<Task> toDoList = new ArrayList<>();
         for (Task t : taskList){
-            if (t.getTaskPosition() == TaskPosition.ToDoList){
+            if (t.getTaskPosition() == TaskPosition.TODOLIST){
                 toDoList.add(t);
             }
         }

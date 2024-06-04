@@ -1,31 +1,15 @@
 package pt.ipp.isep.dei.g312.application.controller;
 
-import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.stage.Stage;
-import javafx.util.StringConverter;
 import pt.ipp.isep.dei.g312.domain.*;
 import pt.ipp.isep.dei.g312.repository.GreenSpaceRepository;
 import pt.ipp.isep.dei.g312.repository.Repositories;
 import pt.ipp.isep.dei.g312.repository.TaskRepository;
 
+import java.util.List;
 import java.util.Optional;
 
-import static pt.ipp.isep.dei.g312.ui.console.utils.Utils.isInt;
-
 public class AddEntryToDoListController {
-
-
-    public ComboBox cmbGreenSpace;
-    public TextField textExpectedDuration;
-    public Button btnSubmit;
-    public Label lblAllFields;
-    public TextField textTaskTitle;
-    public TextArea textTaskDescr;
-    public ComboBox cmbUrgency;
 
     private GreenSpaceRepository greenSpaceRepository;
     private TaskRepository taskRepository;
@@ -37,8 +21,7 @@ public class AddEntryToDoListController {
 
     @FXML
     protected void initialize() {
-        getGreenSpaces();
-        getTaskUrgencies();
+
 
     }
 
@@ -60,139 +43,23 @@ public class AddEntryToDoListController {
     }
 
 
-    private void getGreenSpaces() {
-        cmbGreenSpace.setItems(FXCollections.observableArrayList(greenSpaceRepository.getGreenSpaceList()));
-        cmbGreenSpace.setCellFactory(listView -> new GreenSpaceComboNames());
-        cmbGreenSpace.setButtonCell(new GreenSpaceComboNames());
+    public List<GreenSpace> getGreenSpaces() {
+        return greenSpaceRepository.getGreenSpaceList();
 
     }
 
-    private static class GreenSpaceComboNames extends ListCell<GreenSpace> {
+    public TaskUrgency[] getTaskUrgencies() {
+        return TaskUrgency.values();
+    }
 
-        @Override
-        public void updateItem(GreenSpace item, boolean empty) {
-            super.updateItem(item, empty);
-            if (item != null) {
-
-                setText(item.getName());
-
-            } else if (empty || item == null) {
-                setText("Choose GreenSpace");
-            } else {
-                setText(null);
-            }
+    public Optional<Task> createTask(GreenSpace selectedGreenSpace, String taskTitle, String taskDescr, TaskUrgency taskUrgency, int expectedDuration) {
+        Optional<Task> newTask = Optional.empty();
+        newTask=Employee.registerTask(selectedGreenSpace,taskTitle,taskDescr,taskUrgency,expectedDuration,TaskPosition.TODOLIST,true);
+        if (newTask.isPresent()){
+            return  newTask;
         }
-
-    }
-
-    private void getTaskUrgencies() {
-        cmbUrgency.setItems(FXCollections.observableArrayList(TaskUrgency.values()));
-        cmbUrgency.setCellFactory(listView -> new TaskUrgencyComboNames());
-        cmbUrgency.setButtonCell(new TaskUrgencyComboNames());
-    }
-
-    private static class TaskUrgencyComboNames extends ListCell<TaskUrgency> {
-
-        @Override
-        public void updateItem(TaskUrgency item, boolean empty) {
-            super.updateItem(item, empty);
-            if (item != null) {
-
-                setText(item.toString());
-
-            } else if (empty || item == null) {
-                setText("Choose Urgency");
-            } else {
-                setText(null);
-            }
-        }
-
-    }
-
-    public void addTodoList(ActionEvent actionEvent) {
-
-        if (verifyEmptyFields()) {
-            lblAllFields.setText("Please fill out all required information.");
-            lblAllFields.setVisible(true);
-        } else if (!isInt(textExpectedDuration.getText())) {
-            lblAllFields.setText("Expected duration must be in hours.");
-            lblAllFields.setVisible(true);
-        } else {
-            GreenSpace selectedGreenSpace = (GreenSpace) cmbGreenSpace.getValue();
-            Task task = new Task(textTaskTitle.getText(), textTaskDescr.getText(), (TaskUrgency) cmbUrgency.getValue(), Integer.parseInt(textExpectedDuration.getText()), (GreenSpace) cmbGreenSpace.getValue(), TaskPosition.ToDoList);
-            if (confirmsData()) {
-                Optional<Task> newTask = taskRepository.add(task);
-                if (newTask.isPresent()) {
-                    if (addAnotherTask()) {
-                        resetAllFields();
-                    } else {
-                        Stage stage = (Stage) lblAllFields.getScene().getWindow();
-                        stage.close();
-                    }
-                } else {
-                    lblAllFields.setText("Task already exists.");
-                    lblAllFields.setVisible(true);
-                }
-            }
-            else {
-                resetAllFields();
-            }
-        }
-
-    }
-
-    private boolean confirmsData() {
-        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
-        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION,
-                "Confirm submission?",
-                yes,
-                no);
-
-        alert.setTitle("Task confirmation");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.orElse(yes) == yes) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private void resetAllFields() {
-        cmbGreenSpace.getSelectionModel().clearSelection();
-        cmbGreenSpace.setValue(null);
-        textTaskTitle.setText("");
-        textTaskDescr.setText("");
-        cmbUrgency.getSelectionModel().clearSelection();
-        cmbUrgency.setValue(null);
-        textExpectedDuration.setText("");
-        lblAllFields.setVisible(false);
-    }
-
-    private boolean verifyEmptyFields() {
-        return cmbGreenSpace.getValue() == null
-                || textTaskTitle.getText().isEmpty()
-                || textTaskDescr.getText().isEmpty()
-                || cmbUrgency.getValue() == null
-                || textExpectedDuration.getText().isEmpty();
-    }
-
-    private boolean addAnotherTask() {
-        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
-        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                "Task added to to-do list, do you wish to add another?",
-                yes,
-                no);
-
-        alert.setTitle("Task successfully created");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.orElse(yes) == yes) {
-            return true;
-        } else {
-            return false;
+        else {
+            return Optional.empty();
         }
     }
 }

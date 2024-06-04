@@ -41,22 +41,22 @@ class TaskRepositoryTest {
         greenSpace = new GreenSpace("greenTeste", "casota", 200, "cenas", "GSM@this.app");
 
         task1 = new Task("Sample Task", "This is a sample task description.", 8, "Type A", greenSpace,
-                TaskUrgency.HIGH, TaskStatus.Pending, null, new ArrayList<>(), 1, startDate, endDate, TaskPosition.Agenda);
+                TaskUrgency.HIGH, TaskStatus.Pending, null, new ArrayList<>(), 1, startDate, endDate, TaskPosition.AGENDA);
         task1.assignVehicle(vehicle1);
         taskRepository.addTask(task1);
 
         task2 = new Task("Sample Task 2 for testing", "This is a sample task description.", 8, "Type A", greenSpace,
-                TaskUrgency.HIGH, TaskStatus.Canceled, null, new ArrayList<>(), 2, startDate, endDate, TaskPosition.Agenda);
+                TaskUrgency.HIGH, TaskStatus.Canceled, null, new ArrayList<>(), 2, startDate, endDate, TaskPosition.AGENDA);
         task2.assignVehicle(vehicle2);
         taskRepository.addTask(task2);
 
         Task task3 = new Task("Tascão", "descrição do tasco lá do sitio", 3, "Type A", greenSpace, TaskUrgency.MEDIUM, TaskStatus.Done,
-                null, new ArrayList<>(), 3, startDate, endDate, TaskPosition.Agenda);
+                null, new ArrayList<>(), 3, startDate, endDate, TaskPosition.AGENDA);
 
         taskRepository.addTask(task3);
 
         Task task4 = new Task("GrandaTask", "O Miguel já pagava uns finos ao pessoal", 3, "Type A", greenSpace,
-                TaskUrgency.MEDIUM, TaskStatus.Postponed, null, new ArrayList<>(), 4, startDate, endDate, TaskPosition.Agenda);
+                TaskUrgency.MEDIUM, TaskStatus.Postponed, null, new ArrayList<>(), 4, startDate, endDate, TaskPosition.AGENDA);
 
         taskRepository.addTask(task4);
 
@@ -64,7 +64,7 @@ class TaskRepositoryTest {
         Date task5EndDate = dateFormat.parse("17/06/2024 - 13");
 
         task5 = new Task("TaskSemNomeDeJeito", "Vou-me despedir para ficar a dormir o dia todo", 5, "Type A", greenSpace,
-                TaskUrgency.LOW, TaskStatus.Pending, null, new ArrayList<>(), 5, task5startDate, task5EndDate, TaskPosition.Agenda);
+                TaskUrgency.LOW, TaskStatus.Pending, null, new ArrayList<>(), 5, task5startDate, task5EndDate, TaskPosition.AGENDA);
         task5.assignVehicle(vehicle1);
         task5.assignVehicle(vehicle2);
         taskRepository.addTask(task5);
@@ -100,7 +100,7 @@ class TaskRepositoryTest {
         GreenSpace greenSpace12 = new GreenSpace("ABC","asd",1000,"asd","asd");
 
         Task task12 = new Task("TaskSemNomeDeJeito", "Vou-me despedir para ficar a dormir o dia todo", 5, "Type A", greenSpace12,
-                TaskUrgency.LOW, TaskStatus.Pending, null, new ArrayList<>(), 5, task5startDate, task5EndDate, TaskPosition.Agenda);
+                TaskUrgency.LOW, TaskStatus.Pending, null, new ArrayList<>(), 5, task5startDate, task5EndDate, TaskPosition.AGENDA);
 
         taskRepository.addTask(task12);
         List<Task> result = taskRepository.getTasksByGreenSpace(greenSpace);

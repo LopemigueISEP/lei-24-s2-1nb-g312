@@ -121,7 +121,7 @@ public class Bootstrap implements Runnable {
         Team assignedTeam = null;
         ArrayList<Vehicle> assignedVehicles = new ArrayList<>();
         int taskID = 1;
-        TaskPosition taskPosition = TaskPosition.Agenda;
+        TaskPosition taskPosition = TaskPosition.AGENDA;
 
         GreenSpace greenSpace = new GreenSpace("greenTeste","casota", 200,"cenas","GSM@this.app" );
         Task task = new Task(title, description, taskExpectedDuration, type, greenSpace, urgency, status, assignedTeam, assignedVehicles, taskID, startDate, endDate, taskPosition);
@@ -151,7 +151,7 @@ public class Bootstrap implements Runnable {
         Team assignedTeam2 = null;
         ArrayList<Vehicle> assignedVehicles2 = new ArrayList<>();
         int taskID2 = 2;
-        TaskPosition taskPosition2 = TaskPosition.Agenda;
+        TaskPosition taskPosition2 = TaskPosition.AGENDA;
 
         Task task2 = new Task(title2, description2, taskExpectedDuration2, type2, greenSpace, urgency2, status2, assignedTeam2, assignedVehicles2, taskID2, startDate2, endDate2, taskPosition2);
         taskRepository.addTask(task2);
@@ -159,10 +159,10 @@ public class Bootstrap implements Runnable {
 
         //task3
 
-        Task task3 = new Task("Tascão","descrição do tasco lá do sitio",3,"Type A",greenSpace,TaskUrgency.MEDIUM,TaskStatus.Planned,assignedTeam,new ArrayList<>(),3,startDate,endDate,TaskPosition.Agenda);
+        Task task3 = new Task("Tascão","descrição do tasco lá do sitio",3,"Type A",greenSpace,TaskUrgency.MEDIUM,TaskStatus.Planned,assignedTeam,new ArrayList<>(),3,startDate,endDate,TaskPosition.AGENDA);
         taskRepository.addTask(task3);
 
-        Task task4 = new Task("GrandaTask","O Miguel já pagava uns finos ao pessoal",3,"Type A",greenSpace,TaskUrgency.MEDIUM,TaskStatus.Postponed,assignedTeam,new ArrayList<>(),3,startDate,endDate,TaskPosition.Agenda);
+        Task task4 = new Task("GrandaTask","O Miguel já pagava uns finos ao pessoal",3,"Type A",greenSpace,TaskUrgency.MEDIUM,TaskStatus.Postponed,assignedTeam,new ArrayList<>(),3,startDate,endDate,TaskPosition.AGENDA);
         taskRepository.addTask(task4);
 
 
@@ -170,7 +170,7 @@ public class Bootstrap implements Runnable {
 
         Date task5EndDate = dateFormat.parse("17/06/2024 - 13");
 
-        Task task5 = new Task("TaskSemNomeDeJeito","Vou-me despedir para ficar a dormir o dia todo",5,"Type A",greenSpace,TaskUrgency.LOW,TaskStatus.Pending,assignedTeam,new ArrayList<>(),3,task5startDate,task5EndDate,TaskPosition.Agenda);
+        Task task5 = new Task("TaskSemNomeDeJeito","Vou-me despedir para ficar a dormir o dia todo",5,"Type A",greenSpace,TaskUrgency.LOW,TaskStatus.Pending,assignedTeam,new ArrayList<>(),3,task5startDate,task5EndDate,TaskPosition.AGENDA);
         taskRepository.addTask(task5);
     }
 

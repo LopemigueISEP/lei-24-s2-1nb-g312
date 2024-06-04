@@ -17,7 +17,7 @@ import java.util.*;
  * a list of skills available to be assigned to collaborators. It also implements methods for cloning
  * and comparing employees.
  */
-public class Employee implements Cloneable,Comparable<Employee> {
+public class Employee implements Cloneable, Comparable<Employee> {
     private String name;
     private Date birthDate;
     private String email;
@@ -32,18 +32,18 @@ public class Employee implements Cloneable,Comparable<Employee> {
     //private List<Skill> skillsAdded;
 
 
-
     /**
      * Main constructor for creating an `Employee` object.
-     * @param name              The employee's name.
-     * @param birthDate         The employee's birthdate.
-     * @param email             The employee's email address.
-     * @param phoneNumber       The employee's phone number.
-     * @param admissionDate     The employee's admission date.
-     * @param taxpayerNumber    The employee's taxpayer number.
-     * @param address           The employee's address.
-     * @param docNumber         The employee's ID document number.
-     * @param job               The employee's job title.
+     *
+     * @param name           The employee's name.
+     * @param birthDate      The employee's birthdate.
+     * @param email          The employee's email address.
+     * @param phoneNumber    The employee's phone number.
+     * @param admissionDate  The employee's admission date.
+     * @param taxpayerNumber The employee's taxpayer number.
+     * @param address        The employee's address.
+     * @param docNumber      The employee's ID document number.
+     * @param job            The employee's job title.
      */
     public Employee(String name, Date birthDate, String email, int phoneNumber, Date admissionDate, String taxpayerNumber, String address, String docNumber, String job) {
 
@@ -60,7 +60,7 @@ public class Employee implements Cloneable,Comparable<Employee> {
 
     }
 
-    public Employee(String name, Date birthDate, String email, int phoneNumber, Date admissionDate, String taxpayerNumber, String address, String docNumber, String job,List<Skill> skills) {
+    public Employee(String name, Date birthDate, String email, int phoneNumber, Date admissionDate, String taxpayerNumber, String address, String docNumber, String job, List<Skill> skills) {
 
         this.name = name;
         this.birthDate = birthDate;
@@ -76,8 +76,8 @@ public class Employee implements Cloneable,Comparable<Employee> {
     }
 
     public Employee(String name, List<Skill> skills) {
-        this.name=name;
-        this.skills=skills;
+        this.name = name;
+        this.skills = skills;
     }
 
     public String getTaxpayerNumber() {
@@ -152,7 +152,9 @@ public class Employee implements Cloneable,Comparable<Employee> {
         return job;
     }
 
-    public List<Skill> getEmployeeSkillList(){return this.skills;}
+    public List<Skill> getEmployeeSkillList() {
+        return this.skills;
+    }
 
     /**
      * Creates a clone of the current employee object.
@@ -161,16 +163,16 @@ public class Employee implements Cloneable,Comparable<Employee> {
      */
     @Override
     public Employee clone() {
-        return new Employee(this.name, this.birthDate, this.email, this.phoneNumber, this.admissionDate, this.taxpayerNumber, this.address, this.docNumber, this.job,this.skills);
+        return new Employee(this.name, this.birthDate, this.email, this.phoneNumber, this.admissionDate, this.taxpayerNumber, this.address, this.docNumber, this.job, this.skills);
     }
 
 
     /**
      * Registers a new skill.
      *
-     * @param skillName The name of the skill.
+     * @param skillName        The name of the skill.
      * @param skillDescription The description of the skill.
-     * @param userValidation True if the user have permissions to register the skill, false otherwise.
+     * @param userValidation   True if the user have permissions to register the skill, false otherwise.
      * @return An Optional containing the registered skill, or empty if the registration fails.
      */
     public Optional<Skill> registerSkill(String skillName, String skillDescription, boolean userValidation) {
@@ -196,7 +198,8 @@ public class Employee implements Cloneable,Comparable<Employee> {
 
     /**
      * Registers a job with the provided name and description, subject to user validation.
-     * @param jobName The name of the job to register.
+     *
+     * @param jobName        The name of the job to register.
      * @param jobDescription The description of the job to register.
      * @param userValidation True if the user's validation was successful, false otherwise.
      * @return An Optional containing the registered job if successful, otherwise empty.
@@ -244,6 +247,7 @@ public class Employee implements Cloneable,Comparable<Employee> {
         Employee employee = (Employee) o;
         return email.equals(employee.email);
     }
+
     /**
      * Overrides the default {@code hashCode()} implementation to generate a hash code based on the email address.
      *
@@ -253,7 +257,6 @@ public class Employee implements Cloneable,Comparable<Employee> {
     public int hashCode() {
         return Objects.hash(email);
     }
-
 
 
     /**
@@ -269,6 +272,7 @@ public class Employee implements Cloneable,Comparable<Employee> {
     /**
      * This method retrieves the list of skills associated with the current Employee object.
      * It interacts with a repository class to access and retrieve the skills.
+     *
      * @return A list of Skill objects representing the skills of the current Employee.
      */
     public List<Skill> getSkills() {
@@ -277,6 +281,7 @@ public class Employee implements Cloneable,Comparable<Employee> {
 
     /**
      * Adds a list of skills to the employee's skill set.
+     *
      * @param skillsToAdd The list of `Skill` objects to be added to the employee's skills.
      */
     public void addSkills(List<Skill> skillsToAdd) {
@@ -285,9 +290,10 @@ public class Employee implements Cloneable,Comparable<Employee> {
 
 
     /**
-     Gets skills available to add to a collaborator, considering existing skills.
-     @param skillRepository The repository to access all skills.
-     @return List of skills not yet assigned to the collaborator.
+     * Gets skills available to add to a collaborator, considering existing skills.
+     *
+     * @param skillRepository The repository to access all skills.
+     * @return List of skills not yet assigned to the collaborator.
      */
     public List<Skill> getAvailableSkillsToAddToCollaborator(SkillRepository skillRepository) {
         List<Skill> allSkills = skillRepository.getSkills().get();
@@ -315,6 +321,7 @@ public class Employee implements Cloneable,Comparable<Employee> {
     /**
      * This method overrides the default `toString` method of the Object class.
      * It returns a String representation of the Employee object, likely containing the employee's name.
+     *
      * @return A String representation of the Employee object.
      */
     @Override
@@ -333,16 +340,17 @@ public class Employee implements Cloneable,Comparable<Employee> {
      */
     public boolean addEmployeeIfSuitable(List<Skill> skillSetNeeded, List<Employee> teamEmployees) {
         for (Skill employeeSkill :
-                        this.getSkills()) {
-                    for (Skill neededSkill :
-                            skillSetNeeded) {
-                        if (neededSkill.equals(employeeSkill) && !(teamEmployees.contains(this))){
-                            return true;
-                        }
-                    }
+                this.getSkills()) {
+            for (Skill neededSkill :
+                    skillSetNeeded) {
+                if (neededSkill.equals(employeeSkill) && !(teamEmployees.contains(this))) {
+                    return true;
                 }
+            }
+        }
         return false;
     }
+
     /**
      * Validates whether the employee can be added to the team by checking if they are already part of it.
      *
@@ -352,7 +360,7 @@ public class Employee implements Cloneable,Comparable<Employee> {
     public boolean validateAddToTeam(List<Employee> teamEmployees) {
         for (Employee employee :
                 teamEmployees) {
-            if (teamEmployees.contains(this)){
+            if (teamEmployees.contains(this)) {
                 return false;
             }
         }
@@ -360,15 +368,16 @@ public class Employee implements Cloneable,Comparable<Employee> {
         return true;
 
     }
+
     /**
      * Registers a new green space if the user has permission to do so.
      *
-     * @param name             The name of the green space.
-     * @param address          The address of the green space.
-     * @param area             The area of the green space.
-     * @param typology         The typology of the green space.
+     * @param name              The name of the green space.
+     * @param address           The address of the green space.
+     * @param area              The area of the green space.
+     * @param typology          The typology of the green space.
      * @param greenSpaceManager The manager of the green space.
-     * @param userValidation   A boolean indicating whether the user has permission to register green spaces.
+     * @param userValidation    A boolean indicating whether the user has permission to register green spaces.
      * @return An Optional containing the registered GreenSpace object if registration is successful and user has permission, otherwise an empty Optional.
      */
     public static Optional<GreenSpace> registerGreenSpace(String name, String address, double area, String typology, String greenSpaceManager, boolean userValidation) {
@@ -388,21 +397,12 @@ public class Employee implements Cloneable,Comparable<Employee> {
     }
 
     // method for the employee to register a task for the todolist
-    public static Optional<Task> registerTask(String title, String description, int taskExpectedDuration, String type, String greenSpaceName, TaskUrgency urgency, int taskID, TaskPosition taskPosition, boolean userValidation) {
+    public static Optional<Task> registerTask(GreenSpace GreenSpace, String taskTitle, String taskDescr, TaskUrgency taskUrgency, int expectedDuration, TaskPosition todolist, boolean userValidation) {
         try {
             if (userValidation) {
-                // Obter o GreenSpace correspondente ao nome fornecido
-                GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
-                Optional<GreenSpace> greenSpaceOptional = greenSpaceRepository.getGreenSpaceByName(greenSpaceName);
-                if (greenSpaceOptional.isPresent()) {
-                    GreenSpace greenSpace = greenSpaceOptional.get();
-                    Task task = new Task(title, description, taskExpectedDuration, type, greenSpace, urgency, taskID, taskPosition);
-                    Optional<Task> addedTask = Repositories.getInstance().getTaskRepository().addTask(task);
-                    return addedTask;
-                } else {
-                    System.out.println("GreenSpace with name " + greenSpaceName + " not found.");
-                    return Optional.empty();
-                }
+                Task newtask = new Task(GreenSpace,taskTitle,taskDescr,taskUrgency,expectedDuration,todolist);
+                Optional<Task> addedTask = Repositories.getInstance().getTaskRepository().addTask(newtask);
+                return addedTask;
             } else {
                 System.out.println("This user doesn't have permissions to register tasks");
                 return Optional.empty();
@@ -420,7 +420,7 @@ public class Employee implements Cloneable,Comparable<Employee> {
         return Repositories.getInstance().getTaskRepository().updateTask(task);
     }
 
-    public static Optional <Task> posponedTask(Task task, Date newStartDate){
+    public static Optional<Task> posponedTask(Task task, Date newStartDate) {
         task.setTaskStartDate(newStartDate);
         task.setTaskStatus(TaskStatus.Postponed);
         task.assignTeam(null);
@@ -428,24 +428,21 @@ public class Employee implements Cloneable,Comparable<Employee> {
     }
 
 
-
-
     /**
      * Compares this employee with another based on their skills.
      *
      * @param o The Employee object to compare with.
      * @return A negative integer if this employee has fewer skills than the specified employee,
-     *         zero if they have the same number of skills, or a positive integer if this employee
-     *         has more skills than the specified employee.
+     * zero if they have the same number of skills, or a positive integer if this employee
+     * has more skills than the specified employee.
      */
     @Override
     public int compareTo(Employee o) {
-        if (this.skills.size()>o.getSkills().size()){
+        if (this.skills.size() > o.getSkills().size()) {
             return 1;
-        } else if (this.skills.size()<o.getSkills().size()) {
+        } else if (this.skills.size() < o.getSkills().size()) {
             return -1;
-        }
-        else {
+        } else {
             return 0;
         }
     }
