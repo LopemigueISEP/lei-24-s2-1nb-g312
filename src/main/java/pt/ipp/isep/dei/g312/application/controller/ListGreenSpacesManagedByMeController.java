@@ -6,12 +6,10 @@ import pt.ipp.isep.dei.g312.domain.comparators.GreenSpaceComparatorNameAlphabeti
 import pt.ipp.isep.dei.g312.repository.AuthenticationRepository;
 import pt.ipp.isep.dei.g312.repository.GreenSpaceRepository;
 import pt.ipp.isep.dei.g312.repository.Repositories;
+import pt.ipp.isep.dei.g312.ui.console.utils.LoadConfigProperties;
 import pt.isep.lei.esoft.auth.domain.model.Email;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class ListGreenSpacesManagedByMeController {
 
@@ -19,7 +17,8 @@ public class ListGreenSpacesManagedByMeController {
     private GreenSpaceRepository greenSpaceRepository;
 
     private String loggedInUser;
-    private String greenSpaceComparadorSelecionado = "DESC_AREA";
+    private final String greenSpaceComparadorSelecionado = LoadConfigProperties.getProperty("GreenSpaceSortingAlgoritm");
+
 
     public ListGreenSpacesManagedByMeController(){
         this.authenticationRepository = getAuthenticationRepository();
@@ -67,19 +66,25 @@ public class ListGreenSpacesManagedByMeController {
         List<GreenSpace> greenSpaceManagedByMeList= new ArrayList<>();
         greenSpaceManagedByMeList = greenSpaceRepository.getGreenSpaceManagedByMe(loggedInUser);
 
-        Comparator<GreenSpace> comparator = null;
+        Comparator<GreenSpace> comparator;
 
-        switch (greenSpaceComparadorSelecionado){
-            case "DESC_AREA":
-                comparator = new GreenSpaceComparatorDescendingArea();
-                break;
+        try {
+            switch (greenSpaceComparadorSelecionado){
+                case "DESC_AREA":
+                    comparator = new GreenSpaceComparatorDescendingArea();
+                    break;
 
-            case "NAME_ALPHA":
-                comparator = new GreenSpaceComparatorNameAlphabetical();
+                case "NAME_ALPHA":
+                    comparator = new GreenSpaceComparatorNameAlphabetical();
+                    break;
 
-            default:
-                comparator = null;
+                default:
+                    comparator = null;
+            }
+        }catch (Exception e){
+            throw new RuntimeException("error in switch case in getGreenSpacesManagedByMe",e);
         }
+
 
         if(comparator!=null) {
             Collections.sort(greenSpaceManagedByMeList, comparator);
