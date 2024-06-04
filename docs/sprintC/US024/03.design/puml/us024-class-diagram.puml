@@ -1,0 +1,114 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class GSMUI{
+}
+
+class PostponeTaskInTheAgendaUI{
++run()
++PostponeTaskInTheAgendaController()
+-requestTask()
+-requestNewDate()
+-submitData(task, newDate)
+}
+
+class PostponeTaskInTheAgendaController {
+- taskRepository
++PostponeTaskInTheAgendaController()
+-getTaskRepository()
++listPlannedTasks()
++getTeamTasks()
++postponeTask(task, newDate)
+}
+
+class Employee {
++postponeTask(team, newStartDate)
+}
+
+class Task{
+-title : String
+-description : String
+-startDate : Date
+-endDate : Date
+-taskStatus : EnumName
+-type : String
+-greenSpace : GreenSpace
+-taskUrgency : EnumName
+-assignedTeam : Team
+-assignedVehicles : ArrayList<Vehicle>
+-taskID : int
+-taskPosition : EnumName
+
++setTaskStartDate()
++setTaskStatus()
++assignTeam()
++getTaskPosition()
++setEndDate()
++taskOverlap()
+-calculateEndDate()
+}
+
+class TaskRepository {
++getAgenda()
++updateTask()
++teamAvailability()
++getAllTeamTasks()
++getPlannedTasks()
++getPendingTasks()
++existsTasks()
+}
+
+class TeamRepository{
+-validateTeam()
++getAllTeams()
+}
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getTaskRepository()
+    + getEmployeeRepository()
+    + getVehicleRepository()
+
+}
+
+class Tasks {
+-ArrayList<Task> tasks
+}
+
+
+
+GSMUI "1" ..> "1" PostponeTaskInTheAgendaUI
+
+Repositories --> Repositories : instance
+
+
+PostponeTaskInTheAgendaUI ..> PostponeTaskInTheAgendaController
+
+PostponeTaskInTheAgendaController ..> Repositories
+
+
+Repositories "1"--> "1" TaskRepository
+Repositories "1"--> "1" TeamRepository
+
+TaskRepository "1"--> "*" Employee
+TeamRepository "1"--> "*" Employee
+
+Employee "1" --> "*"Task
+
+
+PostponeTaskInTheAgendaController ..> Employee
+
+TaskRepository "1" --> "1" Tasks : list tasks
+Tasks "1" --> "*" Task
+
+
+@enduml
