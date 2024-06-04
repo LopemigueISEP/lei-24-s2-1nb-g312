@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.g312.repository.Repositories;
 import pt.ipp.isep.dei.g312.repository.SkillRepository;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -409,6 +410,22 @@ public class Employee implements Cloneable, Comparable<Employee> {
             }
         } catch (Exception e) {
             System.out.println("Error occurred while registering a task: " + e.getMessage());
+            return Optional.empty();
+        }
+    }
+
+    public static Optional<Task> addTaskAgenda(GreenSpace selectedGreenSpace, Task selectedTask, LocalDate selectedDate, int startTime, TaskPosition todolist, boolean userValidation) {
+        try {
+            if (userValidation) {
+                Task newTaskAgenda = new Task(selectedGreenSpace,selectedTask,selectedDate,startTime,todolist);
+                Optional<Task> addedTask = Repositories.getInstance().getTaskRepository().addTask(newTaskAgenda);
+                return addedTask;
+            } else {
+                System.out.println("This user doesn't have permissions to add tasks to Agenda");
+                return Optional.empty();
+            }
+        } catch (Exception e) {
+            System.out.println("Error occurred while adding a task to Agenda: " + e.getMessage());
             return Optional.empty();
         }
     }
