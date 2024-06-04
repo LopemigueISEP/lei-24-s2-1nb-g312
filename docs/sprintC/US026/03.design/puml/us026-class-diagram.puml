@@ -13,22 +13,34 @@ class AssignVehicleToAgendaEntryUI{
 }
 
 class AssignVehicleToAgendaEntryController{
++getEmployeeRepository()
++getTaskRepository()
++getVehicleRepository()
++getAvailableTasks()
++getAvailableVehicles(Task taskSelected)
++getTaskAssignedVehicles(Task task)
++assignVehicleToTask(Vehicle vehicle, Task task)
 }
 
 class Employee {
-+assignVehicleToTask()
++assignVehicleToTask(Vehicle availableVehicle, Task selectedTask)
 }
 
 class Task{
 }
 
 class TaskRepository {
++getAllAgendaTasksExceptDoneCanceled()
++getVehicleAvaiability(Task taskSelecionada, List<Vehicle> vehicles)
 }
 
 class EmployeeRepository {
++getEmployee(): employee
 }
 
 class VehicleRepository{
++getVehicles()
+
 }
 
 class Repositories {

@@ -132,7 +132,7 @@ public Vehicle(String registrationPlate, String brand, String model
         this.registerDate = registerDate;
         this.acquisitionDate = acquisitionDate;
         this.checkUpKmFrequency = checkUpKmFrequency;
-        this.checkUps.add(new CheckUp(currentKm, new Date())); // add first checkup when car is bought
+        this.checkUps.add(new CheckUp(currentKm, new Date())); 
     }
 ```
 ### Class Employee
