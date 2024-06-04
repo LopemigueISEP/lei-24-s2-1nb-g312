@@ -6,13 +6,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.g312.application.controller.AddEntryAgendaController;
+import pt.ipp.isep.dei.g312.application.controller.AddEntryToDoListController;
 
 import java.io.IOException;
 /**
  * This class represents the main entry point for the Add Entry To Agenda UI application.
  * It extends the JavaFX Application class and initializes the UI by loading the FXML file and setting up the controller.
  */
+
+
 public class AddEntryToAgendaUI extends Application {
+
+    private AddEntryAgendaController addEntryAgendaController;
+
+    public AddEntryToAgendaUI(){
+        addEntryAgendaController= new AddEntryAgendaController();
+    }
     /**
      * Main method to launch the application.
      *
@@ -37,8 +46,6 @@ public class AddEntryToAgendaUI extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
-            AddEntryAgendaController addEntryAgendaController = fxmlLoader.getController();
-            addEntryAgendaController.initialize(true);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

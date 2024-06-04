@@ -23,8 +23,6 @@ public class ShowListOfAgendaUI extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
-            AddEntryAgendaController addEntryAgendaController = fxmlLoader.getController();
-            addEntryAgendaController.initialize(false);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
