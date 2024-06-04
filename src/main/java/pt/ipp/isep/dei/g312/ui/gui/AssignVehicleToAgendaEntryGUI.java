@@ -56,7 +56,7 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
     public void start(Stage primaryStage) throws Exception {
         Platform.setImplicitExit(false);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(AddEntryToDoListUI.class.getResource("AssignVehicleToAgendaEntryGUI.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(AssignVehicleToAgendaEntryGUI.class.getResource("AssignVehicleToAgendaEntryGUI.fxml"));
         Scene scene;
         try {
             scene = new Scene(fxmlLoader.load());
