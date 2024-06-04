@@ -9,122 +9,109 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
-class ApplicationSession
-{
-    + static getInstance()
-    + getCurrentSession()
+class GSMUI{
 }
 
-class UserSession
-{
-    + getUserEmail()
+class AssignTeamToTaskInTheAgendaUI{
++run()
++AssignTeamController()
+-requestTask()
+-requestTeam()
+-submitData(team, task)
+}
+
+class AssignTeamController{
++assignTeamController()
++assignTeamToTask()
++listAvailableTeams()
++listUnfinishedTasks()
++getAgenda()
++loadValidEmailServices()
++validEmail()
+-getTaskRepository()
+-getTeamRepository()
 }
 
 class Employee {
-    - name
-    - email
-    - position
-    - phone
++assignTeamToTask(team, task)
 }
 
-class Task {
-    - String reference
-    - String description
-    - String informalDescription
-    - String technicalDescription
-    - Integer duration
-    - Double cost
+class Task{
+-title : String
+-description : String
+-startDate : Date
+-endDate : Date
+-taskStatus : EnumName
+-type : String
+-greenSpace : GreenSpace
+-taskUrgency : EnumName
+-assignedTeam : Team
+-assignedVehicles : ArrayList<Vehicle>
+-taskID : int
+-taskPosition : EnumName
 
-    + Task(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, createdBy, taskCategory)
++assignTeam()
++setTaskStatus()
++getTaskPosition()
++setEndDate()
++taskOverlap()
+-calculateEndDate()
+
 }
 
-class TaskCategory {
-    - String description
-
-    + TaskCategory(description)
+class TaskRepository {
++getAgenda()
++updateTask()
++teamAvailability()
++getAllTeamTasks()
++getPlannedTasks()
++getPendingTasks()
++existsTasks()
 }
 
-class Organization {
-    - String name
-    - String vatNumber
-    - String website
-    - String phone
-    - String email
-
-    - addTask(task)
-    - validateTask(task)
-    + anyEmployeeHasEmail(email)
-    + Organization(name, vatNumber, webSite, phone, email, postalAddress, manager)
-    + createTask(reference, description, informalDesccription,\ntechnicalDescription, duration, cost, taskCategoryDescription)
-    - getEmployeeByEmail(email)
-
-'  +saveTask(task)
-}
-
-class TaskCategoryRepository {
-    + getTaskCategoryByDescription(description)
-}
-
-class OrganizationRepository {
-    + getOrganizationByEmployeeEmail(email)
+class TeamRepository{
+-validateTeam()
++getAllTeams()
 }
 
 class Repositories {
     - Repositories()
     + getInstance() : Repositories
-    + getTaskCategoryRepository()
+    + getTaskRepository()
+    + getEmployeeRepository()
+    + getVehicleRepository()
 
 }
 
-class CreateTaskController {
-    + CreateTaskController(organizationRepository, taskCategoryRepository)
-    + getTaskCategories()
-    + createTask(userEmail, reference, description,\ninformalDescription, technicalDescription,\nduration, cost, categoryDescription)
-    - getTaskCategoryByDescription(taskCategoryDescription)
-    - getEmployeeFromSession()
+class Tasks {
+-ArrayList<Task> tasks
 }
 
-note right of CreateTaskController
-    - userEmail is obtained
-    from the user session
-    - categoryDescription
-    is retrieved from selected data
-end note
 
-note bottom of TaskCategoryRepository
-    - used for displaying
-    the category list
-end note
 
-class CreateTaskUI {
-}
+GSMUI "1" ..> "1" AssignTeamToTaskInTheAgendaUI
 
-Repositories -> Repositories : instance
-ApplicationSession -> ApplicationSession : instance
+Repositories --> Repositories : instance
 
-CreateTaskUI .> CreateTaskController
 
-CreateTaskController .> Repositories : repositories
+AssignTeamToTaskInTheAgendaUI ..> AssignTeamController
 
-Repositories -> "1" TaskCategoryRepository
+AssignTeamController ..> Repositories
 
-CreateTaskController ..> TaskCategory
-CreateTaskController ..> OrganizationRepository : organizationRepository
-CreateTaskController ..> TaskCategoryRepository : TaskCategoryRepository
 
-Repositories --> "1" OrganizationRepository
+Repositories "1"--> "1" TaskRepository
+Repositories "1"--> "1" TeamRepository
 
-OrganizationRepository --> "*" Organization
-ApplicationSession --> "1" UserSession : userSession
+TaskRepository "1"--> "*" Employee
+TeamRepository "1"--> "*" Employee
 
-CreateTaskController ..> "1" Organization : organization
-CreateTaskController ..> ApplicationSession
-CreateTaskController ..> UserSession
-Task "*" --> "1" TaskCategory : taskCategory
-TaskCategoryRepository "1" --> "*" TaskCategory : taskCategory
-Organization "1" --> "*" Task : tasks
-Task --> Employee : createdBy
+Employee "1" --> "*"Task
 
-Organization --> "*" Employee : employs
+
+AssignTeamController ..> Employee
+
+TaskRepository "1" --> "1" Tasks : list tasks
+Tasks "1" --> "*" Task
+
 
 @enduml
