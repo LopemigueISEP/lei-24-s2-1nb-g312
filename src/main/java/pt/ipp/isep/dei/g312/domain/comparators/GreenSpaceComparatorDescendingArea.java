@@ -8,6 +8,6 @@ public class GreenSpaceComparatorDescendingArea implements Comparator<GreenSpace
     @Override
     public int compare(GreenSpace g1, GreenSpace g2) {
 
-        return Double.compare(g1.getArea(),g2.getArea());
+        return Double.compare(g2.getArea(),g1.getArea());
     }
 }
