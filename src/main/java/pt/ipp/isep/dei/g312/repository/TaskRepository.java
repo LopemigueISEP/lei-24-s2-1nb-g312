@@ -94,6 +94,12 @@ public class TaskRepository {
         return teamTasks;
     }
 
+
+    /**
+     * Retrieves a list of all agenda tasks except those that are marked as Done or Canceled.
+     *
+     * @return A list of agenda tasks that are not marked as Done or Canceled.
+     */
     public List<Task> getAllAgendaTasksExceptDoneCanceled(){
         List<Task> tasksExcept = new ArrayList<>();
         for(Task task : getAgenda()){
@@ -163,6 +169,14 @@ public class TaskRepository {
         return newTask;
     }
 
+
+    /**
+     * Retrieves the list of available vehicles for a given task.
+     *
+     * @param taskSelecionada The task for which vehicle availability is checked.
+     * @param vehicles The list of vehicles to be considered for availability.
+     * @return A list of vehicles that are available for the given task.
+     */
     public List<Vehicle> getVehicleAvaiability(Task taskSelecionada, List<Vehicle> vehicles) {
         Boolean checkAvailable;
         List<Vehicle> listaVeiculosDisponiveis = new ArrayList<>();
