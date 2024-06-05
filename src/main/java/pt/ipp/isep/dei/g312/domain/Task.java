@@ -41,6 +41,7 @@ public class Task implements Cloneable {
             this.taskExpectedDuration = taskExpectedDuration;
             this.urgency = urgency;
             this.taskPosition = taskPosition;
+            this.assignedVehicles = new ArrayList<>();
         }
 
     }
