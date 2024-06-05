@@ -17,10 +17,10 @@ import pt.ipp.isep.dei.g312.domain.GreenSpace;
 
 import java.io.IOException;
 
-import java.net.URL;
+
 import java.util.Objects;
 import java.util.Optional;
-import java.util.ResourceBundle;
+
 
 
 import static pt.ipp.isep.dei.g312.application.controller.RegisterGreenSpaceController.existsWithName;

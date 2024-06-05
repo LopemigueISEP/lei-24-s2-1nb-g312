@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.g312.repository.SkillRepository;
 
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -423,10 +424,10 @@ public class Employee implements Cloneable, Comparable<Employee> {
      * @param userValidation A flag indicating whether to perform user validation.
      * @return An Optional containing the added Task object if successful, or Optional.empty() otherwise.
      */
-    public static Optional<Task> addTaskAgenda(GreenSpace selectedGreenSpace, Task selectedTask, LocalDate selectedDate, int startTime, TaskPosition agenda, boolean userValidation) {
+    public static Optional<Task> addTaskAgenda(GreenSpace selectedGreenSpace, Task selectedTask, LocalDate selectedDate, LocalTime startTime, TaskPosition agenda, boolean userValidation) {
         try {
             if (userValidation) {
-                Task newTaskAgenda = new Task(selectedGreenSpace,selectedTask,selectedDate,startTime,agenda);
+                Task newTaskAgenda = new Task(selectedGreenSpace,selectedTask,selectedDate, startTime,agenda);
                 Optional<Task> addedTask = Repositories.getInstance().getTaskRepository().addTask(newTaskAgenda);
                 return addedTask;
             } else {

@@ -1,4 +1,4 @@
-# US20 - Register a green space (garden, medium-sized park or large-sized park) and its respective area
+# US20 - As a Green Space Manager (GSM), I want to register a greenspace (garden, medium-sized park or large-sized park) and its respectivearea.
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

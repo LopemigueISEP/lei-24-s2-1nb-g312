@@ -1,4 +1,4 @@
-# US022 - Add a new entry in the Agenda
+# US22 - As a GSM, I want to add a new entry in the Agenda.
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

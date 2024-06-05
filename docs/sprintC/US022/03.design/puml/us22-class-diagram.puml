@@ -19,7 +19,7 @@ class Employee{
     -docNumber : String
     -jobTitle : String
 
-+ addTaskAgenda(selectedGreenSpace : GreenSpace, selectedTask : Task, selectedDate : LocalDate, startTime : int, agenda : TaskPosition, userValidation : boolean) : Optional<Task>
++ addTaskAgenda(selectedGreenSpace : GreenSpace, selectedTask : Task, selectedDate : LocalDate, startTime : LocalTime, agenda : TaskPosition, userValidation : boolean) : Optional<Task>
 
 
 }
@@ -52,7 +52,7 @@ class AddEntryAgendaController{
 + getGreenSpaceList(userEmail : String) : List<GreenSpace>
 + currentUserLogInValidation() : boolean
 + filterGreenSpacesByManager (greenSpaces : List<GreenSpace>, managerName String)
-+ addTaskToAgenda (selectedGreenSpace : GreenSpace,  selectedTask : Task, startDate LocalDate, startTime : int) : Optional<Task>
++ addTaskToAgenda (selectedGreenSpace : GreenSpace,  selectedTask : Task, startDate LocalDate, startTime : LocalTime) : Optional<Task>
 
 
 }

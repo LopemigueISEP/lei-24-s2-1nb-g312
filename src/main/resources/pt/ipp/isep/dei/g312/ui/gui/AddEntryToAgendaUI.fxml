@@ -36,14 +36,14 @@
                 <ComboBox fx:id="cmbGreenSpace" prefHeight="25.0" prefWidth="921.0" promptText="Choose GreenSpace" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                 <ComboBox fx:id="cmbTask" prefHeight="25.0" prefWidth="921.0" promptText="Choose Task" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                 <HBox GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP">
-                    <DatePicker fx:id="datePicker" prefHeight="25.0" prefWidth="200.0" promptText="Choose Date" />
+                    <DatePicker fx:id="datePicker" editable="false" prefHeight="25.0" prefWidth="200.0" promptText="Choose Date" />
                     <TextField fx:id="textStartTime" promptText="Start Time (HH:MM)" />
                 </HBox>
             </children>
         </GridPane>
-        <Label fx:id="lblAllFields" prefHeight="17.0" prefWidth="248.0" text="Please fill out all required information." textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="TOP">
+        <Label fx:id="lblAllFields" prefHeight="17.0" prefWidth="748.0" text="Please fill out all required information." textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="TOP">
             <font>
-                <Font name="Tahoma Bold" size="12.0" />
+                <Font name="Tahoma Bold" size="15.0" />
             </font>
         </Label>
     </children>
