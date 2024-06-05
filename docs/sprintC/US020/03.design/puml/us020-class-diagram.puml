@@ -14,15 +14,14 @@ class RegisterGreenSpaceUI {
 }
 
 class RegisterGreenSpaceController {
-    + initializeRegisterGreenSpaceUI () : void
-    + handleRegisterButtonAction() : void
-    + parseAreaField(areaText : String) : double
-    + validateInput() : void
+    + initialize: void
     + getEmployeeRepository() : employeeRepository
     + getAuthRepository() : authenticationRepository
+    + getGreenSpaceByName : List<GreenSpace>
+    + existsWithAddress(address : String) : boolean
+    + existsWithName(name : String) : boolean
     + currentUserLogInValidation() : boolean
     + matchEmployeeByRole() : Employee
-    + setGreenSpaceManager() : void
     + registerGreenSpace(name: String, address: String, area: double, typology : String, greenSpaceManager: String) : Optional<GreenSpace>
 
 }

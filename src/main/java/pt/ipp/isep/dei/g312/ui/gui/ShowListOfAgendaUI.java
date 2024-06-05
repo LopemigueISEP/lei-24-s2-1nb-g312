@@ -40,7 +40,7 @@ public class ShowListOfAgendaUI extends Application implements Initializable {
     public void start(Stage primaryStage) throws Exception {
         Platform.setImplicitExit(false);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(ShowListOfAgendaUI.class.getResource("ShowListOfAgendaUI.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ShowListOfAgendaUI.class.getResource("ShowListOfAgenda.fxml"));
         Scene scene;
         try {
             scene = new Scene(fxmlLoader.load());
@@ -59,7 +59,7 @@ public class ShowListOfAgendaUI extends Application implements Initializable {
 
         column_greenSpaceName.setCellValueFactory(new PropertyValueFactory<>("greenSpace"));
         column_TaskName.setCellValueFactory(new PropertyValueFactory<>("title"));
-        column_StartDate.setCellValueFactory(new PropertyValueFactory<>("startDate")); // No change
+        column_StartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         column_Status.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         loadTableViewValues();
