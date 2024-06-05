@@ -96,4 +96,10 @@ class TaskTest {
         assertEquals(task.getGreenSpace(), clonedTask.getGreenSpace());
     }
 
+    @Test
+    public void testCancel() {
+        task.cancel();
+        assertEquals(TaskStatus.CANCELED, task.getStatus());
+    }
+
 }
