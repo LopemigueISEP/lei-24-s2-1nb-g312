@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.g312.repository;
 
 import org.junit.jupiter.api.Test;
 
+import pt.ipp.isep.dei.g312.application.session.UserSession;
 import pt.ipp.isep.dei.g312.domain.GreenSpace;
 
 
@@ -78,4 +79,16 @@ class GreenSpaceRepositoryTest {
         assertFalse(repository.existsWithAddress("Minho"));
     }
 
+    @Test
+    void getGreenSpaceManagedByMe() {
+        GreenSpaceRepository repository = new GreenSpaceRepository();
+        GreenSpace greenSpace2 = new GreenSpace("Passadiços do Paiva", "Arouca", 396.5, "Medium-Sized Park", "Marcelo");
+        GreenSpace greenSpace1 = new GreenSpace("Peneda/Gerês", "Minho", 965.0, "Large-Sized Park", "Luís Montenegro");
+        repository.addGreenSpace(greenSpace1);
+        repository.addGreenSpace(greenSpace2);
+
+        assertEquals(repository.getGreenSpaceManagedByMe("Marcelo").getFirst(),greenSpace2);
+        assertNotEquals(repository.getGreenSpaceManagedByMe("Luís Montenegro").getFirst(),greenSpace2);
+
+    }
 }

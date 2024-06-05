@@ -20,6 +20,17 @@ public class GreenSpaceComparatorDescendingArea implements Comparator<GreenSpace
     @Override
     public int compare(GreenSpace g1, GreenSpace g2) {
 
-        return Double.compare(g2.getArea(),g1.getArea());
+
+        int resultValue = Double.compare(g2.getArea(),g1.getArea());
+
+        if(resultValue == 0){
+            return  0;
+        } else if (resultValue > 0) {
+            return  1;
+        }else{
+            return  -1;
+        }
+
+
     }
 }

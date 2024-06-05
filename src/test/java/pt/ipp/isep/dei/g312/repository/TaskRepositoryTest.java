@@ -87,7 +87,8 @@ class TaskRepositoryTest {
         // in setup 5 tasks 1 is done and 1 is canceled
         assertEquals(3, result.size());
 
-        Task taskTeste6 = new Task(dateFormat.parse("16/06/2024 - 14"),TaskStatus.DONE);
+        Task taskTeste6 = new Task("TASK_TESTE","DESCRICAO",8,"",greenSpace,TaskUrgency.HIGH,TaskStatus.DONE,team1,new ArrayList<Vehicle>(),1012,dateFormat.parse("16/06/2024 - 14"),dateFormat.parse("19/06/2024 - 14"),TaskPosition.AGENDA);
+
         taskRepository.addTask(taskTeste6);
         List<Task> result1 = taskRepository.getAllAgendaTasksExceptDoneCanceled();
 
