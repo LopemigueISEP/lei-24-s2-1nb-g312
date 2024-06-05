@@ -24,8 +24,8 @@
 | Step 8  		     | 							                                                 |                          |                                                                                                               |              
 | Step 9 	       | 	... creating Agenda Object?                            | Task                     | Creator                                                                                                       |
 | 		             | 	... validating all data (local validation)?            | Task                     | IE: object created has its own data                                                                           |
-| 		             | 	... validating all data (global validation)?           | Task                     | 	IE: knows all its Agenda instances                                                                           |
-| 		             | 	... saving inputted data?                              | TaskRepository           | IE: object created has its own data                                                                           |
+| 		             | 	... validating all data (global validation)?           | Employee                     | 	IE: knows all its Agenda instances                                                                           |
+| 		             | 	... saving inputted data?                              | Employee           | IE: object created has its own data                                                                           |
 | Step 10  		    | 	... informing operation success?                       | AddEntryAgendaUI         | IE: is responsible for user interactions.                                                                     | 
 
 ### Systematization ##

@@ -25,11 +25,19 @@ class Employee{
 }
 
 class Task{
--greenSpace: GreenSpace
--selectedTask : Task
--selectedDate : LocalDate
--agenda : TaskPosition
-
+    -title: String
+    -description: String
+    -date: Date
+    -taskStartPeriod: TaskPeriod
+    taskExpectedDuration: int
+    type: String
+    greenSpace: GreenSpace
+    urgency: TaskUrgency
+    status: TaskStatus
+    assignedTeam: Team
+    assignedVehicles: List<Vehicle>
+    startDate: Date
+    taskPosition: TaskPosition
 }
 
 
