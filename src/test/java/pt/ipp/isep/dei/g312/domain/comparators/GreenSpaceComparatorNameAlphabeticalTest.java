@@ -13,7 +13,7 @@ class GreenSpaceComparatorNameAlphabeticalTest {
         GreenSpace g1 = new GreenSpace("AgreenSpace1","asd",500,"typology","admin");
         GreenSpace g2 = new GreenSpace("BgreenSpace2","asd",1000,"typology","admin");
         GreenSpace g3 = new GreenSpace("CgreenSpace3","asd",1500,"typology","admin");
-        GreenSpace g4 = new GreenSpace("DgreenSpace4","asd",1500,"typology","admin");
+        GreenSpace g4 = new GreenSpace("EgreenSpace5","asd",1500,"typology","admin");
         GreenSpace g5 = new GreenSpace("EgreenSpace5","asd",2000,"typology","admin");
         GreenSpaceComparatorNameAlphabetical comparator = new GreenSpaceComparatorNameAlphabetical();
 
@@ -30,6 +30,9 @@ class GreenSpaceComparatorNameAlphabeticalTest {
         //E não pode vir antes do C
         int result3 = comparator.compare(g5,g3);
         assertNotEquals(-1,result3);
+
+        int result4 = comparator.compare(g5,g4);
+        assertEquals(0,result4);
 
     }
 
