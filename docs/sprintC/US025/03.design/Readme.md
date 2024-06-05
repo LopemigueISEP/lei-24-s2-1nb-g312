@@ -3,7 +3,7 @@
 ## 3. Design - User Story Realization 
 
 ### 3.1. Rationale
-
+TODO:
 _**Note that SSD - Alternative One is adopted.**_
 
 | Interaction ID | Question: Which class is responsible for... | Answer               | Justification (with patterns)                                                                                 |

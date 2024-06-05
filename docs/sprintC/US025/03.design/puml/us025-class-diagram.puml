@@ -33,23 +33,11 @@ class Task{
 }
 
 
-class AddEntryAgendaController{
-+ getGreenSpaceRepository() : void
-+ getTaskRepository() : void
-+ getAuthRepository() : void
-+ getUserEmail()
-+ initialize() : void
-+ getGreenSpaces() : List<GreenSpace>
-+ getTasksByGreenSpace (greenSpace Greenspace): List<Task>
-+ getGreenSpaceList(userEmail : String) : List<GreenSpace>
-+ currentUserLogInValidation() : boolean
-+ filterGreenSpacesByManager (greenSpaces : List<GreenSpace>, managerName String)
-+ addTaskToAgenda (selectedGreenSpace : GreenSpace,  selectedTask : Task, startDate LocalDate, startTime : int) : Optional<Task>
-
+class CancelEntryAgendaController{
 
 }
 
-class AddEntryAgendaUI{
+class CancelEntryAgendaUI{
 
 }
 
@@ -68,28 +56,23 @@ class EmployeeRepository{
 
 }
 class TasksRepository{
- +getToDoListEntries(): List<ToDoEntries>
-}
-class GreenSpacesRepository{
-+getGreenSpacesList(): GreenSpace
+ +getAgemdaEntries(): List<ToDoEntries>
 }
 
-AddEntryAgendaUI .>AddEntryAgendaController
+CancelEntryAgendaUI .>CancelEntryAgendaController
 
 AddEntryAgendaController .> "1" Repositories
 
 Repositories "1" --> "1" Repositories : getInstance()
 Repositories "1" --> "1" EmployeeRepository
 Repositories "1" --> "1" TasksRepository
-Repositories "1" --> "1" GreenSpacesRepository
 
 AddEntryAgendaController ..>Employee
 
 EmployeeRepository "1" --> "1" Employee
 TasksRepository "1" --> "1" Employee
-GreenSpacesRepository "1" --> "1" Employee
 
-Employee --> Task: registers
+Employee --> Task: update'Perguntar ao fof?? Devo fazer add ao repo?
 
 
 @enduml

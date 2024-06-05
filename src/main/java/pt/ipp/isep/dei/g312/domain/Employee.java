@@ -412,11 +412,21 @@ public class Employee implements Cloneable, Comparable<Employee> {
             return Optional.empty();
         }
     }
-
-    public static Optional<Task> addTaskAgenda(GreenSpace selectedGreenSpace, Task selectedTask, LocalDate selectedDate, int startTime, TaskPosition todolist, boolean userValidation) {
+    /**
+     * This static method attempts to add a task to the agenda.
+     *
+     * @param selectedGreenSpace The GreenSpace associated with the task.
+     * @param selectedTask The Task object to be added.
+     * @param selectedDate The date for the task.
+     * @param startTime The start time of the task (presumably in hours).
+     * @param agenda The position of the task within the agenda (e.g., MORNING, AFTERNOON, EVENING).
+     * @param userValidation A flag indicating whether to perform user validation.
+     * @return An Optional containing the added Task object if successful, or Optional.empty() otherwise.
+     */
+    public static Optional<Task> addTaskAgenda(GreenSpace selectedGreenSpace, Task selectedTask, LocalDate selectedDate, int startTime, TaskPosition agenda, boolean userValidation) {
         try {
             if (userValidation) {
-                Task newTaskAgenda = new Task(selectedGreenSpace,selectedTask,selectedDate,startTime,todolist);
+                Task newTaskAgenda = new Task(selectedGreenSpace,selectedTask,selectedDate,startTime,agenda);
                 Optional<Task> addedTask = Repositories.getInstance().getTaskRepository().addTask(newTaskAgenda);
                 return addedTask;
             } else {
@@ -432,13 +442,13 @@ public class Employee implements Cloneable, Comparable<Employee> {
     // method for the employee to assign a team to a task in the agenda
     public static Optional<Task> assignTeamToTask(Team team, Task task) {
         task.assignTeam(team);
-        task.setTaskStatus(TaskStatus.Planned);
+        task.setTaskStatus(TaskStatus.PLANNED);
         return Repositories.getInstance().getTaskRepository().updateTask(task);
     }
 
     public static Optional<Task> postponedTask(Task task, Date newStartDate) {
         task.setTaskStartDate(newStartDate);
-        task.setTaskStatus(TaskStatus.Postponed);
+        task.setTaskStatus(TaskStatus.POSTPONED);
         task.assignTeam(null);
         return Repositories.getInstance().getTaskRepository().updateTask(task);
     }

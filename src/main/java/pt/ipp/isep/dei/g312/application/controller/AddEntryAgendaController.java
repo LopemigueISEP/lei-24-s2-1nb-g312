@@ -13,7 +13,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
+/**
+ * This class implements the controller for the "Add Entry Agenda" functionality.
+ * It interacts with GreenSpaceRepository, TaskRepository, and AuthenticationRepository to manage tasks and green spaces within the agenda.
+ */
 public class AddEntryAgendaController {
 
     private GreenSpaceRepository greenSpaceRepository;
@@ -26,7 +29,10 @@ public class AddEntryAgendaController {
         getTaskRepository();
         getAuthRepository();
     }
-
+    /**
+     * Retrieves the GreenSpaceRepository instance from Repositories.
+     * This method ensures a single instance of the repository is used throughout the controller.
+     */
     private void getGreenSpaceRepository() {
         if (greenSpaceRepository == null) {
             Repositories repositories = Repositories.getInstance();
@@ -35,7 +41,10 @@ public class AddEntryAgendaController {
         }
 
     }
-
+    /**
+     * Retrieves the TaskRepository instance from Repositories.
+     * This method ensures a single instance of the repository is used throughout the controller.
+     */
     private void getTaskRepository() {
         if (taskRepository == null) {
             Repositories repositories = Repositories.getInstance();
@@ -43,13 +52,21 @@ public class AddEntryAgendaController {
 
         }
     }
-
+    /**
+     * Retrieves the AuthenticationRepository instance from Repositories.
+     * This method ensures a single instance of the repository is used throughout the controller.
+     */
     public void getAuthRepository() {
         if (authRepository == null) {
             Repositories repositories = Repositories.getInstance();
             authRepository = repositories.getAuthenticationRepository();
         }
     }
+    /**
+     * Retrieves the current user's email address from the AuthenticationRepository.
+     *
+     * @return The current user's email address if successful, null otherwise.
+     */
     public String getUserEmail() {
         try {
             return authRepository.getCurrentUserSession().getUserId().getEmail();
@@ -58,19 +75,41 @@ public class AddEntryAgendaController {
             return null;
         }
     }
+    /**
+     * FXML initialization method (likely called during FXML loading).
+     * No specific actions are implemented here in this example.
+     */
     @FXML
     public void initialize() {
 
     }
-
+    /**
+     * Retrieves all green spaces from the GreenSpaceRepository.
+     *
+     * @return A list of all GreenSpace objects.
+     */
     public List<GreenSpace> getGreenSpaces() {
         return greenSpaceRepository.getGreenSpaceList();
 
     }
+    /**
+     * Retrieves tasks associated with a specific green space from the TaskRepository.
+     * The current implementation retrieves all tasks, but can be modified to filter by green space.
+     *
+     * @param greenSpace The GreenSpace object for which to retrieve tasks.
+     * @return A list of Task objects (may be empty if no tasks are associated with the green space).
+     */
     public List<Task> getTasksByGreenSpace(GreenSpace greenSpace) {
         return taskRepository.getTasksByGreenSpace();
 
     }
+    /**
+     * Retrieves a list of green spaces managed by a specific user based on their email address.
+     * This method performs user validation before retrieving green spaces.
+     *
+     * @param userEmail The email address of the user to filter by.
+     * @return A list of GreenSpace objects managed by the user (empty list if validation fails or no green spaces are found).
+     */
     //filter greenspaces by user who created it - considering e-mmail
     public List<GreenSpace> getGreenSpaceList(String userEmail) {
         if (currentUserLogInValidation()) {
@@ -79,11 +118,24 @@ public class AddEntryAgendaController {
         }
         return Collections.emptyList();
     }
-
+    /**
+     * Validates the current user's role to be either Admin or Green Space Manager (GSM).
+     * This method relies on the AuthenticationRepository to perform the validation.
+     *
+     * @return True if the user has a valid role (Admin or GSM), false otherwise.
+     */
     private boolean currentUserLogInValidation() {
         return authRepository.validateUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_GSM);
     }
-
+    /**
+     * Filters a list of green spaces based on the provided manager name.
+     * This method iterates through the green spaces and checks if their manager name (case-insensitively) matches the provided name.
+     * Matching green spaces are added to a new list and returned.
+     *
+     * @param greenSpaces The list of GreenSpace objects to filter.
+     * @param managerName The name of the manager to filter by.
+     * @return A list of GreenSpace objects managed by the specified manager (empty list if no matches are found).
+     */
     public List<GreenSpace> filterGreenSpacesByManager(List<GreenSpace> greenSpaces, String managerName) {
         List<GreenSpace> filteredList = new ArrayList<>();
         for (GreenSpace greenSpace : greenSpaces) {
@@ -93,7 +145,17 @@ public class AddEntryAgendaController {
         }
         return filteredList;
     }
-
+    /**
+     * Attempts to add a task to the agenda.
+     * This method likely delegates the actual task creation and addition to the `Employee` class (assuming such a class exists).
+     * It performs user validation before calling the `addTaskAgenda` method.
+     *
+     * @param selectedGreenSpace The GreenSpace object associated with the task.
+     * @param selectedTask The Task object to be added.
+     * @param startDate The LocalDate object representing the start date of the task.
+     * @param startTime The start time of the task (presumably in hours).
+     * @return An Optional containing the added Task object if successful, or Optional.empty() otherwise.
+     */
     public Optional<Task> addTaskToAgenda(GreenSpace selectedGreenSpace, Task selectedTask, LocalDate startDate, int startTime) {
         Optional<Task> newTaskAgenda = Optional.empty();
         newTaskAgenda=Employee.addTaskAgenda(selectedGreenSpace,selectedTask,startDate,startTime,TaskPosition.AGENDA,true);

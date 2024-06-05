@@ -132,7 +132,7 @@ public class AddEntryToDoListUI extends Application implements Initializable {
             int expectedDuration=Integer.parseInt(textExpectedDuration.getText());
 
             if (confirmsData()) {
-                Optional<Task> newTask = addEntryToDoListController.createTask(selectedGreenSpace,taskTitle,taskDescr,taskUrgency,expectedDuration);;
+                Optional<Task> newTask = addEntryToDoListController.createTask(selectedGreenSpace,taskTitle,taskDescr,taskUrgency,expectedDuration);
                 if (newTask.isPresent()) {
                     if (addAnotherTask()) {
                         resetAllFields();
@@ -170,11 +170,7 @@ public class AddEntryToDoListUI extends Application implements Initializable {
         alert.setTitle("Task confirmation");
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.orElse(yes) == yes) {
-            return true;
-        } else {
-            return false;
-        }
+        return result.orElse(yes) == yes;
     }
 
     private boolean addAnotherTask() {
@@ -188,11 +184,7 @@ public class AddEntryToDoListUI extends Application implements Initializable {
         alert.setTitle("Task successfully created");
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.orElse(yes) == yes) {
-            return true;
-        } else {
-            return false;
-        }
+        return result.orElse(yes) == yes;
     }
     private void resetAllFields() {
         cmbGreenSpace.getSelectionModel().clearSelection();

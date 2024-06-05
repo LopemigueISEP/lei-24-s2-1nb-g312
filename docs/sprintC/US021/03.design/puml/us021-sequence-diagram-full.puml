@@ -12,7 +12,12 @@ participant ":AddEntryToDoListController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "greenSpacesRepository\n:GreenSpacesRepository" as GreenSpacesRepository
+participant "employeeRepository:\nEmployeeRepository" as EmployeeRepository
+participant "employee:Employee" as employee
+participant "task:Task" as task
+
 participant "taskUrgency\n:TaskUrgency" as TaskUrgency
+'DUVIDA PARA O FOF ^
 
 
 ref over GSM, UI : This action assumes that the user has already logged in
@@ -55,16 +60,37 @@ activate GSM
     GSM -> UI : selects green space and task urgency\n and types requested data
     activate UI
 
+        UI -> CTRL : addTodoList()
+        activate CTRL
+            CTRL->CTRL: getEmployeeFromRepository()
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
+                RepositorySingleton --> CTRL : repositories
+            deactivate RepositorySingleton
+        CTRL -> PLAT : getEmployeeRepositories()
+        activate PLAT
+            PLAT --> CTRL : EmployeeRepositories
+        deactivate PLAT
+        CTRL -> EmployeeRepository: getEmployee()
+        activate EmployeeRepository
+            EmployeeRepository -->CTRL: employee
+        deactivate EmployeeRepository
+        CTRL --> CTRL: employee
+        CTRL -> employee : createTask(selectedGreenSpace,taskTitle,taskDescr,taskUrgency,expectedDuration)
+        activate employee
+            employee -> task**: registerTask(selectedGreenSpace,taskTitle,taskDescr,taskUrgency,expectedDuration)
+            task -> employee: task
+            employee -> employee: validateTask(task)
+            employee -> employee: addTask(task)
+            employee --> CTRL: task
+        deactivate employee
+        CTRL -> UI: task
+
+    deactivate CTRL
+    UI --> GSM: shows all data and requests confirmation
+    GSM -> UI : confirms data
+    UI --> GSM : displays operation success
 
     deactivate UI
-
-        System --> GSM : shows all data and requests confirmation
-    deactivate System
-
-    GSM -> System : confirms data
-    activate System
-
-        System --> GSM : displays operation success
-    deactivate System
 
 @enduml

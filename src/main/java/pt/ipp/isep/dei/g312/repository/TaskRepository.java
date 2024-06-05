@@ -86,7 +86,7 @@ public class TaskRepository {
         for (Task task : getAgenda()) {
             Team assignedTeam = task.getAssignedTeam();
             if (assignedTeam != null && assignedTeam.equals(team)) {
-                if (!task.getStatus().equals(TaskStatus.Canceled) && !task.getStatus().equals(TaskStatus.Done)) {
+                if (!task.getStatus().equals(TaskStatus.CANCELED) && !task.getStatus().equals(TaskStatus.DONE)) {
                     teamTasks.add(task);
                 }
             }
@@ -103,7 +103,7 @@ public class TaskRepository {
     public List<Task> getAllAgendaTasksExceptDoneCanceled(){
         List<Task> tasksExcept = new ArrayList<>();
         for(Task task : getAgenda()){
-            if(task.getStatus() != TaskStatus.Done && task.getStatus() != TaskStatus.Canceled){
+            if(task.getStatus() != TaskStatus.DONE && task.getStatus() != TaskStatus.CANCELED){
                 tasksExcept.add(task);
             }
         }
@@ -115,7 +115,7 @@ public class TaskRepository {
     public List<Task> getPlannedTasks() {
         List<Task> plannedTasks = new ArrayList<>();
         for (Task task : getAgenda()) {
-            if (task.getStatus() == TaskStatus.Planned) {
+            if (task.getStatus() == TaskStatus.PLANNED) {
                 plannedTasks.add(task);
             }
         }
@@ -126,7 +126,7 @@ public class TaskRepository {
     public List<Task> getPendingTasks() {
         List<Task> pendingTasks = new ArrayList<>();
         for (Task task : getAgenda()) {
-            if (task.getStatus() == TaskStatus.Pending) {
+            if (task.getStatus() == TaskStatus.PENDING) {
                 pendingTasks.add(task);
             }
         }
@@ -206,5 +206,19 @@ public class TaskRepository {
 
         }
         return listaVeiculosDisponiveis;
+    }
+
+    public List<Task> getTasksCancelable() {
+        List<Task> cancelableTasks = new ArrayList<>();
+        for (Task task : getAgenda()) {
+            if (task.getStatus() != TaskStatus.CANCELED) {
+                cancelableTasks.add(task);
+            }
+        }
+        return cancelableTasks;
+    }
+
+    public void cancelTask(Task taskToCancel) {
+        taskToCancel.cancel();
     }
 }

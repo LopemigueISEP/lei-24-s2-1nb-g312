@@ -31,7 +31,11 @@ public class GreenSpace implements Comparable<GreenSpace>, Serializable {
         this.typology = typology;
         this.greenSpaceManager = greenSpaceManager;
     }
-
+    /**
+     * This constructor creates a new GreenSpace object by copying the properties of another GreenSpace object.
+     *
+     * @param greenSpace The GreenSpace object to copy from.
+     */
     public GreenSpace(GreenSpace greenSpace) {
         this.name = greenSpace.getName();
         this.address = greenSpace.getAddress();
@@ -112,7 +116,13 @@ public class GreenSpace implements Comparable<GreenSpace>, Serializable {
     public String toString() {
         return String.format("%s - %s - %.2f m² - %s - Managed by: %s", name, address, area, typology, greenSpaceManager);
     }
-
+    /**
+     * This method overrides the default `equals` method from the `Object` class.
+     * It checks if two GreenSpace objects are equal based on their properties.
+     *
+     * @param o The object to compare with.
+     * @return True if the objects are equal, false otherwise.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -124,7 +134,12 @@ public class GreenSpace implements Comparable<GreenSpace>, Serializable {
                 Objects.equals(typology, that.typology) &&
                 Objects.equals(greenSpaceManager, that.greenSpaceManager);
     }
-
+    /**
+     * This method overrides the default `hashCode` method from the `Object` class.
+     * It generates a hash code for a GreenSpace object based on its properties.
+     *
+     * @return The hash code for this GreenSpace object.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(name, address, area, typology, greenSpaceManager);

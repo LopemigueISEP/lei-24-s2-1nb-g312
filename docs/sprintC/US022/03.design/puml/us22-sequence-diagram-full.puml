@@ -12,8 +12,10 @@ participant ":AddEntryAgendaController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "greenSpaceRepository:\nGreenSpaceRepository" as GreenSpaceRepository
-participant "employeeRepository:\nEmployeeRepository" as EmployeeRepository
+participant "employeeRepository:\nEmployeeRepository" as EMPLREP
 participant "taskRepository:\nTaskRepository" as TaskRepository
+
+participant "employee\n:Employee" as EMP
 participant "task\n:Task" as TAREFA
 
 activate ADM
@@ -53,7 +55,7 @@ ref over ADM, UI : This action assumes that the user has already logged in
     ADM -> UI : selects green space
     activate UI
 
-UI -> CTRL : getToDoListEntries()
+UI -> CTRL : getTasksByGreenSpace()
             activate CTRL
 
                 CTRL -> RepositorySingleton : getInstance()
@@ -62,25 +64,25 @@ UI -> CTRL : getToDoListEntries()
                     RepositorySingleton --> CTRL: repositories
                 deactivate RepositorySingleton
 
-                CTRL -> PLAT : getToDoListRepository()
+                CTRL -> PLAT : getTaskReposiroty()
                 activate PLAT
 
-                    PLAT --> CTRL: toDoListRepository
+                    PLAT --> CTRL: taskRepository
                 deactivate PLAT
 
-                CTRL -> TaskRepository : getToDoListEntries()
+                CTRL -> TaskRepository : getTasksByGreenSpace()
                 activate TaskRepository
 
-                    TaskRepository --> CTRL : toDoListEntries
+                    TaskRepository --> CTRL : taskByGreenSpace
                 deactivate TaskRepository
 
-                CTRL --> UI : toDoListEntries
+                CTRL --> UI : taskByGreenSpace
             deactivate CTRL
 
-            UI --> ADM : shows To-Do List entries (selected data)
+            UI --> ADM : shows tasks by green space
         deactivate UI
 
-    ADM -> UI : selects one entry from To-Do List
+    ADM -> UI : selects one tasks by green space
     activate UI
 
         UI --> ADM : requests typed data
@@ -95,23 +97,48 @@ UI -> CTRL : getToDoListEntries()
     ADM -> UI : confirms data
     activate UI
 
-        UI -> CTRL : addEntryAgenda(startDate, toDoListEntries)
-        activate CTRL
+        UI -> CTRL : addTaskAgenda(selectedGreenSpace, selectedTask, selectedDate, startTime)
+       activate CTRL
+                       CTRL -> RepositorySingleton : getInstance()
+                       activate RepositorySingleton
+
+                       RepositorySingleton --> CTRL : repositories
+                       deactivate RepositorySingleton
+
+                       CTRL -> PLAT : getEmployeeRepositories()
+                       activate PLAT
 
 
-            CTRL -> TAREFA: addEntryAgenda(startDate, toDoListEntries)
+                       PLAT --> CTRL : EmployeeRepositories
+                       deactivate PLAT
+
+
+                       CTRL -> EMPLREP: getEmployee()
+                       activate EMPLREP
+                       EMPLREP -->CTRL: employee
+                       deactivate EMPLREP
+
+                   CTRL-->CTRL: employee
+
+                   |||
+
+                               CTRL -> EMP : addTaskAgenda(selectedGreenSpace, selectedTask, selectedDate, startTime)
+                               activate EMP
+
+         EMP -> TAREFA: addTaskAgenda(selectedGreenSpace, selectedTask, selectedDate, startTime)
             activate TAREFA
 
 
-                TAREFA -> TAREFA : addEntryAgenda
+                EMP -> EMP : addTaskAgenda
 
-                TAREFA -> TaskRepository : entryAgenda
                 deactivate TAREFA
-                activate TaskRepository
-                TaskRepository -> TaskRepository : validate(entryAgenda)
-                TaskRepository -> CTRL : entryAgenda
-                deactivate TaskRepository
-                CTRL -> UI : entryAgenda
+
+            EMP --> CTRL: taskAgenda
+            deactivate EMP
+
+
+
+                CTRL -> UI : taskAgenda
                 deactivate CTRL
             UI --> ADM: displays operation success
     deactivate UI

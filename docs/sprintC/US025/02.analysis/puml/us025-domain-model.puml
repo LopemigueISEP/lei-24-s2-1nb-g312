@@ -1,0 +1,67 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'left to right direction
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+
+title Domain Model US25
+
+
+class Employee {
+    name
+    birth date
+    contact (email/phone)
+    admission date
+    taxpayer number
+    address
+    ID doc type and number
+    role
+}
+
+class Task {
+    taskID
+    title
+    description
+    date
+    taskStartPeriod
+    taskExpectedDuration
+    type
+    greenSpace
+    assignedTeam
+    assignedVehicles
+}
+class GreenSpacesManager{
+
+}
+class GreenSpace {
+    typology
+    area
+    address
+    name
+    manager
+    numberOfEquipments
+    waterConsumption
+    equipmentUsed
+    inquiryUseOfPark
+    routesWaterPoints
+}
+class Agenda {
+    toDoListEntry
+    startDate
+    status
+}
+Employee "1" -- "1..*" GreenSpacesManager : is >
+GreenSpacesManager "1" -- "1" Agenda : manages >
+GreenSpacesManager "1" -- "1..*" GreenSpace : registers >
+Agenda "1" -- "0..*" Task : has >
+Task "1..*" - "1..*" GreenSpace: occurs >
+
+
+@enduml

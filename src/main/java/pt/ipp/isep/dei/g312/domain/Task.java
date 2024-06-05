@@ -43,6 +43,7 @@ public class Task implements Cloneable {
             this.taskExpectedDuration = taskExpectedDuration;
             this.urgency = urgency;
             this.taskPosition = taskPosition;
+            this.assignedVehicles = new ArrayList<>();
         }
 
     }
@@ -246,6 +247,9 @@ public class Task implements Cloneable {
     }
 
 
+    public void cancel() {
+        this.status=TaskStatus.CANCELED;
+    }
 }
 
 

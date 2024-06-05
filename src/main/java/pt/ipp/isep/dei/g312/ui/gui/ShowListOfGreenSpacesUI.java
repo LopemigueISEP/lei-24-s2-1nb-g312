@@ -16,6 +16,7 @@ import java.io.IOException;
  * It extends the JavaFX Application class and initializes the UI by loading the FXML file and setting up the controller.
  */
 public class ShowListOfGreenSpacesUI extends Application {
+
     /**
      * Main method to launch the application.
      *
@@ -40,8 +41,6 @@ public class ShowListOfGreenSpacesUI extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
-            RegisterGreenSpaceController registerGreenSpaceController = fxmlLoader.getController();
-            registerGreenSpaceController.initialize(false);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
