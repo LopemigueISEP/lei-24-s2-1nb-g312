@@ -1,70 +1,74 @@
-# US025 - Cancel an entry in the Agenda 
+# US025 - Cancel an entry in the Agenda
 
-## 4. Tests 
+## 4. Tests
 
-**Test 1:** Check that it is not possible to create an instance of the Task class with null values. 
+**Test 1:** Check that the task is really canceled
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Task instance = new Task(null, null, null, null, null, null, null);
-	}
-	
+	@Test
+    public void testCancel() {
+        task.cancel();
+        assertEquals(TaskStatus.CANCELED, task.getStatus());
+    }
 
-**Test 2:** Check that it is not possible to create an instance of the Task class with a reference containing less than five chars - AC2. 
+**Test 2:** Check that the repository correctly returns all cancelable tasks.
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureReferenceMeetsAC2() {
-		Category cat = new Category(10, "Category 10");
-		
-		Task instance = new Task("Ab1", "Task Description", "Informal Data", "Technical Data", 3, 3780, cat);
-	}
+    @Test
+    public void testGetTasksCancelable() {
+        List<Task> cancelableTasks = taskRepository.getTasksCancelable();
+        assertEquals(4, cancelableTasks.size());
+        assertTrue(cancelableTasks.contains(task1));
+    }
 
-_It is also recommended to organize this content by subsections._ 
+**Test 3:** Check that canceling a task updates its status to CANCELED
 
+    @Test
+    public void testCancelTask() {
+        taskRepository.addTask(task1);
+        taskRepository.cancelTask(task1);
+        assertEquals(TaskStatus.CANCELED, task1.getStatus());
+    }
+
+_It is also recommended to organize this content by subsections._
 
 ## 5. Construction (Implementation)
 
-### Class CreateTaskController 
+### Class AddEntryToDoListUI
 
 ```java
-public Task createTask(String reference, String description, String informalDescription, String technicalDescription,
-                       Integer duration, Double cost, String taskCategoryDescription) {
-
-	TaskCategory taskCategory = getTaskCategoryByDescription(taskCategoryDescription);
-
-	Employee employee = getEmployeeFromSession();
-	Organization organization = getOrganizationRepository().getOrganizationByEmployee(employee);
-
-	newTask = organization.createTask(reference, description, informalDescription, technicalDescription, duration,
-                                      cost,taskCategory, employee);
-    
-	return newTask;
-}
+public CancelEntryAgendaUI(){
+        cancelEntryAgendaController=new CancelEntryAgendaController();
+        }
 ```
 
-### Class Organization
+### Class AddEntryToDoListController
 
 ```java
-public Optional<Task> createTask(String reference, String description, String informalDescription,
-                                 String technicalDescription, Integer duration, Double cost, TaskCategory taskCategory,
-                                 Employee employee) {
-    
-    Task task = new Task(reference, description, informalDescription, technicalDescription, duration, cost,
-                         taskCategory, employee);
-
-    addTask(task);
-        
-    return task;
-}
+public CancelEntryAgendaController(){
+        getTaskRepository();
+        }
 ```
 
+### Class Task
 
-## 6. Integration and Demo 
+```java
+public Task(String title,String description,TaskUrgency urgency,int taskExpectedDuration,GreenSpace greenSpace,TaskPosition taskPosition){
+        this.title=title;
+        this.description=description;
+        this.taskExpectedDuration=taskExpectedDuration;
+        this.greenSpace=greenSpace;
+        this.urgency=urgency;
+        this.assignedVehicles=new ArrayList<>();
+        this.taskPosition=taskPosition;
+
+
+        }
+```
+
+## 6. Integration and Demo
 
 * A new option on the Employee menu options was added.
 
 * For demo purposes some tasks are bootstrapped while system starts.
-
 
 ## 7. Observations
 

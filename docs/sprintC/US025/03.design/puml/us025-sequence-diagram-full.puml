@@ -73,7 +73,7 @@ activate GSM
             CTRL --> CTRL: employee
             CTRL -> employee: cancelTask(task)
             activate employee
-                employee -->TaskRepository: cancelTask(task)'Estará certo apartir daqui??
+                employee -->TaskRepository: cancelTask(task)'Estará certo apartir daqui?? Tinha ideia de ser o taksrepo a fazer estará certo?
                 activate TaskRepository
                     TaskRepository --> CTRL: task
                 deactivate TaskRepository

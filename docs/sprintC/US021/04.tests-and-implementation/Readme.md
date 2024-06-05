@@ -30,7 +30,7 @@ public AddEntryToDoListUI(){
 }
 ```
 
-### Class RegisterSkillController
+### Class AddEntryToDoListController
 
 ```java
 public AddEntryToDoListController(){
