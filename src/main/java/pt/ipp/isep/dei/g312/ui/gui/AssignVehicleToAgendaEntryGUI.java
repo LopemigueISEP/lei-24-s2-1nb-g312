@@ -149,7 +149,7 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
 
             try {
                 for (Vehicle vehicle : controller.getTaskAssignedVehicles(task)) {
-                    String descriptionVehicle = (String.format("%-15s    %-15s    %-15s   %-15.0f", vehicle.getRegistrationPlate(), vehicle.getBrand(), vehicle.getModel(), vehicle.getCurrentKm()));
+                    String descriptionVehicle = (String.format("Plate: %-15s    Brand: %-10s    %-15s   CurrentKm: %-15.0f", vehicle.getRegistrationPlate(), vehicle.getBrand(), vehicle.getModel(), vehicle.getCurrentKm()));
                     assignedVehicles.add(descriptionVehicle);
                 }
             } catch (NullPointerException nullPointerException) {
