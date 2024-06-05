@@ -22,7 +22,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static pt.ipp.isep.dei.g312.ui.console.utils.Utils.isInt;
-
+/**
+ * This class represents the graphical user interface (GUI) for adding a new entry to an agenda.
+ * It handles user interactions, data validation, and communication with the underlying application controller.
+ */
 public class AddEntryToAgendaUI extends Application implements Initializable {
 
     public Button btnSubmit;
@@ -33,7 +36,9 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
 
     public Label lblAllFields;
     private AddEntryAgendaController addEntryAgendaController;
-
+/**
+        * Constructor that initializes the application controller.
+            */
     public AddEntryToAgendaUI(){
         addEntryAgendaController= new AddEntryAgendaController();
     }
@@ -41,7 +46,12 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
     public static void main(String[] args) {
         launch();
     }
-
+    /**
+     * The start method is the entry point for a JavaFX application.
+     * It's called by the launch() method after the application class is initialized.
+     * This method is responsible for setting up the primary stage (the main application window),
+     * loading the FXML scene, and displaying the application to the user.
+     */
     @Override
     public void start(Stage primaryStage) {
         Platform.setImplicitExit(false);
@@ -59,6 +69,14 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
         }
     }
 
+/**
+ * This method is called by the FXML loader after all the components in the FXML file have been created.
+ * It's used to initialize the UI components and perform any other setup tasks that need to be done
+ * before the application can be used.
+ *
+ * @param url The location of the FXML file.
+ * @param resourceBundle The resource bundle used to localize the application.
+ */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String userEmail = addEntryAgendaController.getUserEmail();
@@ -68,7 +86,12 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
         initializeDatePicker();
 
     }
-
+    /**
+     * Initializes the green space combo box with available green spaces retrieved from the controller,
+     * filtering them based on the user's email (if the user has manager rights).
+     *
+     * @param userEmail The email of the logged-in user.
+     */
     private void initializeComboBoxGreenSpaces(String userEmail) {
         List<GreenSpace> greenSpaces = addEntryAgendaController.getGreenSpaceList(userEmail);
         List<GreenSpace> managedGreenSpaces = addEntryAgendaController.filterGreenSpacesByManager(greenSpaces, userEmail);
@@ -76,6 +99,9 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
         cmbGreenSpace.setCellFactory(listView -> new GreenSpaceComboNames());
         cmbGreenSpace.setButtonCell(new GreenSpaceComboNames());
     }
+    /**
+     * Inner class defining how GreenSpace objects are displayed in the combo box.
+     */
     private static class GreenSpaceComboNames extends ListCell<GreenSpace> {
 
         @Override
@@ -93,6 +119,11 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
         }
 
     }
+    /**
+     * Initializes the task combo box with tasks belonging to the selected green space retrieved from the controller.
+     *
+     * @param greenSpace The selected green space. If null, the combo box will be cleared.
+     */
     private void initializeTaskComboBox(GreenSpace greenSpace){
         List<Task> taskList= addEntryAgendaController.getTasksByGreenSpace(greenSpace);
         cmbTask.setItems(FXCollections.observableArrayList(taskList));
@@ -115,7 +146,10 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
         }
 
     }
-
+    /**
+     * Initializes the date picker with the following behavior:
+     * - Disables dates before tomorrow (ensures user selects a future date).
+     */
     private void initializeDatePicker() {
         datePicker.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
@@ -126,7 +160,13 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
         });
     }
 
-
+    /**
+     * This method handles the "Add to Agenda" button click event.
+     * It retrieves user input from the UI components, validates the data,
+     * and calls the application controller to add a new entry to the agenda.
+     *
+     * @param actionEvent The action event triggered by clicking the button.
+     */
     public void addTaskToAgenda(ActionEvent actionEvent) {
         if (verifyEmptyFields()) {
             lblAllFields.setText("Please fill out all required information.");
@@ -161,14 +201,22 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
             }
         }
     }
-
+    /**
+     * Checks if any of the required fields in the UI are empty.
+     *
+     * @return True if any field is empty, false otherwise.
+     */
     private boolean verifyEmptyFields() {
         return cmbGreenSpace.getValue() == null
                 || cmbTask.getValue() == null
                 || datePicker.getValue() == null
                 || textStartTime.getText().isEmpty();
     }
-
+    /**
+     * Prompts the user to confirm their data entry before adding a task to the agenda.
+     *
+     * @return True if the user confirms, false otherwise.
+     */
     private boolean confirmsData() {
         ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
         ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -187,6 +235,12 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
         }
     }
 
+
+    /**
+     * Prompts the user after a successful task addition to see if they want to add another task.
+     *
+     * @return True if the user wants to add another task, false otherwise.
+     */
     private boolean addAnotherTask() {
         ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
         ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -204,6 +258,9 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
             return false;
         }
     }
+    /**
+     * Resets all UI fields in the form after adding a task or encountering an error.
+     */
     private void resetAllFields() {
         cmbGreenSpace.getSelectionModel().clearSelection();
         cmbGreenSpace.setValue(null);
