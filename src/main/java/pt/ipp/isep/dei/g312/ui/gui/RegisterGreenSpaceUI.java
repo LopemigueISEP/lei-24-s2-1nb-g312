@@ -2,14 +2,13 @@ package pt.ipp.isep.dei.g312.ui.gui;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
+
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -17,10 +16,12 @@ import pt.ipp.isep.dei.g312.application.controller.RegisterGreenSpaceController;
 import pt.ipp.isep.dei.g312.domain.GreenSpace;
 
 import java.io.IOException;
-import java.net.URL;
+
+
 import java.util.Objects;
 import java.util.Optional;
-import java.util.ResourceBundle;
+
+
 
 import static pt.ipp.isep.dei.g312.application.controller.RegisterGreenSpaceController.existsWithName;
 
@@ -49,9 +50,10 @@ public class RegisterGreenSpaceUI extends Application {
     private Label messageLabel;
 
     @FXML
-    private TableView<GreenSpace> greenSpacesTableView;
     private final RegisterGreenSpaceController registerGreenSpaceController;
-    private static boolean isRegisterGreenSpaceUI = true;
+    /**
+     * Constructor to initialize the RegisterGreenSpaceController.
+     */
     public RegisterGreenSpaceUI(){
         registerGreenSpaceController= new RegisterGreenSpaceController();
 
@@ -89,18 +91,11 @@ public class RegisterGreenSpaceUI extends Application {
 
     /**
      * This method is called by the FXML loader during application initialization.
-     * It checks the `isRegisterGreenSpaceUI` flag and performs specific initialization logic based on the value.
-     *
-     * - If `isRegisterGreenSpaceUI` is true, it calls the `initializeRegisterGreenSpaceUI` method (presumably for initializing the register green space user interface).
-     * - If `isRegisterGreenSpaceUI` is false, it calls the `initializeShowListGreenSpacesUI` method (presumably for initializing the show list of green spaces user interface).
+     * It initializes the register green space UI.
      */
     @FXML
     public void initialize() {
-        if (isRegisterGreenSpaceUI) {
             initializeRegisterGreenSpaceUI();
-        } else {
-            initializeShowListGreenSpacesUI();
-        }
     }
 
     /**
@@ -108,7 +103,7 @@ public class RegisterGreenSpaceUI extends Application {
      *
      * - Sets the prompt text for the typology choice box.
      * - Adds available green space types ("Garden", "Medium-Sized Park", "Large-Sized Park") to the choice box.
-     * - Calls the `setGreenSpaceManager` method (likely to populate or configure controls related to the green space manager).
+     * - Calls the `setGreenSpaceManager` method to set the green space manager.
      */
     @FXML
     public void initializeRegisterGreenSpaceUI() {
@@ -117,12 +112,9 @@ public class RegisterGreenSpaceUI extends Application {
         setGreenSpaceManager();
     }
     /**
-     * Initializes the UI for showing a list of green spaces.
+     * Sets the green space manager label based on the current user's login status.
      */
     @FXML
-    public void initializeShowListGreenSpacesUI() {
-        updateGreenSpacesList();
-    }
     private void setGreenSpaceManager() {
         if (RegisterGreenSpaceController.currentUserLogInValidation()) {
             greenSpaceManagerLabel.setText(Objects.requireNonNull(RegisterGreenSpaceController.matchEmployeeByRole()).getEmail());
@@ -133,36 +125,20 @@ public class RegisterGreenSpaceUI extends Application {
 
     /**
      * This method is called when the "Register" button is clicked.
-     * It performs the following actions:
+     * It handles the registration process for a new green space.
      *
-     * 1. Validates user input (calls the `validateInput` method, which is not documented here).
-     * 2. If validation fails, the method exits.
-     * 3. Extracts user input from UI controls:
-     *     - Name (trimmed)
-     *     - Address (trimmed)
-     *     - Area (parsed as a double using `parseAreaField`, which is not documented here)
-     *     - Typology (selected value from choice box)
-     *     - Green space manager (text from label)
-     * 4. Checks current user login validity (calls `currentUserLogInValidation`, not documented here).
-     * 5. If user is not valid, displays an error message and exits.
-     * 6. Checks for existing green space with the same name using `existsWithName`.
-     * 7. If a green space with the same name exists, displays an error message and exits.
-     * 8. Checks for existing green space with the same address using `existsWithAddress`.
-     * 9. If a green space with the same address exists, displays an error message and exits.
-     * 10. Calls `registerGreenSpace` (assumed to be in the RegisterGreenSpaceController class)
-     *     to register the new green space with the extracted information.
-     * 11. If registration is successful (Optional containing a GreenSpace is present):
-     *     - Displays a success message.
-     *     - Calls `updateGreenSpacesList` (likely to update a list of green spaces elsewhere).
-     * 12. If registration fails (Optional is empty):
-     *     - Displays an error message.
+     * - Validates user input.
+     * - Extracts user input from UI controls.
+     * - Checks for existing green space with the same name and address.
+     * - Registers the new green space if no conflicts are found.
+     * - Displays appropriate messages based on the outcome.
      */
     public void handleRegisterButtonAction() {
         if (!validateInput()) {
             return;
         }
 
-        String name = nameField.getText().trim();
+        String name = nameField.getText().trim().toUpperCase();
         String address = addressField.getText().trim();
         double area;
         try {
@@ -188,7 +164,6 @@ public class RegisterGreenSpaceUI extends Application {
                     name, address, area, typology, greenSpaceManager);
             if (registerGreenSpace.isPresent()) {
                 messageLabel.setText("Green space registered successfully!");
-                updateGreenSpacesList();
             } else {
                 messageLabel.setText("Failed to register green space. An error occurred.");
             }
@@ -196,6 +171,7 @@ public class RegisterGreenSpaceUI extends Application {
             messageLabel.setText("You do not have permission to register green spaces.");
         }
     }
+
     /**
      * Validates the input fields for registering a green space.
      *
@@ -221,17 +197,6 @@ public class RegisterGreenSpaceUI extends Application {
         }
 
         return true;
-    }
-    /**
-     * Updates the list view of green spaces with the latest data.
-     */
-    private void updateGreenSpacesList() {
-        if (greenSpacesTableView == null) {
-            return;
-        }
-
-        ObservableList<GreenSpace> greenSpaces = FXCollections.observableArrayList(registerGreenSpaceController.getGreenSpaceByName());
-        greenSpacesTableView.setItems(greenSpaces);
     }
     /**
      * Parses the given string to a {@code double} representing an area.

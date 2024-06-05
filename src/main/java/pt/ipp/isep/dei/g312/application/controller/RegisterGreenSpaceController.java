@@ -12,7 +12,9 @@ import pt.ipp.isep.dei.g312.repository.GreenSpaceRepository;
 import pt.ipp.isep.dei.g312.repository.Repositories;
 
 import java.util.*;
-
+/**
+ * Controller class for managing the registration of green spaces.
+ */
 public class RegisterGreenSpaceController {
 
     private static GreenSpaceRepository greenSpaceRepository;
@@ -70,18 +72,9 @@ public class RegisterGreenSpaceController {
 
     }
 
-    /**
-     * This method retrieves a list of all green spaces from the GreenSpaceRepository.
-     * It's likely intended to search for green spaces by name, but the current implementation retrieves all green spaces.
-     *
-     * @return A list of GreenSpace objects. This may be empty if no green spaces are found.
-     */
-    public List<GreenSpace> getGreenSpaceByName() {
-        return greenSpaceRepository.getGreenSpaceList();
 
-    }
     /**
-     * This static method checks if a green space with the given address exists in the GreenSpaceRepository.
+     * Checks if a green space with the given address exists in the GreenSpaceRepository.
      *
      * @param address The address to search for.
      * @return True if a green space with the address exists, false otherwise.
@@ -91,7 +84,7 @@ public class RegisterGreenSpaceController {
     }
 
     /**
-     * This static method checks if a green space with the given name exists in the GreenSpaceRepository.
+     * Checks if a green space with the given name exists in the GreenSpaceRepository.
      *
      * @param name The name to search for.
      * @return True if a green space with the name exists, false otherwise.
@@ -110,7 +103,7 @@ public class RegisterGreenSpaceController {
     /**
      * Matches the current user with the corresponding employee based on their role.
      *
-     * @return The matched Employee object.
+     * @return The matched Employee object, or null if no match is found.
      */
     public static Employee matchEmployeeByRole() {
         try {
@@ -121,15 +114,6 @@ public class RegisterGreenSpaceController {
             return null;
         }
     }
-    /**
-     * Sets the green space manager label based on the current user's role.
-     */
-
-    /**
-     * Handles the action when the register button is clicked.
-     *
-     */
-
     /**
      * Registers a new green space with the provided details.
      *

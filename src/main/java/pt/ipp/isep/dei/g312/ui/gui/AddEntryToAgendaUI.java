@@ -17,6 +17,8 @@ import pt.ipp.isep.dei.g312.domain.Task;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -171,21 +173,24 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
         if (verifyEmptyFields()) {
             lblAllFields.setText("Please fill out all required information.");
             lblAllFields.setVisible(true);
-        } else if (!isInt(textStartTime.getText())) {
-            lblAllFields.setText("Expected start time should in format HHMM");
+        } else if (textStartTime.getText().split(":").length!=2) {
+            lblAllFields.setText("Expected start time should in format HH:MM");
             lblAllFields.setVisible(true);
         } else {
 
             GreenSpace selectedGreenSpace = (GreenSpace) cmbGreenSpace.getValue();
             Task selectedTask = (Task) cmbTask.getValue();
             LocalDate selectedDate = datePicker.getValue();
-            int startTime=Integer.parseInt(textStartTime.getText());
+                int hourStartTime = Integer.parseInt(textStartTime.getText().split(":")[0]);
+                int minuteStartTime = Integer.parseInt(textStartTime.getText().split(":")[1]);
+                LocalTime startTime = LocalTime.of(hourStartTime, minuteStartTime);
+
 
 
             if (confirmsData()) {
                 Optional<Task> newTaskAgenda = addEntryAgendaController.addTaskToAgenda(selectedGreenSpace,selectedTask,selectedDate,startTime);;
                 if (newTaskAgenda.isPresent()) {
-                    if (addAnotherTask()) {
+                    if (addAnotherTaskToAgenda()) {
                         resetAllFields();
                     } else {
                         Stage stage = (Stage) lblAllFields.getScene().getWindow();
@@ -195,9 +200,6 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
                     lblAllFields.setText("Task already in agenda.");
                     lblAllFields.setVisible(true);
                 }
-            }
-            else {
-                resetAllFields();
             }
         }
     }
@@ -241,7 +243,7 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
      *
      * @return True if the user wants to add another task, false otherwise.
      */
-    private boolean addAnotherTask() {
+    private boolean addAnotherTaskToAgenda() {
         ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
         ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,

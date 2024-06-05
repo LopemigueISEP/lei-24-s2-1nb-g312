@@ -33,12 +33,15 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
 
     @FXML
     public ComboBox<String> cmbTask;
+    @FXML
     public ListView<String> listViewAssignedVehicles;
     @FXML
     public ListView<String> listViewVehicles;
-    public Label label_NeedToChoseTask;
-    public Label label_NeedToSelectVehicle;
     @FXML
+    public Label label_NeedToChoseTask;
+    @FXML
+    public Label label_NeedToSelectVehicle;
+
     private AssignVehicleToAgendaEntryController controller;
 
     private Map<String,Vehicle> vehicleMap;
@@ -149,7 +152,7 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
 
             try {
                 for (Vehicle vehicle : controller.getTaskAssignedVehicles(task)) {
-                    String descriptionVehicle = (String.format("%-15s    %-15s    %-15s   %-15.0f", vehicle.getRegistrationPlate(), vehicle.getBrand(), vehicle.getModel(), vehicle.getCurrentKm()));
+                    String descriptionVehicle = (String.format("Plate: %-15s    Brand: %-10s    %-15s   CurrentKm: %-15.0f", vehicle.getRegistrationPlate(), vehicle.getBrand(), vehicle.getModel(), vehicle.getCurrentKm()));
                     assignedVehicles.add(descriptionVehicle);
                 }
             } catch (NullPointerException nullPointerException) {
@@ -207,6 +210,7 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
      *
      * @param actionEvent the action event
      */
+    @FXML
     public void cmbTaskOnAction(ActionEvent actionEvent) {
         try {
 

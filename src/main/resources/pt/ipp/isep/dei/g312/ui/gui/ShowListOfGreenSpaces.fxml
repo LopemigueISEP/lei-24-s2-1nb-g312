@@ -10,34 +10,34 @@
         <Insets bottom="50" left="50" right="50" top="50" />
     </padding>
     <children>
-        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="List of Registered Green Spaces" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="List of Registered Green Spaces">
             <font>
-                <Font name="Tahoma Bold" size="12.0" />
+                <Font name="Tahoma Bold" size="18.0" />
             </font>
         </Label>
         <TableView fx:id="greenSpacesTableView" prefWidth="600.0" prefHeight="500.0" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn text="Name">
+                <TableColumn fx:id="column_Name" text="Name">
                     <cellValueFactory>
                         <PropertyValueFactory property="name" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Address">
+                <TableColumn fx:id="column_Address" text="Address">
                     <cellValueFactory>
                         <PropertyValueFactory property="address" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Area">
+                <TableColumn fx:id="column_Area" text="Area">
                     <cellValueFactory>
                         <PropertyValueFactory property="area" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Typology">
+                <TableColumn fx:id="column_Typology" text="Typology">
                     <cellValueFactory>
                         <PropertyValueFactory property="typology" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Manager">
+                <TableColumn fx:id="column_Manager" text="Manager">
                     <cellValueFactory>
                         <PropertyValueFactory property="greenSpaceManager" />
                     </cellValueFactory>
@@ -46,4 +46,3 @@
         </TableView>
     </children>
 </VBox>
-
