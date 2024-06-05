@@ -165,7 +165,13 @@ public class GreenSpaceRepository implements Serializable {
                     " is caught");
         }
     }
-
+    /**
+     * Retrieves a list of green spaces managed by the logged-in user.
+     *
+     * @param loggedInUser The email or identifier of the logged-in user.
+     * @return A list of GreenSpace objects managed by the logged-in user. If no green spaces are found,
+     *         an empty list is returned.
+     */
     public List<GreenSpace> getGreenSpaceManagedByMe(String loggedInUser) {
 
         List<GreenSpace> listOfGreenSpacesManagedByMe = new ArrayList<>();

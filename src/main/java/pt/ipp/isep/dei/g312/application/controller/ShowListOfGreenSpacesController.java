@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
+/**
+ * Controller class responsible for managing the display of green spaces.
+ */
 public class ShowListOfGreenSpacesController {
 
     private AuthenticationRepository authenticationRepository;
@@ -21,14 +23,20 @@ public class ShowListOfGreenSpacesController {
 
 
     private final String greenSpaceComparator;
-
+    /**
+     * Constructor that initializes the repositories and loads the green space sorting algorithm from properties.
+     */
 
     public ShowListOfGreenSpacesController(){
         this.authenticationRepository = getAuthenticationRepository();
         this.greenSpaceRepository = getGreenSpaceRepository();
         this.greenSpaceComparator = LoadConfigProperties.getProperty("GreenSpaceSortingAlgoritm");
     }
-
+    /**
+     * Retrieves the GreenSpaceRepository instance.
+     *
+     * @return the GreenSpaceRepository instance
+     */
     private GreenSpaceRepository getGreenSpaceRepository() {
         try {
             if (greenSpaceRepository == null) {
@@ -43,7 +51,11 @@ public class ShowListOfGreenSpacesController {
 
     }
 
-
+    /**
+     * Retrieves the AuthenticationRepository instance.
+     *
+     * @return the AuthenticationRepository instance
+     */
     private AuthenticationRepository getAuthenticationRepository() {
         try {
             if (authenticationRepository == null) {
@@ -59,7 +71,11 @@ public class ShowListOfGreenSpacesController {
 
 
 
-
+    /**
+     * Retrieves the list of green spaces and sorts them based on the configured comparator.
+     *
+     * @return a sorted list of green spaces
+     */
 
     public List<GreenSpace> getGreenSpaceList() {
         List<GreenSpace> greenSpaceList = new ArrayList<>();
