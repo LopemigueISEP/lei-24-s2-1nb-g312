@@ -27,30 +27,24 @@ public class ListGreenSpacesManagedByMeController {
     }
 
     private GreenSpaceRepository getGreenSpaceRepository() {
-        try {
-            if (greenSpaceRepository == null) {
-                Repositories repositories = Repositories.getInstance();
-                greenSpaceRepository = repositories.getGreenSpaceRepository();
-            }
 
-        }catch (Exception e){
-            throw new RuntimeException("error in getting Authentication Repository",e);
+        if (greenSpaceRepository == null) {
+            Repositories repositories = Repositories.getInstance();
+            greenSpaceRepository = repositories.getGreenSpaceRepository();
         }
+
         return greenSpaceRepository;
 
     }
 
 
     private AuthenticationRepository getAuthenticationRepository() {
-        try {
-            if (authenticationRepository == null) {
-                Repositories repositories = Repositories.getInstance();
-                authenticationRepository = repositories.getAuthenticationRepository();
-            }
 
-        }catch (Exception e){
-            throw new RuntimeException("error in getting Authentication Repository",e);
+        if (authenticationRepository == null) {
+            Repositories repositories = Repositories.getInstance();
+            authenticationRepository = repositories.getAuthenticationRepository();
         }
+
         return authenticationRepository;
     }
 
@@ -58,7 +52,6 @@ public class ListGreenSpacesManagedByMeController {
         try {
             Email mail = authenticationRepository.getCurrentUserSession().getUserId();
             loggedInUser = mail.toString();
-
 
         }catch (Exception e){
             throw new RuntimeException("error in getLoggedinUser",e);
