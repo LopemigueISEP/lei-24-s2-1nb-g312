@@ -72,7 +72,7 @@ AddEntryAgendaController ..>Employee
 EmployeeRepository "1" --> "1" Employee
 TasksRepository "1" --> "1" Employee
 
-Employee --> Task: update'Perguntar ao fof?? Devo fazer add ao repo?
+Employee --> Task: update
 
 
 @enduml
