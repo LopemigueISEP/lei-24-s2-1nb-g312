@@ -1,0 +1,88 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "GSM" as GSM
+participant ":CancelEntryAgendaUI" as UI
+participant ":CancelEntryAgendaController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "employeeRepository:\nEmployeeRepository" as EmployeeRepository
+participant "taskRepository:\nTaskRepository" as TaskRepository
+
+participant "employee\n:Employee" as Employee
+participant "task\n:Task" as Task
+
+activate GSM
+
+    GSM -> UI : asks to cancel an entry in the Agenda
+    activate UI
+        UI -> CTRL : getTasksAtAgenda()
+        activate CTRL
+
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
+
+                RepositorySingleton --> CTRL: repositories
+            deactivate RepositorySingleton
+
+            CTRL -> PLAT : getTaskRepository()
+            activate PLAT
+
+                PLAT --> CTRL: TaskRepository
+            deactivate PLAT
+
+            CTRL -> TaskRepository : getTasksAtAgenda()
+            activate TaskRepository
+
+                TaskRepository --> CTRL : TaskAtAgendaList
+            deactivate TaskRepository
+
+
+            CTRL --> UI : TaskAtAgendaList
+        deactivate CTRL
+
+        UI --> GSM : shows all tasks at agenda
+    deactivate UI
+
+    GSM -> UI : selects entry to cancel
+    activate UI
+        UI --> GSM : shows entry to be cancel
+    deactivate UI
+
+    GSM -> UI : confirms data
+    activate UI
+        UI -> CTRL: cancelTask(task)
+        activate CTRL
+            CTRL->CTRL: getEmployeeFromRepository()
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
+                RepositorySingleton --> CTRL : repositories
+            deactivate RepositorySingleton
+            CTRL -> PLAT : getEmployeeRepositories()
+            activate PLAT
+                PLAT --> CTRL : EmployeeRepositories
+            deactivate PLAT
+            CTRL -> EmployeeRepository: getEmployee()
+            activate EmployeeRepository
+                EmployeeRepository -->CTRL: employee
+            deactivate EmployeeRepository
+            CTRL --> CTRL: employee
+            CTRL -> employee: cancelTask(task)
+            activate employee
+                employee -->TaskRepository: cancelTask(task)'Estará certo apartir daqui??
+                activate TaskRepository
+                    TaskRepository --> CTRL: task
+                deactivate TaskRepository
+            deactivate employee
+            CTRL --> UI: task
+
+        deactivate CTRL
+        UI --> GSM : displays operation success
+
+    deactivate UI
+
+@enduml

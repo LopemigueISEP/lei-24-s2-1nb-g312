@@ -15,7 +15,7 @@ activate Employee
     Employee -> System : asks to cancel an entry in the Agenda
     activate System
 
-        System --> Employee : shows all non-canceled entries
+        System --> Employee : shows all tasks at agenda
     deactivate System
 
     Employee -> System : selects entry to cancel

@@ -1,0 +1,78 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+class Employee{
+    -name : String
+    -birthdate : Date
+    -email : String
+    -phoneNumber : int
+    -admission date : Date
+    -taxpayerNumber : String
+    -address : String
+    -docNumber : String
+    -jobTitle : String
+
++ addTaskAgenda(selectedGreenSpace : GreenSpace, selectedTask : Task, selectedDate : LocalDate, startTime : int, agenda : TaskPosition, userValidation : boolean) : Optional<Task>
+
+
+}
+
+class Task{
+-greenSpace: GreenSpace
+-selectedTask : Task
+-selectedDate : LocalDate
+-agenda : TaskPosition
+
+}
+
+
+class CancelEntryAgendaController{
+
+}
+
+class CancelEntryAgendaUI{
+
+}
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getEmployeeRepository(); employeeRepository
+     + getGreenSpaceRepository(); getGreenSpaceRepository
+     + getTaskRepository(); getTaskRepository
+
+}
+class EmployeeRepository{
+
+
++getEmployee(): Employee
+
+}
+class TasksRepository{
+ +getAgemdaEntries(): List<ToDoEntries>
+}
+
+CancelEntryAgendaUI .>CancelEntryAgendaController
+
+AddEntryAgendaController .> "1" Repositories
+
+Repositories "1" --> "1" Repositories : getInstance()
+Repositories "1" --> "1" EmployeeRepository
+Repositories "1" --> "1" TasksRepository
+
+AddEntryAgendaController ..>Employee
+
+EmployeeRepository "1" --> "1" Employee
+TasksRepository "1" --> "1" Employee
+
+Employee --> Task: update'Perguntar ao fof?? Devo fazer add ao repo?
+
+
+@enduml
