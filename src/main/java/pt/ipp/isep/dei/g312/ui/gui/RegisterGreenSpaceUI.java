@@ -2,14 +2,13 @@ package pt.ipp.isep.dei.g312.ui.gui;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
+
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -17,10 +16,12 @@ import pt.ipp.isep.dei.g312.application.controller.RegisterGreenSpaceController;
 import pt.ipp.isep.dei.g312.domain.GreenSpace;
 
 import java.io.IOException;
+
 import java.net.URL;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
 
 import static pt.ipp.isep.dei.g312.application.controller.RegisterGreenSpaceController.existsWithName;
 
@@ -49,9 +50,7 @@ public class RegisterGreenSpaceUI extends Application {
     private Label messageLabel;
 
     @FXML
-    private TableView<GreenSpace> greenSpacesTableView;
     private final RegisterGreenSpaceController registerGreenSpaceController;
-    private static boolean isRegisterGreenSpaceUI = true;
     public RegisterGreenSpaceUI(){
         registerGreenSpaceController= new RegisterGreenSpaceController();
 
@@ -96,11 +95,7 @@ public class RegisterGreenSpaceUI extends Application {
      */
     @FXML
     public void initialize() {
-        if (isRegisterGreenSpaceUI) {
             initializeRegisterGreenSpaceUI();
-        } else {
-            initializeShowListGreenSpacesUI();
-        }
     }
 
     /**
@@ -120,9 +115,6 @@ public class RegisterGreenSpaceUI extends Application {
      * Initializes the UI for showing a list of green spaces.
      */
     @FXML
-    public void initializeShowListGreenSpacesUI() {
-        updateGreenSpacesList();
-    }
     private void setGreenSpaceManager() {
         if (RegisterGreenSpaceController.currentUserLogInValidation()) {
             greenSpaceManagerLabel.setText(Objects.requireNonNull(RegisterGreenSpaceController.matchEmployeeByRole()).getEmail());
@@ -162,7 +154,7 @@ public class RegisterGreenSpaceUI extends Application {
             return;
         }
 
-        String name = nameField.getText().trim();
+        String name = nameField.getText().trim().toUpperCase();
         String address = addressField.getText().trim();
         double area;
         try {
@@ -188,7 +180,6 @@ public class RegisterGreenSpaceUI extends Application {
                     name, address, area, typology, greenSpaceManager);
             if (registerGreenSpace.isPresent()) {
                 messageLabel.setText("Green space registered successfully!");
-                updateGreenSpacesList();
             } else {
                 messageLabel.setText("Failed to register green space. An error occurred.");
             }
@@ -225,14 +216,7 @@ public class RegisterGreenSpaceUI extends Application {
     /**
      * Updates the list view of green spaces with the latest data.
      */
-    private void updateGreenSpacesList() {
-        if (greenSpacesTableView == null) {
-            return;
-        }
 
-        ObservableList<GreenSpace> greenSpaces = FXCollections.observableArrayList(registerGreenSpaceController.getGreenSpaceByName());
-        greenSpacesTableView.setItems(greenSpaces);
-    }
     /**
      * Parses the given string to a {@code double} representing an area.
      * This method attempts to convert the input string to a {@code double} value.
