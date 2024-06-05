@@ -42,29 +42,37 @@ public class ListGreenSpacesManagedByMeGUI extends Application implements Initia
             primaryStage.show();
 
         } catch (IOException e) {
-            throw new RuntimeException("failed to load fxml",e);
+            throw new IOException("failed to load fxml",e);
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        controller = new ListGreenSpacesManagedByMeController();
 
-        label_ManagerEmail.setText(controller.getLoggedInUser());
+        try {
+            controller = new ListGreenSpacesManagedByMeController();
 
-        column_Area.setCellValueFactory(new PropertyValueFactory<>("area"));
-        column_Adress.setCellValueFactory((new PropertyValueFactory<>("address")));
-        column_Typology.setCellValueFactory(new PropertyValueFactory<>("typology"));
-        column_Name.setCellValueFactory(new PropertyValueFactory<>("name"));
+            label_ManagerEmail.setText(controller.getLoggedInUser());
 
-        loadTableViewValues();
+            column_Area.setCellValueFactory(new PropertyValueFactory<>("area"));
+            column_Adress.setCellValueFactory((new PropertyValueFactory<>("address")));
+            column_Typology.setCellValueFactory(new PropertyValueFactory<>("typology"));
+            column_Name.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+            loadTableViewValues();
+        }catch (Exception e){
+            throw new RuntimeException("error in initialize",e);
+        }
 
     }
 
     private void loadTableViewValues() {
-
-        List<GreenSpace> greenSpaces = controller.getGreenSpacesManagedByMe();
-        ObservableList<GreenSpace> greenSpaceObservableList = FXCollections.observableList(greenSpaces);
-        TableView_ListGreenSpacesManagedByMe.setItems(greenSpaceObservableList);
+       try {
+           List<GreenSpace> greenSpaces = controller.getGreenSpacesManagedByMe();
+           ObservableList<GreenSpace> greenSpaceObservableList = FXCollections.observableList(greenSpaces);
+           TableView_ListGreenSpacesManagedByMe.setItems(greenSpaceObservableList);
+       }catch (Exception e){
+           throw new RuntimeException("error loadingTableViewValues",e);
+       }
     }
 }

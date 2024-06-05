@@ -17,12 +17,13 @@ public class ListGreenSpacesManagedByMeController {
     private GreenSpaceRepository greenSpaceRepository;
 
     private String loggedInUser;
-    private final String greenSpaceComparadorSelecionado = LoadConfigProperties.getProperty("GreenSpaceSortingAlgoritm");
+    private final String greenSpaceComparadorSelecionado;
 
 
     public ListGreenSpacesManagedByMeController(){
         this.authenticationRepository = getAuthenticationRepository();
         this.greenSpaceRepository = getGreenSpaceRepository();
+        this.greenSpaceComparadorSelecionado = LoadConfigProperties.getProperty("GreenSpaceSortingAlgoritm");
     }
 
     private GreenSpaceRepository getGreenSpaceRepository() {
@@ -31,10 +32,11 @@ public class ListGreenSpacesManagedByMeController {
                 Repositories repositories = Repositories.getInstance();
                 greenSpaceRepository = repositories.getGreenSpaceRepository();
             }
-            return greenSpaceRepository;
+
         }catch (Exception e){
             throw new RuntimeException("error in getting Authentication Repository",e);
         }
+        return greenSpaceRepository;
 
     }
 
@@ -45,30 +47,36 @@ public class ListGreenSpacesManagedByMeController {
                 Repositories repositories = Repositories.getInstance();
                 authenticationRepository = repositories.getAuthenticationRepository();
             }
-            return authenticationRepository;
+
         }catch (Exception e){
             throw new RuntimeException("error in getting Authentication Repository",e);
         }
+        return authenticationRepository;
     }
 
     public String getLoggedInUser() {
+        try {
+            Email mail = authenticationRepository.getCurrentUserSession().getUserId();
+            loggedInUser = mail.toString();
 
-        Email mail = authenticationRepository.getCurrentUserSession().getUserId();;
-        loggedInUser = mail.toString();
 
+        }catch (Exception e){
+            throw new RuntimeException("error in getLoggedinUser",e);
+        }
         return loggedInUser;
     }
 
 
-    //TODO: Fazer switch case para selecionar o algoritmo e comer info no config file para selecionar o pretendido
+
     public List<GreenSpace> getGreenSpacesManagedByMe(){
 
         List<GreenSpace> greenSpaceManagedByMeList= new ArrayList<>();
-        greenSpaceManagedByMeList = greenSpaceRepository.getGreenSpaceManagedByMe(loggedInUser);
-
         Comparator<GreenSpace> comparator;
 
         try {
+
+            greenSpaceManagedByMeList = greenSpaceRepository.getGreenSpaceManagedByMe(loggedInUser);
+
             switch (greenSpaceComparadorSelecionado){
                 case "DESC_AREA":
                     comparator = new GreenSpaceComparatorDescendingArea();
@@ -81,14 +89,16 @@ public class ListGreenSpacesManagedByMeController {
                 default:
                     comparator = null;
             }
+
+            if(comparator!=null) {
+                Collections.sort(greenSpaceManagedByMeList, comparator);
+            }
+
         }catch (Exception e){
             throw new RuntimeException("error in switch case in getGreenSpacesManagedByMe",e);
         }
 
 
-        if(comparator!=null) {
-            Collections.sort(greenSpaceManagedByMeList, comparator);
-        }
         return greenSpaceManagedByMeList;
     }
 }

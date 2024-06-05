@@ -49,10 +49,11 @@ public class AssignVehicleToAgendaEntryController {
                 Repositories repositories = Repositories.getInstance();
                 employeeRepository = repositories.getEmployeeRepository();
             }
-            return employeeRepository;
+
         }catch (Exception e){
             throw new RuntimeException("error in getting Employee Repository",e);
         }
+        return employeeRepository;
     }
 
 
@@ -67,10 +68,11 @@ public class AssignVehicleToAgendaEntryController {
                 Repositories repositories = Repositories.getInstance();
                 taskRepository = repositories.getTaskRepository();
             }
-            return taskRepository;
+
         }catch (Exception e){
             throw new RuntimeException("error in getting Task Repository",e);
         }
+        return taskRepository;
     }
 
 
@@ -85,10 +87,11 @@ public class AssignVehicleToAgendaEntryController {
                 Repositories repositories = Repositories.getInstance();
                 vehicleRepository = repositories.getVehicleRepository();
             }
-            return vehicleRepository;
+
         }catch (Exception e){
             throw new RuntimeException("error in getting Vehicle Repository",e);
         }
+        return vehicleRepository;
     }
 
     /**
