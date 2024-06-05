@@ -1,0 +1,78 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "GSM"
+participant ":PostponeTaskInTheAgendaUI" as UI
+participant ":PostponeTaskInTheAgendaController" as Controller
+participant ":Repositories" as Repositories
+participant ":repositories\n:Repositories"
+participant ":Employee" as Employee
+participant ":TaskRepository" as TaskRepository
+participant ":TeamRepository" as TeamRepository
+
+activate GSM
+ref over GSM, UI : This action assumes that the user has already logged in
+
+GSM -> UI : asks to postpone a task in the agenda
+    activate UI
+        UI -> "Controller" : requestTask()
+            activate "Controller"
+            "Controller" -> "Repositories": getInstance()
+                        activate "Repositories"
+                        "Repositories" --> "Controller": repositories
+                        deactivate "Repositories"
+
+            "Controller" -> ":repositories\n:Repositories" : getTaskRepository()
+                        activate ":repositories\n:Repositories"
+                        ":repositories\n:Repositories" --> "Controller" : TaskRepository
+                        deactivate ":repositories\n:Repositories"
+            Controller -> TaskRepository : listPlannedTasks()
+                        activate TaskRepository
+                        TaskRepository --> Controller : list of planned tasks
+                        deactivate TaskRepository
+            Controller --> UI : list of planned tasks
+            deactivate Controller
+       UI --> GSM : lists planned tasks and asks to select one
+       deactivate UI
+GSM -> UI: selects a task from the list
+       activate UI
+       UI --> GSM : asks for the new date
+       deactivate UI
+GSM -> UI: types the new date and startHour for the task
+       activate UI
+       UI -> UI : validates the new date
+       UI -> Controller : submitData (task, newDate)
+            activate Controller
+            Controller -> Employee : postponeTask(task, newDate)
+                        activate Employee
+                        Employee -> Task: postponedTask(task, newDate)
+                                activate Task
+                                Task -> Task : clearAssignedTeam
+                                Task -> Task : setTaskStatus(POSTPONED)
+                                Task --> Employee : postpone success
+                                deactivate Task
+                        Employee --> Controller : postpone success
+                        deactivate Employee
+            Controller -> TaskRepository : updateTask(task)
+                        activate TaskRepository
+                        TaskRepository --> Controller : update success
+                        deactivate TaskRepository
+            Controller -> UI : postpone success
+            deactivate Controller
+       UI -> GSM : postpone success
+       deactivate UI
+
+
+
+
+
+
+
+deactivate GSM
+
+@enduml

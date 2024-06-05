@@ -166,4 +166,17 @@ public class GreenSpaceRepository implements Serializable {
         }
     }
 
+    public List<GreenSpace> getGreenSpaceManagedByMe(String loggedInUser) {
+
+        List<GreenSpace> listOfGreenSpacesManagedByMe = new ArrayList<>();
+
+        for(GreenSpace grn: getGreenSpaceList()){
+            if(grn != null){
+                if(grn.getGreenSpaceManager().equals(loggedInUser)){
+                    listOfGreenSpacesManagedByMe.add(grn);
+                }
+            }
+        }
+        return listOfGreenSpacesManagedByMe;
+    }
 }

@@ -1,10 +1,10 @@
 package pt.ipp.isep.dei.g312.domain;
 
-import pt.ipp.isep.dei.g312.repository.GreenSpaceRepository;
 import pt.ipp.isep.dei.g312.repository.Repositories;
 import pt.ipp.isep.dei.g312.repository.SkillRepository;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -412,6 +412,32 @@ public class Employee implements Cloneable, Comparable<Employee> {
             return Optional.empty();
         }
     }
+    /**
+     * This static method attempts to add a task to the agenda.
+     *
+     * @param selectedGreenSpace The GreenSpace associated with the task.
+     * @param selectedTask The Task object to be added.
+     * @param selectedDate The date for the task.
+     * @param startTime The start time of the task (presumably in hours).
+     * @param agenda The position of the task within the agenda (e.g., MORNING, AFTERNOON, EVENING).
+     * @param userValidation A flag indicating whether to perform user validation.
+     * @return An Optional containing the added Task object if successful, or Optional.empty() otherwise.
+     */
+    public static Optional<Task> addTaskAgenda(GreenSpace selectedGreenSpace, Task selectedTask, LocalDate selectedDate, int startTime, TaskPosition agenda, boolean userValidation) {
+        try {
+            if (userValidation) {
+                Task newTaskAgenda = new Task(selectedGreenSpace,selectedTask,selectedDate,startTime,agenda);
+                Optional<Task> addedTask = Repositories.getInstance().getTaskRepository().addTask(newTaskAgenda);
+                return addedTask;
+            } else {
+                System.out.println("This user doesn't have permissions to add tasks to Agenda");
+                return Optional.empty();
+            }
+        } catch (Exception e) {
+            System.out.println("Error occurred while adding a task to Agenda: " + e.getMessage());
+            return Optional.empty();
+        }
+    }
 
     // method for the employee to assign a team to a task in the agenda
     public static Optional<Task> assignTeamToTask(Team team, Task task) {
@@ -420,7 +446,7 @@ public class Employee implements Cloneable, Comparable<Employee> {
         return Repositories.getInstance().getTaskRepository().updateTask(task);
     }
 
-    public static Optional<Task> posponedTask(Task task, Date newStartDate) {
+    public static Optional<Task> postponedTask(Task task, Date newStartDate) {
         task.setTaskStartDate(newStartDate);
         task.setTaskStatus(TaskStatus.Postponed);
         task.assignTeam(null);

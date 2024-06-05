@@ -19,20 +19,33 @@ class Employee{
     -docNumber : String
     -jobTitle : String
 
-+ addEntryAgenda(startDate, toDoListEntries)
-   +validate(entryAgenda)
++ addTaskAgenda(selectedGreenSpace : GreenSpace, selectedTask : Task, selectedDate : LocalDate, startTime : int, agenda : TaskPosition, userValidation : boolean) : Optional<Task>
+
 
 }
 
 class Task{
 -greenSpace: GreenSpace
--toDoListEntries : toDoEntries
--startDate: Date
-+validate(entryAgenda)
+-selectedTask : Task
+-selectedDate : LocalDate
+-agenda : TaskPosition
+
 }
 
 
 class AddEntryAgendaController{
++ getGreenSpaceRepository() : void
++ getTaskRepository() : void
++ getAuthRepository() : void
++ getUserEmail()
++ initialize() : void
++ getGreenSpaces() : List<GreenSpace>
++ getTasksByGreenSpace (greenSpace Greenspace): List<Task>
++ getGreenSpaceList(userEmail : String) : List<GreenSpace>
++ currentUserLogInValidation() : boolean
++ filterGreenSpacesByManager (greenSpaces : List<GreenSpace>, managerName String)
++ addTaskToAgenda (selectedGreenSpace : GreenSpace,  selectedTask : Task, startDate LocalDate, startTime : int) : Optional<Task>
+
 
 }
 

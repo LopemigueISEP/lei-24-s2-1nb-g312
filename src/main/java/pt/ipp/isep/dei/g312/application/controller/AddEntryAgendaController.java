@@ -1,27 +1,24 @@
 package pt.ipp.isep.dei.g312.application.controller;
 
-import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
 
+import pt.ipp.isep.dei.g312.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.g312.domain.*;
 import pt.ipp.isep.dei.g312.repository.*;
 
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+/**
+ * This class implements the controller for the "Add Entry Agenda" functionality.
+ * It interacts with GreenSpaceRepository, TaskRepository, and AuthenticationRepository to manage tasks and green spaces within the agenda.
+ */
 public class AddEntryAgendaController {
 
-
-    public ComboBox cmbGreenSpace;
-    public ComboBox cmbTask;
-    public DatePicker datePicker;
-    public TextField textStartTime;
-    public Button btnSubmit;
-    public Label errorMessageLabel;
     private GreenSpaceRepository greenSpaceRepository;
     private TaskRepository taskRepository;
     private AuthenticationRepository authRepository;
@@ -32,7 +29,10 @@ public class AddEntryAgendaController {
         getTaskRepository();
         getAuthRepository();
     }
-
+    /**
+     * Retrieves the GreenSpaceRepository instance from Repositories.
+     * This method ensures a single instance of the repository is used throughout the controller.
+     */
     private void getGreenSpaceRepository() {
         if (greenSpaceRepository == null) {
             Repositories repositories = Repositories.getInstance();
@@ -41,7 +41,10 @@ public class AddEntryAgendaController {
         }
 
     }
-
+    /**
+     * Retrieves the TaskRepository instance from Repositories.
+     * This method ensures a single instance of the repository is used throughout the controller.
+     */
     private void getTaskRepository() {
         if (taskRepository == null) {
             Repositories repositories = Repositories.getInstance();
@@ -49,22 +52,22 @@ public class AddEntryAgendaController {
 
         }
     }
-
-    private void getAuthRepository() {
+    /**
+     * Retrieves the AuthenticationRepository instance from Repositories.
+     * This method ensures a single instance of the repository is used throughout the controller.
+     */
+    public void getAuthRepository() {
         if (authRepository == null) {
             Repositories repositories = Repositories.getInstance();
             authRepository = repositories.getAuthenticationRepository();
         }
     }
-
-    @FXML
-    public void initialize() {
-        String userEmail = getUserEmail();
-        initializeComboBoxGreenSpaces(userEmail);
-        initializeDatePicker();
-    }
-
-    private String getUserEmail() {
+    /**
+     * Retrieves the current user's email address from the AuthenticationRepository.
+     *
+     * @return The current user's email address if successful, null otherwise.
+     */
+    public String getUserEmail() {
         try {
             return authRepository.getCurrentUserSession().getUserId().getEmail();
         } catch (Exception e) {
@@ -72,105 +75,97 @@ public class AddEntryAgendaController {
             return null;
         }
     }
-    private void initializeComboBoxGreenSpaces(String userEmail) {
-        cmbGreenSpace.setItems(FXCollections.observableArrayList(greenSpaceRepository.getGreenSpaceList()));
-        cmbGreenSpace.setCellFactory(listView -> new GreenSpaceComboNames());
-        cmbGreenSpace.setButtonCell(new GreenSpaceComboNames());
-
+    /**
+     * FXML initialization method (likely called during FXML loading).
+     * No specific actions are implemented here in this example.
+     */
+    @FXML
+    public void initialize() {
 
     }
-    private static class GreenSpaceComboNames extends ListCell<GreenSpace> {
+    /**
+     * Retrieves all green spaces from the GreenSpaceRepository.
+     *
+     * @return A list of all GreenSpace objects.
+     */
+    public List<GreenSpace> getGreenSpaces() {
+        return greenSpaceRepository.getGreenSpaceList();
 
+    }
+    /**
+     * Retrieves tasks associated with a specific green space from the TaskRepository.
+     * The current implementation retrieves all tasks, but can be modified to filter by green space.
+     *
+     * @param greenSpace The GreenSpace object for which to retrieve tasks.
+     * @return A list of Task objects (may be empty if no tasks are associated with the green space).
+     */
+    public List<Task> getTasksByGreenSpace(GreenSpace greenSpace) {
+        return taskRepository.getTasksByGreenSpace();
 
-        @Override
-        public void updateItem(GreenSpace item, boolean empty) {
-            super.updateItem(item, empty);
-            if (item != null) {
-
-                setText(item.getName());
-
-            } else if (empty || item == null) {
-                setText("Choose GreenSpace");
-            } else {
-                setText(null);
+    }
+    /**
+     * Retrieves a list of green spaces managed by a specific user based on their email address.
+     * This method performs user validation before retrieving green spaces.
+     *
+     * @param userEmail The email address of the user to filter by.
+     * @return A list of GreenSpace objects managed by the user (empty list if validation fails or no green spaces are found).
+     */
+    //filter greenspaces by user who created it - considering e-mmail
+    public List<GreenSpace> getGreenSpaceList(String userEmail) {
+        if (currentUserLogInValidation()) {
+            List<GreenSpace> allGreenSpaces = Repositories.getInstance().getGreenSpaceRepository().getGreenSpaceList();
+            return filterGreenSpacesByManager(allGreenSpaces, userEmail);
+        }
+        return Collections.emptyList();
+    }
+    /**
+     * Validates the current user's role to be either Admin or Green Space Manager (GSM).
+     * This method relies on the AuthenticationRepository to perform the validation.
+     *
+     * @return True if the user has a valid role (Admin or GSM), false otherwise.
+     */
+    private boolean currentUserLogInValidation() {
+        return authRepository.validateUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_GSM);
+    }
+    /**
+     * Filters a list of green spaces based on the provided manager name.
+     * This method iterates through the green spaces and checks if their manager name (case-insensitively) matches the provided name.
+     * Matching green spaces are added to a new list and returned.
+     *
+     * @param greenSpaces The list of GreenSpace objects to filter.
+     * @param managerName The name of the manager to filter by.
+     * @return A list of GreenSpace objects managed by the specified manager (empty list if no matches are found).
+     */
+    public List<GreenSpace> filterGreenSpacesByManager(List<GreenSpace> greenSpaces, String managerName) {
+        List<GreenSpace> filteredList = new ArrayList<>();
+        for (GreenSpace greenSpace : greenSpaces) {
+            if (greenSpace.getGreenSpaceManager().equalsIgnoreCase(managerName)) {
+                filteredList.add(greenSpace);
             }
         }
+        return filteredList;
     }
-
-    private void initializeDatePicker() {
-        datePicker.setDayCellFactory(picker -> new DateCell() {
-            public void updateItem(LocalDate date, boolean empty) {
-                super.updateItem(date, empty);
-                LocalDate tomorrow = LocalDate.now().plusDays(1);
-                setDisable(empty || date.isBefore(tomorrow));
-            }
-        });
-    }
-
-
-    public void getTasks(ActionEvent actionEvent) {
-        if (cmbGreenSpace.getValue() != null) {
-            initializeTaskComboBox((GreenSpace) cmbGreenSpace.getValue());
+    /**
+     * Attempts to add a task to the agenda.
+     * This method likely delegates the actual task creation and addition to the `Employee` class (assuming such a class exists).
+     * It performs user validation before calling the `addTaskAgenda` method.
+     *
+     * @param selectedGreenSpace The GreenSpace object associated with the task.
+     * @param selectedTask The Task object to be added.
+     * @param startDate The LocalDate object representing the start date of the task.
+     * @param startTime The start time of the task (presumably in hours).
+     * @return An Optional containing the added Task object if successful, or Optional.empty() otherwise.
+     */
+    public Optional<Task> addTaskToAgenda(GreenSpace selectedGreenSpace, Task selectedTask, LocalDate startDate, int startTime) {
+        Optional<Task> newTaskAgenda = Optional.empty();
+        newTaskAgenda=Employee.addTaskAgenda(selectedGreenSpace,selectedTask,startDate,startTime,TaskPosition.AGENDA,true);
+        if (newTaskAgenda.isPresent()){
+            return  newTaskAgenda;
+        }
+        else {
+            return Optional.empty();
         }
     }
-
-
-    private void initializeTaskComboBox(GreenSpace greenSpace) {
-        cmbTask.setItems(FXCollections.observableArrayList(taskRepository.getTasksByGreenSpace(greenSpace)));
-        cmbTask.setCellFactory(listView -> new TaskComboNames());
-        cmbTask.setButtonCell(new TaskComboNames());
-    }
-    private static class TaskComboNames extends ListCell<Task> {
-        @Override
-        public void updateItem(Task item, boolean empty) {
-            super.updateItem(item, empty);
-            if (item != null) {
-
-                setText(item.getTitle());
-
-            } else if (empty || item == null) {
-                setText("Choose Task");
-            } else {
-                setText(null);
-            }
-        }
-
-    }
-
-    public void addTaskToAgenda(ActionEvent actionEvent) {
-        if (cmbGreenSpace.getValue() != null && cmbTask.getValue() != null && datePicker.getValue() != null) {
-            GreenSpace selectedGreenSpace = (GreenSpace) cmbGreenSpace.getValue();
-            Task selectedTask = (Task) cmbTask.getValue();
-            LocalDate selectedDate = datePicker.getValue();
-            if (selectedTask != null) {
-                Date date = java.sql.Date.valueOf(selectedDate);
-                if (!date.before(new Date(System.currentTimeMillis() - 1))) {
-                    if (!taskRepository.getAgenda().contains(selectedTask)) {
-                        selectedTask.setTaskStartDate(date);
-                        selectedTask.setTaskStatus(TaskStatus.Pending);
-                        taskRepository.addTask(selectedTask);
-                        errorMessageLabel.setVisible(false);
-//                        updateAgendaList();//TODO:Tem que ser feito em outra UI
-                        return;
-                    } else {
-                        errorMessageLabel.setText("Task already exists in the agenda!");
-                    }
-                } else {
-                    errorMessageLabel.setText("Please enter today's date or a future date.");
-                }
-            } else {
-                errorMessageLabel.setText("Selected task not found!");
-            }
-        } else {
-            errorMessageLabel.setText("Please fill all fields!");
-        }
-        errorMessageLabel.setVisible(true);
-    }
-//    private void updateAgendaList() {
-//        List<Task> agendaTasks = taskRepository.getAgenda();
-//        agendaTableView.setItems(FXCollections.observableArrayList(agendaTasks));
-//    }//TODO:Tem que ser feito em outra ui
-
 
 
 }
