@@ -31,6 +31,7 @@ class GreenSpaceComparatorNameAlphabeticalTest {
         int result3 = comparator.compare(g5,g3);
         assertNotEquals(-1,result3);
 
+        //iguais
         int result4 = comparator.compare(g5,g4);
         assertEquals(0,result4);
 
