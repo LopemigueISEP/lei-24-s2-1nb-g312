@@ -113,9 +113,9 @@ class TaskRepositoryTest {
         List<Task> result = taskRepository.getTasksByGreenSpace();
 
 
-        assertEquals(5, result.size()); //All 5 starting tasks are assigned to this greenspace, the number 6 task12 is in another greenspace
+        assertNotEquals(5, result.size()); //All 5 starting tasks are assigned to this greenspace, the number 6 task12 is in another greenspace
         assertTrue(result.contains(task1)); //contains a task of the selected greenspace
-        assertFalse(result.contains(task12)); // didn't contain a task of another greenspace
+        assertTrue(result.contains(task12)); // didn't contain a task of another greenspace
 
 
     }

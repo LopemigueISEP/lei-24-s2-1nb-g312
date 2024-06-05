@@ -14,10 +14,10 @@ class RegisterGreenSpaceUI {
 }
 
 class RegisterGreenSpaceController {
-    + initialize: void
+    + initialize~(): void
     + getEmployeeRepository() : employeeRepository
     + getAuthRepository() : authenticationRepository
-    + getGreenSpaceByName : List<GreenSpace>
+    + getGreenSpaceByName() : List<GreenSpace>
     + existsWithAddress(address : String) : boolean
     + existsWithName(name : String) : boolean
     + currentUserLogInValidation() : boolean

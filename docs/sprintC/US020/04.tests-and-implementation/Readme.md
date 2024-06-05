@@ -1,4 +1,4 @@
-# US20 - Register a green space (garden, medium-sized park or large-sized park) and its respective area
+# US20 - As a Green Space Manager (GSM), I want to register a greenspace (garden, medium-sized park or large-sized park) and its respectivearea.
 
 ## 4. Tests 
 
@@ -119,23 +119,9 @@
 ### Class RegisterGreenSpaceUI
 
 ```java
+public RegisterGreenSpaceUI(){
+    registerGreenSpaceController= new RegisterGreenSpaceController();
 
-public void start(Stage primaryStage) {
-    Platform.setImplicitExit(false);
-    FXMLLoader fxmlLoader = new FXMLLoader(RegisterGreenSpaceUI.class.getResource("RegisterGreenSpace.fxml"));
-    Scene scene;
-    try {
-        scene = new Scene(fxmlLoader.load());
-        primaryStage.setTitle("MusgoSublime");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        RegisterGreenSpaceController registerGreenSpaceController = fxmlLoader.getController();
-        registerGreenSpaceController.initialize(true);
-
-
-    } catch (IOException e) {
-        throw new RuntimeException(e);
-    }
 }
 
 ```
@@ -143,6 +129,11 @@ public void start(Stage primaryStage) {
 ### Class RegisterGreenSpaceController 
 
 ```java
+    public RegisterGreenSpaceController(){
+    getGreenSpaceRepository();
+    getAuthRepository();
+    getEmployeeRepository();
+}
     public Optional<GreenSpace> registerGreenSpace(String name, String address, double area, String typology, String greenSpaceManager) {
     try {
         GreenSpace greenSpace = new GreenSpace(name, address, area, typology, greenSpaceManager);
@@ -151,6 +142,26 @@ public void start(Stage primaryStage) {
         System.err.println("Error occurred while registering a green space: " + e.getMessage());
         return Optional.empty();
     }
+}
+```
+
+### Class Employee
+
+```java
+public static Optional<GreenSpace> registerGreenSpace(String name, String address, double area, String typology, String greenSpaceManager, boolean userValidation) {
+try {
+if (userValidation) {
+GreenSpace greenSpace = new GreenSpace(name, address, area, typology, greenSpaceManager);
+Optional<GreenSpace> addedGreenSpace = Repositories.getInstance().getGreenSpaceRepository().addGreenSpace(greenSpace);
+return addedGreenSpace;
+} else {
+System.out.println("This user doesn't have permissions to register green spaces");
+return Optional.empty();
+}
+} catch (Exception e) {
+System.err.println("Error occurred while registering a green space: " + e.getMessage());
+return Optional.empty();
+}
 }
 ```
 
@@ -170,7 +181,6 @@ public void start(Stage primaryStage) {
 ## 6. Integration and Demo 
 
 * A new option on the Admin menu and GSM menu options was added - show list of registered green spaces.
-* For demo purposes some green spaces are bootstrapped while system starts.
 
 
 ## 7. Observations

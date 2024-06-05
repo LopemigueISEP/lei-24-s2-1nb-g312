@@ -35,13 +35,13 @@ class GreenSpaceRepositoryTest {
 
         // Assert
         assertTrue(addedGreenSpace.isPresent());
-        assertNotEquals(greenSpace, addedGreenSpace.get());
+        assertEquals(greenSpace, addedGreenSpace.get());
 
         // Additional tests
-        assertTrue(repository.addGreenSpace(greenSpace).isPresent()); // Try adding the same green space again
+        assertFalse(repository.addGreenSpace(greenSpace).isPresent()); // Try adding the same green space again
         List<GreenSpace> greenSpaceList = repository.getGreenSpaceList();
-        assertNotEquals(1, greenSpaceList.size()); // Ensure only one green space is added
-        assertNotEquals(greenSpace, greenSpaceList.getFirst()); // Ensure the added green space is in the list
+        assertEquals(1, greenSpaceList.size()); // Ensure only one green space is added
+        assertEquals(greenSpace, greenSpaceList.getFirst()); // Ensure the added green space is in the list
         assertEquals(greenSpaceList, repository.getGreenSpaceList()); // Ensure the list is correctly maintained
     }
 
@@ -54,7 +54,7 @@ class GreenSpaceRepositoryTest {
 
         repository.addGreenSpace(greenSpace1);
         assertTrue(repository.validateGreenSpace(greenSpace2));
-        assertTrue(repository.validateGreenSpace(greenSpace));
+        assertFalse(repository.validateGreenSpace(greenSpace));
     }
 
     @Test
