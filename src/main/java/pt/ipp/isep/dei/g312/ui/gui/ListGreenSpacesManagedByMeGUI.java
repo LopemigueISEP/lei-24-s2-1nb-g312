@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -20,15 +21,32 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * GUI class for displaying a list of green spaces managed by the logged-in user.
+ */
+
 public class ListGreenSpacesManagedByMeGUI extends Application implements Initializable {
+    @FXML
     public Label label_ManagerEmail;
+    @FXML
     public TableView<GreenSpace> TableView_ListGreenSpacesManagedByMe;
+    @FXML
     public TableColumn<GreenSpace,String> column_Name;
+    @FXML
     public TableColumn<GreenSpace, Double> column_Area;
+    @FXML
     public TableColumn<GreenSpace, String> column_Typology;
+    @FXML
     public TableColumn<GreenSpace,String> column_Adress;
 
     private ListGreenSpacesManagedByMeController controller;
+
+    /**
+     * Starts the GUI application.
+     *
+     * @param primaryStage the primary stage for this application.
+     * @throws Exception if an error occurs during application start.
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         Platform.setImplicitExit(false);
@@ -46,6 +64,13 @@ public class ListGreenSpacesManagedByMeGUI extends Application implements Initia
         }
     }
 
+
+    /**
+     * Initializes the controller class.
+     *
+     * @param url the location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -66,6 +91,9 @@ public class ListGreenSpacesManagedByMeGUI extends Application implements Initia
 
     }
 
+    /**
+     * Loads the values into the TableView.
+     */
     private void loadTableViewValues() {
        try {
            List<GreenSpace> greenSpaces = controller.getGreenSpacesManagedByMe();

@@ -173,15 +173,18 @@ public class GreenSpaceRepository implements Serializable {
      *         an empty list is returned.
      */
     public List<GreenSpace> getGreenSpaceManagedByMe(String loggedInUser) {
-
         List<GreenSpace> listOfGreenSpacesManagedByMe = new ArrayList<>();
 
-        for(GreenSpace grn: getGreenSpaceList()){
-            if(grn != null){
-                if(grn.getGreenSpaceManager().equals(loggedInUser)){
-                    listOfGreenSpacesManagedByMe.add(grn);
+        try {
+            for (GreenSpace grn : getGreenSpaceList()) {
+                if (grn != null) {
+                    if (grn.getGreenSpaceManager().equals(loggedInUser)) {
+                        listOfGreenSpacesManagedByMe.add(grn);
+                    }
                 }
             }
+        }catch (Exception e){
+            throw new RuntimeException("error in getGreenSpaceManagedByMe",e);
         }
         return listOfGreenSpacesManagedByMe;
     }

@@ -44,15 +44,12 @@ public class AssignVehicleToAgendaEntryController {
      * @return the EmployeeRepository instance
      */
     private EmployeeRepository getEmployeeRepository() {
-        try {
-            if (employeeRepository == null) {
-                Repositories repositories = Repositories.getInstance();
-                employeeRepository = repositories.getEmployeeRepository();
-            }
 
-        }catch (Exception e){
-            throw new RuntimeException("error in getting Employee Repository",e);
+        if (employeeRepository == null) {
+            Repositories repositories = Repositories.getInstance();
+            employeeRepository = repositories.getEmployeeRepository();
         }
+
         return employeeRepository;
     }
 
@@ -63,15 +60,12 @@ public class AssignVehicleToAgendaEntryController {
      * @return the TaskRepository instance
      */
     private TaskRepository getTaskRepository(){
-        try{
-            if(taskRepository == null){
-                Repositories repositories = Repositories.getInstance();
-                taskRepository = repositories.getTaskRepository();
-            }
 
-        }catch (Exception e){
-            throw new RuntimeException("error in getting Task Repository",e);
+        if(taskRepository == null){
+            Repositories repositories = Repositories.getInstance();
+            taskRepository = repositories.getTaskRepository();
         }
+
         return taskRepository;
     }
 
@@ -82,15 +76,12 @@ public class AssignVehicleToAgendaEntryController {
      * @return the VehicleRepository instance
      */
     private VehicleRepository getVehicleRepository(){
-        try {
-            if (vehicleRepository == null) {
-                Repositories repositories = Repositories.getInstance();
-                vehicleRepository = repositories.getVehicleRepository();
-            }
 
-        }catch (Exception e){
-            throw new RuntimeException("error in getting Vehicle Repository",e);
+        if (vehicleRepository == null) {
+            Repositories repositories = Repositories.getInstance();
+            vehicleRepository = repositories.getVehicleRepository();
         }
+
         return vehicleRepository;
     }
 
