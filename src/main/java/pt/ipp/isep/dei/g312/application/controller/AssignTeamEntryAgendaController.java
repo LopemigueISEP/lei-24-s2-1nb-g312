@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class AssignTeamController {
+public class AssignTeamEntryAgendaController {
 
     private TeamRepository teamRepository;
     private TaskRepository taskRepository;
@@ -22,7 +22,7 @@ public class AssignTeamController {
 
 
 
-    public AssignTeamController() {
+    public AssignTeamEntryAgendaController() {
         this.taskRepository = getTaskRepository();
         this.teamRepository = getTeamRepository();
         this.emailServices = loadValidEmailServices("src/main/resources/config.properties");
