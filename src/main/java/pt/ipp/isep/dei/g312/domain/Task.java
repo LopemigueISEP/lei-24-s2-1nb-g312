@@ -247,6 +247,9 @@ public class Task implements Cloneable {
     }
 
 
+    public void cancel() {
+        this.status=TaskStatus.CANCELED;
+    }
 }
 
 

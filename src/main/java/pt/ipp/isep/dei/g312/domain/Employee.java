@@ -442,13 +442,13 @@ public class Employee implements Cloneable, Comparable<Employee> {
     // method for the employee to assign a team to a task in the agenda
     public static Optional<Task> assignTeamToTask(Team team, Task task) {
         task.assignTeam(team);
-        task.setTaskStatus(TaskStatus.Planned);
+        task.setTaskStatus(TaskStatus.PLANNED);
         return Repositories.getInstance().getTaskRepository().updateTask(task);
     }
 
     public static Optional<Task> postponedTask(Task task, Date newStartDate) {
         task.setTaskStartDate(newStartDate);
-        task.setTaskStatus(TaskStatus.Postponed);
+        task.setTaskStatus(TaskStatus.POSTPONED);
         task.assignTeam(null);
         return Repositories.getInstance().getTaskRepository().updateTask(task);
     }

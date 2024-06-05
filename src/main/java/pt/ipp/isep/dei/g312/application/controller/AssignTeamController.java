@@ -61,7 +61,7 @@ public class AssignTeamController {
     public List<Task> listUnfinishedTasks(){
         List<Task> tasklist = new ArrayList<>();
         for (Task task : taskRepository.getAgenda()){
-            if (!task.getStatus().equals(TaskStatus.Canceled) || !task.getStatus().equals(TaskStatus.Done)) {
+            if (!task.getStatus().equals(TaskStatus.CANCELED) || !task.getStatus().equals(TaskStatus.DONE)) {
                 tasklist.add(task);
 
             }

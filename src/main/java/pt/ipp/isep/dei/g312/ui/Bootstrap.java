@@ -117,7 +117,7 @@ public class Bootstrap implements Runnable {
         String type = "Type A";
         String greenSpaceName = "Central Park";
         TaskUrgency urgency = TaskUrgency.HIGH;
-        TaskStatus status = TaskStatus.Pending;
+        TaskStatus status = TaskStatus.PENDING;
         Team assignedTeam = null;
         ArrayList<Vehicle> assignedVehicles = new ArrayList<>();
         int taskID = 1;
@@ -147,7 +147,7 @@ public class Bootstrap implements Runnable {
         String type2 = "Type A";
         String greenSpaceName2 = "Central Park";
         TaskUrgency urgency2 = TaskUrgency.HIGH;
-        TaskStatus status2 = TaskStatus.Pending;
+        TaskStatus status2 = TaskStatus.PENDING;
         Team assignedTeam2 = null;
         ArrayList<Vehicle> assignedVehicles2 = new ArrayList<>();
         int taskID2 = 2;
@@ -159,10 +159,10 @@ public class Bootstrap implements Runnable {
 
         //task3
 
-        Task task3 = new Task("Tascão","descrição do tasco lá do sitio",3,"Type A",greenSpace,TaskUrgency.MEDIUM,TaskStatus.Planned,assignedTeam,new ArrayList<>(),3,startDate,endDate,TaskPosition.AGENDA);
+        Task task3 = new Task("Tascão","descrição do tasco lá do sitio",3,"Type A",greenSpace,TaskUrgency.MEDIUM,TaskStatus.PLANNED,assignedTeam,new ArrayList<>(),3,startDate,endDate,TaskPosition.AGENDA);
         taskRepository.addTask(task3);
 
-        Task task4 = new Task("GrandaTask","O Miguel já pagava uns finos ao pessoal",3,"Type A",greenSpace,TaskUrgency.MEDIUM,TaskStatus.Postponed,assignedTeam,new ArrayList<>(),3,startDate,endDate,TaskPosition.AGENDA);
+        Task task4 = new Task("GrandaTask","O Miguel já pagava uns finos ao pessoal",3,"Type A",greenSpace,TaskUrgency.MEDIUM,TaskStatus.POSTPONED,assignedTeam,new ArrayList<>(),3,startDate,endDate,TaskPosition.AGENDA);
         taskRepository.addTask(task4);
 
 
@@ -170,7 +170,7 @@ public class Bootstrap implements Runnable {
 
         Date task5EndDate = dateFormat.parse("17/06/2024 - 13");
 
-        Task task5 = new Task("TaskSemNomeDeJeito","Vou-me despedir para ficar a dormir o dia todo",5,"Type A",greenSpace,TaskUrgency.LOW,TaskStatus.Pending,assignedTeam,new ArrayList<>(),3,task5startDate,task5EndDate,TaskPosition.AGENDA);
+        Task task5 = new Task("TaskSemNomeDeJeito","Vou-me despedir para ficar a dormir o dia todo",5,"Type A",greenSpace,TaskUrgency.LOW,TaskStatus.PENDING,assignedTeam,new ArrayList<>(),3,task5startDate,task5EndDate,TaskPosition.AGENDA);
         taskRepository.addTask(task5);
     }
 
