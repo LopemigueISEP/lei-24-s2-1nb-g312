@@ -33,12 +33,15 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
 
     @FXML
     public ComboBox<String> cmbTask;
+    @FXML
     public ListView<String> listViewAssignedVehicles;
     @FXML
     public ListView<String> listViewVehicles;
-    public Label label_NeedToChoseTask;
-    public Label label_NeedToSelectVehicle;
     @FXML
+    public Label label_NeedToChoseTask;
+    @FXML
+    public Label label_NeedToSelectVehicle;
+
     private AssignVehicleToAgendaEntryController controller;
 
     private Map<String,Vehicle> vehicleMap;
@@ -207,6 +210,7 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
      *
      * @param actionEvent the action event
      */
+    @FXML
     public void cmbTaskOnAction(ActionEvent actionEvent) {
         try {
 

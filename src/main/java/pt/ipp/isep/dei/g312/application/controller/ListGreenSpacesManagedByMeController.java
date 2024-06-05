@@ -11,6 +11,9 @@ import pt.isep.lei.esoft.auth.domain.model.Email;
 
 import java.util.*;
 
+/**
+ * Controller class to manage green spaces assigned to the logged-in user.
+ */
 public class ListGreenSpacesManagedByMeController {
 
     private AuthenticationRepository authenticationRepository;
@@ -19,13 +22,20 @@ public class ListGreenSpacesManagedByMeController {
     private String loggedInUser;
     private final String greenSpaceComparadorSelecionado;
 
-
+    /**
+     * Initializes the controller and sets the sorting algorithm from configuration.
+     */
     public ListGreenSpacesManagedByMeController(){
         this.authenticationRepository = getAuthenticationRepository();
         this.greenSpaceRepository = getGreenSpaceRepository();
         this.greenSpaceComparadorSelecionado = LoadConfigProperties.getProperty("GreenSpaceSortingAlgoritm");
     }
 
+    /**
+     * Retrieves the GreenSpaceRepository instance.
+     *
+     * @return the GreenSpaceRepository instance
+     */
     private GreenSpaceRepository getGreenSpaceRepository() {
 
         if (greenSpaceRepository == null) {
@@ -38,6 +48,11 @@ public class ListGreenSpacesManagedByMeController {
     }
 
 
+    /**
+     * Retrieves the AuthenticationRepository instance.
+     *
+     * @return the AuthenticationRepository instance
+     */
     private AuthenticationRepository getAuthenticationRepository() {
 
         if (authenticationRepository == null) {
@@ -48,6 +63,13 @@ public class ListGreenSpacesManagedByMeController {
         return authenticationRepository;
     }
 
+
+    /**
+     * Retrieves the email of the logged-in user.
+     *
+     * @return the logged-in user's email
+     * @throws RuntimeException if an error occurs while fetching the logged-in user
+     */
     public String getLoggedInUser() {
         try {
             Email mail = authenticationRepository.getCurrentUserSession().getUserId();
@@ -60,7 +82,12 @@ public class ListGreenSpacesManagedByMeController {
     }
 
 
-
+    /**
+     * Retrieves a sorted list of green spaces managed by the logged-in user.
+     *
+     * @return a sorted list of green spaces managed by the logged-in user
+     * @throws RuntimeException if an error occurs while fetching or sorting green spaces
+     */
     public List<GreenSpace> getGreenSpacesManagedByMe(){
 
         List<GreenSpace> greenSpaceManagedByMeList= new ArrayList<>();
@@ -90,7 +117,6 @@ public class ListGreenSpacesManagedByMeController {
         }catch (Exception e){
             throw new RuntimeException("error in switch case in getGreenSpacesManagedByMe",e);
         }
-
 
         return greenSpaceManagedByMeList;
     }
