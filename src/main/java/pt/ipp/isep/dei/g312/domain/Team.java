@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.g312.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * adding new members, retrieving the list of current members, and checking team attributes such
  * as size and whether the team is empty.
  */
-public class Team {
+public class Team implements Serializable {
 
     private List<Employee> teamEmployees;
 

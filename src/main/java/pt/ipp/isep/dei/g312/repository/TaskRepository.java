@@ -255,6 +255,16 @@ public class TaskRepository implements Serializable {
         }
         return maxId+1;
     }
+    public List<Task> getTasksByGreenSpaceForTeam(GreenSpace greenSpace) {
+        List<Task> tasksOfGreenSpace = new ArrayList<>();
+        for (Task t :
+                taskList) {
+            if (t.getGreenSpace().equals(greenSpace)) {
+                tasksOfGreenSpace.add(t);
+            }
+        }
+        return tasksOfGreenSpace;
+    }
     /**
      * Serializes the TaskRepository object to a file.
      */
@@ -321,4 +331,6 @@ public class TaskRepository implements Serializable {
                     " is caught");
         }
     }
+
+
 }

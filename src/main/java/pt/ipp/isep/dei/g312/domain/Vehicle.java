@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.g312.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -7,7 +8,7 @@ import java.util.Date;
  * Represents a vehicle with attributes to manage registration, brand, model, type,
  * weight parameters, kilometers, and check-up details.
  */
-public class Vehicle implements Comparable<Vehicle> {
+public class Vehicle implements Comparable<Vehicle>, Serializable {
 
 
     private String registrationPlate;

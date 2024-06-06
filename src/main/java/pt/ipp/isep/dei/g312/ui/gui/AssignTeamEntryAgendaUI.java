@@ -104,11 +104,11 @@ public class AssignTeamEntryAgendaUI extends Application implements Initializabl
 
     //comboBox for Task
     private void initializeTaskComboBox(GreenSpace greenSpace) {
-        List<Task> taskList = controller.getTasksByGreenSpace(greenSpace);
+        List<Task> taskList = controller.getTasksByGreenSpaceForTeam(greenSpace);
         System.out.println(taskList.size());
         cmbTask.setItems(FXCollections.observableArrayList(taskList));
-        cmbTask.setCellFactory(listView -> new AssignTeamEntryAgendaUI.TaskComboNames());
-        cmbTask.setButtonCell(new AssignTeamEntryAgendaUI.TaskComboNames());
+        cmbTask.setCellFactory(listView -> new TaskComboNames());
+        cmbTask.setButtonCell(new TaskComboNames());
     }
 
     public void onChangeCmbTask(ActionEvent actionEvent) {
