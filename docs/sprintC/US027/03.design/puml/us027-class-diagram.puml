@@ -9,25 +9,36 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
-class ListGreenSpacesManagedUI{
+class ListGreenSpacesManagedByMeUI{
 }
 
-class ListGreenSpacesManagedController{
+class ListGreenSpacesManagedByMeController{
++getGreenSpaceRepository()
++getEmployeeRepository()
++getGreenSpacesManagedByMe(): List<GreenSpace>
+
 }
 
 class Employee {
-+getGreenSpacesManaged()
++getGreenSpacesManagedByMe(): List<GreenSpace>
 }
 
 class GreenSpaces{
--ArrayList<GreenSpace> greenSpaces
+-List<GreenSpace> greenSpaces
++getGreenSpacesManagedByEmployee()
 }
 
 class GreenSpace{
+-name : String
+-address : String
+-area : double
+-typology : String
+- greenSpaceManager : String
 }
 
 
 class EmployeeRepository {
++getEmployee(): employee
 }
 
 
@@ -47,9 +58,9 @@ class Repositories {
 Repositories --> Repositories : instance
 
 
-ListGreenSpacesManagedUI ..> ListGreenSpacesManagedController
+ListGreenSpacesManagedByMeUI ..> ListGreenSpacesManagedByMeController
 
-ListGreenSpacesManagedController ..> Repositories : repositories
+ListGreenSpacesManagedByMeController ..> Repositories : repositories
 
 
 
@@ -64,7 +75,7 @@ Employee "1" --> "*"GreenSpaces: list GreenSpaces
 GreenSpaces "1" --> "*"GreenSpace
 
 
-ListGreenSpacesManagedController .> Employee
+ListGreenSpacesManagedByMeController .> Employee
 
 
 @enduml

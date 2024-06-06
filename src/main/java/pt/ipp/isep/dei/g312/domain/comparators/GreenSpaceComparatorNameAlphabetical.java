@@ -19,6 +19,14 @@ public class GreenSpaceComparatorNameAlphabetical implements Comparator<GreenSpa
     @Override
     public int compare(GreenSpace g1, GreenSpace g2) {
 
-        return g1.getName().toUpperCase().compareTo(g2.getName().toUpperCase());
+        int valueCompare = g1.getName().toUpperCase().compareTo(g2.getName().toUpperCase());
+
+        if(valueCompare == 0){
+            return 0;
+        } else if (valueCompare > 0) {
+            return 1;
+        }else{
+            return -1;
+        }
     }
 }

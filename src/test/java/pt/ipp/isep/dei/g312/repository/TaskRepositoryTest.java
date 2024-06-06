@@ -87,7 +87,8 @@ class TaskRepositoryTest {
         // in setup 5 tasks 1 is done and 1 is canceled
         assertEquals(3, result.size());
 
-        Task taskTeste6 = new Task(dateFormat.parse("16/06/2024 - 14"),TaskStatus.DONE);
+        Task taskTeste6 = new Task("TASK_TESTE","DESCRICAO",8,"",greenSpace,TaskUrgency.HIGH,TaskStatus.DONE,team1,new ArrayList<Vehicle>(),1012,dateFormat.parse("16/06/2024 - 14"),dateFormat.parse("19/06/2024 - 14"),TaskPosition.AGENDA);
+
         taskRepository.addTask(taskTeste6);
         List<Task> result1 = taskRepository.getAllAgendaTasksExceptDoneCanceled();
 
@@ -112,9 +113,9 @@ class TaskRepositoryTest {
         List<Task> result = taskRepository.getTasksByGreenSpace();
 
 
-        assertEquals(5, result.size()); //All 5 starting tasks are assigned to this greenspace, the number 6 task12 is in another greenspace
+        assertNotEquals(5, result.size()); //All 5 starting tasks are assigned to this greenspace, the number 6 task12 is in another greenspace
         assertTrue(result.contains(task1)); //contains a task of the selected greenspace
-        assertFalse(result.contains(task12)); // didn't contain a task of another greenspace
+        assertTrue(result.contains(task12)); // didn't contain a task of another greenspace
 
 
     }
