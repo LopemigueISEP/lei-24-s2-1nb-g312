@@ -1,4 +1,4 @@
-# US22 - Add a new entry in the Agenda
+# US22 - As a GSM, I want to add a new entry in the Agenda.
 
 ## 3. Design - User Story Realization 
 

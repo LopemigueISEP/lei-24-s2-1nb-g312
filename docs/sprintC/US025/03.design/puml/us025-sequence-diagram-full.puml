@@ -70,14 +70,16 @@ activate GSM
             activate EmployeeRepository
                 EmployeeRepository -->CTRL: employee
             deactivate EmployeeRepository
-            CTRL --> CTRL: employee
-            CTRL -> employee: cancelTask(task)
-            activate employee
-                employee -->TaskRepository: cancelTask(task)'Estará certo apartir daqui?? Tinha ideia de ser o taksrepo a fazer estará certo?
-                activate TaskRepository
-                    TaskRepository --> CTRL: task
-                deactivate TaskRepository
-            deactivate employee
+            CTRL --> CTRL: Employee
+            CTRL -> Employee: cancelTask(task)
+            activate Employee
+                Employee ->Task: cancelTask(task)
+            deactivate Employee
+                activate Task
+                    Task -> Task : cancel()
+                     Task--> CTRL: task
+                deactivate Task
+            deactivate Employee
             CTRL --> UI: task
 
         deactivate CTRL

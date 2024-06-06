@@ -16,22 +16,44 @@ class AssignVehicleToAgendaEntryController{
 +getEmployeeRepository()
 +getTaskRepository()
 +getVehicleRepository()
-+getAvailableTasks()
-+getAvailableVehicles(Task taskSelected)
-+getTaskAssignedVehicles(Task task)
-+assignVehicleToTask(Vehicle vehicle, Task task)
++getAvailableTasks(): List<Task>
++getAvailableVehicles(Task taskSelected): List<Vehicle>
++getTaskAssignedVehicles(Task task): List<Vehicle>
++assignVehicleToTask(Vehicle vehicle, Task task): void
 }
 
 class Employee {
-+assignVehicleToTask(Vehicle availableVehicle, Task selectedTask)
+    -name : String
+    -birthdate : Date
+    -email : String
+    -phoneNumber : int
+    -admission date : Date
+    -taxpayerNumber : String
+    -address : String
+    -docNumber : String
+    -jobTitle : String
++assignVehicleToTask(Vehicle availableVehicle, Task selectedTask):void
 }
 
 class Task{
+-title: String
+    -description: String
+    -date: Date
+    -taskStartPeriod: TaskPeriod
+    -taskExpectedDuration: int
+    -type: String
+    -greenSpace: GreenSpace
+    -urgency: TaskUrgency
+    -status: TaskStatus
+    -assignedTeam: Team
+    -assignedVehicles: List<Vehicle>
+    -startDate: Date
+    -taskPosition: TaskPosition
 }
 
 class TaskRepository {
-+getAllAgendaTasksExceptDoneCanceled()
-+getVehicleAvaiability(Task taskSelecionada, List<Vehicle> vehicles)
++getAllAgendaTasksExceptDoneCanceled(): List<Task>
++getVehicleAvaiability(Task selectedTask, List<Vehicle> vehicles): List<Vehicle>
 }
 
 class EmployeeRepository {
@@ -39,7 +61,7 @@ class EmployeeRepository {
 }
 
 class VehicleRepository{
-+getVehicles()
++getVehicles():List<Vehicle>
 
 }
 

@@ -9,6 +9,7 @@ import pt.ipp.isep.dei.g312.repository.*;
 
 import java.time.LocalDate;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -156,7 +157,7 @@ public class AddEntryAgendaController {
      * @param startTime The start time of the task (presumably in hours).
      * @return An Optional containing the added Task object if successful, or Optional.empty() otherwise.
      */
-    public Optional<Task> addTaskToAgenda(GreenSpace selectedGreenSpace, Task selectedTask, LocalDate startDate, int startTime) {
+    public Optional<Task> addTaskToAgenda(GreenSpace selectedGreenSpace, Task selectedTask, LocalDate startDate, LocalTime startTime) {
         Optional<Task> newTaskAgenda = Optional.empty();
         newTaskAgenda=Employee.addTaskAgenda(selectedGreenSpace,selectedTask,startDate,startTime,TaskPosition.AGENDA,true);
         if (newTaskAgenda.isPresent()){

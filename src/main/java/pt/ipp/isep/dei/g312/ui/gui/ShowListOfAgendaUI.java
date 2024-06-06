@@ -28,7 +28,7 @@ public class ShowListOfAgendaUI extends Application implements Initializable {
     public TableView<Task> TableView_TaskAgenda;
     public TableColumn<Task, GreenSpace> column_greenSpaceName;
     public TableColumn<Task, String> column_TaskName;
-    public TableColumn<Task, LocalDate> column_StartDate; // Updated type
+    public TableColumn<Task, LocalDate> column_StartDate;
     public TableColumn<Task, TaskStatus> column_Status;
 
     private ShowAgendaController controller;
