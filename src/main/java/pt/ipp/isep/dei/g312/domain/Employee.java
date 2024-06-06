@@ -447,10 +447,11 @@ public class Employee implements Cloneable, Comparable<Employee> {
         return Repositories.getInstance().getTaskRepository().updateTask(task);
     }
 
-    public static Optional<Task> postponedTask(Task task, Date newStartDate) {
-        task.setTaskStartDate(newStartDate);
+    public static Optional<Task> postponedTask(Task task, Date startDate) {
+        task.setTaskStartDate(startDate);
         task.setTaskStatus(TaskStatus.POSTPONED);
         task.assignTeam(null);
+        task.assignVehicle(null);
         return Repositories.getInstance().getTaskRepository().updateTask(task);
     }
 
