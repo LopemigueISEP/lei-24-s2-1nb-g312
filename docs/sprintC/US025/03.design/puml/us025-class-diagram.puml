@@ -61,13 +61,13 @@ class TasksRepository{
 
 CancelEntryAgendaUI .>CancelEntryAgendaController
 
-AddEntryAgendaController .> "1" Repositories
+CancelEntryAgendaController .> "1" Repositories
 
 Repositories "1" --> "1" Repositories : getInstance()
 Repositories "1" --> "1" EmployeeRepository
 Repositories "1" --> "1" TasksRepository
 
-AddEntryAgendaController ..>Employee
+CancelEntryAgendaController ..>Employee
 
 EmployeeRepository "1" --> "1" Employee
 TasksRepository "1" --> "1" Employee

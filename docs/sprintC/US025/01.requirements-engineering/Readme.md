@@ -1,4 +1,4 @@
-# US025 - Cancel an entry in the Agenda 
+# US025 - As a GSM, I want to Cancel an entry in the Agenda
 
 
 ## 1. Requirements Engineering

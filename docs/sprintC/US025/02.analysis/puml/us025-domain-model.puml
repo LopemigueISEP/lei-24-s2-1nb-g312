@@ -40,18 +40,6 @@ class Task {
 class GreenSpacesManager{
 
 }
-class GreenSpace {
-    typology
-    area
-    address
-    name
-    manager
-    numberOfEquipments
-    waterConsumption
-    equipmentUsed
-    inquiryUseOfPark
-    routesWaterPoints
-}
 class Agenda {
     toDoListEntry
     startDate
@@ -59,9 +47,8 @@ class Agenda {
 }
 Employee "1" -- "1..*" GreenSpacesManager : is >
 GreenSpacesManager "1" -- "1" Agenda : manages >
-GreenSpacesManager "1" -- "1..*" GreenSpace : registers >
+
 Agenda "1" -- "0..*" Task : has >
-Task "1..*" - "1..*" GreenSpace: occurs >
 
 
 @enduml

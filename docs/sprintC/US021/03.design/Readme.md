@@ -1,10 +1,8 @@
-# US006 - Create a Task 
+# US021 - As a GSM, I want to add a new entry to the To-Do List
 
 ## 3. Design - User Story Realization 
 
 ### 3.1. Rationale
-
-_**Note that SSD - Alternative One is adopted.**_
 
 | Interaction ID | Question: Which class is responsible for...       | Answer                     | Justification (with patterns)                                                                                 |
 |:---------------|:--------------------------------------------------|:---------------------------|:--------------------------------------------------------------------------------------------------------------|
@@ -42,8 +40,8 @@ Other software classes (i.e. Pure Fabrication) identified:
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/us006-sequence-diagram-full.svg)
+![Sequence Diagram - Full](svg/us021-sequence-diagram-full.svg)
 
 ## 3.3. Class Diagram (CD)
 
-![Class Diagram](svg/us006-class-diagram.svg)
+![Class Diagram](svg/us021-class-diagram.svg)

@@ -79,10 +79,10 @@ activate GSM
         CTRL -> employee : createTask(selectedGreenSpace,taskTitle,taskDescr,taskUrgency,expectedDuration)
         activate employee
             employee -> task**: registerTask(selectedGreenSpace,taskTitle,taskDescr,taskUrgency,expectedDuration)
+            activate task
             task -> employee: task
-            employee -> employee: validateTask(task)
-            employee -> employee: addTask(task)
-            employee --> CTRL: task
+            deactivate task
+            employee -> CTRL: task
         deactivate employee
         CTRL -> UI: task
 

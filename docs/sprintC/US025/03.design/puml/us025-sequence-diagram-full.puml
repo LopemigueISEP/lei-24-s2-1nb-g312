@@ -38,11 +38,11 @@ activate GSM
             CTRL -> TaskRepository : getTasksAtAgenda()
             activate TaskRepository
 
-                TaskRepository --> CTRL : TaskAtAgendaList
+                TaskRepository --> CTRL : taskAtAgendaList
             deactivate TaskRepository
 
 
-            CTRL --> UI : TaskAtAgendaList
+            CTRL --> UI : taskAtAgendaList
         deactivate CTRL
 
         UI --> GSM : shows all tasks at agenda

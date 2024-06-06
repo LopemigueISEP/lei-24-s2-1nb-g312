@@ -42,13 +42,6 @@ class EmployeeRepository{
 +getEmployee(): Employee
 
 }
-class TasksRepository{
- +getTasks(): List<Task>
- +getTodoTasks(): List<Task>
- +getAgendaTasks(): List<Task>
- +getTask(): Task
- +add() : Optional<Task>
-}
 class GreenSpacesRepository{
 +getGreenSpaces(): GreenSpace
 }
@@ -85,6 +78,6 @@ GreenSpacesRepository "1" --> "1" Employee
 
 Employee --> Task: registers
 
-Task "1" --> "1" TasksRepository: add
+
 
 @enduml
