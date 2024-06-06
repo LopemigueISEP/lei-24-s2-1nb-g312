@@ -145,7 +145,7 @@ public class Bootstrap implements Runnable {
         String description2 = "This is a sample task description.";
         int taskExpectedDuration2 = 8; //hours
         String type2 = "Type A";
-        String greenSpaceName2 = "Central Park";
+        String greenSpaceName2 = "Avioso";
         TaskUrgency urgency2 = TaskUrgency.HIGH;
         TaskStatus status2 = TaskStatus.PENDING;
         Team assignedTeam2 = null;

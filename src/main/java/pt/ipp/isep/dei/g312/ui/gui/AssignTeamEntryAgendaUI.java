@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.g312.application.controller.AssignTeamEntryAgendaController;
-import pt.ipp.isep.dei.g312.domain.GreenSpace;
 import pt.ipp.isep.dei.g312.domain.Task;
 import pt.ipp.isep.dei.g312.domain.Team;
 
@@ -28,8 +27,8 @@ public class AssignTeamEntryAgendaUI extends Application implements Initializabl
     public ComboBox cmbTask;
     public ComboBox cmbTeam;
     public Label messageLabel;
-    private Optional<Task> choosenTask = null;
-    private Optional<Team> choosenTeam = null;
+    private Optional<Task> chosenTask = null;
+    private Optional<Team> chosenTeam = null;
 
 
     public AssignTeamEntryAgendaUI() {
@@ -71,22 +70,22 @@ public class AssignTeamEntryAgendaUI extends Application implements Initializabl
     }
 
     public void onChangeCmbTask(ActionEvent actionEvent) {
-        choosenTask = Optional.empty();
+        chosenTask = Optional.empty();
         if (cmbTask.getValue() != null) {
             Task task = (Task) cmbTask.getValue();
             initializeTeamComboBox(task);
-            choosenTask = Optional.of(task);
+            chosenTask = Optional.of(task);
         }
     }
 
     public void onChangeCmbTeam(ActionEvent actionEvent) {
-        choosenTeam = Optional.empty();
-        if(choosenTask.isPresent()) {
+        chosenTeam = Optional.empty();
+        if(chosenTask.isPresent()) {
 
             if (cmbTeam.getValue() != null) {
 
                 Team team = (Team) cmbTeam.getValue();
-                choosenTeam = Optional.of(team);
+                chosenTeam = Optional.of(team);
             }
         }
     }
@@ -142,9 +141,9 @@ public class AssignTeamEntryAgendaUI extends Application implements Initializabl
 
 
     public void handleRegisterButtonAction(ActionEvent actionEvent) {
-        if (choosenTask.isPresent() && choosenTeam.isPresent()) {
-            Task task = choosenTask.get();
-            Team team = choosenTeam.get();
+        if (chosenTask.isPresent() && chosenTeam.isPresent()) {
+            Task task = chosenTask.get();
+            Team team = chosenTeam.get();
             boolean result = controller.assignTeamToTask(team, task);
             if (result) {
                 messageLabel.setText("Team assigned to Task");
