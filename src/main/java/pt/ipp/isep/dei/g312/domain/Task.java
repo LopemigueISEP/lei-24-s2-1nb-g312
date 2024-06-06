@@ -1,16 +1,17 @@
 package pt.ipp.isep.dei.g312.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Task implements Cloneable {
+public class Task implements Cloneable, Serializable {
 
     private String title;
     private String description;
-    private LocalDate selectedDate;
     private int taskExpectedDuration; //expected hours duration
     private LocalTime startTime;
     private String type;
@@ -23,7 +24,6 @@ public class Task implements Cloneable {
     private Date startDate;
     private Date endDate;
     private TaskPosition taskPosition;
-    private Task selectedTask;
 
 
     /**
@@ -36,7 +36,7 @@ public class Task implements Cloneable {
      * @param taskExpectedDuration the expected duration of the task in minutes
      * @param taskPosition        the position of the task, should be TaskPosition.ToDoList
      */
-    public Task( GreenSpace greenSpace, String title, String description, TaskUrgency urgency, int taskExpectedDuration, TaskPosition taskPosition) {
+    public Task( GreenSpace greenSpace, String title, String description, TaskUrgency urgency, int taskExpectedDuration, TaskPosition taskPosition,int taskId) {
         if (taskPosition.equals(TaskPosition.TODOLIST)) {
             this.greenSpace = greenSpace;
             this.title = title;
@@ -45,23 +45,12 @@ public class Task implements Cloneable {
             this.urgency = urgency;
             this.taskPosition = taskPosition;
             this.assignedVehicles = new ArrayList<>();
-        }
-
-    }
-    public Task(GreenSpace selectedGreenSpace, Task selectedTask, LocalDate selectedDate, LocalTime startTime, TaskPosition taskPosition) {
-        if (taskPosition.equals(TaskPosition.AGENDA)) {
-            this.greenSpace = selectedGreenSpace;
-            this.selectedTask = selectedTask;
-            this.selectedDate = selectedDate;
-            this.startTime = startTime;
-            this.taskPosition = taskPosition;
+            this.taskID=taskId;
         }
 
     }
 
     // constructor for clone
-
-
     public Task(String title, String description, int taskExpectedDuration, String type, GreenSpace greenSpace, TaskUrgency urgency, TaskStatus status, Team assignedTeam, ArrayList<Vehicle> assignedVehicles, int taskID, Date startDate, Date endDate, TaskPosition taskPosition) {
         this.title = title;
         this.description = description;
@@ -75,37 +64,6 @@ public class Task implements Cloneable {
         this.taskID = taskID;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.taskPosition = taskPosition;
-    }
-
-    //TODO: para que são estes construtores?
-    public Task(String title, GreenSpace greenSpace, Date startDate, TaskStatus status) {
-        this.title = title;
-        this.greenSpace = greenSpace;
-        this.startDate = startDate;
-        this.status = status;
-        this.description = "";
-        this.taskExpectedDuration = 0;
-        this.type = "";
-        this.urgency = TaskUrgency.MEDIUM; // Default urgency
-        this.assignedVehicles = new ArrayList<>();
-        this.taskID = 0;
-
-    }
-
-    public Task(Date startDate, TaskStatus status) {
-        this.startDate = startDate;
-        this.status = status;
-    }
-
-    public Task(String title, String description, int taskExpectedDuration, String type, GreenSpace greenSpace, TaskUrgency urgency, int taskID, TaskPosition taskPosition) {
-        this.title = title;
-        this.description = description;
-        this.taskExpectedDuration = taskExpectedDuration;
-        this.type = type;
-        this.greenSpace = greenSpace;
-        this.urgency = urgency;
-        this.taskID = taskID;
         this.taskPosition = taskPosition;
     }
 
@@ -250,6 +208,12 @@ public class Task implements Cloneable {
 
     public void cancel() {
         this.status=TaskStatus.CANCELED;
+    }
+
+    public void addTaskAgenda(LocalDate startDate, LocalTime startTime) {
+        this.taskPosition=TaskPosition.AGENDA;
+        this.startDate=Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        this.startTime=startTime;
     }
 }
 

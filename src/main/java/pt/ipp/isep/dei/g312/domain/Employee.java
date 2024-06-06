@@ -381,7 +381,7 @@ public class Employee implements Cloneable, Comparable<Employee> {
      * @param userValidation    A boolean indicating whether the user has permission to register green spaces.
      * @return An Optional containing the registered GreenSpace object if registration is successful and user has permission, otherwise an empty Optional.
      */
-    public static Optional<GreenSpace> registerGreenSpace(String name, String address, double area, String typology, String greenSpaceManager, boolean userValidation) {
+    public static Optional<GreenSpace> registerGreenSpace(String name, String address, double area, GreenSpaceTypology typology, String greenSpaceManager, boolean userValidation) {
         try {
             if (userValidation) {
                 GreenSpace greenSpace = new GreenSpace(name, address, area, typology, greenSpaceManager);
@@ -398,44 +398,15 @@ public class Employee implements Cloneable, Comparable<Employee> {
     }
 
     // method for the employee to register a task for the todolist
-    public static Optional<Task> registerTask(GreenSpace GreenSpace, String taskTitle, String taskDescr, TaskUrgency taskUrgency, int expectedDuration, TaskPosition todolist, boolean userValidation) {
+    public static Optional<Task> registerTask(GreenSpace GreenSpace, String taskTitle, String taskDescr, TaskUrgency taskUrgency, int expectedDuration, TaskPosition todolist, int taskId) {
         try {
-            if (userValidation) {
-                Task newtask = new Task(GreenSpace,taskTitle,taskDescr,taskUrgency,expectedDuration,todolist);
-                Optional<Task> addedTask = Repositories.getInstance().getTaskRepository().addTask(newtask);
-                return addedTask;
-            } else {
-                System.out.println("This user doesn't have permissions to register tasks");
-                return Optional.empty();
-            }
+
+            Task newtask = new Task(GreenSpace, taskTitle, taskDescr, taskUrgency, expectedDuration, todolist,taskId);
+            Optional<Task> addedTask = Repositories.getInstance().getTaskRepository().addTask(newtask);
+            return addedTask;
+
         } catch (Exception e) {
             System.out.println("Error occurred while registering a task: " + e.getMessage());
-            return Optional.empty();
-        }
-    }
-    /**
-     * This static method attempts to add a task to the agenda.
-     *
-     * @param selectedGreenSpace The GreenSpace associated with the task.
-     * @param selectedTask The Task object to be added.
-     * @param selectedDate The date for the task.
-     * @param startTime The start time of the task (presumably in hours).
-     * @param agenda The position of the task within the agenda (e.g., MORNING, AFTERNOON, EVENING).
-     * @param userValidation A flag indicating whether to perform user validation.
-     * @return An Optional containing the added Task object if successful, or Optional.empty() otherwise.
-     */
-    public static Optional<Task> addTaskAgenda(GreenSpace selectedGreenSpace, Task selectedTask, LocalDate selectedDate, LocalTime startTime, TaskPosition agenda, boolean userValidation) {
-        try {
-            if (userValidation) {
-                Task newTaskAgenda = new Task(selectedGreenSpace,selectedTask,selectedDate, startTime,agenda);
-                Optional<Task> addedTask = Repositories.getInstance().getTaskRepository().addTask(newTaskAgenda);
-                return addedTask;
-            } else {
-                System.out.println("This user doesn't have permissions to add tasks to Agenda");
-                return Optional.empty();
-            }
-        } catch (Exception e) {
-            System.out.println("Error occurred while adding a task to Agenda: " + e.getMessage());
             return Optional.empty();
         }
     }
