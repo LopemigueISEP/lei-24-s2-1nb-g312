@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.g312.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ public class Task implements Cloneable, Serializable {
     private String title;
     private String description;
     private int taskExpectedDuration; //expected hours duration
-    private LocalTime startTime;
     private String type;
     private GreenSpace greenSpace;
     private TaskUrgency urgency;
@@ -212,8 +212,9 @@ public class Task implements Cloneable, Serializable {
 
     public void addTaskAgenda(LocalDate startDate, LocalTime startTime) {
         this.taskPosition=TaskPosition.AGENDA;
-        this.startDate=Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        this.startTime=startTime;
+        this.status=TaskStatus.PENDING;
+        LocalDateTime newStartDateTime = LocalDateTime.of(startDate, startTime);
+        this.startDate=Date.from(newStartDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 }
 

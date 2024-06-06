@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.g312.repository.GreenSpaceRepository;
 import pt.ipp.isep.dei.g312.repository.Repositories;
 import pt.ipp.isep.dei.g312.repository.TaskRepository;
 import pt.ipp.isep.dei.g312.repository.TeamRepository;
+import pt.ipp.isep.dei.g312.ui.console.utils.EmailService;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,13 +14,12 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 
 
-public class AssignTeamEntryAgendaController {
+public class AssignTeamEntryAgendaController implements EmailService {
 
     private TeamRepository teamRepository;
     private TaskRepository taskRepository;
     private GreenSpaceRepository greenSpaceRepository;
 
-    private List<String> emailServices = new ArrayList<>();
 
 
 
@@ -27,7 +27,6 @@ public class AssignTeamEntryAgendaController {
         this.taskRepository = getTaskRepository();
         this.teamRepository = getTeamRepository();
         this.greenSpaceRepository = getGreenSpaceRepository();
-        this.emailServices = loadValidEmailServices("src/main/resources/config.properties");
     }
 
 
@@ -39,9 +38,9 @@ public class AssignTeamEntryAgendaController {
 
 
     public boolean assignTeamToTask(Team team, Task task) {
-        //TODO check if email service is valid
         if (Employee.assignTeamToTask(team, task).isPresent()){
             System.out.println("Team assigned to task:" + task.getAssignedTeam().toString());
+            sendEmailTeam(task);
             return true;
         }
         return false;
@@ -78,33 +77,6 @@ public class AssignTeamEntryAgendaController {
         return taskRepository.getAgenda();
     }
 
-    public List<String> loadValidEmailServices(String filePath) {
-        Properties properties = new Properties();
-
-        try (FileInputStream input = new FileInputStream(filePath)) {
-            properties.load(input);
-
-            String validEmail = properties.getProperty("ValidEmail");
-            if (validEmail != null && !validEmail.isEmpty()) {
-                String[] services = validEmail.split(",");
-                for (String service : services) {
-                    emailServices.add(service.trim());
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return emailServices;
-    }
-    public boolean validEmail(String email){
-
-        if(emailServices.contains(email.split("@")[1])){
-            return true;
-        }
-
-        return false;
-    }
 
     public List<GreenSpace> getGreenSpaces() {
         return greenSpaceRepository.getGreenSpaceList();
