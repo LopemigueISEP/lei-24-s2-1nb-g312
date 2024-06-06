@@ -6,6 +6,8 @@ skinparam shadowing false
 autonumber
 
 title Sequence Diagram (SD) US027
+ref over GSM, UI : This action assumes that \nthe user has already logged in
+
 
 'hide footbox
 actor "GSM" as GSM
@@ -28,7 +30,7 @@ activate GSM
             'create CTRL
 
 
-            UI -> CTRL : listGreenSpacesManaged()
+            UI -> CTRL : listGreenSpacesManagedByMe()
             activate CTRL
 
                 CTRL->CTRL: getEmployeeFromRepository()
@@ -68,7 +70,7 @@ activate GSM
 
 
 
-                CTRL -> "employee" : listGreenSpacesManaged(employee)
+                CTRL -> "employee" : listGreenSpacesManagedByMe(employee)
                     activate "employee"
 
                     "employee" ->"GreenSpaces" : getGreenSpacesManaged(employee)
