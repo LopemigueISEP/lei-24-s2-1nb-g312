@@ -123,6 +123,16 @@ public class TaskRepository implements Serializable {
         return plannedTasks;
     }
 
+    public List<Task> getPlannedAndPostponedTasks() {
+        List<Task> plannedTasks = new ArrayList<>();
+        for (Task task : getAgenda()) {
+            if (task.getStatus() == TaskStatus.PLANNED || task.getStatus() == TaskStatus.POSTPONED) {
+                plannedTasks.add(task);
+            }
+        }
+        return plannedTasks;
+    }
+
     // method to get a list of pending status tasks
     public List<Task> getPendingTasks() {
         List<Task> pendingTasks = new ArrayList<>();

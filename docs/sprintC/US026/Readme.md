@@ -1,4 +1,4 @@
-# US26 - Assign one or more vehicles to an entry in the Agenda
+# US026 - As a GSM I want to assign one or more vehicles to an entry in the Agenda.
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

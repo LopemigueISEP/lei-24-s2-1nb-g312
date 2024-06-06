@@ -37,7 +37,7 @@
                 <ComboBox fx:id="cmbTask" onAction="#onChangeCmbTask" prefHeight="25.0" prefWidth="921.0" promptText="Choose Task" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                 <HBox GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP">
                     <DatePicker fx:id="datePicker" onAction="#onChangeDatePicker" prefHeight="25.0" prefWidth="200.0" promptText="Choose Date" />
-                    <TextField fx:id="textStartTime" onAction="#onChangeStartTime" promptText="Start Time (HH:MM)" />
+                    <TextField fx:id="textStartTime" promptText="Start Time (HH:MM)" />
                 </HBox>
             </children>
         </GridPane>
