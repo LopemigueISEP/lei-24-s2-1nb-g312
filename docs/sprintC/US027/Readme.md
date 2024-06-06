@@ -1,4 +1,4 @@
-# US27 - List all green spaces managed by me
+# US027 - As a GSM, I need to list all green spaces managed by me.
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 
