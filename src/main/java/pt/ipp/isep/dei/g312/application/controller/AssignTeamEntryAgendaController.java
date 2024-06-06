@@ -111,12 +111,14 @@ public class AssignTeamEntryAgendaController {
 
     }
 
-    public List<Task> getTasksByGreenSpace(GreenSpace greenSpace) {
-        return taskRepository.getPlannedAndPostponedTasks().stream()
-                .filter(task -> task.getGreenSpace().equals(greenSpace))
-                .collect(Collectors.toList());
+//    public List<Task> getTasksByGreenSpace(GreenSpace greenSpace) {
+//        return taskRepository.getPlannedAndPostponedTasks().stream()
+//                .filter(task -> task.getGreenSpace().equals(greenSpace))
+//                .collect(Collectors.toList());
+//    }
+
+
+    public List<Task> getTasksByGreenSpaceForTeam(GreenSpace greenSpace) {
+        return taskRepository.getTasksByGreenSpaceForTeam(greenSpace);
     }
-
-
-
 }
