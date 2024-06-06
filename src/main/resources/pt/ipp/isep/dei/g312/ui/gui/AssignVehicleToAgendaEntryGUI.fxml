@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane minHeight="720.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.g312.ui.gui.AssignVehicleToAgendaEntryGUI">
+<AnchorPane minHeight="720.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.g312.ui.gui.AssignVehicleToAgendaEntryGUI">
     <children>
         <VBox alignment="TOP_CENTER" layoutX="240.0" layoutY="45.0" />
         <GridPane layoutX="5.0" layoutY="5.0" prefHeight="728.0" prefWidth="720.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -27,7 +24,7 @@
                     </font>
                 </Button>
 
-                      <ComboBox fx:id="cmbTask" editable="true" maxWidth="1.7976931348623157E308" onAction="#cmbTaskOnAction" prefHeight="31.0" prefWidth="610.0" promptText="Choose Task" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                      <ComboBox fx:id="cmbTask" maxWidth="1.7976931348623157E308" onAction="#cmbTaskOnAction" prefHeight="31.0" prefWidth="610.0" promptText="Choose Task" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                 <ListView fx:id="listViewVehicles" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="169.0" prefWidth="481.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="TOP" />
             <ListView fx:id="listViewAssignedVehicles" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" text="Available Vehicles" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">

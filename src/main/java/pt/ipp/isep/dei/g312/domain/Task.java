@@ -215,6 +215,7 @@ public class Task implements Cloneable, Serializable {
         this.status=TaskStatus.PENDING;
         LocalDateTime newStartDateTime = LocalDateTime.of(startDate, startTime);
         this.startDate=Date.from(newStartDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        this.endDate= calculateEndDate();
     }
 }
 
