@@ -15,6 +15,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.g312.application.controller.AssignVehicleToAgendaEntryController;
 import pt.ipp.isep.dei.g312.domain.Task;
+import pt.ipp.isep.dei.g312.domain.TaskStatus;
 import pt.ipp.isep.dei.g312.domain.Vehicle;
 
 import java.io.IOException;
@@ -104,9 +105,46 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy - HH");
 
+            String taskTitle = "";
+            String taskGreenSpaceName ="";
+            String taskStatus="";
+            String taskStartDate ="";
+            String taskEndDate = "";
+
             ObservableList<String> tasks = FXCollections.observableArrayList();
             for (Task task : controller.getAvailableTasks()) {
-                String descriptionTask = String.format("%s | %s | %s | Start: %sh | Finish: %sh", task.getTitle(), task.getGreenSpace().getName(), task.getStatus(), simpleDateFormat.format(task.getStartDate()), simpleDateFormat.format(task.getEndDate()));
+
+                if(task.getTitle() != null) {
+                    taskTitle = task.getTitle();
+                }else {
+                    taskTitle = "not available";
+                }
+
+                if(task.getGreenSpace().getName() != null) {
+                    taskGreenSpaceName = task.getGreenSpace().getName();
+                }else {
+                    taskGreenSpaceName = "not available";
+                }
+
+                if(task.getStatus() != null) {
+                    taskStatus = task.getStatus().toString();
+                }else {
+                    taskStatus = "not available";
+                }
+
+                if (task.getStartDate() != null){
+                    taskStartDate = simpleDateFormat.format(task.getStartDate());
+                }else {
+                    taskStartDate = "not available";
+                }
+
+                if (task.getEndDate() != null){
+                    taskEndDate = simpleDateFormat.format(task.getEndDate());
+                }else {
+                    taskEndDate = "not available";
+                }
+
+                String descriptionTask = String.format("%s | %s | %s | Start: %sh | Finish: %sh", taskTitle, taskGreenSpaceName, taskStatus, taskStartDate, taskEndDate);
                 tasks.add(descriptionTask);
                 taskMap.put(descriptionTask, task);
             }
