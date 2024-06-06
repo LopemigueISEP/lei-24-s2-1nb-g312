@@ -6,7 +6,6 @@ skinparam shadowing false
 autonumber
 
 title Sequence Diagram (SD) US026
-ref over GSM, UI : This action assumes that \nthe user has already logged in
 
 
 'hide footbox
@@ -19,6 +18,8 @@ participant "employeeRepository:\nEmployeeRepository" as EmployeeRepository
 participant "taskRepository:\nTaskRepository" as TaskRepository
 participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
 participant "employee:Employee" as employee
+
+ref over GSM, UI : This action assumes that \nthe user has already logged in
 
 
 activate GSM
