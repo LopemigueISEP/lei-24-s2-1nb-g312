@@ -24,6 +24,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static pt.ipp.isep.dei.g312.ui.console.utils.Utils.isInt;
+
 /**
  * This class represents the graphical user interface (GUI) for adding a new entry to an agenda.
  * It handles user interactions, data validation, and communication with the underlying application controller.
@@ -38,16 +39,18 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
 
     public Label lblAllFields;
     private AddEntryAgendaController addEntryAgendaController;
-/**
-        * Constructor that initializes the application controller.
-            */
-    public AddEntryToAgendaUI(){
-        addEntryAgendaController= new AddEntryAgendaController();
+
+    /**
+     * Constructor that initializes the application controller.
+     */
+    public AddEntryToAgendaUI() {
+        addEntryAgendaController = new AddEntryAgendaController();
     }
 
     public static void main(String[] args) {
         launch();
     }
+
     /**
      * The start method is the entry point for a JavaFX application.
      * It's called by the launch() method after the application class is initialized.
@@ -71,23 +74,23 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
         }
     }
 
-/**
- * This method is called by the FXML loader after all the components in the FXML file have been created.
- * It's used to initialize the UI components and perform any other setup tasks that need to be done
- * before the application can be used.
- *
- * @param url The location of the FXML file.
- * @param resourceBundle The resource bundle used to localize the application.
- */
+    /**
+     * This method is called by the FXML loader after all the components in the FXML file have been created.
+     * It's used to initialize the UI components and perform any other setup tasks that need to be done
+     * before the application can be used.
+     *
+     * @param url            The location of the FXML file.
+     * @param resourceBundle The resource bundle used to localize the application.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String userEmail = addEntryAgendaController.getUserEmail();
         initializeComboBoxGreenSpaces(userEmail);
-        GreenSpace selectedGreenSpace = (GreenSpace) cmbGreenSpace.getSelectionModel().getSelectedItem();
-        initializeTaskComboBox(selectedGreenSpace);
+
         initializeDatePicker();
 
     }
+
     /**
      * Initializes the green space combo box with available green spaces retrieved from the controller,
      * filtering them based on the user's email (if the user has manager rights).
@@ -96,11 +99,18 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
      */
     private void initializeComboBoxGreenSpaces(String userEmail) {
         List<GreenSpace> greenSpaces = addEntryAgendaController.getGreenSpaceList(userEmail);
-        List<GreenSpace> managedGreenSpaces = addEntryAgendaController.filterGreenSpacesByManager(greenSpaces, userEmail);
         cmbGreenSpace.setItems(FXCollections.observableArrayList(greenSpaces));
         cmbGreenSpace.setCellFactory(listView -> new GreenSpaceComboNames());
         cmbGreenSpace.setButtonCell(new GreenSpaceComboNames());
     }
+
+    public void selectGreenSpace(ActionEvent actionEvent) {
+        if (cmbGreenSpace.getValue() != null) {
+            GreenSpace selectedGreenSpace = (GreenSpace) cmbGreenSpace.getValue();
+            initializeTaskComboBox(selectedGreenSpace);
+        }
+    }
+
     /**
      * Inner class defining how GreenSpace objects are displayed in the combo box.
      */
@@ -121,17 +131,19 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
         }
 
     }
+
     /**
      * Initializes the task combo box with tasks belonging to the selected green space retrieved from the controller.
      *
      * @param greenSpace The selected green space. If null, the combo box will be cleared.
      */
-    private void initializeTaskComboBox(GreenSpace greenSpace){
-        List<Task> taskList= addEntryAgendaController.getTasksByGreenSpace(greenSpace);
+    private void initializeTaskComboBox(GreenSpace greenSpace) {
+        List<Task> taskList = addEntryAgendaController.getTasksByGreenSpace(greenSpace);
         cmbTask.setItems(FXCollections.observableArrayList(taskList));
         cmbTask.setCellFactory(listView -> new TaskComboNames());
         cmbTask.setButtonCell(new TaskComboNames());
     }
+
     private static class TaskComboNames extends ListCell<Task> {
         @Override
         public void updateItem(Task item, boolean empty) {
@@ -148,6 +160,7 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
         }
 
     }
+
     /**
      * Initializes the date picker with the following behavior:
      * - Disables dates before tomorrow (ensures user selects a future date).
@@ -173,36 +186,35 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
         if (verifyEmptyFields()) {
             lblAllFields.setText("Please fill out all required information.");
             lblAllFields.setVisible(true);
-        } else if (textStartTime.getText().split(":").length!=2) {
+        } else if (textStartTime.getText().split(":").length != 2) {
             lblAllFields.setText("Expected start time should in format HH:MM");
             lblAllFields.setVisible(true);
         } else {
 
-            GreenSpace selectedGreenSpace = (GreenSpace) cmbGreenSpace.getValue();
             Task selectedTask = (Task) cmbTask.getValue();
             LocalDate selectedDate = datePicker.getValue();
-                int hourStartTime = Integer.parseInt(textStartTime.getText().split(":")[0]);
-                int minuteStartTime = Integer.parseInt(textStartTime.getText().split(":")[1]);
-                LocalTime startTime = LocalTime.of(hourStartTime, minuteStartTime);
-
+            int hourStartTime = Integer.parseInt(textStartTime.getText().split(":")[0]);
+            int minuteStartTime = Integer.parseInt(textStartTime.getText().split(":")[1]);
+            LocalTime startTime = LocalTime.of(hourStartTime, minuteStartTime);
 
 
             if (confirmsData()) {
-                Optional<Task> newTaskAgenda = addEntryAgendaController.addTaskToAgenda(selectedGreenSpace,selectedTask,selectedDate,startTime);;
-                if (newTaskAgenda.isPresent()) {
-                    if (addAnotherTaskToAgenda()) {
-                        resetAllFields();
-                    } else {
-                        Stage stage = (Stage) lblAllFields.getScene().getWindow();
-                        stage.close();
-                    }
+                addEntryAgendaController.addTaskToAgenda(selectedTask, selectedDate, startTime);
+//                if (newTaskAgenda.isPresent()) {
+                if (addAnotherTaskToAgenda()) {
+                    resetAllFields();
                 } else {
-                    lblAllFields.setText("Task already in agenda.");
-                    lblAllFields.setVisible(true);
+                    Stage stage = (Stage) lblAllFields.getScene().getWindow();
+                    stage.close();
                 }
+//                } else {
+//                    lblAllFields.setText("Task already in agenda.");
+//                    lblAllFields.setVisible(true);
+//                }
             }
         }
     }
+
     /**
      * Checks if any of the required fields in the UI are empty.
      *
@@ -214,6 +226,7 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
                 || datePicker.getValue() == null
                 || textStartTime.getText().isEmpty();
     }
+
     /**
      * Prompts the user to confirm their data entry before adding a task to the agenda.
      *
@@ -260,6 +273,7 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
             return false;
         }
     }
+
     /**
      * Resets all UI fields in the form after adding a task or encountering an error.
      */

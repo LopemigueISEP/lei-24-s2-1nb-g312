@@ -49,6 +49,7 @@ public class Bootstrap implements Runnable {
         Repositories.getInstance().getSkillRepository().serializateData();
         Repositories.getInstance().getGreenSpaceRepository().serializateData();
         Repositories.getInstance().getJobRepository().serializateData();
+        Repositories.getInstance().getTaskRepository().serializateData();
     }
 
     private void addEmployes() {
@@ -103,75 +104,7 @@ public class Bootstrap implements Runnable {
 
     private void addTasks() throws ParseException {
         TaskRepository taskRepository = Repositories.getInstance().getTaskRepository();
-        GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
-
-        // Creating a sample date
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH");
-        Date startDate = dateFormat.parse("01/06/2024 - 14");
-        Date endDate = dateFormat.parse("02/06/2024 - 13");
-
-        // Creating other sample parameters
-        String title = "Sample Task";
-        String description = "This is a sample task description.";
-        int taskExpectedDuration = 8; //hours
-        String type = "Type A";
-        String greenSpaceName = "Central Park";
-        TaskUrgency urgency = TaskUrgency.HIGH;
-        TaskStatus status = TaskStatus.PENDING;
-        Team assignedTeam = null;
-        ArrayList<Vehicle> assignedVehicles = new ArrayList<>();
-        int taskID = 1;
-        TaskPosition taskPosition = TaskPosition.AGENDA;
-
-        GreenSpace greenSpace = new GreenSpace("greenTeste","casota", 200,"cenas","GSM@this.app" );
-        Task task = new Task(title, description, taskExpectedDuration, type, greenSpace, urgency, status, assignedTeam, assignedVehicles, taskID, startDate, endDate, taskPosition);
-        taskRepository.addTask(task);
-        // Obtendo o GreenSpace pelo nome
-//        Optional<GreenSpace> greenSpaceOptional = greenSpaceRepository.getGreenSpaceByName(greenSpaceName);
-//        if (greenSpaceOptional.isPresent()) {
-//            GreenSpace greenSpace = greenSpaceOptional.get();
-//
-//            // Adicionando a tarefa ao repositório
-//            Task task = new Task(title, description, taskExpectedDuration, type, greenSpace, urgency, status, assignedTeam, assignedVehicles, taskID, startDate, endDate, taskPosition);
-//            taskRepository.addTask(task);
-//        } else {
-//        }
-
-        Date startDate2 = dateFormat.parse("01/06/2024 - 14");
-        Date endDate2 = dateFormat.parse("02/06/2024 - 13");
-
-        // Task 2
-        String title2 = "Sample Task 2 for testing";
-        String description2 = "This is a sample task description.";
-        int taskExpectedDuration2 = 8; //hours
-        String type2 = "Type A";
-        String greenSpaceName2 = "Avioso";
-        TaskUrgency urgency2 = TaskUrgency.HIGH;
-        TaskStatus status2 = TaskStatus.PENDING;
-        Team assignedTeam2 = null;
-        ArrayList<Vehicle> assignedVehicles2 = new ArrayList<>();
-        int taskID2 = 2;
-        TaskPosition taskPosition2 = TaskPosition.AGENDA;
-
-        Task task2 = new Task(title2, description2, taskExpectedDuration2, type2, greenSpace, urgency2, status2, assignedTeam2, assignedVehicles2, taskID2, startDate2, endDate2, taskPosition2);
-        taskRepository.addTask(task2);
-
-
-        //task3
-
-        Task task3 = new Task("Tascão","descrição do tasco lá do sitio",3,"Type A",greenSpace,TaskUrgency.MEDIUM,TaskStatus.PLANNED,assignedTeam,new ArrayList<>(),3,startDate,endDate,TaskPosition.AGENDA);
-        taskRepository.addTask(task3);
-
-        Task task4 = new Task("GrandaTask","O Miguel já pagava uns finos ao pessoal",3,"Type A",greenSpace,TaskUrgency.MEDIUM,TaskStatus.POSTPONED,assignedTeam,new ArrayList<>(),3,startDate,endDate,TaskPosition.AGENDA);
-        taskRepository.addTask(task4);
-
-
-        Date task5startDate = dateFormat.parse("16/06/2024 - 14");
-
-        Date task5EndDate = dateFormat.parse("17/06/2024 - 13");
-
-        Task task5 = new Task("TaskSemNomeDeJeito","Vou-me despedir para ficar a dormir o dia todo",5,"Type A",greenSpace,TaskUrgency.LOW,TaskStatus.PENDING,assignedTeam,new ArrayList<>(),3,task5startDate,task5EndDate,TaskPosition.AGENDA);
-        taskRepository.addTask(task5);
+        taskRepository.getSeralizatedData();
     }
 
     private void addVehicles() throws ParseException {

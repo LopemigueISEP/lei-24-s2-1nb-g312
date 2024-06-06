@@ -61,14 +61,15 @@ public class AddEntryToDoListUI extends Application implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        initializeGreenSpaceComboBox();
+        String userEmail = addEntryToDoListController.getUserEmail();
+        initializeGreenSpaceComboBox(userEmail);
         initializeTaskUrgenciesComboBox();
 
 
     }
 
-    private void initializeGreenSpaceComboBox() {
-        List<GreenSpace> greenSpaces= addEntryToDoListController.getGreenSpaces();
+    private void initializeGreenSpaceComboBox(String userEmail) {
+        List<GreenSpace> greenSpaces = addEntryToDoListController.getGreenSpaces(userEmail);
         cmbGreenSpace.setItems(FXCollections.observableArrayList(greenSpaces));
         cmbGreenSpace.setCellFactory(listView -> new GreenSpaceComboNames());
         cmbGreenSpace.setButtonCell(new GreenSpaceComboNames());

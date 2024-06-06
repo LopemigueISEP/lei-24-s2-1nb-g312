@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import pt.ipp.isep.dei.g312.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.g312.domain.Employee;
 import pt.ipp.isep.dei.g312.domain.GreenSpace;
+import pt.ipp.isep.dei.g312.domain.GreenSpaceTypology;
+import pt.ipp.isep.dei.g312.domain.TaskUrgency;
 import pt.ipp.isep.dei.g312.repository.AuthenticationRepository;
 import pt.ipp.isep.dei.g312.repository.EmployeeRepository;
 import pt.ipp.isep.dei.g312.repository.GreenSpaceRepository;
@@ -124,7 +126,7 @@ public class RegisterGreenSpaceController {
      * @param greenSpaceManager The manager of the green space.
      * @return An Optional containing the registered GreenSpace if successful, or empty otherwise.
      */
-    public static Optional<GreenSpace> registerGreenSpace(String name, String address, double area, String typology, String greenSpaceManager) {
+    public static Optional<GreenSpace> registerGreenSpace(String name, String address, double area, GreenSpaceTypology typology, String greenSpaceManager) {
         try {
             GreenSpace greenSpace = new GreenSpace(name, address, area, typology, greenSpaceManager);
             return greenSpaceRepository.addGreenSpace(greenSpace);
@@ -134,4 +136,7 @@ public class RegisterGreenSpaceController {
         }
     }
 
+    public GreenSpaceTypology[] getGreenSpaceTypologies() {
+        return GreenSpaceTypology.values();
+    }
 }

@@ -1,72 +1,52 @@
-# US006 - Create a Task 
+# US028 - Consult the tasks assigned to me between two dates
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As an organization employee, I want to create a new task in order to be further published.
+As a Collaborator, I wish to consult the tasks assigned to me between two dates.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
->	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
+> Transcribed: The management of green areas for public use requires the timely management and completion of multiple
+tasks throughout the year. In the daily management, the GSM uses two essential tools: the Agenda and the Task List
+(aka To-Do List). The To-Do List comprises all the tasks required to be done in order to assure the proper functioning
+of the parks. 
 
->	As long as it is not published, access to the task is exclusive to the employees of the respective organization. 
+> Justification: By providing a list of tasks assigned to a Collaborator that can be filtered by date and status, he can
+easily consult the daily tasks as well the past and future tasks.
 
-**From the client clarifications:**
-
-> **Question:** Which is the unit of measurement used to estimate duration?
->
-> **Answer:** Duration is estimated in days.
-
-> **Question:** Monetary data is expressed in any particular currency?
->
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All required fields must be filled in.
-* **AC2:** The task reference must have at least 5 alphanumeric characters.
-* **AC3:** When creating a task with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
+* **AC1:** The list of tasks must be sorted by date.
+* **AC2:** The Collaborator should be able to filter the results by the status of the task.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - Create a task category" as there must be at least one task category to classify the task being created.
+* There is a dependency on "US022 - Add a new entry in the Agenda" as there must be at least one task to the listed.
+* There is a dependency on "US023 - Assign a Team to an entry in the Agenda" since tasks should be assigned.
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
-
-* Typed data:
-    * a reference
-    * a designation 
-    * an informal description
-    * a technical description
-    * an estimated duration
-    * an estimated cost
 	
 * Selected data:
-    * a task category 
+    * a start date
+    * an end date
+    * a task status
 
 **Output Data:**
 
-* List of existing task categories
-* (In)Success of the operation
+* List of tasks assigned to the Collaborator
 
 ### 1.6. System Sequence Diagram (SSD)
 
-**_Other alternatives might exist._**
-
-#### Alternative One
-
-![System Sequence Diagram - Alternative One](svg/us006-system-sequence-diagram-alternative-one.svg)
-
-#### Alternative Two
-
-![System Sequence Diagram - Alternative Two](svg/us006-system-sequence-diagram-alternative-two.svg)
+![System Sequence Diagram - Alternative One](svg/us028-system-sequence-diagram.svg)
 
 ### 1.7 Other Relevant Remarks
 
-* The created task stays in a "not published" state in order to distinguish from "published" tasks.
+n/a

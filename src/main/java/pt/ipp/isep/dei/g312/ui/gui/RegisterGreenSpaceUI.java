@@ -3,17 +3,21 @@ package pt.ipp.isep.dei.g312.ui.gui;
 import javafx.application.Application;
 import javafx.application.Platform;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
+import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import pt.ipp.isep.dei.g312.application.controller.RegisterGreenSpaceController;
 import pt.ipp.isep.dei.g312.domain.GreenSpace;
+import pt.ipp.isep.dei.g312.domain.GreenSpaceTypology;
+import pt.ipp.isep.dei.g312.domain.TaskUrgency;
 
 import java.io.IOException;
 
@@ -41,7 +45,7 @@ public class RegisterGreenSpaceUI extends Application {
     private TextField areaField;
 
     @FXML
-    private ComboBox<String> typologyChoiceBox;
+    private ComboBox typologyChoiceBox;
 
     @FXML
     private Label greenSpaceManagerLabel;
@@ -107,9 +111,31 @@ public class RegisterGreenSpaceUI extends Application {
      */
     @FXML
     public void initializeRegisterGreenSpaceUI() {
-        typologyChoiceBox.setPromptText("Select Green Space Type");
-        typologyChoiceBox.getItems().addAll("Garden", "Medium-Sized Park", "Large-Sized Park");
+        initializetypologyChoiceBox();
         setGreenSpaceManager();
+    }
+    private void initializetypologyChoiceBox() {
+        GreenSpaceTypology[] taskUrgencies= registerGreenSpaceController.getGreenSpaceTypologies();
+        typologyChoiceBox.setItems(FXCollections.observableArrayList(taskUrgencies));
+        typologyChoiceBox.setCellFactory(listView -> new TypologyChoiceBoxNames());
+        typologyChoiceBox.setButtonCell(new TypologyChoiceBoxNames());
+    }
+    private static class TypologyChoiceBoxNames extends ListCell<GreenSpaceTypology> {
+
+        @Override
+        public void updateItem(GreenSpaceTypology item, boolean empty) {
+            super.updateItem(item, empty);
+            if (item != null) {
+
+                setText(item.toString());
+
+            } else if (empty || item == null) {
+                setText("Select Green Space Type");
+            } else {
+                setText(null);
+            }
+        }
+
     }
     /**
      * Sets the green space manager label based on the current user's login status.
@@ -138,8 +164,8 @@ public class RegisterGreenSpaceUI extends Application {
             return;
         }
 
-        String name = nameField.getText().trim().toUpperCase();
-        String address = addressField.getText().trim();
+        String name = nameField.getText();
+        String address = addressField.getText();
         double area;
         try {
             area = parseAreaField(areaField.getText().trim());
@@ -147,7 +173,7 @@ public class RegisterGreenSpaceUI extends Application {
             messageLabel.setText("Invalid area. Please enter a valid number.");
             return;
         }
-        String typology = typologyChoiceBox.getValue();
+        GreenSpaceTypology typology = (GreenSpaceTypology) typologyChoiceBox.getValue();
         String greenSpaceManager = greenSpaceManagerLabel.getText();
 
         if (RegisterGreenSpaceController.currentUserLogInValidation()) {

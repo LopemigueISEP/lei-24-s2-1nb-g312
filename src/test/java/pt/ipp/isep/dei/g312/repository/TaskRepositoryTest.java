@@ -110,7 +110,7 @@ class TaskRepositoryTest {
                 TaskUrgency.LOW, TaskStatus.PENDING, null, new ArrayList<>(), 5, task5startDate, task5EndDate, TaskPosition.AGENDA);
 
         taskRepository.addTask(task12);
-        List<Task> result = taskRepository.getTasksByGreenSpace();
+        List<Task> result = taskRepository.getTasksByGreenSpace(greenSpace);
 
 
         assertNotEquals(5, result.size()); //All 5 starting tasks are assigned to this greenspace, the number 6 task12 is in another greenspace

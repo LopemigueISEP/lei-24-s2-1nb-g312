@@ -1,0 +1,25 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) US028
+
+autonumber
+
+actor "Collaborator" as ACTOR
+participant ":System" as SYSTEM
+
+activate ACTOR
+
+ACTOR -> SYSTEM: Asks to list tasks assigned to him
+activate SYSTEM
+SYSTEM --> ACTOR: Requests filter data (i.e. start date, end date, task status)
+deactivate SYSTEM
+
+ACTOR -> SYSTEM: Enters requested data
+activate SYSTEM
+SYSTEM --> ACTOR: Shows the list of tasks sorted by date between start and end dates \nwith the given task status assigned to the collaborator
+deactivate SYSTEM
+
+@enduml
