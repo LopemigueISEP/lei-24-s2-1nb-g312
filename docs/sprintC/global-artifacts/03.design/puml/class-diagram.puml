@@ -30,6 +30,7 @@ class RegisterSkillController{
     +currentUserLogInValidation(): boolean
     + matchEmployeeByRole(): employee
     + printAllSkills(): void
+    + +getEmployee() : employee
 
 }
 
@@ -66,6 +67,8 @@ class Repositories {
     + getAuthenticationRepository()
     + getVehicleRepository()
     + getTeamRepository()
+    + getGreenSpaceRepository()
+    + getTaskRepository()
 
 }
 
@@ -92,6 +95,11 @@ class Employee{
     +equals() : boolean
     +clone() : Employee
     + getSkills() : List<Skill>
+    +registerGreenSpace(name: String, address: String, area: double, typology : GreenSpaceTypology, greenSpaceManager: String, userValidation : boolean) : Optional<GreenSpace>
+    +addGreenSpace(greenSpace) : Optional<GreenSpace>
+    +validateGreenSpace(greenSpace) : boolean
+    + addTaskAgenda(selectedGreenSpace : GreenSpace, selectedTask : Task, selectedDate : LocalDate, startTime : LocalTime, agenda : TaskPosition, userValidation : boolean) : Optional<Task>
+
 
 }
 
@@ -171,6 +179,7 @@ class RegisterCollaboratorController {
 
 class AuthenticationRepository {
     +getAuthentication()
+    +getCurrentUserSession() : UserSession
 }
 class JobRepository {
     -jobsList: List<Job>
@@ -480,8 +489,95 @@ ListVehiclesDueToCheckUpController "1" ..> "1" VehicleRepository
 Vehicle "1" --> "1" CheckUps :list check-ups
 CheckUps "1" --> "*" CheckUp
 
+class RegisterGreenSpaceUI {
+
+}
+
+class RegisterGreenSpaceController {
+    + getEmployeeRepository() : EmployeeRepository
+    + getAuthRepository() : AuthenticationRepository
+    + initialize(): void
+    + existsWithAddress(address : String) : boolean
+    + existsWithName(name : String) : boolean
+    + currentUserLogInValidation() : boolean
+    + matchEmployeeByRole() : Employee
+    + registerGreenSpace(name: String, address: String, area: double, typology : GreenSpaceTypology, greenSpaceManager: String) : Optional<GreenSpace>
+    + getGreenSpaceTypologies() : GreenSpaceTypology[]
+    }
+class GreenSpace {
+        -name : String
+        -address : String
+        -area : double
+        -typology : GreenSpaceTypology
+        - greenSpaceManager : String
+}
+
+RegisterGreenSpaceController ..> Repositories: repositories
+RegisterGreenSpaceController ..> Employee
+RegisterGreenSpaceUI ..> RegisterGreenSpaceController
+Repositories -> Repositories : instance
+EmployeeRepository "1" --> "*" Employee
+AuthenticationRepository "1" --> "*" Employee
+Employee "1" --> "*" GreenSpace : registerGreenSpace
+Repositories "1" --> "1" EmployeeRepository
+Repositories "1" --> "1" AuthenticationRepository
 
 
+class AddEntryAgendaUI{
 
+}
+
+class AddEntryAgendaController{
++ getGreenSpaceRepository() : void
++ getTaskRepository() : void
++ getAuthRepository() : void
++ getUserEmail() : String
++ getGreenSpaces() : List<GreenSpace>
++ getTasksByGreenSpace (greenSpace Greenspace): List<Task>
++ getGreenSpaceList(userEmail : String) : List<GreenSpace>
++ filterGreenSpacesByManager (greenSpaces : List<GreenSpace>, managerName : String)
++ currentUserLogInValidation() : boolean
++ addTaskToAgenda (selectedTask : Task, startDate LocalDate, startTime : LocalTime) : Optional<Task>
++ initialize() : void
+
+
+}
+class TasksRepository{
+ +getToDoListEntries(): List<ToDoEntries>
+}
+class GreenSpacesRepository{
++getGreenSpacesList(): GreenSpace
+}
+class Task{
+    -title: String
+    -description: String
+    -date: Date
+    -taskStartPeriod: TaskPeriod
+    taskExpectedDuration: int
+    type: String
+    greenSpace: GreenSpace
+    urgency: TaskUrgency
+    status: TaskStatus
+    assignedTeam: Team
+    assignedVehicles: List<Vehicle>
+    startDate: Date
+    taskPosition: TaskPosition
+}
+AddEntryAgendaUI ..>AddEntryAgendaController
+
+AddEntryAgendaController ..> "1" Repositories
+
+Repositories "1" --> "1" Repositories : getInstance()
+Repositories "1" --> "1" EmployeeRepository
+Repositories "1" --> "1" TasksRepository
+Repositories "1" --> "1" GreenSpacesRepository
+
+AddEntryAgendaController ..>Employee
+
+EmployeeRepository "1" --> "1" Employee
+TasksRepository "1" --> "1" Employee
+GreenSpacesRepository "1" --> "1" Employee
+
+Employee --> Task: registers
 
 @enduml
