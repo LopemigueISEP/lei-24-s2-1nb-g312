@@ -45,7 +45,7 @@ class AddEntryAgendaController{
 + getGreenSpaceRepository() : void
 + getTaskRepository() : void
 + getAuthRepository() : void
-+ getUserEmail()
++ getUserEmail() : String
 + initialize() : void
 + getGreenSpaces() : List<GreenSpace>
 + getTasksByGreenSpace (greenSpace Greenspace): List<Task>
