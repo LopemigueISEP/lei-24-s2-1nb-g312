@@ -31,8 +31,8 @@ public class PostponeTaskInTheAgendaUI extends Application implements Initializa
     public Label lblAllFields;
     private Optional<GreenSpace> chosenGreenSpace = null;
     private Optional<Task> chosenTask = null;
-    private LocalDate chosenDate = null;
-    private LocalTime chosenStartTime = null;
+    private Optional<LocalDate> chosenDate = null;
+    private Optional<LocalTime> chosenStartTime = null;
 
     public PostponeTaskInTheAgendaUI() {
         controller = new PostponeTaskInTheAgendaController();
@@ -138,17 +138,18 @@ public class PostponeTaskInTheAgendaUI extends Application implements Initializa
     //Datepicker for new Date
 
     public void onChangeDatePicker(ActionEvent actionEvent) {
-        chosenDate = datePicker.getValue();
+        chosenDate = Optional.ofNullable(datePicker.getValue());
     }
 
 
 
     //Hour for new Time
 
-    public void onChangeStartTime(ActionEvent actionEvent) {
+    public void onChangeStartTime() {
         try {
-            chosenStartTime = LocalTime.parse(textStartTime.getText(), DateTimeFormatter.ofPattern("HH:mm"));
-            textStartTime.setStyle(null);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            LocalTime time = LocalTime.parse(textStartTime.getText(), formatter);
+            chosenStartTime = Optional.of(time);
         } catch (DateTimeParseException e) {
             textStartTime.setStyle("-fx-border-color: red;");
         }
@@ -160,9 +161,10 @@ public class PostponeTaskInTheAgendaUI extends Application implements Initializa
 
     //Button to postpone Task
     public void postponeTask(ActionEvent actionEvent) {
-        if (chosenGreenSpace.isPresent() && chosenTask.isPresent() && chosenDate != null && chosenStartTime != null) {
+        if (chosenGreenSpace.isPresent() && chosenTask.isPresent() && chosenDate.isPresent() && !textStartTime.getText().isEmpty()) {
+            onChangeStartTime();
             // Call controller to postpone task
-            Optional<Task> success = controller.postponeTask(chosenTask.get(), chosenDate, chosenStartTime);
+            Optional<Task> success = controller.postponeTask(chosenTask.get(), chosenDate.get(), chosenStartTime.get());
             if (success.isPresent()) {
                 lblAllFields.setVisible(false);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
