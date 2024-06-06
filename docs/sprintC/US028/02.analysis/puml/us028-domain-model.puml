@@ -2,33 +2,55 @@
 skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
+
+'left to right direction
+
 skinparam classAttributeIconSize 0
+
 hide circle
 hide methods
 
-title Domain Model
+'title Domain Model
 
-class Agenda {
-    appointments
-    alerts
-    to-doList
-}
+'class Platform {
+'  -description
+'}
 
-class Task {
-    reference
-    description
-    duration
-    cost
+class Employee {
+    name
+    birthdate
+    email/phone
+    admisson date
+    VAT number
+    address
+    role
 }
 
 class Collaborator{
 }
 
+
 class Team{
+
+
 }
 
-Collaborator "1..*" -- "1" Team : has >
-Agenda "1" -- "0..*" Task : has >
-Team "1" -- "1" Task : executes >
+class Task {
+    taskID
+    title
+    description
+    date
+    taskStartPeriod
+    taskExpectedDuration
+    type
+    greenSpace
+    assignedTeam
+    assignedVehicles
+}
+
+
+Employee "1..*" -- "1..*" Collaborator : is >
+Collaborator "1" -- "1..*" Team: has >
+Team "1..*" -- "1..*" Task: executes
 
 @enduml
