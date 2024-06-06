@@ -134,7 +134,7 @@ public RegisterGreenSpaceUI(){
     getAuthRepository();
     getEmployeeRepository();
 }
-    public Optional<GreenSpace> registerGreenSpace(String name, String address, double area, String typology, String greenSpaceManager) {
+public static Optional<GreenSpace> registerGreenSpace(String name, String address, double area, GreenSpaceTypology typology, String greenSpaceManager) {
     try {
         GreenSpace greenSpace = new GreenSpace(name, address, area, typology, greenSpaceManager);
         return greenSpaceRepository.addGreenSpace(greenSpace);
@@ -143,37 +143,43 @@ public RegisterGreenSpaceUI(){
         return Optional.empty();
     }
 }
+
+public GreenSpaceTypology[] getGreenSpaceTypologies() {
+    return GreenSpaceTypology.values();
+}
+
 ```
 
 ### Class Employee
 
 ```java
-public static Optional<GreenSpace> registerGreenSpace(String name, String address, double area, String typology, String greenSpaceManager, boolean userValidation) {
-try {
-if (userValidation) {
-GreenSpace greenSpace = new GreenSpace(name, address, area, typology, greenSpaceManager);
-Optional<GreenSpace> addedGreenSpace = Repositories.getInstance().getGreenSpaceRepository().addGreenSpace(greenSpace);
-return addedGreenSpace;
-} else {
-System.out.println("This user doesn't have permissions to register green spaces");
-return Optional.empty();
-}
-} catch (Exception e) {
-System.err.println("Error occurred while registering a green space: " + e.getMessage());
-return Optional.empty();
-}
+public static Optional<GreenSpace> registerGreenSpace(String name, String address, double area, GreenSpaceTypology typology, String greenSpaceManager, boolean userValidation) {
+    try {
+        if (userValidation) {
+            GreenSpace greenSpace = new GreenSpace(name, address, area, typology, greenSpaceManager);
+            Optional<GreenSpace> addedGreenSpace = Repositories.getInstance().getGreenSpaceRepository().addGreenSpace(greenSpace);
+            return addedGreenSpace;
+        } else {
+            System.out.println("This user doesn't have permissions to register green spaces");
+            return Optional.empty();
+        }
+    } catch (Exception e) {
+        System.err.println("Error occurred while registering a green space: " + e.getMessage());
+        return Optional.empty();
+    }
 }
 ```
 
 ### Class GreenSpace
 
 ```java
- public GreenSpace(String name, String address, double area, String typology, String greenSpaceManager){
-    this.name = name;
-    this.address = address;
-    this.area = area;
-    this.typology = typology;
-    this.greenSpaceManager = greenSpaceManager;
+public GreenSpace(GreenSpace greenSpace) {
+    this.name = greenSpace.getName();
+    this.address = greenSpace.getAddress();
+    this.area = greenSpace.getArea();
+    this.typology = greenSpace.getTypology();
+    this.greenSpaceManager = greenSpace.getGreenSpaceManager();
+
 }
 ```
 

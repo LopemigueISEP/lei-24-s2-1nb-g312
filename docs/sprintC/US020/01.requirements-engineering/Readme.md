@@ -55,7 +55,7 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
 
 * **AC1:** All required fields must be filled in (green space typology, area, name, manager and address)
 * **AC2:** Area must only have digits
-* **AC3:** The green space name should be in capital letters, in order to prevent duplicates.
+* **AC3:** The green space name and address should verify duplicates.
 
 
 
@@ -71,8 +71,11 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
     * name
     * address
     * area
-    * green space typology
-    * green space manager
+  
+  
+*  Selected data:
+   * green space typology 
+   * green space manager
 
 
 **Output Data:**

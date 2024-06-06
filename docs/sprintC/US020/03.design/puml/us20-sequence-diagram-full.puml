@@ -12,6 +12,7 @@ participant RegisterGreenSpaceController as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "employeeRepository:\nEmployeeRepository" as EMPLREP
+participant "greenSpaceTypology\n:GreenSpaceTypology" as GreenSpaceTypology
 
 participant "employee\n:Employee" as EMP
 participant "green Space:\nGreen Space" as GREENSPACE
@@ -21,11 +22,19 @@ ref over GSM, UI : This action assumes that the user has already logged in
 
 GSM -> UI : asks to register a new green space
 activate UI
+ UI -> CTRL: getGreenSpaceTypology()
+        activate CTRL
+            CTRL -> GreenSpaceTypology : getGreenSpaceTypology()
+            activate GreenSpaceTypology
+                GreenSpaceTypology -> CTRL: greenSpaceTypology
+            deactivate GreenSpaceTypology
+        CTRL -> UI : greenSpaceTypology
+        deactivate CTRL
+UI -> GSM : shows green space typology to be selected and requests data (name, address, area)
 
-UI -> GSM : requests data (name, address, area, typology, manager))
 deactivate UI
 
-GSM -> UI : types requested data
+GSM -> UI : selects green space typology and types requested data
 activate UI
 
 UI --> GSM : shows all data and requests confirmation

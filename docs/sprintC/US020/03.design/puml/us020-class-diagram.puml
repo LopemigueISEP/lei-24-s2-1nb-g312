@@ -14,23 +14,22 @@ class RegisterGreenSpaceUI {
 }
 
 class RegisterGreenSpaceController {
-    + initialize~(): void
-    + getEmployeeRepository() : employeeRepository
-    + getAuthRepository() : authenticationRepository
-    + getGreenSpaceByName() : List<GreenSpace>
+    + getEmployeeRepository() : EmployeeRepository
+    + getAuthRepository() : AuthenticationRepository
+    + initialize(): void
     + existsWithAddress(address : String) : boolean
     + existsWithName(name : String) : boolean
     + currentUserLogInValidation() : boolean
     + matchEmployeeByRole() : Employee
-    + registerGreenSpace(name: String, address: String, area: double, typology : String, greenSpaceManager: String) : Optional<GreenSpace>
-
-}
+    + registerGreenSpace(name: String, address: String, area: double, typology : GreenSpaceTypology, greenSpaceManager: String) : Optional<GreenSpace>
+    + getGreenSpaceTypologies() : GreenSpaceTypology[]
+    }
 
 class Repositories {
      - Repositories()
      + getInstance() : Repositories
-     + getEmployeeRepository() : employeeRepository
-     + getAuthRepository() : authenticationRepository
+     + getEmployeeRepository() : EmployeeRepository
+     + getAuthRepository() : AuthenticationRepository
 
 }
 
@@ -44,7 +43,7 @@ class Employee {
     -address : String
     -docNumber : String
     -jobTitle : String
-    +registerGreenSpace(name: String, address: String, area: double, typology : String, greenSpaceManager: String) : Optional<GreenSpace>
+    +registerGreenSpace(name: String, address: String, area: double, typology : GreenSpaceTypology, greenSpaceManager: String, userValidation : boolean) : Optional<GreenSpace>
     +addGreenSpace(greenSpace) : Optional<GreenSpace>
     +validateGreenSpace(greenSpace) : boolean
 
@@ -62,7 +61,7 @@ class GreenSpace {
         -name : String
         -address : String
         -area : double
-        -typology : String
+        -typology : GreenSpaceTypology
         - greenSpaceManager : String
 }
 
