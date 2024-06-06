@@ -6,62 +6,130 @@ skinparam shadowing false
 autonumber
 
 actor "Collaborator" as ACTOR
-participant ":TaskUI" as UI
-participant ":TaskController" as CTRL
-participant ":Repositories" as REPOS_Singleton
-participant "repositories\n:Repositories" as REPOS_Instance
-participant "taskRepository\n:TaskRepository" as TASK_REPO
+participant ":TasksAssinedToMeBetweenToDatesUI" as UI
+participant ":TasksAssignedToMeBetweenToDatesController" as CTRL
+participant ":TaskStatus" as taskStatus
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+
+participant "taskRepository\n:TaskRepository" as TaskRepository
+
+participant "employeeRepository:\nEmployeeRepository" as EmployeeRepository
+participant "employee" as employee
 participant ":Task" as TASK
 
 activate ACTOR
 
 ref over ACTOR, UI: This action assumes that the user has already logged in
 
-ACTOR -> UI: Asks to list tasks assigned to him
+ACTOR -> UI: I wish to consult the tasks assigned to me between two dates
+
 activate UI
-UI --> ACTOR: Requests filter data (Start date, end date, task status)
+
+UI -> CTRL:getTaskStatus()
+    activate CTRL
+        CTRL -> taskStatus: getTaskStatus()
+        activate taskStatus
+
+        taskStatus-->CTRL: taskStatus
+        deactivate taskStatus
+    CTRL-->UI: taskStatus
+    deactivate CTRL
+
+UI --> ACTOR: Requests data (Start date, end date, task status)
 deactivate UI
 
-ACTOR -> UI: Enters requested filter data
+ACTOR -> UI: Selects requested data
 activate UI
 
-    UI -> CTRL: getTasks(startDate, endDate, taskStatus)
-    activate CTRL
+    UI -> CTRL: getTasksAssignedToMeBetweenToDates(startDate, endDate, taskStatus)
 
-        CTRL -> REPOS_Singleton: getInstance()
-        activate REPOS_Singleton
-        REPOS_Singleton --> CTRL: repositories
-        deactivate REPOS_Singleton
 
-        CTRL -> REPOS_Instance: getTaskRepository()
-        activate REPOS_Instance
-        REPOS_Instance --> CTRL: taskRepository
-        deactivate REPOS_Instance
+        activate CTRL
+        CTRL->CTRL: getEmployeeFromRepository()
+                        activate CTRL
+                        CTRL -> RepositorySingleton : getInstance()
+                        activate RepositorySingleton
 
-        CTRL -> TASK_REPO: getCollaboratorTasksSortedByDate(startDate, endDate, taskStatus)
-        activate TASK_REPO
+                        RepositorySingleton --> CTRL : repositories
+                        deactivate RepositorySingleton
 
-            loop for each task
-                TASK_REPO -> TASK: hasStatus(taskStatus)
+                        CTRL -> PLAT : getEmployeeRepositories()
+                        activate PLAT
+
+
+                        PLAT --> CTRL : EmployeeRepositories
+                        deactivate PLAT
+
+
+                        CTRL -> EmployeeRepository: getEmployee()
+                        activate EmployeeRepository
+                        EmployeeRepository -->CTRL: employee
+                        deactivate EmployeeRepository
+
+                    CTRL-->CTRL: employee
+                    deactivate CTRL
+
+                    |||
+
+
+
+
+'
+'CTRL->CTRL: getEmployeeTasksFromRepository()
+'                        activate CTRL
+'        CTRL -> RepositorySingleton: getInstance()
+'        activate RepositorySingleton
+'        RepositorySingleton --> CTRL: repositories
+'        deactivate RepositorySingleton
+'
+'        CTRL -> PLAT: getTaskRepository()
+'        activate PLAT
+'        PLAT --> CTRL: taskRepository
+'        deactivate PLAT
+'
+'    CTRL -> EmployeeRepository: getEmployeeTasks()
+'                            activate EmployeeRepository
+'                            EmployeeRepository -->CTRL: tasks
+'                            deactivate EmployeeRepository
+'
+'                        CTRL-->CTRL: tasks
+'                        deactivate CTRL
+
+
+
+
+
+
+        CTRL -> employee: getEmployeeTasksBetweenToDates(startDate, endDate, taskStatus)
+        activate employee
+
+
+               employee->TASK: getEmployeeTasksBetweenToDates(startDate, endDate, taskStatus)
                 activate TASK
-                TASK --> TASK_REPO
+                TASK --> employee: List of tasks
                 deactivate TASK
+'            loop for each task
+'                TaskRepository -> TASK: hasStatus(taskStatus)
+'                activate TASK
+'                TASK --> TaskRepository
+'                deactivate TASK
+'
+'                TaskRepository -> TASK: isBetweenDates(startDate, endDate)
+'                activate TASK
+'                TASK --> TaskRepository
+'                deactivate TASK
+'
+'                TaskRepository -> TASK: isAssignedToCurrentCollaborator()
+'                activate TASK
+'                TASK --> TaskRepository
+'                deactivate TASK
+'            end loop
 
-                TASK_REPO -> TASK: isBetweenDates(startDate, endDate)
-                activate TASK
-                TASK --> TASK_REPO
-                deactivate TASK
+'            TaskRepository -> TaskRepository: sortTasksByDate()
 
-                TASK_REPO -> TASK: isAssignedToCurrentCollaborator()
-                activate TASK
-                TASK --> TASK_REPO
-                deactivate TASK
-            end loop
-
-            TASK_REPO -> TASK_REPO: sortTasksByDate()
-
-        TASK_REPO --> CTRL: List of tasks
-        deactivate TASK_REPO
+        employee --> CTRL: List of tasks
+        deactivate employee
 
     CTRL --> UI: List of tasks
     deactivate CTRL

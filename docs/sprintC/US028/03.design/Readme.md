@@ -4,22 +4,22 @@
 
 ### 3.1. Rationale
 
-| Interaction ID  | Question: Which class is responsible for...            | Answer         | Justification (with patterns)                       |
-|:----------------|:-------------------------------------------------------|:---------------|:----------------------------------------------------|
-| Step 1	         | 	... interacting with the actor?                       | TaskUI         | Pure Fabrication: responsible for user interactions |
-|                 | ... coordinating the US?                               | TaskController | Controller                                          |
-| Step 2          |                                                        |                |                                                     |
-| Step 3          | ... interacting with the actor?                        | TaskUI         | Pure Fabrication                                    |
-| Step 4          | ... coordinating the US?                               | TaskController | Controller                                          |
-|                 | ... knowing the tasks to be shown?                     | TaskRepository | IE: knows/has its own Tasks                         |
-|                 | ... knowing if a task is assigned to the current user? | Task           | IE: stores business logic related to itself         |
-|                 | ... knowing all the possible task status?              | TaskStatus     | Enumeration                                         |
-|                 | ... show list of tasks?                                | TaskUI         | IE: responsible for user interactions               |
+| Interaction ID  | Question: Which class is responsible for...            | Answer                 | Justification (with patterns)                       |
+|:----------------|:-------------------------------------------------------|:-----------------------|:----------------------------------------------------|
+| Step 1	         | 	... interacting with the actor?                       | TaskUI                 | Pure Fabrication: responsible for user interactions |
+|                 | ... coordinating the US?                               | TaskController         | Controller                                          |
+|                 | ... knowing all the possible task status?              | TaskStatus             | Enumeration                                         |
+| Step 2          |                                                        |                        |                                                     |
+| Step 3          | ... interacting with the actor?                        | TaskUI                 | Pure Fabrication                                    |
+| 			  		        | ... knowing the user using the system?      | Employee               | IE: has it's own information                        ||                 | ... knowing the tasks to be shown?                     | TaskRepository | IE: knows/has its own Tasks                         |
+|                 | ... knowing if a task is assigned to the current user? | Task                   | IE: stores business logic related to itself         |
+|  Step 4                | ... show list of tasks?                                | TaskUI                 | IE: responsible for user interactions               |
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are:
 
+* Employee
 * Task
 * TaskStatus
 
@@ -27,7 +27,7 @@ Other software classes (i.e. Pure Fabrication) identified:
 
 * TaskUI
 * TaskController
-* TaskRepository
+
 
 ## 3.2. Sequence Diagram (SD)
 

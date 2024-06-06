@@ -5,13 +5,18 @@ skinparam linetype polyline
 skinparam classAttributeIconSize 0
 
 
-class TaskUI {
-    -TaskController
+class TasksAssignedToMeBetweenTwoDatesUI {
+
 }
 
-class TaskController {
+
+class TasksAssignedToMeBetweenToDatesController {
     -TaskRepository
+
+
     +getTasks(LocalDate startDate, LocalDate endDate, TaskStatus taskStatus)
+
+
 }
 
 class Repositories {
@@ -48,11 +53,11 @@ enum TaskStatus {
 class Employee {
 }
 
-TaskUI "1" --> "1" TaskController
-TaskController "1" ..> "1" Repositories: repositories
-TaskController "1" --> "1" TaskRepository
-TaskController "1" ..> "*" Task
-TaskController "1" ..> "*" TaskStatus
+TasksAssignedToMeBetweenTwoDatesUI "1" --> "1" TasksAssignedToMeBetweenToDatesController
+TasksAssignedToMeBetweenToDatesController "1" ..> "1" Repositories: repositories
+TasksAssignedToMeBetweenToDatesController "1" --> "1" TaskRepository
+TasksAssignedToMeBetweenToDatesController "1" ..> "*" Task
+TasksAssignedToMeBetweenToDatesController "1" ..> "*" TaskStatus
 Repositories --> Repositories: instance
 Repositories "1" --> "1" TaskRepository
 TaskRepository "1" ..> "*" TaskStatus
