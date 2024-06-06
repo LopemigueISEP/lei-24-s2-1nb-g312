@@ -105,12 +105,12 @@ Repositories "1"--> "1" TeamRepository
 TaskRepository "1"--> "*" Employee
 TeamRepository "1"--> "*" Employee
 
-Employee "1" --> "*"Task
+
 
 
 AssignTeamController ..> Employee
 
-TaskRepository "1" --> "1" Tasks : list tasks
+Employee "1" --> "1" Tasks : list tasks
 Tasks "1" --> "*" Task
 
 
