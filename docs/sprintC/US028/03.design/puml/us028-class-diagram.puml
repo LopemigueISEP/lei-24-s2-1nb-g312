@@ -11,25 +11,20 @@ class TasksAssignedToMeBetweenTwoDatesUI {
 
 
 class TasksAssignedToMeBetweenToDatesController {
-    -TaskRepository
 
 
     +getTasks(LocalDate startDate, LocalDate endDate, TaskStatus taskStatus)
 
-
 }
 
 class Repositories {
-    -TaskRepository
     -Repositories()
     +getInstance()
-    +getTaskRepository()
+    +getEmployeeRepository()
 }
 
-class TaskRepository {
-    +List<Task>
-    +getCollaboratorTasksSortedByDate(LocalDate startDate, LocalDate endDate, TaskStatus taskStatus)
-    -sortTasksByDate()
+class EmployeeRepository {
+
 }
 
 class Task {
@@ -53,16 +48,16 @@ enum TaskStatus {
 class Employee {
 }
 
-TasksAssignedToMeBetweenTwoDatesUI "1" --> "1" TasksAssignedToMeBetweenToDatesController
+TasksAssignedToMeBetweenTwoDatesUI "1" ..> "1" TasksAssignedToMeBetweenToDatesController
 TasksAssignedToMeBetweenToDatesController "1" ..> "1" Repositories: repositories
-TasksAssignedToMeBetweenToDatesController "1" --> "1" TaskRepository
-TasksAssignedToMeBetweenToDatesController "1" ..> "*" Task
-TasksAssignedToMeBetweenToDatesController "1" ..> "*" TaskStatus
+
+TasksAssignedToMeBetweenToDatesController "1" .> "*" Employee
+TasksAssignedToMeBetweenToDatesController "1" .> "*" TaskStatus: taskStatus
 Repositories --> Repositories: instance
-Repositories "1" --> "1" TaskRepository
-TaskRepository "1" ..> "*" TaskStatus
-TaskRepository "1" --> "*" Task
-Task "1" ..> "1" TaskStatus
-Task "1" ..> "1" Employee
+Repositories "1" --> "1" EmployeeRepository
+EmployeeRepository "1" --> "*" Employee
+Employee "1" --> "*" Task
+Task "1" .> "1" TaskStatus
+
 
 @enduml

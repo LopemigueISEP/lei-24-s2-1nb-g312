@@ -8,7 +8,7 @@
 |:----------------|:-------------------------------------------------------|:-----------------------|:----------------------------------------------------|
 | Step 1	         | 	... interacting with the actor?                       | TaskUI                 | Pure Fabrication: responsible for user interactions |
 |                 | ... coordinating the US?                               | TaskController         | Controller                                          |
-|                 | ... knowing all the possible task status?              | TaskStatus             | Enumeration                                         |
+|                 | ... knowing all the possible task status?              | TaskStatus             | IE: has its own information                         |
 | Step 2          |                                                        |                        |                                                     |
 | Step 3          | ... interacting with the actor?                        | TaskUI                 | Pure Fabrication                                    |
 | 			  		        | ... knowing the user using the system?      | Employee               | IE: has it's own information                        ||                 | ... knowing the tasks to be shown?                     | TaskRepository | IE: knows/has its own Tasks                         |
