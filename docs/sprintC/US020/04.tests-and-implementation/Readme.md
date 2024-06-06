@@ -2,116 +2,87 @@
 
 ## 4. Tests 
 
-**Test 1:** Check that green space list is empty
 
-**Test 2:** This test ensure that the new registered green space is correctly added to the repository.
+**Test 1:** This test ensure that the new registered green space is correctly added to the repository.
 
-**Test 3:** This test ensure that the new registered green space is validated.
+**Test 2:** This test ensure that the new registered green space is validated.
 
-**Test 4:** This test ensure that the green space name already exists.
+**Test 3:** This test ensure that the green space name already exists.
 
-**Test 5:** This test ensure that the green space address already exists.
+**Test 4:** This test ensure that the green space address already exists.
 
-**Test 6:** This test tests the constructor.
+**Test 5:** This test tests the constructor.
 
 **Test 6:** This tests verifies if the clone is a different object and if primitive field values are copied correctly
 
-**Test 7:** This test tests the alphabetically order of the list.
 
 
 
 	 @Test
     public void testGetGreenSpace() {
-        GreenSpaceRepository repository = new GreenSpaceRepository();
-        GreenSpace greenSpace = new GreenSpace("Passadiços do Paiva", "Arouca", 396.5, "Medium-Sized Park", "Marcelo");
-        GreenSpace greenSpace1 = new GreenSpace("Passadiços do Paiva", "Arouca", 396.5, "Medium-Sized Park", "Marcelo");
-        GreenSpace greenSpace2 = new GreenSpace("Passadiços do Paiva", "Arouca", 396.5, "Medium-Sized Park", "Marcelo"); // Duplicate
-        List<GreenSpace> greenSpaces = repository.getGreenSpace();
+        private GreenSpaceRepository repository;
+        private GreenSpace greenSpace1 = new GreenSpace("Park A", "Address A", 1000.0, GreenSpaceTypology.MEDIUM, "Manager A");
+        private GreenSpace greenSpace2 = new GreenSpace("Garden B", "Address B", 2000.0, GreenSpaceTypology.GARDEN, "Manager B");
+        private GreenSpace greenSpace;
 
 
         //Test 1
-        assertEquals(0, greenSpaces.size());
+        ptional<GreenSpace> addedGreenSpace = repository.addGreenSpace(greenSpace1);
+        assertTrue(addedGreenSpace.isPresent());
+        assertTrue(repository.getGreenSpaceList().contains(greenSpace1));
+
+        // Test adding an invalid green space (already exists)
+        Optional<GreenSpace> addedGreenSpace2 = repository.addGreenSpace(greenSpace1);
+        assertFalse(addedGreenSpace2.isPresent());
+    
 
         //Test 2
-        assertTrue(addedGreenSpace.isPresent());
-        assertNotEquals(greenSpace, addedGreenSpace.get());
-
-        assertTrue(repository.addGreenSpace(greenSpace).isPresent()); 
-        List<GreenSpace> greenSpaceList = repository.getGreenSpaceList();
-        assertNotEquals(1, greenSpaceList.size()); 
-        assertNotEquals(greenSpace, greenSpaceList.getFirst());
-        assertEquals(greenSpaceList, repository.getGreenSpaceList());
-
-        assertEquals(greenSpace.getName(), greenSpaces.getFirst().getName());
-
+        assertTrue(repository.validateGreenSpace(greenSpace1));
         repository.addGreenSpace(greenSpace1);
-        assertTrue(repository.addGreenSpace(greenSpace2)); // Assert adding duplicate succeeds
-    
+        assertFalse(repository.validateGreenSpace(greenSpace1));
+
 
         //Test 3
-        assertTrue(repository.validateGreenSpace(greenSpace2));
-        assertTrue(repository.validateGreenSpace(greenSpace));
+        repository.addGreenSpace(greenSpace1);
+        repository.addGreenSpace(greenSpace2);
 
+        assertTrue(repository.existsWithName("Park A"));
 
-        //Test 4
-        assertTrue(repository.existsWithName("Passadiços do Paiva"));
-        assertFalse(repository.existsWithName("Peneda/Gerês"));
+        assertFalse(repository.existsWithName("Square C"));
 
-         //Test 5
+         //Test 4
 
-        assertTrue(repository.existsWithAddress("Arouca"));
-        assertFalse(repository.existsWithAddress("Minho"));
+        repository.addGreenSpace(greenSpace1);
+        repository.addGreenSpace(greenSpace2);
 
-        //Test 6
+        assertTrue(repository.existsWithAddress("Address A"));
 
+        assertFalse(repository.existsWithAddress("Address C"));
+
+        //Test 5
             public void testConstructor() {
-        // Arrange
-        String name = "Peneda/Gerês";
-        String address = "Minho";
-        double area = 965.0;
-        String typology = "Large-Sized Park";
-        String greenSpaceManager = "Luís Montenegro";
+    
+        String name = "Park A";
+        String address = "Address A";
+        double area = 1000.0;
+        GreenSpaceTypology typology = GreenSpaceTypology.MEDIUM;
+        String greenSpaceManager = "Manager A";
 
-        // Act
+     
         GreenSpace greenSpace = new GreenSpace(name, address, area, typology, greenSpaceManager);
-
-        // Assert
-        assertEquals(name, greenSpace.getName());
+        /assertEquals(name, greenSpace.getName());
         assertEquals(address, greenSpace.getAddress());
-        assertEquals(area, greenSpace.getArea());
+        assertEquals(area, greenSpace.getArea(), 0.001); // Use delta for double comparison
         assertEquals(typology, greenSpace.getTypology());
         assertEquals(greenSpaceManager, greenSpace.getGreenSpaceManager());
-    }
+}
 
-        //Test 7
-    @Test
-    public void testClone() {
-        GreenSpace original = new GreenSpace("Passadiços do Paiva", "Arouca", 396.5, "Medium-Sized Park", "Marcelo");
-        GreenSpace clone = original.clone();
-
-        // Verify that the clone has the same attributes as the original
-        assertEquals(original.getName(), clone.getName());
-        assertEquals(original.getAddress(), clone.getAddress());
-        assertEquals(original.getArea(), clone.getArea());
-        assertEquals(original.getTypology(), clone.getTypology());
-        assertEquals(original.getGreenSpaceManager(), clone.getGreenSpaceManager());
-
-        // Modify the clone and verify that the original is not affected
-        clone.setName("Passadiços de Vizela");
-        clone.setArea(29.0);
-
-        assertNotEquals(original.getName(), clone.getName());
-        assertNotEquals(original.getArea(), clone.getArea());
+        //Test 6
+        GreenSpace clonedGreenSpace = greenSpace.clone();
+        assertEquals(greenSpace, clonedGreenSpace);
+        assertNotSame(greenSpace, clonedGreenSpace);
 
        }
-
-
-        
-        
-
-    
-
-
 
 
 ## 5. Construction (Implementation)

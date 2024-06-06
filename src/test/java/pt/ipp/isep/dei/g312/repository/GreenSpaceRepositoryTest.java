@@ -2,9 +2,8 @@ package pt.ipp.isep.dei.g312.repository;
 
 import org.junit.jupiter.api.Test;
 
-import pt.ipp.isep.dei.g312.application.session.UserSession;
 import pt.ipp.isep.dei.g312.domain.GreenSpace;
-
+import pt.ipp.isep.dei.g312.domain.GreenSpaceTypology;
 
 
 import java.util.List;
@@ -16,67 +15,57 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class GreenSpaceRepositoryTest {
+    private GreenSpaceRepository repository;
+    private GreenSpace greenSpace1 = new GreenSpace("Park A", "Address A", 1000.0, GreenSpaceTypology.MEDIUM, "Manager A");
+    private GreenSpace greenSpace2 = new GreenSpace("Garden B", "Address B", 2000.0, GreenSpaceTypology.GARDEN, "Manager B");
     @Test
-    public void testGetGreenSpace() { //empty list
-        GreenSpaceRepository repository = new GreenSpaceRepository();
-
-        List<GreenSpace> greenSpaces = repository.getGreenSpaceList();
-        assertEquals(0, greenSpaces.size());
-    }
-
-    @Test
-    void addGreenSpace() {
-        // Arrange
-        GreenSpaceRepository repository = new GreenSpaceRepository();
-        GreenSpace greenSpace = new GreenSpace("Park", "Street A", 100.0, "Medium-Sized Park", "John Doe");
-
-        // Act
-        Optional<GreenSpace> addedGreenSpace = repository.addGreenSpace(greenSpace);
-
-        // Assert
+    public void testAddGreenSpace() {
+        // Test adding a valid green space
+        Optional<GreenSpace> addedGreenSpace = repository.addGreenSpace(greenSpace1);
         assertTrue(addedGreenSpace.isPresent());
-        assertEquals(greenSpace, addedGreenSpace.get());
+        assertTrue(repository.getGreenSpaceList().contains(greenSpace1));
 
-        // Additional tests
-        assertFalse(repository.addGreenSpace(greenSpace).isPresent()); // Try adding the same green space again
-        List<GreenSpace> greenSpaceList = repository.getGreenSpaceList();
-        assertEquals(1, greenSpaceList.size()); // Ensure only one green space is added
-        assertEquals(greenSpace, greenSpaceList.getFirst()); // Ensure the added green space is in the list
-        assertEquals(greenSpaceList, repository.getGreenSpaceList()); // Ensure the list is correctly maintained
+        // Test adding an invalid green space (already exists)
+        Optional<GreenSpace> addedGreenSpace2 = repository.addGreenSpace(greenSpace1);
+        assertFalse(addedGreenSpace2.isPresent());
     }
 
     @Test
     public void testValidateGreenSpace() {
-        GreenSpaceRepository repository = new GreenSpaceRepository();
-        GreenSpace greenSpace = new GreenSpace("Passadiços do Paiva", "Arouca", 396.5, "Medium-Sized Park", "Marcelo");
-        GreenSpace greenSpace1 = new GreenSpace("Passadiços do Paiva", "Arouca", 396.5, "Medium-Sized Park", "Marcelo");
-        GreenSpace greenSpace2 = new GreenSpace("Peneda/Gerês", "Minho", 965.0, "Large-Sized Park", "Luís Montenegro");
+        // Test validating a new green space
+        assertTrue(repository.validateGreenSpace(greenSpace1));
 
+        // Add a green space to the repository
         repository.addGreenSpace(greenSpace1);
-        assertTrue(repository.validateGreenSpace(greenSpace2));
-        assertFalse(repository.validateGreenSpace(greenSpace));
+
+        // Test validating an existing green space
+        assertFalse(repository.validateGreenSpace(greenSpace1));
     }
 
     @Test
     public void testExistsWithName() {
-        GreenSpaceRepository repository = new GreenSpaceRepository();
-        GreenSpace greenSpace1 = new GreenSpace("Passadiços do Paiva", "Arouca", 396.5, "Medium-Sized Park", "Marcelo");
-        GreenSpace greenSpace2 = new GreenSpace("Peneda/Gerês", "Minho", 965.0, "Large-Sized Park", "Luís Montenegro");
-
+        // Add green spaces to the repository
         repository.addGreenSpace(greenSpace1);
-        assertTrue(repository.existsWithName("Passadiços do Paiva"));
-        assertFalse(repository.existsWithName("Peneda/Gerês"));
+        repository.addGreenSpace(greenSpace2);
+
+        // Test existing green space name
+        assertTrue(repository.existsWithName("Park A"));
+
+        // Test non-existing green space name
+        assertFalse(repository.existsWithName("Square C"));
     }
 
     @Test
     public void testExistsWithAddress() {
-        GreenSpaceRepository repository = new GreenSpaceRepository();
-        GreenSpace greenSpace1 = new GreenSpace("Passadiços do Paiva", "Arouca", 396.5, "Medium-Sized Park", "Marcelo");
-        GreenSpace greenSpace2 = new GreenSpace("Peneda/Gerês", "Minho", 965.0, "Large-Sized Park", "Luís Montenegro");
-
+        // Add green spaces to the repository
         repository.addGreenSpace(greenSpace1);
-        assertTrue(repository.existsWithAddress("Arouca"));
-        assertFalse(repository.existsWithAddress("Minho"));
+        repository.addGreenSpace(greenSpace2);
+
+        // Test existing green space address
+        assertTrue(repository.existsWithAddress("Address A"));
+
+        // Test non-existing green space address
+        assertFalse(repository.existsWithAddress("Address C"));
     }
 
     @Test

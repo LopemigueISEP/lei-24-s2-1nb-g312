@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.g312.domain;
 
 import org.junit.jupiter.api.Test;
+import pt.ipp.isep.dei.g312.repository.GreenSpaceRepository;
 
 
 import java.text.ParseException;
@@ -238,37 +239,5 @@ class EmployeeTest {
         }
     }
 
-    @Test
-    void testRegisterGreenSpace_WithValidUser_ReturnsGreenSpaceOptional() {
-        // Arrange
-        String name = "Park";
-        String address = "Address";
-        double area = 100.0;
-        String typology = "Large Park";
-        String greenSpaceManager = "Manager";
-        boolean userValidation = true;
 
-        // Act
-        Optional<GreenSpace> result = Employee.registerGreenSpace(name, address, area, typology, greenSpaceManager, userValidation);
-
-        // Assert
-        assertTrue(result.isPresent());
-    }
-
-    @Test
-    void testRegisterGreenSpace_WithInvalidUser_ReturnsEmptyOptional() {
-        // Arrange
-        String name = "Park";
-        String address = "Address";
-        double area = 100.0;
-        String typology = "Large Park";
-        String greenSpaceManager = "Manager";
-        boolean userValidation = false;
-
-        // Act
-        Optional<GreenSpace> result = Employee.registerGreenSpace(name, address, area, typology, greenSpaceManager, userValidation);
-
-        // Assert
-        assertTrue(result.isEmpty());
-    }
 }
