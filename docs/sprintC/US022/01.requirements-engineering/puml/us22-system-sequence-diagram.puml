@@ -20,16 +20,16 @@ activate Employee
     Employee -> System : selects green space
     activate System
 
-    System --> Employee : shows To-Do List entries (selected data)
+    System --> Employee : shows To-Do List entries
         deactivate System
 
         Employee -> System : selects one entry from To-Do List
         activate System
 
-        System --> Employee : requests typed data
+        System --> Employee : requests typed data(start date)
     deactivate System
 
-    Employee -> System : types requested data (startDate)
+    Employee -> System : types requested data
     activate System
 
         System --> Employee : shows all data and requests confirmation
