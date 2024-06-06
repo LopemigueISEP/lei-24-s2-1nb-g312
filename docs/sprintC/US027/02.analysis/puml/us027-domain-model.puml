@@ -30,8 +30,17 @@ class GreenSpaceManager{
 }
 
 
-class GreenSpace{
-- manager
+class GreenSpace {
+    typology
+    area
+    address
+    name
+    manager
+    numberOfEquipments
+    waterConsumption
+    equipmentUsed
+    inquiryUseOfPark
+    routesWaterPoints
 }
 
 
