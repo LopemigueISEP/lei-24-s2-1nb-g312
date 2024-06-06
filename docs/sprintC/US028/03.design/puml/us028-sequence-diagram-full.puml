@@ -1,0 +1,72 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "Collaborator" as ACTOR
+participant ":TaskUI" as UI
+participant ":TaskController" as CTRL
+participant ":Repositories" as REPOS_Singleton
+participant "repositories\n:Repositories" as REPOS_Instance
+participant "taskRepository\n:TaskRepository" as TASK_REPO
+participant ":Task" as TASK
+
+activate ACTOR
+
+ref over ACTOR, UI: This action assumes that the user has already logged in
+
+ACTOR -> UI: Asks to list tasks assigned to him
+activate UI
+UI --> ACTOR: Requests filter data (Start date, end date, task status)
+deactivate UI
+
+ACTOR -> UI: Enters requested filter data
+activate UI
+
+    UI -> CTRL: getTasks(startDate, endDate, taskStatus)
+    activate CTRL
+
+        CTRL -> REPOS_Singleton: getInstance()
+        activate REPOS_Singleton
+        REPOS_Singleton --> CTRL: repositories
+        deactivate REPOS_Singleton
+
+        CTRL -> REPOS_Instance: getTaskRepository()
+        activate REPOS_Instance
+        REPOS_Instance --> CTRL: taskRepository
+        deactivate REPOS_Instance
+
+        CTRL -> TASK_REPO: getCollaboratorTasksSortedByDate(startDate, endDate, taskStatus)
+        activate TASK_REPO
+
+            loop for each task
+                TASK_REPO -> TASK: hasStatus(taskStatus)
+                activate TASK
+                TASK --> TASK_REPO
+                deactivate TASK
+
+                TASK_REPO -> TASK: isBetweenDates(startDate, endDate)
+                activate TASK
+                TASK --> TASK_REPO
+                deactivate TASK
+
+                TASK_REPO -> TASK: isAssignedToCurrentCollaborator()
+                activate TASK
+                TASK --> TASK_REPO
+                deactivate TASK
+            end loop
+
+            TASK_REPO -> TASK_REPO: sortTasksByDate()
+
+        TASK_REPO --> CTRL: List of tasks
+        deactivate TASK_REPO
+
+    CTRL --> UI: List of tasks
+    deactivate CTRL
+
+UI --> ACTOR: Shows the list of tasks
+deactivate UI
+
+@enduml
