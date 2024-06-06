@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.g312.application.controller.AssignTeamEntryAgendaController;
+import pt.ipp.isep.dei.g312.domain.GreenSpace;
 import pt.ipp.isep.dei.g312.domain.Task;
 import pt.ipp.isep.dei.g312.domain.Team;
 
@@ -27,8 +28,10 @@ public class AssignTeamEntryAgendaUI extends Application implements Initializabl
     public ComboBox cmbTask;
     public ComboBox cmbTeam;
     public Label messageLabel;
+    public ComboBox cmbGreenSpace;
     private Optional<Task> chosenTask = null;
     private Optional<Team> chosenTeam = null;
+    private Optional<GreenSpace> chosenGreenSpace = null;
 
 
     public AssignTeamEntryAgendaUI() {
@@ -55,27 +58,85 @@ public class AssignTeamEntryAgendaUI extends Application implements Initializabl
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        initializeTaskComboBox();
+        initializeGreenSpaceComboBox();
 
 
 
     }
 
+    //comboBox for GreenSpace
+    private void initializeGreenSpaceComboBox() {
+        List<GreenSpace> greenSpaceList = controller.getGreenSpaces();
+        cmbGreenSpace.setItems(FXCollections.observableArrayList(greenSpaceList));
+        cmbGreenSpace.setCellFactory(listView -> new AssignTeamEntryAgendaUI.GreenSpaceComboNames());
+        cmbGreenSpace.setButtonCell(new AssignTeamEntryAgendaUI.GreenSpaceComboNames());
+    }
 
-    private void initializeTaskComboBox() {
-        List<Task> tasklist = controller.listUnfinishedTasks();
-        cmbTask.setItems(FXCollections.observableArrayList(tasklist));
-        cmbTask.setCellFactory(listView -> new TaskComboNames());
-        cmbTask.setButtonCell(new TaskComboNames());
+    public void onChangeCmbGreenSpace(ActionEvent actionEvent) {
+        chosenGreenSpace = Optional.empty();
+        if (cmbGreenSpace.getValue() != null) {
+            GreenSpace greenSpace = (GreenSpace) cmbGreenSpace.getValue();
+            initializeTaskComboBox(greenSpace);
+            chosenGreenSpace = Optional.of(greenSpace);
+        }
+    }
+
+
+
+    private static class GreenSpaceComboNames extends ListCell<GreenSpace> {
+
+        @Override
+        public void updateItem(GreenSpace item, boolean empty) {
+            super.updateItem(item, empty);
+            if (item != null) {
+
+                setText(item.toString());
+
+            } else if (empty || item == null) {
+                setText("Select a GreenSpace");
+            } else {
+                setText(null);
+            }
+        }
+
+    }
+
+
+    //comboBox for Task
+    private void initializeTaskComboBox(GreenSpace greenSpace) {
+        List<Task> taskList = controller.getTasksByGreenSpace(greenSpace);
+        System.out.println(taskList.size());
+        cmbTask.setItems(FXCollections.observableArrayList(taskList));
+        cmbTask.setCellFactory(listView -> new AssignTeamEntryAgendaUI.TaskComboNames());
+        cmbTask.setButtonCell(new AssignTeamEntryAgendaUI.TaskComboNames());
     }
 
     public void onChangeCmbTask(ActionEvent actionEvent) {
         chosenTask = Optional.empty();
         if (cmbTask.getValue() != null) {
             Task task = (Task) cmbTask.getValue();
-            initializeTeamComboBox(task);
             chosenTask = Optional.of(task);
+        initializeTeamComboBox(task);
+
         }
+    }
+
+    private static class TaskComboNames extends ListCell<Task> {
+
+        @Override
+        public void updateItem(Task item, boolean empty) {
+            super.updateItem(item, empty);
+            if (item != null) {
+
+                setText(item.toString());
+
+            } else if (empty || item == null) {
+                setText("Select a Task");
+            } else {
+                setText(null);
+            }
+        }
+
     }
 
     public void onChangeCmbTeam(ActionEvent actionEvent) {
@@ -90,24 +151,6 @@ public class AssignTeamEntryAgendaUI extends Application implements Initializabl
         }
     }
 
-
-    private static class TaskComboNames extends ListCell<Task> {
-
-        @Override
-        public void updateItem(Task item, boolean empty) {
-            super.updateItem(item, empty);
-            if (item != null) {
-
-                setText(item.getTitle());
-
-            } else if (empty || item == null) {
-                setText("Select a Task");
-            } else {
-                setText(null);
-            }
-        }
-
-    }
 
 
 

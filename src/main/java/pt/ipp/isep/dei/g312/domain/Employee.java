@@ -420,6 +420,7 @@ public class Employee implements Cloneable, Comparable<Employee> {
 
     public static Optional<Task> postponedTask(Task task, Date startDate) {
         task.setTaskStartDate(startDate);
+        task.setEndDate();
         task.setTaskStatus(TaskStatus.POSTPONED);
         task.assignTeam(null);
         task.assignVehicle(null);

@@ -1,8 +1,6 @@
 package pt.ipp.isep.dei.g312.application.controller;
-import pt.ipp.isep.dei.g312.domain.Employee;
-import pt.ipp.isep.dei.g312.domain.Task;
-import pt.ipp.isep.dei.g312.domain.TaskStatus;
-import pt.ipp.isep.dei.g312.domain.Team;
+import pt.ipp.isep.dei.g312.domain.*;
+import pt.ipp.isep.dei.g312.repository.GreenSpaceRepository;
 import pt.ipp.isep.dei.g312.repository.Repositories;
 import pt.ipp.isep.dei.g312.repository.TaskRepository;
 import pt.ipp.isep.dei.g312.repository.TeamRepository;
@@ -12,11 +10,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
+
 
 public class AssignTeamEntryAgendaController {
 
     private TeamRepository teamRepository;
     private TaskRepository taskRepository;
+    private GreenSpaceRepository greenSpaceRepository;
 
     private List<String> emailServices = new ArrayList<>();
 
@@ -25,6 +26,7 @@ public class AssignTeamEntryAgendaController {
     public AssignTeamEntryAgendaController() {
         this.taskRepository = getTaskRepository();
         this.teamRepository = getTeamRepository();
+        this.greenSpaceRepository = getGreenSpaceRepository();
         this.emailServices = loadValidEmailServices("src/main/resources/config.properties");
     }
 
@@ -33,11 +35,13 @@ public class AssignTeamEntryAgendaController {
     private TeamRepository getTeamRepository() { return Repositories.getInstance().getTeamRepository(); }
 
     private TaskRepository getTaskRepository() { return Repositories.getInstance().getTaskRepository(); }
+    private GreenSpaceRepository getGreenSpaceRepository() { return Repositories.getInstance().getGreenSpaceRepository(); }
 
 
     public boolean assignTeamToTask(Team team, Task task) {
         //TODO check if email service is valid
         if (Employee.assignTeamToTask(team, task).isPresent()){
+            System.out.println("Team assigned to task:" + task.getAssignedTeam().toString());
             return true;
         }
         return false;
@@ -101,5 +105,18 @@ public class AssignTeamEntryAgendaController {
 
         return false;
     }
+
+    public List<GreenSpace> getGreenSpaces() {
+        return greenSpaceRepository.getGreenSpaceList();
+
+    }
+
+    public List<Task> getTasksByGreenSpace(GreenSpace greenSpace) {
+        return taskRepository.getPlannedAndPostponedTasks().stream()
+                .filter(task -> task.getGreenSpace().equals(greenSpace))
+                .collect(Collectors.toList());
+    }
+
+
 
 }
