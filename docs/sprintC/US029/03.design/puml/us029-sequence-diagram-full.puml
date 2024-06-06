@@ -1,0 +1,58 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "Collaborator" as ACTOR
+participant ":TaskUI" as UI
+participant ":TaskController" as CTRL
+participant ":Repositories" as REPOS_Singleton
+participant "repositories\n:Repositories" as REPOS_Instance
+participant "taskRepository\n:TaskRepository" as TASK_REPO
+participant ":Task" as TASK
+
+activate ACTOR
+
+ref over ACTOR, UI: This action assumes that the user has already logged in
+
+ACTOR -> UI: Selects a task to complete
+activate UI
+UI --> ACTOR: Requests optional observations
+deactivate UI
+
+ACTOR -> UI: Enters optional observations
+activate UI
+
+    UI -> CTRL: recordTaskCompletion(task, observations)
+    activate CTRL
+
+        CTRL -> REPOS_Singleton: getInstance()
+        activate REPOS_Singleton
+        REPOS_Singleton --> CTRL: repositories
+        deactivate REPOS_Singleton
+
+        CTRL -> REPOS_Instance: getTaskRepository()
+        activate REPOS_Instance
+        REPOS_Instance --> CTRL: taskRepository
+        deactivate REPOS_Instance
+
+        CTRL -> TASK_REPO: recordTaskCompletion(task, observations)
+        activate TASK_REPO
+
+            TASK_REPO -> TASK: setCompleted(observations)
+            activate TASK
+            TASK -> TASK_REPO: Operation success
+            deactivate TASK
+
+        TASK_REPO --> CTRL: Operation success
+        deactivate TASK_REPO
+
+    CTRL --> UI: Operation success
+    deactivate CTRL
+
+UI --> ACTOR: Displays operation success
+deactivate UI
+
+@enduml

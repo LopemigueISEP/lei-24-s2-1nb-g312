@@ -1,0 +1,57 @@
+@startuml
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+skinparam classAttributeIconSize 0
+
+
+class TaskUI {
+    -TaskController
+}
+
+class TaskController {
+    -TaskRepository
+    +recordTaskCompletion(Task task, String observations)
+}
+
+class Repositories {
+    -TaskRepository
+    -Repositories()
+    +getInstance()
+    +getTaskRepository()
+}
+
+class TaskRepository {
+    +List<Task>
+    +recordTaskCompletion(Task task, String observations)
+}
+
+class Task {
+    -status : TaskStatus
+    +setCompleted(String observations)
+}
+
+enum TaskStatus {
+    PLANNED
+    POSTPONED
+    CANCELED
+    DONE
+    PENDING
+}
+
+class Employee {
+}
+
+TaskUI "1" --> "1" TaskController
+TaskController "1" ..> "1" Repositories: repositories
+TaskController "1" --> "1" TaskRepository
+TaskController "1" ..> "*" Task
+TaskController "1" ..> "*" TaskStatus
+Repositories --> Repositories: instance
+Repositories "1" --> "1" TaskRepository
+TaskRepository "1" ..> "*" TaskStatus
+TaskRepository "1" --> "*" Task
+Task "1" ..> "1" TaskStatus
+Task "1" ..> "1" Employee
+
+@enduml

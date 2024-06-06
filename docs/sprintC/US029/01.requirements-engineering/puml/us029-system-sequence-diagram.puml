@@ -1,0 +1,25 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) US029
+
+autonumber
+
+actor "Collaborator" as ACTOR
+participant ":System" as SYSTEM
+
+activate ACTOR
+
+ACTOR -> SYSTEM: Selects a task to complete
+activate SYSTEM
+SYSTEM --> ACTOR: Requests optional observations
+deactivate SYSTEM
+
+ACTOR -> SYSTEM: Enters optional observations
+activate SYSTEM
+SYSTEM --> ACTOR: Displays operation success
+deactivate SYSTEM
+
+@enduml

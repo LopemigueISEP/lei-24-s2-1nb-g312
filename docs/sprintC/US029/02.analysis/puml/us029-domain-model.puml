@@ -1,0 +1,34 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+hide circle
+hide methods
+
+title Domain Model
+
+class Agenda {
+    appointments
+    alerts
+    to-doList
+}
+
+class Task {
+    reference
+    description
+    duration
+    cost
+}
+
+class Collaborator{
+}
+
+class Team{
+}
+
+Collaborator "1..*" -- "1" Team : has >
+Agenda "1" -- "0..*" Task : has >
+Team "1" -- "1" Task : executes >
+
+@enduml
