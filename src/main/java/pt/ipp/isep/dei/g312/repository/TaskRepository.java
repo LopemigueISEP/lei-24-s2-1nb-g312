@@ -143,7 +143,12 @@ public class TaskRepository implements Serializable {
         }
         return pendingTasks;
     }
-
+    /**
+     * Retrieves a list of tasks associated with a specific green space.
+     *
+     * @param greenSpace the GreenSpace for which to retrieve tasks
+     * @return a List of Task objects associated with the specified green space
+     */
     public List<Task> getTasksByGreenSpace(GreenSpace greenSpace) {
         List<Task> tasksOfGreenSpace = new ArrayList<>();
         for (Task t :
@@ -155,7 +160,13 @@ public class TaskRepository implements Serializable {
         return tasksOfGreenSpace;
     }
 
-
+    /**
+     * Checks if a task is valid, ensuring it is not already present in the list of tasks.
+     *
+     * @param task the task to validate
+     * @return true if the task is valid (i.e., not already present in the list),
+     *        false otherwise
+     */
     private boolean isValidTask(Task task) {
         boolean isValid = !taskList.contains(task);
 
@@ -234,7 +245,13 @@ public class TaskRepository implements Serializable {
         taskToCancel.cancel();
     }
 
-
+    /**
+     * Adds the specified task to the agenda with the provided start date and time.
+     *
+     * @param task the task to add to the agenda
+     * @param startDate the date on which the task is to be scheduled
+     * @param startTime the time at which the task is to start
+     */
     public void addTaskAgenda(Task task, LocalDate startDate, LocalTime startTime) {
         for (Task t :
                 taskList) {

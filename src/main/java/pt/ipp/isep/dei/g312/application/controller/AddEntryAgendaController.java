@@ -74,32 +74,31 @@ public class AddEntryAgendaController {
         }
     }
 
+
     /**
-     * Retrieves all green spaces from the GreenSpaceRepository.
-     *
-     * @return A list of all GreenSpace objects.
-     */
+
+     Retrieves a list of green spaces.
+     @return a list of GreenSpace objects representing the green spaces */
     public List<GreenSpace> getGreenSpaces() {
         return greenSpaceRepository.getGreenSpaceList();
 
     }
     /**
-     * Retrieves tasks associated with a specific green space from the TaskRepository.
-     * The current implementation retrieves all tasks, but can be modified to filter by green space.
+     * Retrieves a list of tasks associated with a specific green space.
      *
-     * @param greenSpace The GreenSpace object for which to retrieve tasks.
-     * @return A list of Task objects (may be empty if no tasks are associated with the green space).
+     * @param greenSpace the GreenSpace for which to retrieve tasks
+     * @return a list of Task objects associated with the specified green space
      */
     public List<Task> getTasksByGreenSpace(GreenSpace greenSpace) {
         return taskRepository.getTasksByGreenSpace(greenSpace);
 
     }
     /**
-     * Retrieves a list of green spaces managed by a specific user based on their email address.
-     * This method performs user validation before retrieving green spaces.
+     * Retrieves a list of green spaces managed by a specific user.
      *
-     * @param userEmail The email address of the user to filter by.
-     * @return A list of GreenSpace objects managed by the user (empty list if validation fails or no green spaces are found).
+     * @param userEmail the email of the user managing the green spaces
+     * @return a list of GreenSpace objects managed by the specified user,
+     *         or an empty list if the user is not logged in or if there are no green spaces managed by the user
      */
     //filter greenspaces by user who created it - considering e-mmail
     public List<GreenSpace> getGreenSpaceList(String userEmail) {
@@ -137,14 +136,11 @@ public class AddEntryAgendaController {
         return authRepository.validateUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_GSM);
     }
     /**
-     * Attempts to add a task to the agenda.
-     * This method likely delegates the actual task creation and addition to the `Employee` class (assuming such a class exists).
-     * It performs user validation before calling the `addTaskAgenda` method.
+     * Adds a task to the agenda on the specified date and time.
      *
-     * @param selectedTask       The Task object to be added.
-     * @param startDate          The LocalDate object representing the start date of the task.
-     * @param startTime          The start time of the task (presumably in hours).
-     * @return An Optional containing the added Task object if successful, or Optional.empty() otherwise.
+     * @param selectedTask the task to be added to the agenda
+     * @param startDate the date on which the task is to be scheduled
+     * @param startTime the time at which the task is to start
      */
     public void addTaskToAgenda(Task selectedTask, LocalDate startDate, LocalTime startTime) {
         taskRepository.addTaskAgenda(selectedTask, startDate, startTime);

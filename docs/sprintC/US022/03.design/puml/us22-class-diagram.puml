@@ -46,13 +46,13 @@ class AddEntryAgendaController{
 + getTaskRepository() : void
 + getAuthRepository() : void
 + getUserEmail() : String
-+ initialize() : void
 + getGreenSpaces() : List<GreenSpace>
 + getTasksByGreenSpace (greenSpace Greenspace): List<Task>
 + getGreenSpaceList(userEmail : String) : List<GreenSpace>
++ filterGreenSpacesByManager (greenSpaces : List<GreenSpace>, managerName : String)
 + currentUserLogInValidation() : boolean
-+ filterGreenSpacesByManager (greenSpaces : List<GreenSpace>, managerName String)
-+ addTaskToAgenda (selectedGreenSpace : GreenSpace,  selectedTask : Task, startDate LocalDate, startTime : LocalTime) : Optional<Task>
++ addTaskToAgenda (selectedTask : Task, startDate LocalDate, startTime : LocalTime) : Optional<Task>
++ initialize() : void
 
 
 }
