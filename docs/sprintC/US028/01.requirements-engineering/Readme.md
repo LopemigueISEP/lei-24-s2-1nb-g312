@@ -1,5 +1,4 @@
-# US028 - Consult the tasks assigned to me between two dates
-
+# US028 - As a Collaborator, I wish to consult the tasks assigned to me between two dates
 
 ## 1. Requirements Engineering
 
@@ -27,8 +26,10 @@ easily consult the daily tasks as well the past and future tasks.
 
 ### 1.4. Found out Dependencies
 
+* There is a dependency on "US003 - As an HRM, I want to register a collaborator with a job and
+  fundamental characteristics" as there must be at least one collaborator to list the tasks.
 * There is a dependency on "US022 - Add a new entry in the Agenda" as there must be at least one task to the listed.
-* There is a dependency on "US023 - Assign a Team to an entry in the Agenda" since tasks should be assigned.
+* There is a dependency on "US023 - Assign a Team to an entry in the Agenda" since tasks should be assigned to a team that has a collaborator.
 
 ### 1.5 Input and Output Data
 

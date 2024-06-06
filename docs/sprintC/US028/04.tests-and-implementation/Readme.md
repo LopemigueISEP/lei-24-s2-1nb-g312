@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US028 - As a Collaborator, I wish to consult the tasks assigned to me between two dates
 
 ## 4. Tests 
 

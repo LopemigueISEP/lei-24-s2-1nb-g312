@@ -1,4 +1,4 @@
-# US028 - Consult the tasks assigned to me between two dates
+# US028 - As a Collaborator, I wish to consult the tasks assigned to me between two dates
 
 ## 3. Design - User Story Realization
 

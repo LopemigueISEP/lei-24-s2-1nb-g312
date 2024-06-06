@@ -12,14 +12,14 @@ participant ":System" as SYSTEM
 
 activate ACTOR
 
-ACTOR -> SYSTEM: Asks to list tasks assigned to him
+ACTOR -> SYSTEM: I wish to consult the tasks assigned to me between two dates
 activate SYSTEM
 SYSTEM --> ACTOR: Requests filter data (i.e. start date, end date, task status)
 deactivate SYSTEM
 
-ACTOR -> SYSTEM: Enters requested data
+ACTOR -> SYSTEM: selects requested data
 activate SYSTEM
-SYSTEM --> ACTOR: Shows the list of tasks sorted by date between start and end dates \nwith the given task status assigned to the collaborator
+SYSTEM --> ACTOR: Shows the list of his tasks with filter applied
 deactivate SYSTEM
 
 @enduml
