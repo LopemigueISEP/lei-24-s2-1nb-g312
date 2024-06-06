@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei.g312.application.controller;
 
-import javafx.fxml.FXML;
 
 import pt.ipp.isep.dei.g312.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.g312.domain.*;
@@ -10,10 +9,8 @@ import pt.ipp.isep.dei.g312.repository.*;
 import java.time.LocalDate;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
 /**
  * This class implements the controller for the "Add Entry Agenda" functionality.
  * It interacts with GreenSpaceRepository, TaskRepository, and AuthenticationRepository to manage tasks and green spaces within the agenda.
@@ -76,14 +73,7 @@ public class AddEntryAgendaController {
             return null;
         }
     }
-    /**
-     * FXML initialization method (likely called during FXML loading).
-     * No specific actions are implemented here in this example.
-     */
-    @FXML
-    public void initialize() {
 
-    }
     /**
      * Retrieves all green spaces from the GreenSpaceRepository.
      *
@@ -101,7 +91,7 @@ public class AddEntryAgendaController {
      * @return A list of Task objects (may be empty if no tasks are associated with the green space).
      */
     public List<Task> getTasksByGreenSpace(GreenSpace greenSpace) {
-        return taskRepository.getTasksByGreenSpace();
+        return taskRepository.getTasksByGreenSpace(greenSpace);
 
     }
     /**
@@ -118,15 +108,6 @@ public class AddEntryAgendaController {
             return filterGreenSpacesByManager(allGreenSpaces, userEmail);
         }
         return Collections.emptyList();
-    }
-    /**
-     * Validates the current user's role to be either Admin or Green Space Manager (GSM).
-     * This method relies on the AuthenticationRepository to perform the validation.
-     *
-     * @return True if the user has a valid role (Admin or GSM), false otherwise.
-     */
-    private boolean currentUserLogInValidation() {
-        return authRepository.validateUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_GSM);
     }
     /**
      * Filters a list of green spaces based on the provided manager name.
@@ -147,25 +128,26 @@ public class AddEntryAgendaController {
         return filteredList;
     }
     /**
+     * Validates the current user's role to be either Admin or Green Space Manager (GSM).
+     * This method relies on the AuthenticationRepository to perform the validation.
+     *
+     * @return True if the user has a valid role (Admin or GSM), false otherwise.
+     */
+    private boolean currentUserLogInValidation() {
+        return authRepository.validateUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_GSM);
+    }
+    /**
      * Attempts to add a task to the agenda.
      * This method likely delegates the actual task creation and addition to the `Employee` class (assuming such a class exists).
      * It performs user validation before calling the `addTaskAgenda` method.
      *
-     * @param selectedGreenSpace The GreenSpace object associated with the task.
-     * @param selectedTask The Task object to be added.
-     * @param startDate The LocalDate object representing the start date of the task.
-     * @param startTime The start time of the task (presumably in hours).
+     * @param selectedTask       The Task object to be added.
+     * @param startDate          The LocalDate object representing the start date of the task.
+     * @param startTime          The start time of the task (presumably in hours).
      * @return An Optional containing the added Task object if successful, or Optional.empty() otherwise.
      */
-    public Optional<Task> addTaskToAgenda(GreenSpace selectedGreenSpace, Task selectedTask, LocalDate startDate, LocalTime startTime) {
-        Optional<Task> newTaskAgenda = Optional.empty();
-        newTaskAgenda=Employee.addTaskAgenda(selectedGreenSpace,selectedTask,startDate,startTime,TaskPosition.AGENDA,true);
-        if (newTaskAgenda.isPresent()){
-            return  newTaskAgenda;
-        }
-        else {
-            return Optional.empty();
-        }
+    public void addTaskToAgenda(Task selectedTask, LocalDate startDate, LocalTime startTime) {
+        taskRepository.addTaskAgenda(selectedTask, startDate, startTime);
     }
 
 
