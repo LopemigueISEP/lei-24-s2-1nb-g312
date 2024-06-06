@@ -11,7 +11,7 @@ public class GreenSpace implements Comparable<GreenSpace>, Serializable {
     private String name;
     private String address;
     private double area;
-    private String typology;
+    private GreenSpaceTypology typology;
     private String greenSpaceManager;
 
     /**
@@ -24,7 +24,7 @@ public class GreenSpace implements Comparable<GreenSpace>, Serializable {
      * @param greenSpaceManager The username of the employee managing the green space.
      */
 
-    public GreenSpace(String name, String address, double area, String typology, String greenSpaceManager) {
+    public GreenSpace(String name, String address, double area, GreenSpaceTypology typology, String greenSpaceManager) {
         this.name = name;
         this.address = address;
         this.area = area;
@@ -69,11 +69,11 @@ public class GreenSpace implements Comparable<GreenSpace>, Serializable {
         this.area = area;
     }
 
-    public void setTypology(String typology) {
+    public void setTypology(GreenSpaceTypology typology) {
         this.typology = typology;
     }
 
-    public String getTypology() {
+    public GreenSpaceTypology getTypology() {
         return typology;
     }
 
