@@ -3,8 +3,7 @@ package pt.ipp.isep.dei.g312.repository;
 import pt.ipp.isep.dei.g312.domain.*;
 
 import java.io.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.*;
 
 
@@ -143,7 +142,12 @@ public class TaskRepository implements Serializable {
         }
         return pendingTasks;
     }
-
+    /**
+     * Retrieves a list of tasks associated with a specific green space.
+     *
+     * @param greenSpace the GreenSpace for which to retrieve tasks
+     * @return a List of Task objects associated with the specified green space
+     */
     public List<Task> getTasksByGreenSpace(GreenSpace greenSpace) {
         List<Task> tasksOfGreenSpace = new ArrayList<>();
         for (Task t :
@@ -155,7 +159,13 @@ public class TaskRepository implements Serializable {
         return tasksOfGreenSpace;
     }
 
-
+    /**
+     * Checks if a task is valid, ensuring it is not already present in the list of tasks.
+     *
+     * @param task the task to validate
+     * @return true if the task is valid (i.e., not already present in the list),
+     *        false otherwise
+     */
     private boolean isValidTask(Task task) {
         boolean isValid = !taskList.contains(task);
 
@@ -234,7 +244,13 @@ public class TaskRepository implements Serializable {
         taskToCancel.cancel();
     }
 
-
+    /**
+     * Adds the specified task to the agenda with the provided start date and time.
+     *
+     * @param task the task to add to the agenda
+     * @param startDate the date on which the task is to be scheduled
+     * @param startTime the time at which the task is to start
+     */
     public void addTaskAgenda(Task task, LocalDate startDate, LocalTime startTime) {
         for (Task t :
                 taskList) {
@@ -333,4 +349,38 @@ public class TaskRepository implements Serializable {
     }
 
 
+    //TODO:EM construção
+    public List<Task> getTasksAssignedToMeBetweenToDates(String userEmail, LocalDate startDate, LocalDate endDate) {
+
+        // Converte LocalDate para ZonedDateTime usando o fuso horário do sistema
+        ZonedDateTime zonedStartDate = startDate.atStartOfDay(ZoneId.systemDefault());
+        ZonedDateTime zonedEndDate = endDate.atStartOfDay(ZoneId.systemDefault());
+
+
+        // Converte ZonedDateTime para Date
+        Date startDateDate = Date.from(zonedStartDate.toInstant());
+        Date endDateDate = Date.from(zonedEndDate.toInstant());
+
+
+
+        List<Task> employeeTasksBetweenDates = new ArrayList<>();
+        List<Employee> taskEmployees = new ArrayList<>();
+
+        for(Task task : getAgenda()){
+            if(task!=null){
+                if((startDateDate.before(task.getEndDate()) || startDateDate.equals(task.getEndDate())) && (endDateDate.after(task.getStartDate()) || endDateDate.equals(task.getStartDate()))){
+                    if(task.getAssignedTeam().getTeamEmployees()!=null){
+                        taskEmployees = task.getAssignedTeam().getTeamEmployees();
+                        for (Employee emp : taskEmployees){
+                            if(emp.getEmail().equals(userEmail)){
+                                employeeTasksBetweenDates.add(task);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return employeeTasksBetweenDates;
+    }
 }

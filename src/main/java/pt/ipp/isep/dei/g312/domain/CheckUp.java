@@ -1,12 +1,13 @@
 package pt.ipp.isep.dei.g312.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /** Represents a vehicle CheckUp.
  *  This class is responsible for managing the information of a CheckUp.
  *  It stores the km at the last check-up and date of a vehicle.
  */
-public class CheckUp {
+public class CheckUp implements Serializable {
     private double kmAtLastCheckUp;
     Date checkUpDate;
 

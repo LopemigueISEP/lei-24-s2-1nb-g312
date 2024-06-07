@@ -4,10 +4,7 @@
 
 **Test 1:** Check that it is not possible to create an instance of the Task class with null values. 
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Task instance = new Task(null, null, null, null, null, null, null);
-	}
+	
 	
 
 **Test 2:** Check that it is not possible to create an instance of the Task class with a reference containing less than five chars - AC2. 
@@ -19,7 +16,7 @@
 		Task instance = new Task("Ab1", "Task Description", "Informal Data", "Technical Data", 3, 3780, cat);
 	}
 
-_It is also recommended to organize this content by subsections._ 
+
 
 
 ## 5. Construction (Implementation)
@@ -27,29 +24,8 @@ _It is also recommended to organize this content by subsections._
 ### Class AddEntryToAgendaUI
 
 ```java
-public void start(Stage primaryStage) {
-    Platform.setImplicitExit(false);
-    FXMLLoader fxmlLoader = new FXMLLoader(AddEntryToDoListUI.class.getResource("AddEntryToAgendaUI.fxml"));
-    Scene scene;
-    try {
-        scene = new Scene(fxmlLoader.load());
-        primaryStage.setTitle("MusgoSublime");
-        primaryStage.setScene(scene);
-
-        primaryStage.show();
-
-    } catch (IOException e) {
-        throw new RuntimeException(e);
-    }
-}
-@Override
-public void initialize(URL url, ResourceBundle resourceBundle) {
-    String userEmail = addEntryAgendaController.getUserEmail();
-    initializeComboBoxGreenSpaces(userEmail);
-    GreenSpace selectedGreenSpace = (GreenSpace) cmbGreenSpace.getSelectionModel().getSelectedItem();
-    initializeTaskComboBox(selectedGreenSpace);
-    initializeDatePicker();
-
+    public AddEntryToAgendaUI() {
+    addEntryAgendaController = new AddEntryAgendaController();
 }
 
 ```
@@ -62,15 +38,9 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
     getTaskRepository();
     getAuthRepository();
 }
-    public Optional<Task> addTaskToAgenda(GreenSpace selectedGreenSpace, Task selectedTask, LocalDate startDate, int startTime) {
-    Optional<Task> newTaskAgenda = Optional.empty();
-    newTaskAgenda=Employee.addTaskAgenda(selectedGreenSpace,selectedTask,startDate,startTime,TaskPosition.AGENDA,true);
-    if (newTaskAgenda.isPresent()){
-        return  newTaskAgenda;
-    }
-    else {
-        return Optional.empty();
-    }
+
+public void addTaskToAgenda(Task selectedTask, LocalDate startDate, LocalTime startTime) {
+    taskRepository.addTaskAgenda(selectedTask, startDate, startTime);
 }
 ```
 
@@ -97,15 +67,12 @@ public static Optional<Task> addTaskAgenda(GreenSpace selectedGreenSpace, Task s
 ### Class Task
 
 ```java
- public Task(GreenSpace selectedGreenSpace, Task selectedTask, LocalDate selectedDate, int startTime, TaskPosition taskPosition) {
-    if (taskPosition.equals(TaskPosition.AGENDA)) {
-        this.greenSpace = selectedGreenSpace;
-        this.selectedTask = selectedTask;
-        this.selectedDate = selectedDate;
-        this.startTime = startTime;
-        this.taskPosition = taskPosition;
-    }
-
+    public void addTaskAgenda(LocalDate startDate, LocalTime startTime) {
+    this.taskPosition=TaskPosition.AGENDA;
+    this.status=TaskStatus.PENDING;
+    LocalDateTime newStartDateTime = LocalDateTime.of(startDate, startTime);
+    this.startDate=Date.from(newStartDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    this.endDate= calculateEndDate();
 }
 ```
 ## 6. Integration and Demo

@@ -102,7 +102,7 @@ public class Bootstrap implements Runnable {
         Optional<Team> addedTeam = teamRepository.add(team);
     }
 
-    private void addTasks() throws ParseException {
+    private void addTasks() {
         TaskRepository taskRepository = Repositories.getInstance().getTaskRepository();
         taskRepository.getSeralizatedData();
     }

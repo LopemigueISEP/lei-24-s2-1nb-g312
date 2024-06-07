@@ -45,14 +45,14 @@ class AddEntryAgendaController{
 + getGreenSpaceRepository() : void
 + getTaskRepository() : void
 + getAuthRepository() : void
-+ getUserEmail()
-+ initialize() : void
++ getUserEmail() : String
 + getGreenSpaces() : List<GreenSpace>
 + getTasksByGreenSpace (greenSpace Greenspace): List<Task>
 + getGreenSpaceList(userEmail : String) : List<GreenSpace>
++ filterGreenSpacesByManager (greenSpaces : List<GreenSpace>, managerName : String)
 + currentUserLogInValidation() : boolean
-+ filterGreenSpacesByManager (greenSpaces : List<GreenSpace>, managerName String)
-+ addTaskToAgenda (selectedGreenSpace : GreenSpace,  selectedTask : Task, startDate LocalDate, startTime : LocalTime) : Optional<Task>
++ addTaskToAgenda (selectedTask : Task, startDate LocalDate, startTime : LocalTime) : Optional<Task>
++ initialize() : void
 
 
 }
@@ -64,9 +64,9 @@ class AddEntryAgendaUI{
 class Repositories {
     - Repositories()
     + getInstance() : Repositories
-    + getEmployeeRepository(); employeeRepository
-     + getGreenSpaceRepository(); getGreenSpaceRepository
-     + getTaskRepository(); getTaskRepository
+    + getEmployeeRepository() : employeeRepository
+     + getGreenSpaceRepository() : getGreenSpaceRepository
+     + getTaskRepository() : getTaskRepository
 
 }
 class EmployeeRepository{

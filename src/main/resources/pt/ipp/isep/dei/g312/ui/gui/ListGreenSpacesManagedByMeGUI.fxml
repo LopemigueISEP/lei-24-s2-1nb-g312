@@ -36,10 +36,10 @@
                   </Label>
                   <TableView fx:id="TableView_ListGreenSpacesManagedByMe" prefHeight="459.0" prefWidth="524.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="6">
                     <columns>
-                      <TableColumn fx:id="column_Name" prefWidth="106.0" text="Name" />
-                      <TableColumn fx:id="column_Area" prefWidth="132.0" text="Area" />
-                        <TableColumn fx:id="column_Typology" prefWidth="132.0" text="Typology" />
-                        <TableColumn fx:id="column_Adress" prefWidth="153.0" text="Adress" />
+                      <TableColumn fx:id="column_Name" editable="false" prefWidth="106.0" text="Name" />
+                      <TableColumn fx:id="column_Area" editable="false" prefWidth="132.0" text="Area" />
+                        <TableColumn fx:id="column_Typology" editable="false" prefWidth="132.0" text="Typology" />
+                        <TableColumn fx:id="column_Adress" editable="false" prefWidth="153.0" text="Adress" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

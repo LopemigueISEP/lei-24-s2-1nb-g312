@@ -25,13 +25,11 @@ public class GreenSpaceRepository implements Serializable {
     }
 
     /**
-     * Attempts to add a new `GreenSpace` object to the repository.
-     * The method first validates the green space to ensure it doesn't already exist with the same name.
-     * If validation is successful, a clone of the provided green space is added to the repository
-     * and the list is sorted by name.
+     * Adds a new green space to the list if it passes validation.
      *
-     * @param greenSpace The `GreenSpace` object to add.
-     * @return An Optional containing the added `GreenSpace` object if it was added successfully, or an empty Optional if it was not added.
+     * @param greenSpace the green space to add
+     * @return an Optional containing the added green space if it passes validation,
+     *         or an empty Optional if the green space is not valid
      */
     public Optional<GreenSpace> addGreenSpace(GreenSpace greenSpace) {
         if (validateGreenSpace(greenSpace)) {
@@ -90,14 +88,14 @@ public class GreenSpaceRepository implements Serializable {
      * @param name The name of the GreenSpace to retrieve.
      * @return An Optional containing the GreenSpace object if found, or an empty Optional if not found.
      */
-    public Optional<GreenSpace> getGreenSpaceByName(String name) {
-        for (GreenSpace greenSpace : greenSpaceList) {
-            if (greenSpace.getName().equalsIgnoreCase(name)) {
-                return Optional.of(greenSpace);
-            }
-        }
-        return Optional.empty();
-    }
+//    public Optional<GreenSpace> getGreenSpaceByName(String name) {
+//        for (GreenSpace greenSpace : greenSpaceList) {
+//            if (greenSpace.getName().equalsIgnoreCase(name)) {
+//                return Optional.of(greenSpace);
+//            }
+//        }
+//        return Optional.empty();
+//    }
     /**
      * Serialize data and save it to a file.
      */

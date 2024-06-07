@@ -27,14 +27,15 @@ public class Task implements Cloneable, Serializable {
 
 
     /**
-     * Constructor for creating a task in the to-do list.
+     * Constructs a new task with the specified attributes.
      *
-     * @param greenSpace          the GreenSpace object associated with the task
-     * @param title               the title of the task
-     * @param description         the description of the task
-     * @param urgency             the urgency level of the task
+     * @param greenSpace the green space associated with the task
+     * @param title the title of the task
+     * @param description the description of the task
+     * @param urgency the urgency level of the task
      * @param taskExpectedDuration the expected duration of the task in minutes
-     * @param taskPosition        the position of the task, should be TaskPosition.ToDoList
+     * @param taskPosition the position of the task
+     * @param taskId the ID of the task
      */
     public Task( GreenSpace greenSpace, String title, String description, TaskUrgency urgency, int taskExpectedDuration, TaskPosition taskPosition,int taskId) {
         if (taskPosition.equals(TaskPosition.TODOLIST)) {
@@ -194,13 +195,25 @@ public class Task implements Cloneable, Serializable {
     public Task clone() {
         return new Task(this.title, this.description, this.taskExpectedDuration, this.type, this.greenSpace, this.urgency, this.status, this.assignedTeam, this.assignedVehicles, this.taskID, this.startDate, this.endDate, this.taskPosition);
     }
-
+    /**
+     * Returns a string representation of the task, including its title, green space,
+     * start date, and status.
+     *
+     * @return a formatted string containing the task's title, associated green space,
+     *         start date, and status
+     */
     @Override
     public String toString() {
         return String.format("Task: %s - GreenSpace: %s - Start Date: %s - Status: %s",
                 title, greenSpace, startDate, status);
     }
-
+    /**
+     * Compares this task with the specified task for order based on their start dates.
+     *
+     * @param other the task to be compared
+     * @return a negative integer, zero, or a positive integer as this task's start date
+     *         is before, equal to, or after the specified task's start date
+     */
     public int compareTo(Task other) {
         return this.startDate.compareTo(other.startDate);
     }
@@ -209,12 +222,20 @@ public class Task implements Cloneable, Serializable {
     public void cancel() {
         this.status=TaskStatus.CANCELED;
     }
-
+    /**
+     * Adds the task to the agenda with the specified start date and time.
+     * Sets the task's position to {@code TaskPosition.AGENDA} and its status to {@code TaskStatus.PENDING}.
+     * Also calculates and sets the task's start date and end date.
+     *
+     * @param startDate the date on which the task is to be scheduled
+     * @param startTime the time at which the task is to start
+     */
     public void addTaskAgenda(LocalDate startDate, LocalTime startTime) {
         this.taskPosition=TaskPosition.AGENDA;
         this.status=TaskStatus.PENDING;
         LocalDateTime newStartDateTime = LocalDateTime.of(startDate, startTime);
         this.startDate=Date.from(newStartDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        this.endDate= calculateEndDate();
     }
 }
 

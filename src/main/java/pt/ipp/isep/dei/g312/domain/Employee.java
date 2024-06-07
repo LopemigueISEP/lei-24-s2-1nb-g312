@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.g312.repository.Repositories;
 import pt.ipp.isep.dei.g312.repository.SkillRepository;
 
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.*;
  * a list of skills available to be assigned to collaborators. It also implements methods for cloning
  * and comparing employees.
  */
-public class Employee implements Cloneable, Comparable<Employee> {
+public class Employee implements Cloneable, Comparable<Employee>, Serializable {
     private String name;
     private Date birthDate;
     private String email;

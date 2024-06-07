@@ -42,6 +42,7 @@ public class AdminUI implements Runnable {
         options.add(new MenuItem("Cancel an entry in the Agenda", new CancelEntryAgendaUI()));
         options.add(new MenuItem("Assign vehicles to an entry in the Agenda", new AssignVehicleToAgendaEntryGUI()));
         options.add(new MenuItem("List all green spaces managed by Me", new ListGreenSpacesManagedByMeGUI()));
+        options.add(new MenuItem("List tasks assigned to me between to dates", new TasksAssignedToMeBetweenToDatesGUI()));
 
         int option = 0;
         do {
