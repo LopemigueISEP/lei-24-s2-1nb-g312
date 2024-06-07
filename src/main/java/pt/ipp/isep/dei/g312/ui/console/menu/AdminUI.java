@@ -43,6 +43,7 @@ public class AdminUI implements Runnable {
         options.add(new MenuItem("Assign vehicles to an entry in the Agenda", new AssignVehicleToAgendaEntryGUI()));
         options.add(new MenuItem("List all green spaces managed by Me", new ListGreenSpacesManagedByMeGUI()));
         options.add(new MenuItem("List tasks assigned to me between to dates", new TasksAssignedToMeBetweenToDatesGUI()));
+        options.add(new MenuItem("Calculate routes to Assembly Point", new ImportTwoCSVUI()));
 
         int option = 0;
         do {
