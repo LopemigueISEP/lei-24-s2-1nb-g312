@@ -204,4 +204,15 @@ public class EmployeeRepository {
         return employeesSortedSkills;
 
     }
+
+    public Optional<Employee> getEmployeeByEmail(String userEmail) {
+        Optional<Employee> responsible=Optional.empty();
+        for (Employee e :
+                employeeList) {
+            if (e.getEmail().equals(userEmail)){
+                responsible=Optional.of(e);
+            }
+        }
+        return responsible;
+    }
 }

@@ -41,8 +41,8 @@
                      <columns>
                         <TableColumn fx:id="column_Name" editable="false" prefWidth="106.0" text="Name" />
                         <TableColumn fx:id="column_Team" editable="false" prefWidth="132.0" text="Team" />
+                        <TableColumn fx:id="column_GreenSpace" editable="false" prefWidth="153.0" text="GreenSpace" />
                         <TableColumn fx:id="column_StartDate" editable="false" prefWidth="132.0" sortType="DESCENDING" text="StartDate" />
-                        <TableColumn fx:id="column_EndDate" editable="false" prefWidth="153.0" text="EndDate" />
                         <TableColumn fx:id="column_Status" editable="false" prefWidth="153.0" text="Status" />
                      </columns>
                      <GridPane.margin>
