@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.g312.application.controller.TasksAssignedToMeBetweenToDatesController;
 import pt.ipp.isep.dei.g312.domain.Task;
@@ -27,7 +28,7 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
     public Label label_currentUserEmail;
     public DatePicker DatePickerStartDate;
     public DatePicker DatePickerEndDate;
-    public ComboBox comboboxTaskStatus;
+    public ComboBox<String> comboboxTaskStatus;
     public TableView TableView_TasksAssignedToMeBeetwenToDates;
     public TableColumn column_Name;
     public TableColumn column_Team;
@@ -69,16 +70,13 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
             loadValuesTaskStatusComboBox();
 
 
+            column_Status.setCellValueFactory((new PropertyValueFactory<>("status")));
+            column_EndDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+            column_StartDate.setCellValueFactory((new PropertyValueFactory<>("startDate")));
+            column_Team.setCellValueFactory(new PropertyValueFactory<>("assignedTeam"));
+            column_Name.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-//            initDatePicker(DatePickerStartDate);
-//            initDatePicker(DatePickerEndDate);
-
-//            column_Area.setCellValueFactory(new PropertyValueFactory<>("area"));
-//            column_Adress.setCellValueFactory((new PropertyValueFactory<>("address")));
-//            column_Typology.setCellValueFactory(new PropertyValueFactory<>("typology"));
-//            column_Name.setCellValueFactory(new PropertyValueFactory<>("name"));
-//
-//            loadTableViewValues();
+            loadTableView();
         }catch (Exception e){
             throw new RuntimeException("error in initialize",e);
         }
@@ -97,15 +95,7 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
         comboboxTaskStatus.setItems(observableListTaskStatus);
     }
 
-    private void initDatePicker(DatePicker datePicker) {
-        datePicker.setDayCellFactory(picker -> new DateCell() {
-            public void updateItem(LocalDate date, boolean empty) {
-                super.updateItem(date, empty);
-                LocalDate tomorrow = LocalDate.now().plusDays(1);
-                setDisable(empty || date.isBefore(tomorrow));
-            }
-        });
-    }
+
 
     public void DatePickerStartDate_onAction(ActionEvent actionEvent) {
         startDate = DatePickerStartDate.getValue();
@@ -130,11 +120,12 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
         }
     }
 
-    public void loadTableView(){
+    public void loadTableView() {
         List<Task> userTasksBetweenToDates = loadUserTasksBetweenToDates();
-        
-        
+        userTasksBetweenToDates = filterTasksByStatus(userTasksBetweenToDates);
 
+        ObservableList<Task> observableList = FXCollections.observableList(userTasksBetweenToDates);
+        TableView_TasksAssignedToMeBeetwenToDates.setItems(observableList);
     }
 
 
@@ -150,8 +141,21 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
         return taskList;
     }
     public void comboBox_TaskStatus_OnAction(ActionEvent actionEvent) {
-        
-        
 
+        loadTableView();
+    }
+
+    public List<Task> filterTasksByStatus(List<Task> tasks) {
+        String selectedStatus = comboboxTaskStatus.getValue();
+        if (selectedStatus != null && !selectedStatus.equals("All")) {
+            List<Task> filteredTasks = new ArrayList<>();
+            for (Task task : tasks) {
+                if (task.getStatus().toString().equals(selectedStatus)) {
+                    filteredTasks.add(task);
+                }
+            }
+            return filteredTasks;
+        }
+        return tasks;
     }
 }
