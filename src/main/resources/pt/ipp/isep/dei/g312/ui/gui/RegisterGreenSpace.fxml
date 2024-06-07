@@ -60,7 +60,7 @@
             </Button>
 
             <!-- Label para exibir mensagens -->
-            <Label fx:id="messageLabel" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+            <Label fx:id="messageLabel" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
 
         </GridPane>
     </children>
