@@ -75,7 +75,6 @@
         assertEquals(area, greenSpace.getArea(), 0.001); // Use delta for double comparison
         assertEquals(typology, greenSpace.getTypology());
         assertEquals(greenSpaceManager, greenSpace.getGreenSpaceManager());
-}
 
         //Test 6
         GreenSpace clonedGreenSpace = greenSpace.clone();

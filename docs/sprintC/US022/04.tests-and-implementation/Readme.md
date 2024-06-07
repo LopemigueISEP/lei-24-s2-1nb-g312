@@ -2,19 +2,31 @@
 
 ## 4. Tests 
 
-**Test 1:** Check that it is not possible to create an instance of the Task class with null values. 
+**Test 1:** Test adding task to agenda. 
 
-	
+	@Test
+    public void testAddTaskAgenda() {
+        LocalDate startDate = LocalDate.of(2024, 6, 8);
+        LocalTime startTime = LocalTime.of(10, 30);
+
+        task.addTaskAgenda(startDate, startTime);
+
+        assertEquals(TaskPosition.AGENDA, task.getTaskPosition());
+        assertEquals(TaskStatus.PENDING, task.getStatus());
+
+        LocalDateTime expectedStartDateTime = LocalDateTime.of(startDate, startTime);
+        Date expectedStartDate = Date.from(expectedStartDateTime.atZone(ZoneId.systemDefault()).toInstant());
+
+        assertEquals(expectedStartDate, task.getStartDate());
+
+        // Here we assume that calculateEndDate() is a method that returns a non-null Date.
+        assertNotNull(task.getEndDate());
+    }
 	
 
 **Test 2:** Check that it is not possible to create an instance of the Task class with a reference containing less than five chars - AC2. 
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureReferenceMeetsAC2() {
-		Category cat = new Category(10, "Category 10");
-		
-		Task instance = new Task("Ab1", "Task Description", "Informal Data", "Technical Data", 3, 3780, cat);
-	}
+	
 
 
 
