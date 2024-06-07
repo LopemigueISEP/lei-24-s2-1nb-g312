@@ -424,7 +424,7 @@ public class Employee implements Cloneable, Comparable<Employee>, Serializable {
         task.setEndDate();
         task.setTaskStatus(TaskStatus.POSTPONED);
         task.assignTeam(null);
-        task.assignVehicle(null);
+        task.clearVehicleList();
         return Repositories.getInstance().getTaskRepository().updateTask(task);
     }
 
