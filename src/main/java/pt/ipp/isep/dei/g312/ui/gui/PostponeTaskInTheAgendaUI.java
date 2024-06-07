@@ -32,7 +32,7 @@ public class PostponeTaskInTheAgendaUI extends Application implements Initializa
     private Optional<GreenSpace> chosenGreenSpace = null;
     private Optional<Task> chosenTask = null;
     private Optional<LocalDate> chosenDate = null;
-    private Optional<LocalTime> chosenStartTime = null;
+    private Optional<LocalTime> chosenStartTime = Optional.empty();
 
     public PostponeTaskInTheAgendaUI() {
         controller = new PostponeTaskInTheAgendaController();
@@ -149,9 +149,21 @@ public class PostponeTaskInTheAgendaUI extends Application implements Initializa
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             LocalTime time = LocalTime.parse(textStartTime.getText(), formatter);
-            chosenStartTime = Optional.of(time);
+
+            // Verifica se o horário está entre 9:00 e 17:00
+            LocalTime startTime = LocalTime.of(9, 0);
+            LocalTime endTime = LocalTime.of(17, 0);
+
+            if (time.isBefore(startTime) || time.isAfter(endTime)) {
+                textStartTime.setStyle("-fx-border-color: red;");
+                chosenStartTime = Optional.empty();
+            } else {
+                textStartTime.setStyle(null); // Remove o estilo de borda vermelha caso esteja correto
+                chosenStartTime = Optional.of(time);
+            }
         } catch (DateTimeParseException e) {
             textStartTime.setStyle("-fx-border-color: red;");
+            chosenStartTime = Optional.empty();
         }
     }
 
@@ -163,25 +175,28 @@ public class PostponeTaskInTheAgendaUI extends Application implements Initializa
     public void postponeTask(ActionEvent actionEvent) {
         if (chosenGreenSpace.isPresent() && chosenTask.isPresent() && chosenDate.isPresent() && !textStartTime.getText().isEmpty()) {
             onChangeStartTime();
-            // Call controller to postpone task
-            Optional<Task> success = controller.postponeTask(chosenTask.get(), chosenDate.get(), chosenStartTime.get());
-            if (success.isPresent()) {
-                lblAllFields.setVisible(false);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Success");
-                alert.setHeaderText(null);
-                alert.setContentText("The task has been successfully postponed.");
-                alert.showAndWait();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("There was an error postponing the task. Please try again.");
-                alert.showAndWait();
+            if (chosenStartTime.isPresent()) {
+                // Call controller to postpone task
+                Optional<Task> success = controller.postponeTask(chosenTask.get(), chosenDate.get(), chosenStartTime.get());
+                if (success.isPresent()) {
+                    lblAllFields.setVisible(false);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText(null);
+                    alert.setContentText("The task has been successfully postponed.");
+                    alert.showAndWait();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("There was an error postponing the task. Please try again.");
+                    alert.showAndWait();
+                }
             }
         } else {
             lblAllFields.setVisible(true);
         }
+
     }
 
 
