@@ -24,6 +24,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * GUI class for displaying tasks assigned to the logged-in user between two dates.
+ */
 public class TasksAssignedToMeBetweenToDatesGUI extends Application implements Initializable {
 
 
@@ -43,6 +46,12 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
     LocalDate startDate,endDate;
 
 
+    /**
+     * Starts the JavaFX application.
+     *
+     * @param primaryStage the primary stage for this application
+     * @throws Exception if an error occurs during startup
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         Platform.setImplicitExit(false);
@@ -60,6 +69,13 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
         }
     }
 
+
+    /**
+     * Initializes the controller class.
+     *
+     * @param url            the location used to resolve relative paths for the root object, or null if the location is not known
+     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -84,6 +100,11 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
         }
     }
 
+
+
+    /**
+     * Loads the task status values into the ComboBox.
+     */
     private void loadValuesTaskStatusComboBox() {
         try {
             List<TaskStatus> taskStatus = controller.getTaskStatusValues();
@@ -102,7 +123,11 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
     }
 
 
-
+    /**
+     * Handles the action event for the start date DatePicker.
+     *
+     * @param actionEvent the action event
+     */
     public void DatePickerStartDate_onAction(ActionEvent actionEvent) {
         try {
             startDate = DatePickerStartDate.getValue();
@@ -118,6 +143,12 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
 
     }
 
+
+    /**
+     * Handles the action event for the end date DatePicker.
+     *
+     * @param actionEvent the action event
+     */
     public void DatePickerEndtDate_onAction(ActionEvent actionEvent) {
         try {
             endDate = DatePickerEndDate.getValue();
@@ -134,6 +165,10 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
     }
 
 
+
+    /**
+     * Loads the tasks into the TableView.
+     */
     public void loadTableView() {
         try {
             List<Task> userTasksBetweenToDates = loadUserTasksBetweenToDates();
@@ -148,6 +183,11 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
     }
 
 
+    /**
+     * Loads the tasks assigned to the user between the specified start and end dates.
+     *
+     * @return the list of tasks assigned to the user between the specified dates
+     */
     public List<Task> loadUserTasksBetweenToDates(){
         List<Task> taskList = new ArrayList<>();
         try {
@@ -163,6 +203,13 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
 
         return taskList;
     }
+
+
+    /**
+     * Handles the action event for the task status ComboBox.
+     *
+     * @param actionEvent the action event
+     */
     public void comboBox_TaskStatus_OnAction(ActionEvent actionEvent) {
         try {
             loadTableView();
@@ -171,6 +218,13 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
         }
     }
 
+
+    /**
+     * Filters the tasks by the selected status.
+     *
+     * @param tasks the list of tasks to filter
+     * @return the filtered list of tasks
+     */
     public List<Task> filterTasksByStatus(List<Task> tasks) {
 
         try {

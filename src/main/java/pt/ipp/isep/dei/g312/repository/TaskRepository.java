@@ -8,9 +8,19 @@ import java.util.*;
 
 
 // Agenda is a repository of tasks, not a conceptual class.
+
+/**
+ * Repository class for managing tasks.
+ */
 public class TaskRepository implements Serializable {
     public List<Task> taskList = new ArrayList<>(); //isto passa a ser uma lista de tasks, passa a chamar-se taskList
 
+    /**
+     * Adds a task to the repository.
+     *
+     * @param task the task to add
+     * @return an Optional containing the added task if it was successfully added, or empty otherwise
+     */
     public Optional<Task> addTask(Task task) {
         if (isValidTask(task)) {
             taskList.add(task);
@@ -19,6 +29,12 @@ public class TaskRepository implements Serializable {
         return null;
     }
 
+
+    /**
+     * Retrieves the list of tasks from the repository.
+     *
+     * @return an Optional containing the list of tasks, or empty if the list is null
+     */
     public Optional<List<Task>> getTaskList(){
         Optional<List<Task>> tasksList = Optional.empty();
         List<Task> listTask = new ArrayList<>(taskList);
@@ -27,6 +43,12 @@ public class TaskRepository implements Serializable {
     }
 
     // method to filter tasks by position in the agenda
+
+    /**
+     * Retrieves the list of tasks in the agenda.
+     *
+     * @return the list of tasks in the agenda
+     */
     public List<Task> getAgenda() {
         ArrayList<Task> agenda = new ArrayList<>();
         for (Task t : taskList) {
@@ -38,6 +60,12 @@ public class TaskRepository implements Serializable {
     }
 
     // method to filter tasks by position in the TO DO List
+
+    /**
+     * Retrieves the list of tasks in the TO DO list.
+     *
+     * @return the list of tasks in the TO DO list
+     */
     public List<Task> getToDoList() {
         ArrayList<Task> toDoList = new ArrayList<>();
         for (Task t : taskList) {
@@ -50,6 +78,13 @@ public class TaskRepository implements Serializable {
 
 
     //method to update task in the agenda
+
+    /**
+     * Updates a task in the agenda.
+     *
+     * @param task the task to update
+     * @return an Optional containing the updated task if it was successfully updated, or empty otherwise
+     */
     public Optional<Task> updateTask(Task task) {
         int index = 0;
         for (Task t : taskList) {
@@ -63,6 +98,14 @@ public class TaskRepository implements Serializable {
     }
 
     // method to test team availability,
+
+    /**
+     * Checks the availability of a team for a given task.
+     *
+     * @param teamTasks the list of tasks assigned to the team
+     * @param task the task to check availability for
+     * @return true if the team is available for the task, false otherwise
+     */
     public boolean teamAvailability(List<Task> teamTasks, Task task) {
         if (teamTasks.isEmpty()) {
             return true;
@@ -81,6 +124,12 @@ public class TaskRepository implements Serializable {
 
     // method to get all tasks assigned to a team (ignoring tasks with status canceled or done)
 
+    /**
+     * Retrieves all tasks assigned to a team, excluding those with status CANCELED or DONE.
+     *
+     * @param team the team for which to retrieve tasks
+     * @return the list of tasks assigned to the team
+     */
     public List<Task> getAllTeamTasks(Team team) {
         List<Task> teamTasks = new ArrayList<>();
         for (Task task : getAgenda()) {
@@ -112,6 +161,12 @@ public class TaskRepository implements Serializable {
 
 
     // method to get a list of planned status tasks
+
+    /**
+     * Retrieves a list of tasks with status PLANNED.
+     *
+     * @return a list of planned tasks
+     */
     public List<Task> getPlannedTasks() {
         List<Task> plannedTasks = new ArrayList<>();
         for (Task task : getAgenda()) {
@@ -122,6 +177,11 @@ public class TaskRepository implements Serializable {
         return plannedTasks;
     }
 
+    /**
+     * Retrieves a list of tasks with status PLANNED or POSTPONED.
+     *
+     * @return a list of planned and postponed tasks
+     */
     public List<Task> getPlannedAndPostponedTasks() {
         List<Task> plannedTasks = new ArrayList<>();
         for (Task task : getAgenda()) {
@@ -133,6 +193,12 @@ public class TaskRepository implements Serializable {
     }
 
     // method to get a list of pending status tasks
+
+    /**
+     * Retrieves a list of tasks with status PENDING.
+     *
+     * @return a list of pending tasks
+     */
     public List<Task> getPendingTasks() {
         List<Task> pendingTasks = new ArrayList<>();
         for (Task task : getAgenda()) {
@@ -172,6 +238,13 @@ public class TaskRepository implements Serializable {
         return isValid;
     }
 
+
+    /**
+     * Adds a new task to the repository.
+     *
+     * @param task the task to add
+     * @return an Optional containing the added task if it was successfully added, or empty otherwise
+     */
     public Optional<Task> add(Task task) {
         Optional<Task> newTask = Optional.empty();
         boolean operationSuccess = false;
@@ -230,6 +303,11 @@ public class TaskRepository implements Serializable {
         return listaVeiculosDisponiveis;
     }
 
+    /**
+     * Retrieves a list of tasks that can be canceled.
+     *
+     * @return a list of cancelable tasks
+     */
     public List<Task> getTasksCancelable() {
         List<Task> cancelableTasks = new ArrayList<>();
         for (Task task : getAgenda()) {
@@ -239,6 +317,13 @@ public class TaskRepository implements Serializable {
         }
         return cancelableTasks;
     }
+
+
+    /**
+     * Cancels a given task.
+     *
+     * @param taskToCancel the task to cancel
+     */
 
     public void cancelTask(Task taskToCancel) {
         taskToCancel.cancel();
@@ -260,6 +345,12 @@ public class TaskRepository implements Serializable {
         }
     }
 
+
+    /**
+     * Retrieves the next available task ID.
+     *
+     * @return the next available task ID
+     */
     public int getNextTaskId() {
         int maxId=0;
         for (Task task:
@@ -271,6 +362,14 @@ public class TaskRepository implements Serializable {
         }
         return maxId+1;
     }
+
+
+    /**
+     * Retrieves a list of tasks associated with a specific green space.
+     *
+     * @param greenSpace the GreenSpace for which to retrieve tasks
+     * @return a list of tasks associated with the specified green space
+     */
     public List<Task> getTasksByGreenSpaceForTeam(GreenSpace greenSpace) {
         List<Task> tasksOfGreenSpace = new ArrayList<>();
         for (Task t :
@@ -281,6 +380,8 @@ public class TaskRepository implements Serializable {
         }
         return tasksOfGreenSpace;
     }
+
+
     /**
      * Serializes the TaskRepository object to a file.
      */
@@ -350,6 +451,14 @@ public class TaskRepository implements Serializable {
 
 
 
+    /**
+     * Retrieves the tasks assigned to the specified user within a given date range.
+     *
+     * @param userEmail the email of the user whose tasks are to be retrieved
+     * @param startDate the start date of the range
+     * @param endDate the end date of the range
+     * @return a list of tasks assigned to the specified user within the given date range
+     */
     public List<Task> getTasksAssignedToMeBetweenToDates(String userEmail, LocalDate startDate, LocalDate endDate) {
 
         // Converte LocalDate para ZonedDateTime usando o fuso horário do sistema

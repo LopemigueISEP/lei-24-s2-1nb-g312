@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
+/**
+ * Controller class for managing tasks assigned to the logged-in user between two dates.
+ */
 public class TasksAssignedToMeBetweenToDatesController {
 
     private AuthenticationRepository authenticationRepository;
@@ -21,6 +25,9 @@ public class TasksAssignedToMeBetweenToDatesController {
     private String loggedInUser;
 
 
+    /**
+     * Constructor for TasksAssignedToMeBetweenToDatesController.
+     */
     public TasksAssignedToMeBetweenToDatesController(){
         this.authenticationRepository = getAuthenticationRepository();
         this.taskRepository = getTaskRepository();
@@ -42,6 +49,11 @@ public class TasksAssignedToMeBetweenToDatesController {
         return authenticationRepository;
     }
 
+    /**
+     * Retrieves the TaskRepository instance.
+     *
+     * @return the TaskRepository instance
+     */
     private TaskRepository getTaskRepository() {
 
         if (taskRepository == null) {
@@ -51,6 +63,11 @@ public class TasksAssignedToMeBetweenToDatesController {
         return taskRepository;
     }
 
+    /**
+     * Retrieves the TeamRepository instance.
+     *
+     * @return the TeamRepository instance
+     */
     private TeamRepository getTeamRepository() {
 
         if (teamRepository == null) {
@@ -61,6 +78,12 @@ public class TasksAssignedToMeBetweenToDatesController {
     }
 
 
+    /**
+     * Gets the email of the logged-in user.
+     *
+     * @return the email of the logged-in user
+     * @throws RuntimeException if an error occurs while retrieving the email
+     */
     public String getLoggedInUserEmail() {
         try {
             Email mail = authenticationRepository.getCurrentUserSession().getUserId();
@@ -77,6 +100,14 @@ public class TasksAssignedToMeBetweenToDatesController {
 
 
 
+    /**
+     * Retrieves tasks assigned to the logged-in user between the specified start and end dates.
+     *
+     * @param startDate the start date
+     * @param endDate   the end date
+     * @return the list of tasks assigned to the logged-in user between the specified dates
+     * @throws RuntimeException if an error occurs while retrieving the tasks
+     */
     public List<Task> getTasksAssignedToMeBetweenToDates(LocalDate startDate, LocalDate endDate) {
 
         List<Task> taskList = new ArrayList<>();
@@ -88,6 +119,13 @@ public class TasksAssignedToMeBetweenToDatesController {
         return taskList;
     }
 
+
+    /**
+     * Retrieves the list of task status values.
+     *
+     * @return the list of task status values
+     * @throws RuntimeException if an error occurs while retrieving the task status values
+     */
     public List<TaskStatus> getTaskStatusValues() {
         try {
             return List.of(TaskStatus.values());
