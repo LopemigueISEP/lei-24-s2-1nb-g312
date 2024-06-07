@@ -82,6 +82,20 @@ public class Employee implements Cloneable, Comparable<Employee>, Serializable {
         this.skills = skills;
     }
 
+    public Employee(Employee employee) {
+        this.name=employee.getName();
+        this.birthDate=employee.getBirthDate();
+        this.email=employee.getEmail();
+        this.phoneNumber=employee.getPhoneNumber();
+        this.admissionDate=employee.getAdmissionDate();
+        this.taxpayerNumber=employee.getTaxpayerNumber();
+        this.address=employee.getAddress();
+        this.docNumber=employee.getDocNumber();
+
+        this.skills=employee.getSkills();
+        this.job=employee.getJob();
+    }
+
     public String getTaxpayerNumber() {
         return taxpayerNumber;
     }
@@ -399,7 +413,7 @@ public class Employee implements Cloneable, Comparable<Employee>, Serializable {
     }
 
     // method for the employee to register a task for the todolist
-    public static Optional<Task> registerTask(GreenSpace GreenSpace, String taskTitle, String taskDescr, TaskUrgency taskUrgency, int expectedDuration, TaskPosition todolist, int taskId) {
+    public Optional<Task> registerTask(GreenSpace GreenSpace, String taskTitle, String taskDescr, TaskUrgency taskUrgency, int expectedDuration, TaskPosition todolist, int taskId) {
         try {
 
             Task newtask = new Task(GreenSpace, taskTitle, taskDescr, taskUrgency, expectedDuration, todolist,taskId);

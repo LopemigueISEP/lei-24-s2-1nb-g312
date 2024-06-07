@@ -3,10 +3,7 @@ package pt.ipp.isep.dei.g312.application.controller;
 import javafx.fxml.FXML;
 import pt.ipp.isep.dei.g312.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.g312.domain.*;
-import pt.ipp.isep.dei.g312.repository.AuthenticationRepository;
-import pt.ipp.isep.dei.g312.repository.GreenSpaceRepository;
-import pt.ipp.isep.dei.g312.repository.Repositories;
-import pt.ipp.isep.dei.g312.repository.TaskRepository;
+import pt.ipp.isep.dei.g312.repository.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,11 +14,13 @@ public class AddEntryToDoListController {
 
     private GreenSpaceRepository greenSpaceRepository;
     private TaskRepository taskRepository;
+    private EmployeeRepository employeeRepository;
     private AuthenticationRepository authRepository;
 
-    public AddEntryToDoListController(){
+    public AddEntryToDoListController() {
         getGreenSpaceRepository();
         getTaskRepository();
+        getEmployeeRepository();
         getAuthRepository();
     }
 
@@ -38,6 +37,14 @@ public class AddEntryToDoListController {
 
         }
 
+    }
+
+    private void getEmployeeRepository() {
+        if (employeeRepository == null) {
+            Repositories repositories = Repositories.getInstance();
+            employeeRepository = repositories.getEmployeeRepository();
+
+        }
     }
 
     private void getTaskRepository() {
@@ -64,6 +71,7 @@ public class AddEntryToDoListController {
         return Collections.emptyList();
 
     }
+
     /**
      * Validates the current user's role to be either Admin or Green Space Manager (GSM).
      * This method relies on the AuthenticationRepository to perform the validation.
@@ -99,15 +107,22 @@ public class AddEntryToDoListController {
 
     public Optional<Task> createTask(GreenSpace selectedGreenSpace, String taskTitle, String taskDescr, TaskUrgency taskUrgency, int expectedDuration) {
         Optional<Task> newTask = Optional.empty();
-        int taskMaxId=taskRepository.getNextTaskId();
-        newTask=Employee.registerTask(selectedGreenSpace,taskTitle,taskDescr,taskUrgency,expectedDuration,TaskPosition.TODOLIST,taskMaxId);
-        if (newTask.isPresent()){
-            return  newTask;
+        int taskMaxId = taskRepository.getNextTaskId();
+        Optional<Employee> responsible = employeeRepository.getEmployeeByEmail(getUserEmail());
+        if (responsible.isPresent()) {
+            newTask = responsible.get().registerTask(selectedGreenSpace, taskTitle, taskDescr, taskUrgency, expectedDuration, TaskPosition.TODOLIST, taskMaxId);
+
         }
         else {
             return Optional.empty();
         }
+        if (newTask.isPresent()) {
+            return newTask;
+        } else {
+            return Optional.empty();
+        }
     }
+
     public String getUserEmail() {
         try {
             return authRepository.getCurrentUserSession().getUserId().getEmail();

@@ -142,7 +142,7 @@ public class AddEntryToDoListUI extends Application implements Initializable {
                         stage.close();
                     }
                 } else {
-                    lblAllFields.setText("Task already exists.");
+                    lblAllFields.setText("Task already exists or you do not have permissions.");
                     lblAllFields.setVisible(true);
                 }
             }
