@@ -26,7 +26,7 @@
                         <Insets />
                      </GridPane.margin>
                   </Label>
-                  <Label fx:id="label_currentUserEmail" alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" text="Manager" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                  <Label fx:id="label_currentUserEmail" alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" text="user" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                      <font>
                         <Font name="Tahoma" size="15.0" />
                      </font>
@@ -34,19 +34,36 @@
                         <Insets bottom="15.0" />
                      </padding>
                   </Label>
-                  <TableView fx:id="TableView_ListGreenSpacesManagedByMe" prefHeight="350.0" prefWidth="500.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="5">
+                  <TableView fx:id="TableView_TasksAssignedToMeBeetwenToDates" prefHeight="350.0" prefWidth="500.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="5">
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                      <columns>
                         <TableColumn fx:id="column_Name" editable="false" prefWidth="106.0" text="Name" />
-                        <TableColumn fx:id="column_Area" editable="false" prefWidth="132.0" text="Area" />
-                        <TableColumn fx:id="column_Typology" editable="false" prefWidth="132.0" text="Typology" />
-                        <TableColumn fx:id="column_Adress" editable="false" prefWidth="153.0" text="Adress" />
+                        <TableColumn fx:id="column_Team" editable="false" prefWidth="132.0" sortType="DESCENDING" text="Team" />
+                        <TableColumn fx:id="column_StartDate" editable="false" prefWidth="132.0" text="StartDate" />
+                        <TableColumn fx:id="column_EndDate" editable="false" prefWidth="153.0" text="EndDate" />
+                        <TableColumn fx:id="column_Status" editable="false" prefWidth="153.0" text="Status" />
                      </columns>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
                   </TableView>
-                  <DatePicker fx:id="DatePickerStartDate" onAction="#DatePickerStartDate_onAction" promptText="Start date" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <DatePicker fx:id="DatePickerEndDate" onAction="#DatePickerEndtDate_onAction" promptText="End date" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="comboboxTaskStatus" onAction="#comboBox_TaskStatus_OnAction" opacity="0.99" prefWidth="150.0" promptText="Task status" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets bottom="15.0" />
+                     </GridPane.margin>
+                  </ComboBox>
+                     <DatePicker fx:id="DatePickerStartDate" onAction="#DatePickerStartDate_onAction" promptText="Start date" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                  <DatePicker fx:id="DatePickerEndDate" onAction="#DatePickerEndtDate_onAction" promptText="End date" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                  <Label fx:id="label_error" text="Label" textAlignment="CENTER" textFill="#ee0808" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" />
+                     </GridPane.margin>
+                  </Label>
+
+
+
                </children>
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" percentWidth="15.0" />

@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.g312.application.controller;
 
 import pt.ipp.isep.dei.g312.domain.Task;
+import pt.ipp.isep.dei.g312.domain.TaskStatus;
 import pt.ipp.isep.dei.g312.repository.AuthenticationRepository;
 import pt.ipp.isep.dei.g312.repository.Repositories;
 import pt.ipp.isep.dei.g312.repository.TaskRepository;
@@ -92,5 +93,10 @@ public class TasksAssignedToMeBetweenToDatesController {
         List<Task> taskList = taskRepository.getTasksAssignedToMeBetweenToDates(getLoggedInUserEmail(),startDate, endDate);
 
         return taskList;
+    }
+
+    public List<TaskStatus> getTaskStatusValues() {
+
+        return List.of(TaskStatus.values());
     }
 }

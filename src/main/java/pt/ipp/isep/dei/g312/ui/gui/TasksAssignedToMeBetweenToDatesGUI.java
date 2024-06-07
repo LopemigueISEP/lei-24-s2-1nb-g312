@@ -2,20 +2,22 @@ package pt.ipp.isep.dei.g312.ui.gui;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.DateCell;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.g312.application.controller.TasksAssignedToMeBetweenToDatesController;
 import pt.ipp.isep.dei.g312.domain.Task;
+import pt.ipp.isep.dei.g312.domain.TaskStatus;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -25,6 +27,14 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
     public Label label_currentUserEmail;
     public DatePicker DatePickerStartDate;
     public DatePicker DatePickerEndDate;
+    public ComboBox comboboxTaskStatus;
+    public TableView TableView_TasksAssignedToMeBeetwenToDates;
+    public TableColumn column_Name;
+    public TableColumn column_Team;
+    public TableColumn column_StartDate;
+    public TableColumn column_EndDate;
+    public TableColumn column_Status;
+    public Label label_error;
     TasksAssignedToMeBetweenToDatesController controller;
 
     LocalDate startDate,endDate;
@@ -51,9 +61,14 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         try {
-            controller = new TasksAssignedToMeBetweenToDatesController();
 
+            controller = new TasksAssignedToMeBetweenToDatesController();
+            label_error.setText("");
             label_currentUserEmail.setText(controller.getLoggedInUserEmail());
+
+            loadValuesTaskStatusComboBox();
+
+
 
 //            initDatePicker(DatePickerStartDate);
 //            initDatePicker(DatePickerEndDate);
@@ -69,6 +84,19 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
         }
     }
 
+    private void loadValuesTaskStatusComboBox() {
+        List<TaskStatus> taskStatus = controller.getTaskStatusValues();
+
+        ObservableList<String> observableListTaskStatus = FXCollections.observableArrayList();
+        observableListTaskStatus.add("All");
+        for(TaskStatus ts: taskStatus){
+            if(ts!=null){
+                observableListTaskStatus.add(ts.toString());
+            }
+        }
+        comboboxTaskStatus.setItems(observableListTaskStatus);
+    }
+
     private void initDatePicker(DatePicker datePicker) {
         datePicker.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
@@ -80,30 +108,50 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
     }
 
     public void DatePickerStartDate_onAction(ActionEvent actionEvent) {
-
         startDate = DatePickerStartDate.getValue();
-        loadTableView();
+        if (endDate == null || endDate.isAfter(startDate)){
+            loadTableView();
+            label_error.setText("");
+        }else {
+            label_error.setText("Start date can't be after end date");
+        }
+
 
     }
 
     public void DatePickerEndtDate_onAction(ActionEvent actionEvent) {
-
         endDate = DatePickerEndDate.getValue();
-        loadTableView();
+        if (startDate == null || startDate.isBefore(endDate)){
+            loadTableView();
+            label_error.setText("");
+        }else {
+            label_error.setText("End date can't be before start date");
+
+        }
     }
 
     public void loadTableView(){
-        if(startDate != null & endDate != null){
-            if(endDate.isAfter(startDate) || endDate.isEqual(startDate)) {
-                List<Task> taskList = controller.getTasksAssignedToMeBetweenToDates(startDate, endDate);
-
-                for(Task task: taskList){
-                    System.out.println(task);
-                }
-            }
-        }
+        List<Task> userTasksBetweenToDates = loadUserTasksBetweenToDates();
+        
+        
 
     }
 
 
+    public List<Task> loadUserTasksBetweenToDates(){
+        List<Task> taskList = new ArrayList<>();
+        
+        if(startDate != null & endDate != null){
+            if(endDate.isAfter(startDate) || endDate.isEqual(startDate)) {
+                taskList = controller.getTasksAssignedToMeBetweenToDates(startDate, endDate);
+                
+            }
+        }
+        return taskList;
+    }
+    public void comboBox_TaskStatus_OnAction(ActionEvent actionEvent) {
+        
+        
+
+    }
 }
