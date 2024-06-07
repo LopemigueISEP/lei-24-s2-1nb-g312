@@ -3,8 +3,7 @@ package pt.ipp.isep.dei.g312.repository;
 import pt.ipp.isep.dei.g312.domain.*;
 
 import java.io.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.*;
 
 
@@ -350,4 +349,38 @@ public class TaskRepository implements Serializable {
     }
 
 
+    //TODO:EM construção
+    public List<Task> getTasksAssignedToMeBetweenToDates(String userEmail, LocalDate startDate, LocalDate endDate) {
+
+        // Converte LocalDate para ZonedDateTime usando o fuso horário do sistema
+        ZonedDateTime zonedStartDate = startDate.atStartOfDay(ZoneId.systemDefault());
+        ZonedDateTime zonedEndDate = endDate.atStartOfDay(ZoneId.systemDefault());
+
+
+        // Converte ZonedDateTime para Date
+        Date startDateDate = Date.from(zonedStartDate.toInstant());
+        Date endDateDate = Date.from(zonedEndDate.toInstant());
+
+
+
+        List<Task> employeeTasksBetweenDates = new ArrayList<>();
+        List<Employee> taskEmployees = new ArrayList<>();
+
+        for(Task task : getAgenda()){
+            if(task!=null){
+                if((startDateDate.before(task.getEndDate()) || startDateDate.equals(task.getEndDate())) && (endDateDate.after(task.getStartDate()) || endDateDate.equals(task.getStartDate()))){
+                    if(task.getAssignedTeam().getTeamEmployees()!=null){
+                        taskEmployees = task.getAssignedTeam().getTeamEmployees();
+                        for (Employee emp : taskEmployees){
+                            if(emp.getEmail().equals(userEmail)){
+                                employeeTasksBetweenDates.add(task);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return employeeTasksBetweenDates;
+    }
 }

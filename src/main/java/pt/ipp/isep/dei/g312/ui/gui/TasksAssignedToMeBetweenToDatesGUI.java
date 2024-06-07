@@ -9,10 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.g312.application.controller.ListGreenSpacesManagedByMeController;
 import pt.ipp.isep.dei.g312.application.controller.TasksAssignedToMeBetweenToDatesController;
+import pt.ipp.isep.dei.g312.domain.Task;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,6 +26,9 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
     public DatePicker DatePickerStartDate;
     public DatePicker DatePickerEndDate;
     TasksAssignedToMeBetweenToDatesController controller;
+
+    LocalDate startDate,endDate;
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -51,10 +53,10 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
         try {
             controller = new TasksAssignedToMeBetweenToDatesController();
 
-            label_currentUserEmail.setText(controller.getLoggedInUser());
+            label_currentUserEmail.setText(controller.getLoggedInUserEmail());
 
-            initDatePicker(DatePickerStartDate);
-            initDatePicker(DatePickerEndDate);
+//            initDatePicker(DatePickerStartDate);
+//            initDatePicker(DatePickerEndDate);
 
 //            column_Area.setCellValueFactory(new PropertyValueFactory<>("area"));
 //            column_Adress.setCellValueFactory((new PropertyValueFactory<>("address")));
@@ -78,12 +80,30 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
     }
 
     public void DatePickerStartDate_onAction(ActionEvent actionEvent) {
-        //se ambos os datepickers não forem nulos ir buscar as tasks
+
+        startDate = DatePickerStartDate.getValue();
+        loadTableView();
+
     }
 
     public void DatePickerEndtDate_onAction(ActionEvent actionEvent) {
+
+        endDate = DatePickerEndDate.getValue();
+        loadTableView();
     }
 
+    public void loadTableView(){
+        if(startDate != null & endDate != null){
+            if(endDate.isAfter(startDate) || endDate.isEqual(startDate)) {
+                List<Task> taskList = controller.getTasksAssignedToMeBetweenToDates(startDate, endDate);
+
+                for(Task task: taskList){
+                    System.out.println(task);
+                }
+            }
+        }
+
+    }
 
 
 }
