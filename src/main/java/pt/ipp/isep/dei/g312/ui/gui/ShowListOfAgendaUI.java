@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.g312.ui.gui;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,7 @@ import pt.ipp.isep.dei.g312.application.controller.ShowAgendaController;
 import pt.ipp.isep.dei.g312.domain.GreenSpace;
 import pt.ipp.isep.dei.g312.domain.Task;
 import pt.ipp.isep.dei.g312.domain.TaskStatus;
+import pt.ipp.isep.dei.g312.domain.Vehicle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -68,7 +70,22 @@ public class ShowListOfAgendaUI extends Application implements Initializable {
         column_Status.setCellValueFactory(new PropertyValueFactory<>("status"));
         column_EndDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
         column_Team.setCellValueFactory(new PropertyValueFactory<>("assignedTeam"));
-        column_Vehicles.setCellValueFactory(new PropertyValueFactory<>("assignedVehicles"));
+        //column_Vehicles.setCellValueFactory(new PropertyValueFactory<>("assignedVehicles"));
+
+
+        column_Vehicles.setCellValueFactory(cellData -> {
+            Task task = cellData.getValue();
+            List<Vehicle> vehicles = task.getAssignedVehicles();
+            StringBuilder vehiclePlates = new StringBuilder();
+            for (Vehicle vehicle : vehicles) {
+                if (vehiclePlates.length() > 0) {
+                    vehiclePlates.append(", ");
+                }
+                vehiclePlates.append(vehicle.getRegistrationPlate());
+            }
+            return new ReadOnlyStringWrapper(vehiclePlates.toString());
+        });
+
 
         loadTableViewValues();
     }
