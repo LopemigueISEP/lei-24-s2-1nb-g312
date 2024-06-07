@@ -71,9 +71,9 @@ class GreenSpaceRepositoryTest {
     @Test
     void getGreenSpaceManagedByMe() {
         GreenSpaceRepository repository = new GreenSpaceRepository();
-        GreenSpace greenSpace3 = new GreenSpace("Parque Eduardo VII", "Lisboa", 25.0, "Urban Park", "Luís Montenegro");
-        GreenSpace greenSpace2 = new GreenSpace("Passadiços do Paiva", "Arouca", 396.5, "Medium-Sized Park", "Marcelo");
-        GreenSpace greenSpace1 = new GreenSpace("Peneda/Gerês", "Minho", 965.0, "Large-Sized Park", "Luís Montenegro");
+        GreenSpace greenSpace3 = new GreenSpace("Parque Eduardo VII", "Lisboa", 25.0, GreenSpaceTypology.GARDEN, "Luís Montenegro");
+        GreenSpace greenSpace2 = new GreenSpace("Passadiços do Paiva", "Arouca", 396.5, GreenSpaceTypology.MEDIUM, "Marcelo");
+        GreenSpace greenSpace1 = new GreenSpace("Peneda/Gerês", "Minho", 965.0, GreenSpaceTypology.LARGE, "Luís Montenegro");
         repository.addGreenSpace(greenSpace1);
         repository.addGreenSpace(greenSpace2);
         repository.addGreenSpace(greenSpace3);
