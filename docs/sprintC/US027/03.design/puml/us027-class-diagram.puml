@@ -71,7 +71,7 @@ Repositories "1"--> "1" EmployeeRepository
 EmployeeRepository "1"--> "*" Employee
 
 
-Employee "1" --> "*"GreenSpaces: list GreenSpaces
+Employee "1" --> "1"GreenSpaces: list GreenSpaces
 GreenSpaces "1" --> "*"GreenSpace
 
 
