@@ -39,7 +39,6 @@ public class AssignTeamEntryAgendaController implements EmailService {
 
     public boolean assignTeamToTask(Team team, Task task) {
         if (Employee.assignTeamToTask(team, task).isPresent()){
-            System.out.println("Team assigned to task:" + task.getAssignedTeam().toString());
             sendEmailTeam(task);
             return true;
         }
