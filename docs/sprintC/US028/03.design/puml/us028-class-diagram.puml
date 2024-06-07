@@ -32,7 +32,8 @@ class Task {
     -startDate : LocalDate
     -endDate: LocalDate
     -collaborator: Collaborator
-    +hasStatus(TaskStatus taskStatus)
+    +getAssignedTeam
+    +getTeamEmployees
     +isBetweenDates(LocalDate startDate, LocalDate endDate)
     +isAssignedToCurrentCollaborator()
 }

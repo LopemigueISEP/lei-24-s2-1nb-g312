@@ -83,78 +83,111 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
     }
 
     private void loadValuesTaskStatusComboBox() {
-        List<TaskStatus> taskStatus = controller.getTaskStatusValues();
+        try {
+            List<TaskStatus> taskStatus = controller.getTaskStatusValues();
 
-        ObservableList<String> observableListTaskStatus = FXCollections.observableArrayList();
-        observableListTaskStatus.add("All");
-        for(TaskStatus ts: taskStatus){
-            if(ts!=null){
-                observableListTaskStatus.add(ts.toString());
+            ObservableList<String> observableListTaskStatus = FXCollections.observableArrayList();
+            observableListTaskStatus.add("All");
+            for (TaskStatus ts : taskStatus) {
+                if (ts != null) {
+                    observableListTaskStatus.add(ts.toString());
+                }
             }
+            comboboxTaskStatus.setItems(observableListTaskStatus);
+        }catch (Exception e){
+            throw new RuntimeException("error im loadValuesTaskStatusCombobox",e);
         }
-        comboboxTaskStatus.setItems(observableListTaskStatus);
     }
 
 
 
     public void DatePickerStartDate_onAction(ActionEvent actionEvent) {
-        startDate = DatePickerStartDate.getValue();
-        if (endDate == null || endDate.isAfter(startDate)){
-            loadTableView();
-            label_error.setText("");
-        }else {
-            label_error.setText("Start date can't be after end date");
+        try {
+            startDate = DatePickerStartDate.getValue();
+            if (endDate == null || endDate.isAfter(startDate)) {
+                loadTableView();
+                label_error.setText("");
+            } else {
+                label_error.setText("Start date can't be after end date");
+            }
+        }catch (Exception e){
+            throw new RuntimeException("error in DatePickerStartDate_onAction",e);
         }
-
 
     }
 
     public void DatePickerEndtDate_onAction(ActionEvent actionEvent) {
-        endDate = DatePickerEndDate.getValue();
-        if (startDate == null || startDate.isBefore(endDate)){
-            loadTableView();
-            label_error.setText("");
-        }else {
-            label_error.setText("End date can't be before start date");
+        try {
+            endDate = DatePickerEndDate.getValue();
+            if (startDate == null || startDate.isBefore(endDate)) {
+                loadTableView();
+                label_error.setText("");
+            } else {
+                label_error.setText("End date can't be before start date");
 
+            }
+        }catch (Exception e){
+            throw new RuntimeException("error in DatePickerEndDate_onAction",e);
         }
     }
 
     public void loadTableView() {
-        List<Task> userTasksBetweenToDates = loadUserTasksBetweenToDates();
-        userTasksBetweenToDates = filterTasksByStatus(userTasksBetweenToDates);
+        try {
+            List<Task> userTasksBetweenToDates = loadUserTasksBetweenToDates();
+            userTasksBetweenToDates = filterTasksByStatus(userTasksBetweenToDates);
 
-        ObservableList<Task> observableList = FXCollections.observableList(userTasksBetweenToDates);
-        TableView_TasksAssignedToMeBeetwenToDates.setItems(observableList);
+            ObservableList<Task> observableList = FXCollections.observableList(userTasksBetweenToDates);
+            TableView_TasksAssignedToMeBeetwenToDates.setItems(observableList);
+        }catch (Exception e){
+            throw new RuntimeException("error in loadTableView",e);
+        }
     }
 
 
     public List<Task> loadUserTasksBetweenToDates(){
         List<Task> taskList = new ArrayList<>();
-        
-        if(startDate != null & endDate != null){
-            if(endDate.isAfter(startDate) || endDate.isEqual(startDate)) {
-                taskList = controller.getTasksAssignedToMeBetweenToDates(startDate, endDate);
-                
+        try {
+            if (startDate != null & endDate != null) {
+                if (endDate.isAfter(startDate) || endDate.isEqual(startDate)) {
+                    taskList = controller.getTasksAssignedToMeBetweenToDates(startDate, endDate);
+
+                }
             }
+        }catch (Exception e){
+            throw new RuntimeException("error in loadUserTasksBetweenDates",e);
         }
+
         return taskList;
     }
     public void comboBox_TaskStatus_OnAction(ActionEvent actionEvent) {
-
-        loadTableView();
+        try {
+            loadTableView();
+        }catch (Exception e){
+            throw new RuntimeException("error in comboBox_TaskStatus_OnAction",e);
+        }
     }
 
     public List<Task> filterTasksByStatus(List<Task> tasks) {
-        String selectedStatus = comboboxTaskStatus.getValue();
-        if (selectedStatus != null && !selectedStatus.equals("All")) {
-            List<Task> filteredTasks = new ArrayList<>();
-            for (Task task : tasks) {
-                if (task.getStatus().toString().equals(selectedStatus)) {
-                    filteredTasks.add(task);
-                }
+
+        try {
+
+            if(tasks == null){
+                return new ArrayList<>();
             }
-            return filteredTasks;
+
+            String selectedStatus = comboboxTaskStatus.getValue();
+            if (selectedStatus != null && !selectedStatus.equals("All")) {
+                List<Task> filteredTasks = new ArrayList<>();
+                for (Task task : tasks) {
+                    if (task.getStatus().toString().equals(selectedStatus)) {
+                        filteredTasks.add(task);
+                    }
+                }
+                return filteredTasks;
+            }
+
+        }catch (Exception e){
+            throw new RuntimeException("error in filterTasksByStatus",e);
         }
         return tasks;
     }

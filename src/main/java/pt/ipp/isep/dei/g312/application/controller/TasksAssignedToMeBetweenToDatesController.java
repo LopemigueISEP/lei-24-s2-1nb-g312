@@ -19,7 +19,7 @@ public class TasksAssignedToMeBetweenToDatesController {
     private TaskRepository taskRepository;
     private TeamRepository teamRepository;
     private String loggedInUser;
-    private String userName;
+
 
     public TasksAssignedToMeBetweenToDatesController(){
         this.authenticationRepository = getAuthenticationRepository();
@@ -74,29 +74,26 @@ public class TasksAssignedToMeBetweenToDatesController {
         return loggedInUser;
     }
 
-    public String getLoggedInUserName(){
-        try {
-            userName = authenticationRepository.getCurrentUserSession().getUserName();
 
 
-        }catch (Exception e){
-            loggedInUser = "No user name identified";
-            throw new RuntimeException("error in getLoggedinUserName",e);
 
-        }
-        return userName;
-    }
-
-    //TODO: Em construção
     public List<Task> getTasksAssignedToMeBetweenToDates(LocalDate startDate, LocalDate endDate) {
 
-        List<Task> taskList = taskRepository.getTasksAssignedToMeBetweenToDates(getLoggedInUserEmail(),startDate, endDate);
-
+        List<Task> taskList = new ArrayList<>();
+        try {
+            taskList = taskRepository.getTasksAssignedToMeBetweenToDates(getLoggedInUserEmail(), startDate, endDate);
+        }catch (Exception e){
+            throw new RuntimeException("error in getTasksAssignedToMeBetweenToDates",e);
+        }
         return taskList;
     }
 
     public List<TaskStatus> getTaskStatusValues() {
+        try {
+            return List.of(TaskStatus.values());
 
-        return List.of(TaskStatus.values());
+        }catch (Exception e){
+            throw new RuntimeException("error in getTaskStatusValues",e);
+        }
     }
 }

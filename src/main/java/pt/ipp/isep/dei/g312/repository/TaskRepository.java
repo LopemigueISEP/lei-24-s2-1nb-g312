@@ -349,35 +349,40 @@ public class TaskRepository implements Serializable {
     }
 
 
-    //TODO:EM construção
+
     public List<Task> getTasksAssignedToMeBetweenToDates(String userEmail, LocalDate startDate, LocalDate endDate) {
 
         // Converte LocalDate para ZonedDateTime usando o fuso horário do sistema
         ZonedDateTime zonedStartDate = startDate.atStartOfDay(ZoneId.systemDefault());
         ZonedDateTime zonedEndDate = endDate.atStartOfDay(ZoneId.systemDefault());
 
-
         // Converte ZonedDateTime para Date
         Date startDateDate = Date.from(zonedStartDate.toInstant());
         Date endDateDate = Date.from(zonedEndDate.toInstant());
 
-
-
         List<Task> employeeTasksBetweenDates = new ArrayList<>();
         List<Employee> taskEmployees = new ArrayList<>();
 
-        for(Task task : getAgenda()){
-            if(task!=null){
-                if((startDateDate.before(task.getEndDate()) || startDateDate.equals(task.getEndDate())) && (endDateDate.after(task.getStartDate()) || endDateDate.equals(task.getStartDate()))){
-                    if(task.getAssignedTeam().getTeamEmployees()!=null){
-                        taskEmployees = task.getAssignedTeam().getTeamEmployees();
-                        for (Employee emp : taskEmployees){
-                            if(emp.getEmail().equals(userEmail)){
-                                employeeTasksBetweenDates.add(task);
+        for(Task task : getAgenda()) {
+            try {
+                if (task != null) {
+                    if ((startDateDate.before(task.getEndDate()) || startDateDate.equals(task.getEndDate())) && (endDateDate.after(task.getStartDate()) || endDateDate.equals(task.getStartDate()))) {
+                        if (task.getAssignedTeam() != null && task.getAssignedTeam().getTeamEmployees() != null) {
+                            taskEmployees = task.getAssignedTeam().getTeamEmployees();
+                            for (Employee emp : taskEmployees) {
+                                if (emp != null && emp.getEmail().equals(userEmail)) {
+                                    employeeTasksBetweenDates.add(task);
+                                }
                             }
                         }
                     }
                 }
+            } catch (NullPointerException e) {
+                System.err.println("Error: Null value encountered - " + e.getMessage());
+                throw new RuntimeException("Null value encountered during task processing", e);
+            } catch (Exception e) {
+                System.err.println("An unexpected error occurred - " + e.getMessage());
+                throw new RuntimeException("An unexpected error occurred during task processing", e);
             }
         }
 
