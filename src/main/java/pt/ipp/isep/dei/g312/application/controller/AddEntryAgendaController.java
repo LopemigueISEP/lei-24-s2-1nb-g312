@@ -27,6 +27,7 @@ public class AddEntryAgendaController {
         getTaskRepository();
         getAuthRepository();
     }
+
     /**
      * Retrieves the GreenSpaceRepository instance from Repositories.
      * This method ensures a single instance of the repository is used throughout the controller.
@@ -39,6 +40,7 @@ public class AddEntryAgendaController {
         }
 
     }
+
     /**
      * Retrieves the TaskRepository instance from Repositories.
      * This method ensures a single instance of the repository is used throughout the controller.
@@ -50,6 +52,7 @@ public class AddEntryAgendaController {
 
         }
     }
+
     /**
      * Retrieves the AuthenticationRepository instance from Repositories.
      * This method ensures a single instance of the repository is used throughout the controller.
@@ -60,6 +63,7 @@ public class AddEntryAgendaController {
             authRepository = repositories.getAuthenticationRepository();
         }
     }
+
     /**
      * Retrieves the current user's email address from the AuthenticationRepository.
      *
@@ -76,13 +80,15 @@ public class AddEntryAgendaController {
 
 
     /**
-
-     Retrieves a list of green spaces.
-     @return a list of GreenSpace objects representing the green spaces */
+     * Retrieves a list of green spaces.
+     *
+     * @return a list of GreenSpace objects representing the green spaces
+     */
     public List<GreenSpace> getGreenSpaces() {
         return greenSpaceRepository.getGreenSpaceList();
 
     }
+
     /**
      * Retrieves a list of tasks associated with a specific green space.
      *
@@ -90,15 +96,24 @@ public class AddEntryAgendaController {
      * @return a list of Task objects associated with the specified green space
      */
     public List<Task> getTasksByGreenSpace(GreenSpace greenSpace) {
-        return taskRepository.getTasksByGreenSpace(greenSpace);
 
+        List<Task> tasksList = new ArrayList<>();
+        for (Task t : taskRepository.getTasksByGreenSpace(greenSpace)) {
+            if (t.getTaskPosition() == TaskPosition.TODOLIST) {
+                tasksList.add(t);
+            }
+        }
+
+
+        return tasksList;
     }
+
     /**
      * Retrieves a list of green spaces managed by a specific user.
      *
      * @param userEmail the email of the user managing the green spaces
      * @return a list of GreenSpace objects managed by the specified user,
-     *         or an empty list if the user is not logged in or if there are no green spaces managed by the user
+     * or an empty list if the user is not logged in or if there are no green spaces managed by the user
      */
     //filter greenspaces by user who created it - considering e-mmail
     public List<GreenSpace> getGreenSpaceList(String userEmail) {
@@ -108,6 +123,7 @@ public class AddEntryAgendaController {
         }
         return Collections.emptyList();
     }
+
     /**
      * Filters a list of green spaces based on the provided manager name.
      * This method iterates through the green spaces and checks if their manager name (case-insensitively) matches the provided name.
@@ -126,6 +142,7 @@ public class AddEntryAgendaController {
         }
         return filteredList;
     }
+
     /**
      * Validates the current user's role to be either Admin or Green Space Manager (GSM).
      * This method relies on the AuthenticationRepository to perform the validation.
@@ -135,12 +152,13 @@ public class AddEntryAgendaController {
     private boolean currentUserLogInValidation() {
         return authRepository.validateUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_GSM);
     }
+
     /**
      * Adds a task to the agenda on the specified date and time.
      *
      * @param selectedTask the task to be added to the agenda
-     * @param startDate the date on which the task is to be scheduled
-     * @param startTime the time at which the task is to start
+     * @param startDate    the date on which the task is to be scheduled
+     * @param startTime    the time at which the task is to start
      */
     public void addTaskToAgenda(Task selectedTask, LocalDate startDate, LocalTime startTime) {
         taskRepository.addTaskAgenda(selectedTask, startDate, startTime);
