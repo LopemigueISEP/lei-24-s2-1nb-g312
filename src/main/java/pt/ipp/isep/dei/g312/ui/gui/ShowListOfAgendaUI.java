@@ -30,6 +30,11 @@ public class ShowListOfAgendaUI extends Application implements Initializable {
     public TableColumn<Task, String> column_TaskName;
     public TableColumn<Task, LocalDate> column_StartDate;
     public TableColumn<Task, TaskStatus> column_Status;
+    public TableColumn<Task, LocalDate> column_EndDate;
+
+    public TableColumn<Task, String> column_Team;
+
+    public TableColumn<Task, String> column_Vehicles;
 
     private ShowAgendaController controller;
 
@@ -61,6 +66,9 @@ public class ShowListOfAgendaUI extends Application implements Initializable {
         column_TaskName.setCellValueFactory(new PropertyValueFactory<>("title"));
         column_StartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         column_Status.setCellValueFactory(new PropertyValueFactory<>("status"));
+        column_EndDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+        column_Team.setCellValueFactory(new PropertyValueFactory<>("assignedTeam"));
+        column_Vehicles.setCellValueFactory(new PropertyValueFactory<>("assignedVehicles"));
 
         loadTableViewValues();
     }

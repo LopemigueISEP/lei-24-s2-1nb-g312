@@ -28,6 +28,12 @@
                         <TableColumn fx:id="column_TaskName" prefWidth="132.0" text="Task" />
                         <TableColumn fx:id="column_StartDate" prefWidth="132.0" text="Start Date" />
                         <TableColumn fx:id="column_Status" prefWidth="153.0" text="Status" />
+                        <TableColumn fx:id="column_EndDate" prefWidth="153.0" text="End DAte" />
+                        <TableColumn fx:id="column_Team" prefWidth="153.0" text="Team" />
+                        <TableColumn fx:id="column_Vehicles" prefWidth="153.0" text="Vehicles" />
+
+
+
                     </columns>
                 </TableView>
             </children>
