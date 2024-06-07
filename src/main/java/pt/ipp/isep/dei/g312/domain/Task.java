@@ -76,6 +76,9 @@ public class Task implements Cloneable, Serializable {
         this.assignedVehicles.add(vehicle);
     }
 
+    public void clearVehicleList(){
+        this.assignedVehicles.clear();
+    }
 
     public void setTaskStartDate(Date date) {
         this.startDate = date;
