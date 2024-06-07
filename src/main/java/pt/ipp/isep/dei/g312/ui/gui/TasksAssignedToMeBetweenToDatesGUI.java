@@ -14,11 +14,13 @@ import javafx.stage.Stage;
 import pt.ipp.isep.dei.g312.application.controller.TasksAssignedToMeBetweenToDatesController;
 import pt.ipp.isep.dei.g312.domain.Task;
 import pt.ipp.isep.dei.g312.domain.TaskStatus;
+import pt.ipp.isep.dei.g312.domain.comparators.TasksByDateComparatorDescendingOrder;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -104,7 +106,7 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
     public void DatePickerStartDate_onAction(ActionEvent actionEvent) {
         try {
             startDate = DatePickerStartDate.getValue();
-            if (endDate == null || endDate.isAfter(startDate)) {
+            if (endDate == null || endDate.isAfter(startDate) || endDate.isEqual(startDate)) {
                 loadTableView();
                 label_error.setText("");
             } else {
@@ -119,7 +121,7 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
     public void DatePickerEndtDate_onAction(ActionEvent actionEvent) {
         try {
             endDate = DatePickerEndDate.getValue();
-            if (startDate == null || startDate.isBefore(endDate)) {
+            if (startDate == null || startDate.isBefore(endDate) || startDate.isEqual(endDate)) {
                 loadTableView();
                 label_error.setText("");
             } else {
@@ -131,10 +133,12 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
         }
     }
 
+
     public void loadTableView() {
         try {
             List<Task> userTasksBetweenToDates = loadUserTasksBetweenToDates();
             userTasksBetweenToDates = filterTasksByStatus(userTasksBetweenToDates);
+            Collections.sort(userTasksBetweenToDates,new TasksByDateComparatorDescendingOrder());
 
             ObservableList<Task> observableList = FXCollections.observableList(userTasksBetweenToDates);
             TableView_TasksAssignedToMeBeetwenToDates.setItems(observableList);
