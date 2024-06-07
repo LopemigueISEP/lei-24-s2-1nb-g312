@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.g312.ui.gui;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,9 +13,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.g312.application.controller.TasksAssignedToMeBetweenToDatesController;
+import pt.ipp.isep.dei.g312.domain.GreenSpace;
 import pt.ipp.isep.dei.g312.domain.Task;
 import pt.ipp.isep.dei.g312.domain.TaskStatus;
 import pt.ipp.isep.dei.g312.domain.comparators.TasksByDateComparatorDescendingOrder;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,11 +38,11 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
     public DatePicker DatePickerStartDate;
     public DatePicker DatePickerEndDate;
     public ComboBox<String> comboboxTaskStatus;
-    public TableView TableView_TasksAssignedToMeBeetwenToDates;
+    public TableView<Task> TableView_TasksAssignedToMeBeetwenToDates;
     public TableColumn column_Name;
     public TableColumn column_Team;
     public TableColumn column_StartDate;
-    public TableColumn column_EndDate;
+    public TableColumn column_GreenSpace;
     public TableColumn column_Status;
     public Label label_error;
     TasksAssignedToMeBetweenToDatesController controller;
@@ -90,7 +93,7 @@ public class TasksAssignedToMeBetweenToDatesGUI extends Application implements I
 
 
             column_Status.setCellValueFactory((new PropertyValueFactory<>("status")));
-            column_EndDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+            column_GreenSpace.setCellValueFactory(new PropertyValueFactory<>("GreenSpace"));
             column_StartDate.setCellValueFactory((new PropertyValueFactory<>("startDate")));
             column_Team.setCellValueFactory(new PropertyValueFactory<>("assignedTeam"));
             column_Name.setCellValueFactory(new PropertyValueFactory<>("title"));
