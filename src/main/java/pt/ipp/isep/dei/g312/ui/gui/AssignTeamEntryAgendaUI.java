@@ -189,6 +189,7 @@ public class AssignTeamEntryAgendaUI extends Application implements Initializabl
             boolean result = controller.assignTeamToTask(team, task);
             if (result) {
                 messageLabel.setText("Team assigned to Task");
+                //controller.assignTeamToTaskEmail();
             } else {
                 messageLabel.setText("Team not assigned to Task");
             }
