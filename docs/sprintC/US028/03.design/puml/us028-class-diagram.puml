@@ -12,8 +12,9 @@ class TasksAssignedToMeBetweenTwoDatesUI {
 
 class TasksAssignedToMeBetweenToDatesController {
 
-
-    +getTasks(LocalDate startDate, LocalDate endDate, TaskStatus taskStatus)
+    +getEmployeeRepository()
+    getTaskStatusValues(): List<TaskStatus>
+    getTasksAssignedToMeBetweenToDates(startDate, endDate): List<Task>
 
 }
 
@@ -24,18 +25,37 @@ class Repositories {
 }
 
 class EmployeeRepository {
+    +getEmployee(): employee
+}
+
+class Tasks{
+    - List<Task> tasks
+    +getAgenda(): List<Task>
+    +isBetweenDates(startDate,endDate)
+    +getAssignedTeam(): team
+    +getTeamEmployees(): List<Employee>
+    +isAssignedToCurrentCollaborator():boolean
 
 }
 
+
+
+
 class Task {
-    -status : TaskStatus
-    -startDate : LocalDate
-    -endDate: LocalDate
-    -collaborator: Collaborator
-    +getAssignedTeam
-    +getTeamEmployees
-    +isBetweenDates(LocalDate startDate, LocalDate endDate)
-    +isAssignedToCurrentCollaborator()
+
+     -title: String
+     -description: String
+     -taskExpectedDuration: int
+     -greenSpace: greenSpace
+     -urgency: TaskUrgency
+     -status: TaskStatus
+     -assignedTeam: team
+     -assignedVehicles: List<Vehicles>
+     -taskID: int
+     -startDate: Date
+     -endDate: Date
+     -taskPosition: TaskPosition
+
 }
 
 enum TaskStatus {
@@ -47,6 +67,7 @@ enum TaskStatus {
 }
 
 class Employee {
+getTasksAssignedToMeBetweenToDates(startDate, endDate): List<Task>
 }
 
 TasksAssignedToMeBetweenTwoDatesUI "1" ..> "1" TasksAssignedToMeBetweenToDatesController
@@ -57,8 +78,8 @@ TasksAssignedToMeBetweenToDatesController "1" .> "*" TaskStatus: taskStatus
 Repositories --> Repositories: instance
 Repositories "1" --> "1" EmployeeRepository
 EmployeeRepository "1" --> "*" Employee
-Employee "1" --> "*" Task
+Employee "1" --> "1" Tasks: listTasks
+Tasks "1" --> "*" Task
 Task "1" .> "1" TaskStatus
-
 
 @enduml
