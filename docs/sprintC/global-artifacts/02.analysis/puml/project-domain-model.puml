@@ -140,7 +140,7 @@ class LargeSizedPark{
 }
 
 Organization "1" -- "1" Agenda : owns >
-Organization "1" -- "1..*" Employee : recr >
+Organization "1" -- "1..*" Employee : has >
 Employee "1" -- "1..*" HumanResourcesManager : is >
 Employee "1" -- "1..*" VehicleEquipmentFleetManager : is >
 Employee "1" -- "1..*" GreenSpacesManager : is >
@@ -196,6 +196,7 @@ ToDoList "1" -- "1" Agenda : entries >
 Task "1" -- "1" Status : has >
 Task "1" -- "1" Urgency : has >
 Status "1" -- "0..1" Planned : is >
+Status "1" -- "0..1" Pending : is >
 Status "1" -- "0..1" Postponned : is >
 Status "1" -- "0..1" Canceled : is >
 Urgency "1" -- "0..1" High : is >

@@ -188,28 +188,36 @@ Iterative Development".)
 [//]: # ( - **_A_** is related with a transaction (item of **_B_**)
 [//]: # ( - etc.)
 
-| Concept (A) 		                              |   Association   	   |                          Concept (B) |
-|---------------------------------------------|:-------------------:|-------------------------------------:|
-| Organization                                |    owns    		 	     |                               Agenda |
-| Organization                                |    has    		  	     |                             Employee |
-| Employee                                    |     is    		 	      |                HumanResourcesManager |
-| Employee                                    |     is    		 	      |         VehicleEquipmentFleetManager |
-| Employee                                    |     is    		 	      |                   GreenSpacesManager |
-| Employee	                                   |      is   		 	      |                         Collaborator |
-| Employee	                                   |      is   		 	      | SoftwareQualityAssessmentTeamManager |
-| Task                                        |   occurs     		 	   |                           GreenSpace |
-| HumanResourcesManager                       | registers      		 	 |                                 Team |
-| HumanResourcesManager                       | registers      		 	 |                         Collaborator |
-| HumanResourcesManager                       | registers      		 	 |                                  Job |
-| HumanResourcesManager                       | registers      		 	 |                                Skill |
-| VehicleEquipmentFleetManager                |   manages    		 	   |                              Vehicle |
-| VehicleEquipmentFleetManager                |   manages    		 	   |                            Equipment |
-| VehicleEquipmentFleetManager                |   manages    		 	   |                              Machine |
-| GreenSpacesManager                          |   manages    		 	   |                           GreenSpace |
-| GreenSpacesManager                          |   manages    		 	   |                        AssemblyPoint |
-| GreenSpacesManager                          |   manages    		 	   |                      EvacuationRoute |
-| GreenSpacesManager                          |    creates  		 	    |                                 Task |
-| GreenSpacesManager                          |   manages    		 	   |                GreenSpacesUserPortal |
+| Concept (A) 		               |   Association   	   |                          Concept (B) |
+|------------------------------|:-------------------:|-------------------------------------:|
+| Organization                 |    owns    		 	     |                               Agenda |
+| Organization                 |    has    		  	     |                             Employee |
+| Employee                     |     is    		 	      |                HumanResourcesManager |
+| Employee                     |     is    		 	      |         VehicleEquipmentFleetManager |
+| Employee                     |     is    		 	      |                   GreenSpacesManager |
+| Employee	                    |      is   		 	      |                         Collaborator |
+| Employee	                    |      is   		 	      | SoftwareQualityAssessmentTeamManager |
+| Task                         |   occurs     		 	   |                           GreenSpace |
+| HumanResourcesManager        | registers      		 	 |                                 Team |
+| HumanResourcesManager        | registers      		 	 |                         Collaborator |
+| HumanResourcesManager        | registers      		 	 |                                  Job |
+| HumanResourcesManager        | registers      		 	 |                                Skill |
+| VehicleEquipmentFleetManager |   manages    		 	   |                              Vehicle |
+| VehicleEquipmentFleetManager |   manages    		 	   |                            Equipment |
+| VehicleEquipmentFleetManager |   manages    		 	   |                              Machine |
+| GreenSpacesManager           |   manages    		 	   |                           GreenSpace |
+| GreenSpacesManager           |   manages    		 	   |                        AssemblyPoint |
+| GreenSpacesManager           |   manages    		 	   |                      EvacuationRoute |
+| GreenSpacesManager           |    creates  		 	    |                                 Task |
+| GreenSpacesManager           |   manages    		 	   |                GreenSpacesUserPortal |
+| GreenSpacesManager           |   assigns    		 	   |                                 Team |
+| GreenSpacesManager           |   assigns    		 	   |                              Vehicle |
+| GreenSpacesManager           |   manages    		 	   |                             ToDoList |
+| GreenSpacesManager           |   manages    		 	   |                               Agenda |
+| GreenSpacesManager           |  registers    		 	  |                           GreenSpace |
+| ToDoList                     |     has    		 	     |                                 Task |
+| ToDoList                     |     has    		 	     |                           GreenSpace |
+| ToDoList                     |   entries    		 	   |                               Agenda |
 | SoftwareQualityAssessmentTeamManager        |    tests    		 	    |            AlgorithmRouteWaterPoints |
 | SoftwareQualityAssessmentTeamManager        |    tests    		 	    |                        AssemblyPoint |
 | SoftwareQualityAssessmentTeamManager        |    tests    		 	    |                      EvacuationRoute |
@@ -231,7 +239,16 @@ Iterative Development".)
 | GreenSpace                                  |    is       		 	    |                     Large-sized park |
 | Task	                                       |  needs       		 	   |                              Vehicle |
 | Task	                                       |    needs   		 	     |                              Machine |
-| Task	                                       |    needs    		 	    |                            Equipment |
+| Task	                                       |     has    		 	     |                              Urgency |
+| Task	                                       |     has    		 	     |                               Status |
+| Task	                                       |   occurs    		 	    |                           GreenSpace |
+| Urgency	                                       |     is    		 	      |                                 High |
+| Urgency	                                       |     is    		 	      |                               Medium |
+| Urgency	                                       |     is    		 	      |                                  Low |
+| Status	                                       |     is    		 	      |                              Planned |
+| Status	                                       |     is    		 	      |                            Postponed |
+| Status	                                       |     is    		 	      |                            Cancelled |
+| Status	                                       |     is    		 	      |                              Pending |
 
 ## Domain Model
 
