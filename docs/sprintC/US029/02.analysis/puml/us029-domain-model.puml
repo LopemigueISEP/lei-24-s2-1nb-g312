@@ -8,6 +8,16 @@ hide methods
 
 title Domain Model
 
+class Employee {
+    name
+    birth date
+    contact (email/phone)
+    admission date
+    taxpayer number
+    address
+    ID doc type and number
+    role
+}
 class Agenda {
     appointments
     alerts
@@ -30,5 +40,5 @@ class Team{
 Collaborator "1..*" -- "1" Team : has >
 Agenda "1" -- "0..*" Task : has >
 Team "1" -- "1" Task : executes >
-
+Employee "1" -- "1..*" Collaborator : is >
 @enduml

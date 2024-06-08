@@ -4,16 +4,18 @@
 
 ### 3.1. Rationale
 
-| Interaction ID | Question: Which class is responsible for...            | Answer         | Justification (with patterns)                       |
-|:---------------|:-------------------------------------------------------|:---------------|:----------------------------------------------------|
-| Step 1	        | 	... interacting with the actor?                       | TaskUI         | Pure Fabrication: responsible for user interactions |
-| 	              | 	... coordinating the US?                              | TaskController | Controller                                          |
-| Step 2         |                                                        |                |                                                     |
-| Step 3         | ... interacting with the actor?                        | TaskUI         | Pure Fabrication: responsible for user interactions |
-|                | ... coordinating the US?                               | TaskController | Controller                                          |
-|                | ... saving inputted data and record completion of task | Task           | IE: owns its own data                               |
-| Step 4         | ... interacting with the actor?                        | TaskUI         | Pure Fabrication: responsible for user interactions |
-|                | ... knowing the possible task status?                  | TaskStatus     | Enumeration                                         |
+| Interaction ID | Question: Which class is responsible for...            | Answer                 | Justification (with patterns)                       |
+|:---------------|:-------------------------------------------------------|:-----------------------|:----------------------------------------------------|
+| Step 1	        | 	... interacting with the actor?                       | CompleteTaskUI         | Pure Fabrication: responsible for user interactions |
+| 	              | 	... coordinating the US?                              | CompleteTaskController | Controller                                          |
+| Step 2         |                                                        |                        |                                                     |
+| Step 3         | ... interacting with the actor?                        | CompleteTaskUI         | Pure Fabrication: responsible for user interactions |
+|                | ... coordinating the US?                               | CompleteTaskController | Controller                                          |
+|                | ... saving inputted data and record completion of task | Employee               | IE: owns task data                                  |
+| Step 4         |                                                        |                        |                                                     |
+| Step 5         | ... interacting with the actor?                        | CompleteTaskUI         | Pure Fabrication: responsible for user interactions |
+|                | ... knowing the possible task status?                  | TaskStatus             | Enumeration                                         |
+| Step 6         |                                                        |                        |                                                     |
 
 ### Systematization ##
 

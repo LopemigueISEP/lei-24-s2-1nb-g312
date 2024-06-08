@@ -19,7 +19,7 @@ class Employee{
     -docNumber : String
     -jobTitle : String
 
-+ addTaskAgenda(selectedGreenSpace : GreenSpace, selectedTask : Task, selectedDate : LocalDate, startTime : int, agenda : TaskPosition, userValidation : boolean) : Optional<Task>
++ cancelTask(Task taskToCancel)
 
 
 }
@@ -59,6 +59,15 @@ class TasksRepository{
  +getAgemdaEntries(): List<ToDoEntries>
 }
 
+enum TaskStatus {
+    PLANNED
+    POSTPONED
+    CANCELED
+    DONE
+    PENDING
+}
+
+
 CancelEntryAgendaUI .>CancelEntryAgendaController
 
 CancelEntryAgendaController .> "1" Repositories
@@ -74,5 +83,5 @@ TasksRepository "1" --> "1" Employee
 
 Employee --> Task: update
 
-
+Task "1" .> "1" TaskStatus
 @enduml

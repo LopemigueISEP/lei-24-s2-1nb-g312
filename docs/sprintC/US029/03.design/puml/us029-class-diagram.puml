@@ -1,17 +1,18 @@
 @startuml
+'skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 skinparam linetype polyline
+'skinparam linetype orto
+
 skinparam classAttributeIconSize 0
 
+class CompleteTaskUI {
 
-class TaskUI {
-    -TaskController
 }
 
-class TaskController {
-    -TaskRepository
-    +recordTaskCompletion(Task task, String observations)
+class CompleteTaskController {
+
 }
 
 class Repositories {
@@ -24,6 +25,13 @@ class Repositories {
 class TaskRepository {
     +List<Task>
     +recordTaskCompletion(Task task, String observations)
+}
+
+class EmployeeRepository{
+
+
++getEmployee(): Employee
+
 }
 
 class Task {
@@ -39,19 +47,37 @@ enum TaskStatus {
     PENDING
 }
 
-class Employee {
+class Employee{
+    -name : String
+    -birthdate : Date
+    -email : String
+    -phoneNumber : int
+    -admission date : Date
+    -taxpayerNumber : String
+    -address : String
+    -docNumber : String
+    -jobTitle : String
+
++ addTaskAgenda(selectedGreenSpace : GreenSpace, selectedTask : Task, selectedDate : LocalDate, startTime : int, agenda : TaskPosition, userValidation : boolean) : Optional<Task>
+//todoo
+
 }
 
-TaskUI "1" --> "1" TaskController
-TaskController "1" ..> "1" Repositories: repositories
-TaskController "1" --> "1" TaskRepository
-TaskController "1" ..> "*" Task
-TaskController "1" ..> "*" TaskStatus
-Repositories --> Repositories: instance
+CompleteTaskUI  .>  CompleteTaskController
+
+CompleteTaskController  .> "1" Repositories
+
+Repositories "1" --> "1" Repositories: instance
+Repositories "1" --> "1" EmployeeRepository
 Repositories "1" --> "1" TaskRepository
-TaskRepository "1" ..> "*" TaskStatus
-TaskRepository "1" --> "*" Task
-Task "1" ..> "1" TaskStatus
-Task "1" ..> "1" Employee
+
+CompleteTaskController ..> Employee
+
+EmployeeRepository "1" --> "1" Employee
+TaskRepository "1" --> "1" Employee
+
+Employee --> Task: complete
+
+Task "1" .> "1" TaskStatus
 
 @enduml

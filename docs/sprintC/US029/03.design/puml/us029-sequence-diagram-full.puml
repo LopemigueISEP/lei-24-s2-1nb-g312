@@ -11,47 +11,76 @@ participant ":TaskController" as CTRL
 participant ":Repositories" as REPOS_Singleton
 participant "repositories\n:Repositories" as REPOS_Instance
 participant "taskRepository\n:TaskRepository" as TASK_REPO
+participant "employeeRepository:\nEmployeeRepository" as EmployeeRepository
+participant "employee\n:Employee" as Employee
 participant ":Task" as TASK
 
 activate ACTOR
 
 ref over ACTOR, UI: This action assumes that the user has already logged in
 
-ACTOR -> UI: Selects a task to complete
+ACTOR -> UI: selects a task to complete
 activate UI
-UI --> ACTOR: Requests optional observations
-deactivate UI
-
-ACTOR -> UI: Enters optional observations
-activate UI
-
-    UI -> CTRL: recordTaskCompletion(task, observations)
+    UI -> CTRL: getTasksWithAssignedTeam()
     activate CTRL
 
-        CTRL -> REPOS_Singleton: getInstance()
-        activate REPOS_Singleton
-        REPOS_Singleton --> CTRL: repositories
-        deactivate REPOS_Singleton
+            CTRL -> REPOS_Singleton : getInstance()
+            activate REPOS_Singleton
 
-        CTRL -> REPOS_Instance: getTaskRepository()
-        activate REPOS_Instance
-        REPOS_Instance --> CTRL: taskRepository
-        deactivate REPOS_Instance
+                REPOS_Singleton --> CTRL: repositories
+            deactivate REPOS_Singleton
 
-        CTRL -> TASK_REPO: recordTaskCompletion(task, observations)
-        activate TASK_REPO
+            CTRL -> PLAT : getTaskRepository()
+            activate PLAT
 
-            TASK_REPO -> TASK: setCompleted(observations)
-            activate TASK
-            TASK -> TASK_REPO: Operation success
-            deactivate TASK
+                PLAT --> CTRL: TaskRepository
+            deactivate PLAT
 
-        TASK_REPO --> CTRL: Operation success
-        deactivate TASK_REPO
+            CTRL -> TaskRepository : getTasksWithAssignedTeam()
+            activate TaskRepository
 
-    CTRL --> UI: Operation success
-    deactivate CTRL
+                TaskRepository --> CTRL : taskWithAssignedTeamList
+            deactivate TaskRepository
 
+
+            CTRL --> UI : taskWithAssignedTeamList
+        deactivate CTRL
+UI --> ACTOR: requests data(optionalObservations,endDate)
+deactivate UI
+
+ACTOR -> UI: types requested data
+activate UI
+
+    UI -> CTRL: completeTask(task, observations,newEndDate)
+    activate CTRL
+
+        activate CTRL
+            CTRL->CTRL: getEmployeeFromRepository()
+            CTRL -> REPOS_Singleton : getInstance()
+            activate REPOS_Singleton
+                REPOS_Singleton --> CTRL : repositories
+            deactivate REPOS_Singleton
+            CTRL -> PLAT : getEmployeeRepositories()
+            activate PLAT
+                PLAT --> CTRL : EmployeeRepositories
+            deactivate PLAT
+            CTRL -> EmployeeRepository: getEmployee()
+            activate EmployeeRepository
+                EmployeeRepository -->CTRL: employee
+            deactivate EmployeeRepository
+            CTRL --> CTRL: Employee
+            CTRL -> Employee: completeTask(task, observations,newEndDate)
+            activate Employee
+                Employee ->Task: completeTask(task, observations,newEndDate)
+            deactivate Employee
+                activate Task
+                    Task -> Task : complete()
+                     Task--> CTRL: task
+                deactivate Task
+            deactivate Employee
+            CTRL --> UI: task
+
+        deactivate CTRL
 UI --> ACTOR: Displays operation success
 deactivate UI
 

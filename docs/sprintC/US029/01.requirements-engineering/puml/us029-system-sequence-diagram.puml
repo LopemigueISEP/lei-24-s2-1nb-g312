@@ -12,14 +12,19 @@ participant ":System" as SYSTEM
 
 activate ACTOR
 
-ACTOR -> SYSTEM: Selects a task to complete
+ACTOR -> SYSTEM: selects a task to complete
 activate SYSTEM
-SYSTEM --> ACTOR: Requests optional observations
+    SYSTEM --> ACTOR: requests data(optionalObservations,endDate)
+deactivate SYSTEM
+ACTOR -> SYSTEM: types requested data
+activate SYSTEM
+    SYSTEM --> ACTOR : shows all data and requests confirmation
 deactivate SYSTEM
 
-ACTOR -> SYSTEM: Enters optional observations
+ACTOR -> SYSTEM : confirms data
+
 activate SYSTEM
-SYSTEM --> ACTOR: Displays operation success
+SYSTEM --> ACTOR: displays operation success
 deactivate SYSTEM
 
 @enduml
