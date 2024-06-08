@@ -1,5 +1,8 @@
 package pt.ipp.isep.dei.g312.domain;
 
+/**
+ * Enum representing different typologies of green spaces.
+ */
 public enum GreenSpaceTypology {
     GARDEN("Garden", 1),
     MEDIUM("Medium-Sized Park", 2),

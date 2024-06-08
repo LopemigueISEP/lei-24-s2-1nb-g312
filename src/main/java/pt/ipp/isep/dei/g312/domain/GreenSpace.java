@@ -95,7 +95,6 @@ public class GreenSpace implements Comparable<GreenSpace>, Serializable {
         return new GreenSpace(this.name, this.address, this.area, this.typology, this.greenSpaceManager);
     }
 
-
     /**
      * Compares this green space with another based on their names.
      *

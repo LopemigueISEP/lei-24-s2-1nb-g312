@@ -61,7 +61,20 @@ public class Employee implements Cloneable, Comparable<Employee>, Serializable {
         this.skills = new ArrayList<>();
 
     }
-
+    /**
+     * Constructs a new Employee with the specified details.
+     *
+     * @param name           The employee's name.
+     * @param birthDate      The employee's birthdate.
+     * @param email          The employee's email address.
+     * @param phoneNumber    The employee's phone number.
+     * @param admissionDate  The employee's admission date.
+     * @param taxpayerNumber The employee's taxpayer number.
+     * @param address        The employee's address.
+     * @param docNumber      The employee's ID document number.
+     * @param job            The employee's job title.
+     * @param skills         The list of skills of the employee.
+     */
     public Employee(String name, Date birthDate, String email, int phoneNumber, Date admissionDate, String taxpayerNumber, String address, String docNumber, String job, List<Skill> skills) {
 
         this.name = name;
@@ -76,12 +89,21 @@ public class Employee implements Cloneable, Comparable<Employee>, Serializable {
         this.skills = new ArrayList<>(skills);
 
     }
-
+    /**
+     * Constructs a new Employee with the specified name and skills.
+     *
+     * @param name   The name of the employee.
+     * @param skills The list of skills of the employee.
+     */
     public Employee(String name, List<Skill> skills) {
         this.name = name;
         this.skills = skills;
     }
-
+    /**
+     * Constructs a new Employee by copying another Employee.
+     *
+     * @param employee The Employee to copy.
+     */
     public Employee(Employee employee) {
         this.name=employee.getName();
         this.birthDate=employee.getBirthDate();
@@ -188,7 +210,7 @@ public class Employee implements Cloneable, Comparable<Employee>, Serializable {
      *
      * @param skillName        The name of the skill.
      * @param skillDescription The description of the skill.
-     * @param userValidation   True if the user have permissions to register the skill, false otherwise.
+     * @param userValidation   True if the user has permissions to register the skill, false otherwise.
      * @return An Optional containing the registered skill, or empty if the registration fails.
      */
     public Optional<Skill> registerSkill(String skillName, String skillDescription, boolean userValidation) {
@@ -411,7 +433,18 @@ public class Employee implements Cloneable, Comparable<Employee>, Serializable {
             return Optional.empty();
         }
     }
-
+    /**
+     * Registers a new task for the given green space.
+     *
+     * @param GreenSpace       The GreenSpace where the task will be performed.
+     * @param taskTitle        The title of the task.
+     * @param taskDescr        The description of the task.
+     * @param taskUrgency      The urgency level of the task.
+     * @param expectedDuration The expected duration of the task in minutes.
+     * @param todolist         The position of the task in the to-do list.
+     * @param taskId           The unique identifier for the task.
+     * @return An Optional containing the registered Task if successful, otherwise an empty Optional.
+     */
     // method for the employee to register a task for the todolist
     public Optional<Task> registerTask(GreenSpace GreenSpace, String taskTitle, String taskDescr, TaskUrgency taskUrgency, int expectedDuration, TaskPosition todolist, int taskId) {
         try {
