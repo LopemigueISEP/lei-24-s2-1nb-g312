@@ -34,10 +34,6 @@ In the daily management, the GSM uses two essential tools: the Agenda and the Ta
 >
 > **Answer:** To-do list entries doesn't have dates!
 
-> **Question:** Similarly, when a new entry is added to the Agenda, the status of that task will be, by default, set to "planned", right?
->
-> **Answer:** "Pending" as default for to-do list entries and "Planned" as default for Agenda entries, sounds good;
-
 > **Question:** When the GSM plans a task (that was previously in To-Do) into the Agenda, what aditional data/information does he need to input when planning?
 >
 > **Answer:** The starting date for the task. Later the GSM will be able to add the Team and vehicles (if required).

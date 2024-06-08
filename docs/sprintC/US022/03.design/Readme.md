@@ -14,25 +14,26 @@
 | Step 2  		     | 							                                                 |                          |                                                                                                               |
 | Step 3	        | 	...validating selected data?                           | AddEntryAgendaUI         | Pure Fabrication                                                                                              |
 | 		             | 	...temporarily keeping selected data?                  | AddEntryAgendaUI         | Pure Fabrication                                                                                              |
-|                | 	...showing To-Do List entries?                         |  TaskRepository          | I.E: has all green spaces registered, Pure Fabrication                                                        |
+|                | 	...showing To-Do List entries?                         | TaskRepository           | I.E: has all green spaces registered, Pure Fabrication                                                        |
 | Step 4  		     | 	                                                       |                          |                                                                                                               |
 | Step 5 	       | 	... validating selected data?                          | AddEntryAgendaUI         | Pure Fabrication                                                                                              |
 | 		             | 	... temporarily keeping the selected To-Do List entry? | AddEntryAgendaUI         | Pure Fabrication                                                                                              |              
 | Step 6  		     | 							                                                 |                          |                                                                                                               |              
-| Step 7         | 	......validating requested data? ?                     | AddEntryAgendaUI         | Pure Fabrication                                                                                              |
+| Step 7         | 	......validating requested data?                       | AddEntryAgendaUI         | Pure Fabrication                                                                                              |
 |                | 	...temporarily keeping requested data?                 | AddEntryAgendaUI         | Pure Fabrication                                                                                              |
 | Step 8  		     | 							                                                 |                          |                                                                                                               |              
-| Step 9 	       | 	... creating Agenda Object?                            | Task                     | Creator                                                                                                       |
+| Step 9 	       | 	... ... register task to agenda entry?                 | Employee                 | IE: knows all green spaces and to-do list entries                                                             |
 | 		             | 	... validating all data (local validation)?            | Task                     | IE: object created has its own data                                                                           |
-| 		             | 	... validating all data (global validation)?           | Employee                     | 	IE: knows all its Agenda instances                                                                           |
-| 		             | 	... saving inputted data?                              | Employee           | IE: object created has its own data                                                                           |
-| Step 10  		    | 	... informing operation success?                       | AddEntryAgendaUI         | IE: is responsible for user interactions.                                                                     | 
+| 		             | 	... validating all data (global validation)?           | Employee                 | 	IE: knows all its Agenda instances                                                                           |
+| 		             | 	... saving inputted data?                              | Employee                 | IE: object created has its own data                                                                           |
+| Step 10  		    | 	... informing operation success?                       | AddEntryAgendaUI         | IE: is responsible for user interactions                                                                      | 
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are: 
 
 * Task
+* Employee
 
 Other software classes (i.e. Pure Fabrication) identified: 
 
