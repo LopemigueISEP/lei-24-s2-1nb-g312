@@ -69,27 +69,31 @@ class TaskTest {
         assertNotNull(task.getEndDate());
     }
 
-    /**
-     * //TODO:para verificar este teste está a dar erro
-     */
 
-//    @Test
-//    void testTaskOverlap() {
-//        Task otherTask = new Task(greenSpace, "Mow Lawn", "Mow the lawn", TaskUrgency.MEDIUM, 60, TaskPosition.TODOLIST);
-//        otherTask.setTaskStartDate(startDate);
-//        otherTask.setEndDate();
-//
-//        task.setTaskStartDate(new Date(startDate.getTime() + 30 * 60 * 1000)); // 30 minutes after startDate
-//        task.setEndDate();
-//
-//        assertTrue(task.taskOverlap(otherTask));
-//
-//        Task nonOverlappingTask = new Task(greenSpace, "Plant Trees", "Plant new trees", TaskUrgency.LOW, 180, TaskPosition.TODOLIST);
-//        nonOverlappingTask.setTaskStartDate(new Date(endDate.getTime() + 3600 * 1000)); // 1 hour after endDate
-//        nonOverlappingTask.setEndDate();
-//
-//        assertFalse(task.taskOverlap(nonOverlappingTask));
-//    }
+    @Test
+    void testTaskOverlap() {
+        // Create otherTask with the same start date as task's start date
+        Task otherTask = new Task(greenSpace, "Mow Lawn", "Mow the lawn", TaskUrgency.MEDIUM, 60, TaskPosition.TODOLIST, 99998);
+        otherTask.setTaskStartDate(startDate);
+        otherTask.setEndDate();  // Ensure the end date is set
+
+        // Set task's start date to 30 minutes after otherTask's start date
+        task.setTaskStartDate(new Date(startDate.getTime() + 30 * 60 * 1000)); // 30 minutes after startDate
+        task.setEndDate();  // Ensure the end date is set
+
+        // Check that task overlaps with otherTask
+        assertTrue(task.taskOverlap(otherTask));
+
+        // Create nonOverlappingTask with start date 1 hour after task's end date
+        Task nonOverlappingTask = new Task(greenSpace, "Plant Trees", "Plant new trees", TaskUrgency.LOW, 180, TaskPosition.TODOLIST, 99997);
+        nonOverlappingTask.setTaskStartDate(new Date(task.getEndDate().getTime() + 3600 * 1000)); // 1 hour after task's end date
+        nonOverlappingTask.setEndDate();  // Ensure the end date is set
+
+        // Check that task does not overlap with nonOverlappingTask
+        assertFalse(task.taskOverlap(nonOverlappingTask));
+    }
+
+
 
     @Test
     void testClone() {
