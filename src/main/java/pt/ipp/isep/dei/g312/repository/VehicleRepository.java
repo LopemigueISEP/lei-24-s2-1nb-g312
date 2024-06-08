@@ -1,11 +1,13 @@
 package pt.ipp.isep.dei.g312.repository;
 
+import pt.ipp.isep.dei.g312.domain.Job;
 import pt.ipp.isep.dei.g312.domain.Organization;
 import pt.ipp.isep.dei.g312.domain.Vehicle;
 
+import java.io.*;
 import java.util.*;
 
-public class VehicleRepository {
+public class VehicleRepository implements Serializable {
 
     // list of vehicles
     public List<Vehicle> vehiclesList = new ArrayList<>();
@@ -90,6 +92,76 @@ public class VehicleRepository {
 
         return isValid;
     }
+
+
+    /**
+     * Serializes the Vehicle object to a file.
+     */
+    public void serializateData() {
+
+        String filename = this.getClass().getSimpleName()+".bin";
+
+        // Serialization
+        try {
+
+            // Saving of object in a file
+            FileOutputStream file = new FileOutputStream
+                    (filename);
+            ObjectOutputStream out = new ObjectOutputStream
+                    (file);
+
+            // Method for serialization of object
+            out.writeObject(this);
+
+
+            out.close();
+            file.close();
+
+            System.out.println(this.getClass().getSimpleName()+" Has Been Serialized successfully! ");
+        } catch (FileNotFoundException ex) {
+            System.out.println("IOException is caught");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    /**
+     * Deserializes the Vehicle object from a file and adds the jobs to the current repository.
+     */
+    public void getSeralizatedData() {
+        String filename = this.getClass().getSimpleName()+".bin";
+
+        try {
+
+            // Reading the object from a file
+            FileInputStream file = new FileInputStream
+                    (filename);
+            ObjectInputStream in = new ObjectInputStream
+                    (file);
+
+            // Method for deserialization of object
+            VehicleRepository vehicleRepository = (VehicleRepository) in.readObject();
+
+            for (Vehicle j :vehicleRepository.getVehicles()){
+                this.add(j);
+            }
+
+            in.close();
+            file.close();
+
+        }
+
+        catch (IOException ex) {
+            System.out.println("IOException is caught");
+        }
+
+        catch (ClassNotFoundException ex) {
+            System.out.println("ClassNotFoundException" +
+                    " is caught");
+        }
+    }
+
 
 
 }

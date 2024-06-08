@@ -50,6 +50,7 @@ public class Bootstrap implements Runnable {
         Repositories.getInstance().getGreenSpaceRepository().serializateData();
         Repositories.getInstance().getJobRepository().serializateData();
         Repositories.getInstance().getTaskRepository().serializateData();
+        Repositories.getInstance().getVehicleRepository().serializateData();
     }
 
     private void addEmployes() {
@@ -109,19 +110,21 @@ public class Bootstrap implements Runnable {
 
     private void addVehicles() throws ParseException {
         VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Vehicle vehicle = new Vehicle("80-PH-70", "BMW", "320D", "Passageiros", 1900, 2000, 19000, dateFormat.parse("08/03/2011"), dateFormat.parse("01/09/2020"), 20000);
-        vehicleRepository.add(vehicle);
+        vehicleRepository.getSeralizatedData();
 
-        Vehicle vehicleDrivenWithin = new Vehicle("81-PH-70", "BMW", "320D", "Passageiros", 1900, 2000, 19000, dateFormat.parse("08/03/2011"), dateFormat.parse("01/09/2020"), 20000);
-        vehicleRepository.add(vehicleDrivenWithin);
-        vehicleDrivenWithin.setCurrentKm(38500.0);
-        vehicleRepository.updateVehicle(vehicleDrivenWithin);
-
-        Vehicle vehicleDrivenAbove = new Vehicle("82-PH-70", "BMW", "320D", "Passageiros", 1900, 2000, 19000, dateFormat.parse("08/03/2011"), dateFormat.parse("01/09/2020"), 20000);
-        vehicleRepository.add(vehicleDrivenAbove);
-        vehicleDrivenAbove.setCurrentKm(42000.0);
-        vehicleRepository.updateVehicle(vehicleDrivenAbove);
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//        Vehicle vehicle = new Vehicle("80-PH-70", "BMW", "320D", "Passageiros", 1900, 2000, 19000, dateFormat.parse("08/03/2011"), dateFormat.parse("01/09/2020"), 20000);
+//        vehicleRepository.add(vehicle);
+//
+//        Vehicle vehicleDrivenWithin = new Vehicle("81-PH-70", "BMW", "320D", "Passageiros", 1900, 2000, 19000, dateFormat.parse("08/03/2011"), dateFormat.parse("01/09/2020"), 20000);
+//        vehicleRepository.add(vehicleDrivenWithin);
+//        vehicleDrivenWithin.setCurrentKm(38500.0);
+//        vehicleRepository.updateVehicle(vehicleDrivenWithin);
+//
+//        Vehicle vehicleDrivenAbove = new Vehicle("82-PH-70", "BMW", "320D", "Passageiros", 1900, 2000, 19000, dateFormat.parse("08/03/2011"), dateFormat.parse("01/09/2020"), 20000);
+//        vehicleRepository.add(vehicleDrivenAbove);
+//        vehicleDrivenAbove.setCurrentKm(42000.0);
+//        vehicleRepository.updateVehicle(vehicleDrivenAbove);
     }
     private void addGreenSpaces() {
         GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
