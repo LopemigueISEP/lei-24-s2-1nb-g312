@@ -21,10 +21,10 @@ import java.util.logging.Logger;
 
 public class Bootstrap implements Runnable {
 
-    //Add some task categories to the repository as bootstrap
+
     public void run() {
 
-//        addTaskCategories();
+
         addOrganization();
         addUsers();
         addSkills();
