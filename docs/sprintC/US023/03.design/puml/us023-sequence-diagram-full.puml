@@ -12,8 +12,10 @@ participant ":AssignTeamController" as Controller
 participant ":Repositories" as Repositories
 participant ":repositories\n:Repositories"
 participant ":Employee" as Employee
+participant ":GreenSpaceRepository" as GreenSpaceRepository
 participant ":TaskRepository" as TaskRepository
 participant ":TeamRepository" as TeamRepository
+
 participant ":Task" as Task
 
 
@@ -37,6 +39,15 @@ GSM -> UI : Initiates team assignment to a task \nin the agenda
                         activate ":repositories\n:Repositories"
                         ":repositories\n:Repositories" --> "Controller" : TaskRepository
                         deactivate ":repositories\n:Repositories"
+                "Controller" -> ":repositories\n:Repositories" : getGreenSpaceRepository()
+                        activate ":repositories\n:Repositories"
+                        ":repositories\n:Repositories" --> "Controller" : GreenSpaceRepository
+                        deactivate ":repositories\n:Repositories"
+                "Controller" -> "GreenSpaceRepository" : getGreenSpaces()
+                        activate "GreenSpaceRepository"
+                        "GreenSpaceRepository" --> "Controller" : list of GreenSpaces
+                        deactivate "GreenSpaceRepository"
+
                 "Controller" -> "TaskRepository" : getAgenda()
                         activate "TaskRepository"
                         "TaskRepository" --> "Controller" :list of tasks in the Agenda
@@ -45,7 +56,7 @@ GSM -> UI : Initiates team assignment to a task \nin the agenda
                 deactivate "Controller"
            UI --> "GSM" : lists tasks in the Agenda \nand asks to select one
            deactivate UI
-GSM -> UI : selects a team from the list
+GSM -> UI : selects a task from the list
            activate UI
            UI -> "Controller" : listAvailableTeams()
                 activate "Controller"
@@ -71,15 +82,19 @@ GSM -> UI: submitData (team, task)
                                 deactivate "Task"
                         "Employee" --> "Controller": update success
                         deactivate "Employee"
-                "Controller" -> "TaskRepository": updateTask(task)
-                        activate "TaskRepository"
-                        "TaskRepository" --> "Controller": update success
-                        deactivate "TaskRepository"
-                "Controller" -> "TeamRepository" : getTeamEmployees()
-                        activate "TeamRepository"
-                        "TeamRepository" --> "Controller" : teamEmployee Email
+                "Controller" -> "EmailService" : assignTaskToTeamEmail()
+                        activate "EmailService"
+                            "EmailService" -> "Email" : sendEmailTeam()
+                                activate "Email"
+                                    "Email" -> "ConfigFile" : loadValidEmailServices()
+                                        activate "ConfigFile"
+                                        "ConfigFile" --> "Email" : validEmailServices
+                                        deactivate "ConfigFile"
+                                    "Email" --> "EmailService" : email sent to assignedTeam
+                                deactivate "Email"
+                            "EmailService" --> "Controller" : email sent to assignedTeam
+                        deactivate "EmailService"
                         deactivate "TeamRepository"
-                "Controller" -> "Controller": validEmail (properties)
                 "Controller" --> UI : update success
                 deactivate "Controller"
            UI --> GSM : update success and \nemailSentToTeamMembers

@@ -15,6 +15,7 @@ class GSMUI{
 class AssignTeamToTaskInTheAgendaUI{
 +run()
 +AssignTeamController()
++assignTeamToTask()
 -requestTask()
 -requestTeam()
 -submitData(team, task)
@@ -30,6 +31,18 @@ class AssignTeamController{
 +validEmail()
 -getTaskRepository()
 -getTeamRepository()
+}
+
+interface EmailService{
++assignTaskToTeamEmail()
+}
+
+class Email {
++assignTaskToTeamEmail()
+-sendEmailTeam()
+-loadValidEmailServices() {
+-validEmail()
+-createEmailFile()
 }
 
 class Employee {
@@ -94,9 +107,9 @@ GSMUI "1" ..> "1" AssignTeamToTaskInTheAgendaUI
 Repositories --> Repositories : instance
 
 
-AssignTeamToTaskInTheAgendaUI ..> AssignTeamController
+AssignTeamToTaskInTheAgendaUI "1" ..> "1" AssignTeamController
 
-AssignTeamController ..> Repositories
+AssignTeamController "1" ..> "1" Repositories
 
 
 Repositories "1"--> "1" TaskRepository
@@ -108,7 +121,9 @@ TeamRepository "1"--> "*" Employee
 
 
 
-AssignTeamController ..> Employee
+AssignTeamController "1" ..> "1" Employee
+AssignTeamController "1" ..> "1" EmailService
+EmailService "1" --> "*" Email
 
 Employee "1" --> "1" Tasks : list tasks
 Tasks "1" --> "*" Task

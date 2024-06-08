@@ -18,7 +18,7 @@ public class GSMUI implements Runnable {
         options.add(new MenuItem("Register a Green Space", new RegisterGreenSpaceUI()));
         options.add(new MenuItem("Show list of green Spaces", new ShowListOfGreenSpacesUI()));
         options.add(new MenuItem("Add entry to the To-Do List", new AddEntryToDoListUI()));
-        options.add(new MenuItem("Show To-Do List", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("Show To-Do List", new ShowToDoListUI()));
         options.add(new MenuItem("Add entry to the Agenda ", new AddEntryToAgendaUI()));
         options.add(new MenuItem("Show Agenda", new ShowListOfAgendaUI()));
         options.add(new MenuItem("Assign Team to an entry in Agenda", new AssignTeamEntryAgendaUI()));
