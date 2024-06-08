@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
 public class ShowListOfAgendaUI extends Application implements Initializable {
 
     public TableView<Task> TableView_TaskAgenda;
-    public TableColumn<Task, GreenSpace> column_greenSpaceName;
+    public TableColumn<Task, String> column_greenSpaceName;
     public TableColumn<Task, String> column_TaskName;
     public TableColumn<Task, LocalDate> column_StartDate;
     public TableColumn<Task, TaskStatus> column_Status;
@@ -64,7 +64,12 @@ public class ShowListOfAgendaUI extends Application implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         controller = new ShowAgendaController();
 
-        column_greenSpaceName.setCellValueFactory(new PropertyValueFactory<>("greenSpace"));
+        column_greenSpaceName.setCellValueFactory(cellData -> {
+            GreenSpace greenSpace = cellData.getValue().getGreenSpace();
+            return new ReadOnlyStringWrapper(greenSpace.getName());
+        });
+
+        //column_greenSpaceName.setCellValueFactory(new PropertyValueFactory<>("greenSpace"));
         column_TaskName.setCellValueFactory(new PropertyValueFactory<>("title"));
         column_StartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         column_Status.setCellValueFactory(new PropertyValueFactory<>("status"));

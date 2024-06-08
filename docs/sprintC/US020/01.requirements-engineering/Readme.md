@@ -92,4 +92,4 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
 
 * The area must be in hectares.
 * Typology must be selected by the GSM from the 3 previously defined.
-* Green Space Manager is associated with the e-mail used for log in
+* Green Space Manager is associated with the e-mail used for log in.

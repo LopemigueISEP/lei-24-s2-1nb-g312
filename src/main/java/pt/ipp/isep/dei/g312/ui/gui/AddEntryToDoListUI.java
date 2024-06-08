@@ -32,6 +32,7 @@ public class AddEntryToDoListUI extends Application implements Initializable {
     public TextArea textTaskDescr;
     public Label lblAllFields;
     public ComboBox cmbUrgency;
+    public ComboBox cmbTasks;
     private AddEntryToDoListController addEntryToDoListController;
 
     public AddEntryToDoListUI(){

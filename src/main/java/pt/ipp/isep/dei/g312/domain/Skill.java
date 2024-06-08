@@ -84,4 +84,10 @@ public class Skill implements Comparable<Skill>, Serializable {
     public int compareTo(Skill o) {
         return this.skillName.compareTo(o.getSkillName());
     }
+
+    @Override
+    public boolean equals(Object skill) {
+        Skill newskill= (Skill) skill;
+        return this.getSkillName().equals(newskill.getSkillName());
+    }
 }
