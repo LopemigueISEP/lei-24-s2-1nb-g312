@@ -232,7 +232,12 @@ public class Vehicle implements Comparable<Vehicle>, Serializable {
             return 0;
         }
     }
-
+    /**
+     * Indicates whether some other object is "equal to" this one. This method compares the registration plates of two vehicles.
+     *
+     * @param obj The object with which to compare.
+     * @return True if the registration plate of this vehicle is equal to the registration plate of the specified object; false otherwise.
+     */
 
     public boolean equals(Vehicle obj) {
         return this.getRegistrationPlate().equals(obj.getRegistrationPlate());

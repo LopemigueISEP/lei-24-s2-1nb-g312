@@ -11,9 +11,17 @@ import java.util.Optional;
 
 import static pt.ipp.isep.dei.g312.ui.console.utils.Utils.showList;
 
+/**
+ * A repository class for managing teams.
+ */
 public class TeamRepository implements Serializable {
     public List<Team> teamList = new ArrayList<>();
-
+    /**
+     * Adds a new team to the repository.
+     *
+     * @param team The team to add.
+     * @return An Optional containing the added team if the operation is successful, empty otherwise.
+     */
     public Optional<Team> add(Team team) {
         Optional<Team> newTeam = Optional.empty();
         boolean operationSuccess = false;
@@ -27,16 +35,28 @@ public class TeamRepository implements Serializable {
         }
         return newTeam;
     }
-
+    /**
+     * Validates whether a team is not already present in the repository.
+     *
+     * @param team The team to validate.
+     * @return True if the team is not already present in the repository, false otherwise.
+     */
     private boolean validateTeam(Team team) {
 
         return !teamList.contains(team);
     }
 
+    /**
+     * Retrieves a list of all teams in the repository.
+     *
+     * @return A list of all teams in the repository.
+     */
     public List<Team> getAllTeams() {
         return new ArrayList<>(teamList);
     }
-
+    /**
+     * Prints the details of all registered teams, including team members and their skills.
+     */
     public void printRegisteredTeams() {
         int index = 1;
         for (Team team : teamList) {

@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Represents a team of employees within an organization. This class manages a collection of
- * {@link Employee} instances that constitute a team. It provides functionality to add employees,
+ * Employee instances that constitute a team. It provides functionality to add employees,
  * get information about team members, and manage the team's composition.
  * <p>
  * The class is designed to allow straightforward manipulation of team member lists, including
@@ -74,16 +74,30 @@ public class Team implements Serializable {
     public int size() {
         return this.teamEmployees.size();
     }
-
+    /**
+     * Adds an employee to the team.
+     *
+     * @param employee The employee to be added to the team.
+     */
     public void addEmployee(Employee employee) {
         this.teamEmployees.add(employee);
     }
-
+    /**
+     * Indicates whether some other object is "equal to" this one. This method overrides the default equals method of the Object class.
+     *
+     * @param obj The reference object with which to compare.
+     * @return True if this object is the same as the obj argument; false otherwise.
+     */
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);
     }
-
+    /**
+     * Returns a string representation of the team's composition, consisting of the names of the employees in the team.
+     * Since the `toString` method of the Employee class doesn't include skill information, only the names of the employees are included.
+     *
+     * @return A string representing the composition of the team.
+     */
     // because method tostring on employee didn't have skill return, i only implemented the toString of the names of the employees of the team
     @Override
     public String toString() {

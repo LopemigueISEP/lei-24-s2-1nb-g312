@@ -205,7 +205,12 @@ public class EmployeeRepository implements Serializable {
         return employeesSortedSkills;
 
     }
-
+    /**
+     * Retrieves an employee by their email address.
+     *
+     * @param userEmail The email address of the employee to retrieve.
+     * @return An Optional containing the employee with the specified email address if found, or an empty Optional if no employee matches the provided email.
+     */
     public Optional<Employee> getEmployeeByEmail(String userEmail) {
         Optional<Employee> responsible=Optional.empty();
         for (Employee e :
