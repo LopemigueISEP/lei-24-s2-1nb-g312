@@ -26,6 +26,7 @@ public class AdminUI implements Runnable {
         options.add(new MenuItem("Generate team", new GenerateTeamUI()));
         options.add(new MenuItem("Show teams", new ShowListOfTeamsUI()));
         options.add(new MenuItem("Register Vehicle", new CreateVehicleUI()));
+        options.add(new MenuItem("Show registered vehicles", new ShowVehicleListUI()));
         options.add(new MenuItem("Register Check-up", new RegisterCheckUpUI()));
         options.add(new MenuItem("List Vehicles due to Check-up", new ListVehiclesDueToCheckUpUI()));
         options.add(new MenuItem("Import CSV for Planning and Building Irrigation System", new ImportCSVUI()));

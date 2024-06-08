@@ -46,4 +46,13 @@ public class ListVehiclesDueToCheckUpController {
         return vehiclesDueToCheckUp;
     }
 
+    public ArrayList<Vehicle> registeredVehicleList() {
+        ArrayList<Vehicle> vehiclesList = new ArrayList<>();
+        for (Vehicle vehicle : vehicleRepository.getVehicles()) {
+            vehiclesList.add(vehicle);
+        }
+        return vehiclesList;
+
+    }
+
 }
