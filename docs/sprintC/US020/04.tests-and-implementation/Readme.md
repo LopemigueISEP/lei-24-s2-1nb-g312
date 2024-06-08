@@ -20,20 +20,26 @@
 
 	 @Test
     public void testGetGreenSpace() {
-        private GreenSpaceRepository repository;
-        private GreenSpace greenSpace1 = new GreenSpace("Park A", "Address A", 1000.0, GreenSpaceTypology.MEDIUM, "Manager A");
-        private GreenSpace greenSpace2 = new GreenSpace("Garden B", "Address B", 2000.0, GreenSpaceTypology.GARDEN, "Manager B");
-        private GreenSpace greenSpace;
+    private GreenSpaceRepository repository;
+    private GreenSpace greenSpace1;
+    private GreenSpace greenSpace2;
 
+    @BeforeEach
+    public void setUp() {
+        repository = new GreenSpaceRepository();
+        greenSpace1 = new GreenSpace("Park A", "Address A", 1000.0, GreenSpaceTypology.MEDIUM, "GSM");
+        greenSpace2 = new GreenSpace("Garden B", "Address B", 2000.0, GreenSpaceTypology.GARDEN, "Admin");
+    }
 
         //Test 1
-        ptional<GreenSpace> addedGreenSpace = repository.addGreenSpace(greenSpace1);
+       Optional<GreenSpace> addedGreenSpace = repository.addGreenSpace(greenSpace1);
         assertTrue(addedGreenSpace.isPresent());
         assertTrue(repository.getGreenSpaceList().contains(greenSpace1));
 
         // Test adding an invalid green space (already exists)
         Optional<GreenSpace> addedGreenSpace2 = repository.addGreenSpace(greenSpace1);
         assertFalse(addedGreenSpace2.isPresent());
+    
     
 
         //Test 2
@@ -59,9 +65,14 @@
 
         assertFalse(repository.existsWithAddress("Address C"));
 
+
         //Test 5
-            public void testConstructor() {
-    
+        GreenSpace clonedGreenSpace = greenSpace.clone();
+        assertEquals(greenSpace, clonedGreenSpace);
+        assertNotSame(greenSpace, clonedGreenSpace);
+
+        //Test 6
+
         String name = "Park A";
         String address = "Address A";
         double area = 1000.0;
@@ -75,11 +86,6 @@
         assertEquals(area, greenSpace.getArea(), 0.001); // Use delta for double comparison
         assertEquals(typology, greenSpace.getTypology());
         assertEquals(greenSpaceManager, greenSpace.getGreenSpaceManager());
-
-        //Test 6
-        GreenSpace clonedGreenSpace = greenSpace.clone();
-        assertEquals(greenSpace, clonedGreenSpace);
-        assertNotSame(greenSpace, clonedGreenSpace);
 
        }
 
