@@ -111,8 +111,12 @@ public class RegisterGreenSpaceUI extends Application {
      */
     @FXML
     public void initializeRegisterGreenSpaceUI() {
-        initializetypologyChoiceBox();
-        setGreenSpaceManager();
+        try {
+            initializetypologyChoiceBox();
+            setGreenSpaceManager();
+        }catch (Exception e){
+            throw new RuntimeException("eero",e);
+        }
     }
     private void initializetypologyChoiceBox() {
         GreenSpaceTypology[] taskUrgencies= registerGreenSpaceController.getGreenSpaceTypologies();
@@ -143,7 +147,11 @@ public class RegisterGreenSpaceUI extends Application {
     @FXML
     private void setGreenSpaceManager() {
         if (RegisterGreenSpaceController.currentUserLogInValidation()) {
-            greenSpaceManagerLabel.setText(Objects.requireNonNull(RegisterGreenSpaceController.matchEmployeeByRole()).getEmail());
+            if(RegisterGreenSpaceController.matchEmployeeByRole() != null) {
+                greenSpaceManagerLabel.setText(Objects.requireNonNull(RegisterGreenSpaceController.matchEmployeeByRole()).getEmail());
+            }else{
+                greenSpaceManagerLabel.setText("user not registered in employees");
+            }
         } else {
             greenSpaceManagerLabel.setText("Not Logged In");
         }
