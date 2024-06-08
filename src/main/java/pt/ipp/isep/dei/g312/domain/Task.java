@@ -13,6 +13,7 @@ public class Task implements Cloneable, Serializable {
 
     private String title;
     private String description;
+
     private int taskExpectedDuration; //expected hours duration
     private String type;
     private GreenSpace greenSpace;
@@ -67,6 +68,8 @@ public class Task implements Cloneable, Serializable {
         this.endDate = endDate;
         this.taskPosition = taskPosition;
     }
+
+    public int getTaskExpectedDuration() {return taskExpectedDuration;}
 
     public void assignTeam(Team team) {
         this.assignedTeam = team;
@@ -145,6 +148,8 @@ public class Task implements Cloneable, Serializable {
     public TaskUrgency getUrgency() {
         return this.urgency;
     }
+
+
 
     // method to calculate end date of a task in date using day and hour
     private Date calculateEndDate() {

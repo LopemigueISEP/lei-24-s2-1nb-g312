@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.g312.ui.gui.ShowToDoListUI">
+    <children>
+        <GridPane layoutX="5.0" layoutY="5.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label alignment="CENTER" text="To Do List" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                    <font>
+                        <Font name="Tahoma Bold" size="18.0" />
+                    </font>
+                    <GridPane.margin>
+                        <Insets />
+                    </GridPane.margin>
+                    <padding>
+                        <Insets top="50.0" />
+                    </padding>
+                </Label>
+                <TableView fx:id="TableView_TaskToDoList" prefHeight="300.0" prefWidth="524.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="6">
+                    <columns>
+                        <TableColumn fx:id="column_greenSpaceName" prefWidth="106.0" text="GreenSpace" />
+                        <TableColumn fx:id="column_TaskName" prefWidth="132.0" text="Task" />
+                        <TableColumn fx:id="column_taskExpectedDuration" prefWidth="132.0" text="Expected Duration (h)" />
+
+                    </columns>
+                </TableView>
+            </children>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" percentWidth="15.0" />
+                <ColumnConstraints percentWidth="80.0" />
+                <ColumnConstraints hgrow="SOMETIMES" percentWidth="15.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints percentHeight="20.0" />  <RowConstraints percentHeight="80.0" />  </rowConstraints>
+        </GridPane>
+    </children>
+</AnchorPane>
