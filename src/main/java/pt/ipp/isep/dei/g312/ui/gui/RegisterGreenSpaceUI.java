@@ -196,6 +196,7 @@ public class RegisterGreenSpaceUI extends Application {
         } else {
             messageLabel.setText("You do not have permission to register green spaces.");
         }
+        resetAllFields();
     }
 
     /**
@@ -234,5 +235,12 @@ public class RegisterGreenSpaceUI extends Application {
      */
     private double parseAreaField(String areaText) throws NumberFormatException {
         return Double.parseDouble(areaText);
+    }
+    private void resetAllFields() {
+        nameField.setText("");
+        addressField.setText("");
+        areaField.setText("");
+        typologyChoiceBox.getSelectionModel().clearSelection();
+        typologyChoiceBox.setValue(null);
     }
 }

@@ -5,6 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +26,7 @@ class TaskTest {
 
     @BeforeEach
     void setUp() {
-        greenSpace = new GreenSpace("Parque da Cidade do Porto", "Porto", 99.6, "Large-sized park", "Green Space Manager");
+        greenSpace = new GreenSpace("Parque da Cidade do Porto", "Porto", 99.6, GreenSpaceTypology.LARGE, "Green Space Manager");
         startDate = new Date();
         endDate = new Date(startDate.getTime() + 3600 * 1000); // 1 hour later
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -101,5 +105,22 @@ class TaskTest {
         task.cancel();
         assertEquals(TaskStatus.CANCELED, task.getStatus());
     }
+    @Test
+    public void testAddTaskAgenda() {
+        LocalDate startDate = LocalDate.of(2024, 6, 8);
+        LocalTime startTime = LocalTime.of(10, 30);
 
+        task.addTaskAgenda(startDate, startTime);
+
+        assertEquals(TaskPosition.AGENDA, task.getTaskPosition());
+        assertEquals(TaskStatus.PENDING, task.getStatus());
+
+        LocalDateTime expectedStartDateTime = LocalDateTime.of(startDate, startTime);
+        Date expectedStartDate = Date.from(expectedStartDateTime.atZone(ZoneId.systemDefault()).toInstant());
+
+        assertEquals(expectedStartDate, task.getStartDate());
+
+        // Here we assume that calculateEndDate() is a method that returns a non-null Date.
+        assertNotNull(task.getEndDate());
+    }
 }

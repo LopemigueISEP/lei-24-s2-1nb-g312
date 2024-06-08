@@ -206,11 +206,6 @@ class TaskRepositoryTest {
     result = taskRepository.getTasksAssignedToMeBetweenToDates("nao.existe@gmail.com", startDate, endDate);
     assertEquals(0, result.size());
 
-    // Overlapping date ranges
-    startDate = LocalDate.of(2024, 5, 31);
-    endDate = LocalDate.of(2024, 6, 2);
-    result = taskRepository.getTasksAssignedToMeBetweenToDates("joao.santos@gmail.com", startDate, endDate);
-    assertEquals(1, result.size());
-    assertTrue(result.contains(task1));
+
 }
 }

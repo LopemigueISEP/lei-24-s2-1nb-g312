@@ -105,6 +105,30 @@ public GreenSpace(String name, String address, double area, String typology, Str
 ```
 
 
+####   getter method
+
+```java
+public List<GreenSpace> getGreenSpaceManagedByMe(String loggedInUser) {
+    List<GreenSpace> listOfGreenSpacesManagedByMe = new ArrayList<>();
+
+    try {
+        for (GreenSpace grn : getGreenSpaceList()) {
+            if (grn != null) {
+                if (grn.getGreenSpaceManager().equals(loggedInUser)) {
+                    listOfGreenSpacesManagedByMe.add(grn);
+                }
+            }
+        }
+    }catch (Exception e){
+        throw new RuntimeException("error in getGreenSpaceManagedByMe",e);
+    }
+    return listOfGreenSpacesManagedByMe;
+}
+
+```
+
+
+
 ## 6. Integration and Demo 
 
 n/a
