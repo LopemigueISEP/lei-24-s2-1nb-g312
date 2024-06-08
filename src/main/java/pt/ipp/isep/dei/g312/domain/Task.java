@@ -25,6 +25,7 @@ public class Task implements Cloneable, Serializable {
     private Date startDate;
     private Date endDate;
     private TaskPosition taskPosition;
+    private String observation;
 
 
     /**
@@ -230,6 +231,13 @@ public class Task implements Cloneable, Serializable {
     public void cancel() {
         this.status=TaskStatus.CANCELED;
     }
+
+    public void complete(String observation, Date endDate) {
+        this.observation=observation;
+        this.endDate=endDate;
+        this.status=TaskStatus.DONE;
+    }
+
     /**
      * Adds the task to the agenda with the specified start date and time.
      * Sets the task's position to {@code TaskPosition.AGENDA} and its status to {@code TaskStatus.PENDING}.
@@ -245,6 +253,7 @@ public class Task implements Cloneable, Serializable {
         this.startDate=Date.from(newStartDateTime.atZone(ZoneId.systemDefault()).toInstant());
         this.endDate= calculateEndDate();
     }
+
 
 }
 

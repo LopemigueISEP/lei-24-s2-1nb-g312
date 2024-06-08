@@ -184,7 +184,7 @@ public class AddEntryToAgendaUI extends Application implements Initializable {
      */
     public void addTaskToAgenda(ActionEvent actionEvent) {
         if (verifyEmptyFields()) {
-            lblAllFields.setText("Please fill out all required information.");
+            lblAllFields.setText("Please fill out required information.");
             lblAllFields.setVisible(true);
         } else if (textStartTime.getText().split(":").length != 2) {
             lblAllFields.setText("Expected start time should in format HH:MM");

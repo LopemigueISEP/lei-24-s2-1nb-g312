@@ -330,6 +330,29 @@ public class TaskRepository implements Serializable {
         }
         return cancelableTasks;
     }
+    /**
+     * Retrieves a list of tasks that can be completed.
+     *
+     * @return a list of completable tasks
+     */
+    public List<Task> getTasksCompletable(Employee colab) {
+        List<Task> completableTasks = new ArrayList<>();
+        for (Task task : getAgenda()) {
+            if (task.getStatus() != TaskStatus.CANCELED && task.getStatus() != TaskStatus.DONE) {
+                if (task.getAssignedTeam()!=null){
+                    for (Employee e:
+                            task.getAssignedTeam().getTeamEmployees()) {
+                        if (e.getEmail().equals(colab.getEmail())){
+                            completableTasks.add(task);
+                        }
+                    }
+                }
+
+
+            }
+        }
+        return completableTasks;
+    }
 
 
     /**
@@ -340,6 +363,17 @@ public class TaskRepository implements Serializable {
 
     public void cancelTask(Task taskToCancel) {
         taskToCancel.cancel();
+    }
+
+    /**
+     * Completes a given task.
+     *
+     * @param taskToComplete the task to cancel
+     * @param observation optional observation
+     * @param endDate date of the finished task
+     */
+    public void completeTask(Task taskToComplete, String observation, Date endDate) {
+        taskToComplete.complete(observation,endDate);
     }
 
     /**
@@ -510,4 +544,6 @@ public class TaskRepository implements Serializable {
 
         return employeeTasksBetweenDates;
     }
+
+
 }
