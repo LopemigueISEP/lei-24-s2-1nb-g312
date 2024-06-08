@@ -277,7 +277,7 @@ public class TaskRepository implements Serializable {
                 for (Task task : getAllAgendaTasksExceptDoneCanceled()) {
                     if (task != null) {
                         for (Vehicle taskVehicle : task.getAssignedVehicles()) {
-                            if (taskVehicle != null && taskVehicle == vehicle) {
+                            if (taskVehicle != null && taskVehicle.getRegistrationPlate().equals(vehicle.getRegistrationPlate())) {
                                 if (!(taskSelecionada.getStartDate().compareTo(task.getEndDate()) >= 0 || taskSelecionada.getEndDate().compareTo(task.getStartDate()) <= 0)) {
                                     checkAvailable = false;
                                     break;
