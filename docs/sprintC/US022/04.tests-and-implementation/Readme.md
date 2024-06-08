@@ -2,7 +2,9 @@
 
 ## 4. Tests 
 
-**Test 1:** Test adding task to agenda. 
+**Test 1:** Test adding task to agenda.
+
+**Test 2:** Test get task from a specific green space.
 
 	@Test
     public void testAddTaskAgenda() {
@@ -21,15 +23,22 @@
 
         // Here we assume that calculateEndDate() is a method that returns a non-null Date.
         assertNotNull(task.getEndDate());
+
+        //Test 2
+        Date task5startDate = dateFormat.parse("16/06/2024 - 14");
+        Date task5EndDate = dateFormat.parse("17/06/2024 - 13");
+        GreenSpace greenSpace12 = new GreenSpace("ABC", "asd", 1000, GreenSpaceTypology.MEDIUM, "asd");
+
+        Task task12 = new Task("TaskSemNomeDeJeito", "Vou-me despedir para ficar a dormir o dia todo", 5, "Type A", greenSpace12,
+                TaskUrgency.LOW, TaskStatus.PENDING, null, new ArrayList<>(), 5, task5startDate, task5EndDate, TaskPosition.AGENDA);
+
+        taskRepository.addTask(task12);
+        List<Task> result = taskRepository.getTasksByGreenSpace(greenSpace);
+
+        assertNotEquals(5, result.size()); //All 5 starting tasks are assigned to this greenspace, the number 6 task12 is in another greenspace
+        assertFalse(result.contains(task1)); //contains a task of the selected greenspace
+        assertFalse(result.contains(task12)); // didn't contain a task of another greenspace
     }
-	
-
-**Test 2:** Check that it is not possible to create an instance of the Task class with a reference containing less than five chars - AC2. 
-
-	
-
-
-
 
 ## 5. Construction (Implementation)
 

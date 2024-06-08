@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.g312.repository;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import pt.ipp.isep.dei.g312.domain.GreenSpace;
@@ -16,8 +17,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GreenSpaceRepositoryTest {
     private GreenSpaceRepository repository;
-    private GreenSpace greenSpace1 = new GreenSpace("Park A", "Address A", 1000.0, GreenSpaceTypology.MEDIUM, "Manager A");
-    private GreenSpace greenSpace2 = new GreenSpace("Garden B", "Address B", 2000.0, GreenSpaceTypology.GARDEN, "Manager B");
+    private GreenSpace greenSpace1;
+    private GreenSpace greenSpace2;
+    @BeforeEach
+    public void setUp() {
+        repository = new GreenSpaceRepository();
+        greenSpace1 = new GreenSpace("Park A", "Address A", 1000.0, GreenSpaceTypology.MEDIUM, "GSM");
+        greenSpace2 = new GreenSpace("Garden B", "Address B", 2000.0, GreenSpaceTypology.GARDEN, "Admin");
+    }
+
     @Test
     public void testAddGreenSpace() {
         // Test adding a valid green space
@@ -29,7 +37,6 @@ class GreenSpaceRepositoryTest {
         Optional<GreenSpace> addedGreenSpace2 = repository.addGreenSpace(greenSpace1);
         assertFalse(addedGreenSpace2.isPresent());
     }
-
     @Test
     public void testValidateGreenSpace() {
         // Test validating a new green space
