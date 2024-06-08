@@ -151,7 +151,11 @@ public class Task implements Cloneable, Serializable {
 
 
 
-    // method to calculate end date of a task in date using day and hour
+    /**
+     * Calculates the end date of a task based on its start date and expected duration,
+     * considering working hours from 9 AM to 5 PM.
+     * @return The calculated end date of the task.
+     */
     private Date calculateEndDate() {
 
         Date start = this.startDate;
@@ -190,7 +194,12 @@ public class Task implements Cloneable, Serializable {
 
     public Date getEndDate() {return this.endDate;}
 
-    // method to check if two tasks overlap
+
+    /**
+     * Checks if this task overlaps with another task based on their start and end dates.
+     * @param other The other task to check for overlap.
+     * @return True if the tasks overlap, false otherwise.
+     */
     public boolean taskOverlap(Task other) {
         if (this.startDate.compareTo(other.endDate) >= 0 || this.endDate.compareTo(other.startDate) <= 0) {
             return false;
@@ -199,7 +208,10 @@ public class Task implements Cloneable, Serializable {
     }
 
 
-    // clone method
+    /**
+     * Creates and returns a clone of this task.
+     * @return A clone of this task.
+     */
     public Task clone() {
         return new Task(this.title, this.description, this.taskExpectedDuration, this.type, this.greenSpace, this.urgency, this.status, this.assignedTeam, this.assignedVehicles, this.taskID, this.startDate, this.endDate, this.taskPosition);
     }
@@ -227,9 +239,13 @@ public class Task implements Cloneable, Serializable {
     }
 
 
+    /**
+     * Cancels the task by setting its status to CANCELED.
+     */
     public void cancel() {
         this.status=TaskStatus.CANCELED;
     }
+
     /**
      * Adds the task to the agenda with the specified start date and time.
      * Sets the task's position to {@code TaskPosition.AGENDA} and its status to {@code TaskStatus.PENDING}.

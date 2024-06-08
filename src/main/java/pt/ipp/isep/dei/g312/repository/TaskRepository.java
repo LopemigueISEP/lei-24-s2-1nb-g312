@@ -7,7 +7,6 @@ import java.time.*;
 import java.util.*;
 
 
-// Agenda is a repository of tasks, not a conceptual class.
 
 /**
  * Repository class for managing tasks.
@@ -49,7 +48,6 @@ public class TaskRepository implements Serializable {
         return tasksList;
     }
 
-    // method to filter tasks by position in the agenda
 
     /**
      * Retrieves the list of tasks in the agenda.
@@ -66,7 +64,6 @@ public class TaskRepository implements Serializable {
         return agenda;
     }
 
-    // method to filter tasks by position in the TO DO List
 
     /**
      * Retrieves the list of tasks in the TO DO list.
@@ -84,7 +81,6 @@ public class TaskRepository implements Serializable {
     }
 
 
-    //method to update task in the agenda
 
     /**
      * Updates a task in the agenda.
@@ -104,7 +100,6 @@ public class TaskRepository implements Serializable {
         return Optional.empty();
     }
 
-    // method to test team availability,
 
     /**
      * Checks the availability of a team for a given task.
@@ -129,7 +124,6 @@ public class TaskRepository implements Serializable {
     }
 
 
-    // method to get all tasks assigned to a team (ignoring tasks with status canceled or done)
 
     /**
      * Retrieves all tasks assigned to a team, excluding those with status CANCELED or DONE.

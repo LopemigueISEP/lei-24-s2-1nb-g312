@@ -434,7 +434,17 @@ public class Employee implements Cloneable, Comparable<Employee>, Serializable {
         }
     }
 
-    // method for the employee to register a task for the todolist
+    /**
+     * Registers a new task.
+     * @param GreenSpace       The green space where the task is to be performed.
+     * @param taskTitle        The title of the task.
+     * @param taskDescr        The description of the task.
+     * @param taskUrgency      The urgency level of the task.
+     * @param expectedDuration The expected duration of the task.
+     * @param todolist         The position of the task in the to-do list.
+     * @param taskId           The ID of the task.
+     * @return An Optional containing the registered task, or empty if the registration fails.
+     */
     public Optional<Task> registerTask(GreenSpace GreenSpace, String taskTitle, String taskDescr, TaskUrgency taskUrgency, int expectedDuration, TaskPosition todolist, int taskId) {
         try {
 
@@ -448,13 +458,24 @@ public class Employee implements Cloneable, Comparable<Employee>, Serializable {
         }
     }
 
-    // method for the employee to assign a team to a task in the agenda
+    /**
+     * Assigns a team to a task.
+     * @param team The team to assign to the task.
+     * @param task The task to assign the team to.
+     * @return An Optional containing the updated task, or empty if the assignment fails.
+     */
     public static Optional<Task> assignTeamToTask(Team team, Task task) {
         task.assignTeam(team);
         task.setTaskStatus(TaskStatus.PLANNED);
         return Repositories.getInstance().getTaskRepository().updateTask(task);
     }
 
+    /**
+     * Postpones a task to a new start date.
+     * @param task The task to postpone.
+     * @param startDate The new start date for the task.
+     * @return An Optional containing the postponed task, or empty if the postponement fails.
+     */
     public static Optional<Task> postponedTask(Task task, Date startDate) {
         task.setTaskStartDate(startDate);
         task.setEndDate();
