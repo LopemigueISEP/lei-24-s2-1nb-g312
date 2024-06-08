@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.g312.domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pt.ipp.isep.dei.g312.repository.GreenSpaceRepository;
 
@@ -13,7 +14,10 @@ public class GreenSpaceTest {
     private GreenSpace greenSpace;
 
 
-
+    @BeforeEach
+    public void setUp() {
+        greenSpace = new GreenSpace("Park A", "Address A", 1000.0, GreenSpaceTypology.MEDIUM, "GSM");
+    }
 
     @Test
     public void testClone() {
