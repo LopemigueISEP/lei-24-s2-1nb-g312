@@ -52,6 +52,7 @@ public class Bootstrap implements Runnable {
         Repositories.getInstance().getTaskRepository().serializateData();
         Repositories.getInstance().getVehicleRepository().serializateData();
         Repositories.getInstance().getEmployeeRepository().serializateData();
+        Repositories.getInstance().getTeamRepository().serializateData();
     }
 
     private void addEmployes() {
@@ -91,20 +92,22 @@ public class Bootstrap implements Runnable {
 
     private void addTeams() {
         TeamRepository teamRepository = Repositories.getInstance().getTeamRepository();
-        EmployeeRepository employeeRepository = Repositories.getInstance().getEmployeeRepository();
+        teamRepository.getSeralizatedData();
 
-        // Get employees to form teams
-        List<Employee> allEmployees = employeeRepository.getEmployees();
-
-        // Create a sample team with some employees
-        List<Employee> teamMembers = new ArrayList<>();
-        teamMembers.add(allEmployees.get(0)); // Add first employee
-        teamMembers.add(allEmployees.get(1)); // Add second employee
-
-        Team team = new Team(teamMembers);
-
-        // Add the team to the repository
-        Optional<Team> addedTeam = teamRepository.add(team);
+//        EmployeeRepository employeeRepository = Repositories.getInstance().getEmployeeRepository();
+//
+//        // Get employees to form teams
+//        List<Employee> allEmployees = employeeRepository.getEmployees();
+//
+//        // Create a sample team with some employees
+//        List<Employee> teamMembers = new ArrayList<>();
+//        teamMembers.add(allEmployees.get(0)); // Add first employee
+//        teamMembers.add(allEmployees.get(1)); // Add second employee
+//
+//        Team team = new Team(teamMembers);
+//
+//        // Add the team to the repository
+//        Optional<Team> addedTeam = teamRepository.add(team);
     }
 
     private void addTasks() {
