@@ -41,7 +41,7 @@ class TaskTest {
         team = new Team(teamMembers);
 
 
-        task = new Task(greenSpace, "Clean Park", "Clean the park area", TaskUrgency.HIGH, 120, TaskPosition.TODOLIST);
+        task = new Task(greenSpace, "Clean Park", "Clean the park area", TaskUrgency.HIGH, 120, TaskPosition.TODOLIST,99999);
     }
 
     @Test

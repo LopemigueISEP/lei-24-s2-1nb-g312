@@ -28,14 +28,14 @@ public class Task implements Cloneable, Serializable {
 
 
     /**
-     * Constructs a new task with the specified attributes.
+     * Constructor for creating a task in the to-do list.
      *
      * @param greenSpace the green space associated with the task
      * @param title the title of the task
      * @param description the description of the task
      * @param urgency the urgency level of the task
      * @param taskExpectedDuration the expected duration of the task in minutes
-     * @param taskPosition the position of the task
+     * @param taskPosition the position of the task, must be TaskPosition.ToDoList
      * @param taskId the ID of the task
      */
     public Task( GreenSpace greenSpace, String title, String description, TaskUrgency urgency, int taskExpectedDuration, TaskPosition taskPosition,int taskId) {
@@ -245,6 +245,7 @@ public class Task implements Cloneable, Serializable {
         this.startDate=Date.from(newStartDateTime.atZone(ZoneId.systemDefault()).toInstant());
         this.endDate= calculateEndDate();
     }
+
 }
 
 
