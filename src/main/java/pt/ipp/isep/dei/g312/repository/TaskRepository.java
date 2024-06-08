@@ -22,11 +22,18 @@ public class TaskRepository implements Serializable {
      * @return an Optional containing the added task if it was successfully added, or empty otherwise
      */
     public Optional<Task> addTask(Task task) {
+        Optional<Task> newTask = Optional.empty();
+        boolean operationSuccess = false;
+
         if (isValidTask(task)) {
-            taskList.add(task);
-            return Optional.of(task);
+            newTask = Optional.of(task.clone());
+            operationSuccess = taskList.add(newTask.get());
         }
-        return null;
+        if (!operationSuccess) {
+            newTask = Optional.empty();
+        }
+        return newTask;
+
     }
 
 
@@ -233,9 +240,15 @@ public class TaskRepository implements Serializable {
      *        false otherwise
      */
     private boolean isValidTask(Task task) {
-        boolean isValid = !taskList.contains(task);
 
-        return isValid;
+        for (Task t :
+                taskList) {
+            if (t.getTaskID() == task.getTaskID()){
+                return false;
+            }
+        }
+
+        return true;
     }
 
 

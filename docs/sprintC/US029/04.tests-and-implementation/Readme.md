@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US025 - As a Collaborator, I want to record the completion of a task.
 
 ## 4. Tests 
 

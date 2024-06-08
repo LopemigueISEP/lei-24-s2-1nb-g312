@@ -1,4 +1,4 @@
-# US029 - Record the completion of a task
+# US029 - As a Collaborator, I want to record the completion of a task.
 
 ## 3. Design - User Story Realization
 
