@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.g312.ui.gui.RegisterGreenSpaceUI">
     <children>
@@ -32,7 +39,7 @@
             </rowConstraints>
 
             <!-- Título -->
-            <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="US20 - Register a Green Space " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+            <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="US20 - Register a Green Space" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
                 <font>
                     <Font name="Tahoma Bold" size="12.0" />
                 </font>
@@ -48,8 +55,10 @@
 
             <!-- Label para a indicação do gestor -->
             <HBox GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
-                <Label style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Managed by: " />
-                <Label fx:id="greenSpaceManagerLabel" style="-fx-font-size: 14px;" text="" />
+                <children>
+                    <Label style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Managed by: " />
+                    <Label fx:id="greenSpaceManagerLabel" style="-fx-font-size: 14px;" text="" />
+                </children>
             </HBox>
 
             <!-- Botão para registrar -->

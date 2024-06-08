@@ -7,11 +7,8 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 
-import javafx.scene.control.ListCell;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import pt.ipp.isep.dei.g312.application.controller.RegisterGreenSpaceController;
@@ -171,6 +168,9 @@ public class RegisterGreenSpaceUI extends Application {
         if (!validateInput()) {
             return;
         }
+        if (!confirmsData()) {
+            return;
+        }
 
         String name = nameField.getText();
         String address = addressField.getText();
@@ -204,7 +204,12 @@ public class RegisterGreenSpaceUI extends Application {
         } else {
             messageLabel.setText("You do not have permission to register green spaces.");
         }
-        resetAllFields();
+        if (addAnotherGreenSpace()) {
+            resetAllFields();
+        } else {
+            Stage stage = (Stage) messageLabel.getScene().getWindow();
+            stage.close();
+        }
     }
 
     /**
@@ -250,5 +255,46 @@ public class RegisterGreenSpaceUI extends Application {
         areaField.setText("");
         typologyChoiceBox.getSelectionModel().clearSelection();
         typologyChoiceBox.setValue(null);
+    }
+    private boolean confirmsData() {
+        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,
+                "Confirm submission?",
+                yes,
+                no);
+
+        alert.setTitle("Green space registered");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.orElse(yes) == yes) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    /**
+     * Prompts the user after a successful task addition to see if they want to add another task.
+     *
+     * @return True if the user wants to add another task, false otherwise.
+     */
+    private boolean addAnotherGreenSpace() {
+        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Green space registered, do you wish to register another?",
+                yes,
+                no);
+
+        alert.setTitle("Green space successfully registered");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.orElse(yes) == yes) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
