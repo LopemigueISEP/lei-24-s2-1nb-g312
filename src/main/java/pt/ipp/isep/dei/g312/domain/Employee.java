@@ -433,18 +433,7 @@ public class Employee implements Cloneable, Comparable<Employee>, Serializable {
             return Optional.empty();
         }
     }
-    /**
-     * Registers a new task for the given green space.
-     *
-     * @param GreenSpace       The GreenSpace where the task will be performed.
-     * @param taskTitle        The title of the task.
-     * @param taskDescr        The description of the task.
-     * @param taskUrgency      The urgency level of the task.
-     * @param expectedDuration The expected duration of the task in minutes.
-     * @param todolist         The position of the task in the to-do list.
-     * @param taskId           The unique identifier for the task.
-     * @return An Optional containing the registered Task if successful, otherwise an empty Optional.
-     */
+
     // method for the employee to register a task for the todolist
     public Optional<Task> registerTask(GreenSpace GreenSpace, String taskTitle, String taskDescr, TaskUrgency taskUrgency, int expectedDuration, TaskPosition todolist, int taskId) {
         try {
