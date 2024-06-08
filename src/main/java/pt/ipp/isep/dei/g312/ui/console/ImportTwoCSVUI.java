@@ -1,77 +1,46 @@
 package pt.ipp.isep.dei.g312.ui.console;
 
-import pt.ipp.isep.dei.g312.application.controller.ImportCSVController;
 import pt.ipp.isep.dei.g312.application.controller.ImportTwoCSVController;
-import pt.ipp.isep.dei.g312.domain.CSVFile;
-import pt.ipp.isep.dei.g312.domain.CSVLine;
 import pt.ipp.isep.dei.g312.domain.comparators.Routes;
-import pt.ipp.isep.dei.g312.ui.console.utils.Result;
+import pt.ipp.isep.dei.g312.ui.console.utils.VisualizeParkGraphs;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
-import static pt.ipp.isep.dei.g312.ui.console.utils.Utils.raiseAlertMessage;
-import static pt.ipp.isep.dei.g312.ui.console.utils.Utils.readLineFromConsole;
-
 public class ImportTwoCSVUI implements Runnable {
-
-    private ImportTwoCSVController controller;
+    private final ImportTwoCSVController controller;
 
     public ImportTwoCSVUI() {
-        this.controller = new ImportTwoCSVController();
-
+        controller = new ImportTwoCSVController();
     }
 
     @Override
     public void run() {
-        System.out.println("\n\n--- Import CSV ------------------------");
-        int ap = numberOfAssemblyPoint();
-        //File[] files = requestData();
-
-        File[] files = {new File("C:\\Users\\Tiago\\IdeaProjects\\lei-24-s2-1nb-g312\\src\\main\\java\\dataFiles\\AssemblyPoints\\us17_matrix.csv"
-        ), new File("C:\\Users\\Tiago\\IdeaProjects\\lei-24-s2-1nb-g312\\src\\main\\java\\dataFiles\\AssemblyPoints\\us17_points_names.csv")};
-
-        submitData(files);
-        if (ap == 1) {
+        System.out.println("\n\n--- Dijkstra Algorithm ------------------------");
+        try {
+            File[] files = requestCSVFiles();
+            controller.startMatrixBuffer(files[0]);
+            controller.startNameBuffer(files[1]);
 
             List<Routes> routes = controller.calculateShorterRoute();
-            for (Routes r : routes) {
-                System.out.println(r.toString());
-            }
-            //TODO imprimir output 1 assembly point
-        }
-        if (ap == 2) {
-            for (Routes r : controller.calculateShorterRoute()) {
-                System.out.println(r.toString());
-            }
-            //TODO imprimir output vários assembly point
+            VisualizeParkGraphs.generateAndDisplayInputGraph(controller.costMatrix, controller.verticeNames, "inputGraph.png");
+            VisualizeParkGraphs.generateAndDisplayPaths(routes, "");
+
+            VisualizeParkGraphs.exportCSV(routes);
+        } catch (IOException e) {
+            System.out.println("Error processing graph visualization");
         }
     }
 
-    private File[] requestData() {
+    private File[] requestCSVFiles() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter the path for the cost matrix CSV file: ");
+        String matrixPath = input.nextLine();
+        System.out.print("Enter the path for the names CSV file: ");
+        String namesPath = input.nextLine();
 
-        String matrixPath = readLineFromConsole("CSV File Path for Cost Matrix: ");
-        File matrixFile = new File(matrixPath);
-        String namesPath = readLineFromConsole("CSV File Path for Points Names: ");
-        File namesFile = new File(namesPath);
-        return new File[]{matrixFile, namesFile};
-    }
-
-
-    private void submitData(File[] files) {
-
-        if (controller.startNameBuffer(files[1]).isPresent() && controller.startMatrixBuffer(files[0]).isPresent()) {
-            System.out.println("CSV Files successfully imported!");
-        }
-
-    }
-
-    private int numberOfAssemblyPoint(){
-        return Integer.parseInt(readLineFromConsole("1: Single Assembly Point\n2: Multiple Assembly Points\nChoose an option: "));
+        return new File[] { new File(matrixPath), new File(namesPath) };
     }
 }
