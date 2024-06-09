@@ -226,4 +226,24 @@ class TaskRepositoryTest {
         assertFalse(taskSameID.isPresent());
 
     }
+
+
+    @Test
+    void testGetTaskList() {
+        Optional<List<Task>> optionalTaskList = taskRepository.getTaskList();
+        assertTrue(optionalTaskList.isPresent(), "Task list should be present");
+        List<Task> taskList = optionalTaskList.get();
+        assertEquals(6, taskList.size());
+    }
+
+    @Test
+    void testGetAgenda() {
+        List<Task> agendaTasks = taskRepository.getAgenda();
+
+        assertEquals(6, agendaTasks.size());
+        agendaTasks.forEach(task -> assertEquals(TaskPosition.AGENDA, task.getTaskPosition()));
+    }
+
+
+
 }
