@@ -26,6 +26,15 @@ public class GSMUI implements Runnable {
         options.add(new MenuItem("Cancel an entry in the Agenda", new CancelEntryAgendaUI()));
         options.add(new MenuItem("Assign vehicles to an entry in the Agenda", new AssignVehicleToAgendaEntryGUI()));
         options.add(new MenuItem("List all green spaces managed by Me", new ListGreenSpacesManagedByMeGUI()));
+        options.add(new MenuItem("Import CSV for Planning and Building Irrigation System", new ImportCSVUI()));
+        options.add(new MenuItem("Planning and Building Irrigation System", new KruskalAlgorithmUI()));
+        options.add(new MenuItem("Import Group Files and Run-Time Testing Kruskal Algorithm", new RunTimeTestingKruskalAlgorithmUI()));
+        options.add(new MenuItem("Calculate routes to Assembly Point", new ImportTwoCSVUI()));
+
+
+
+
+
 
 
         int option = 0;
