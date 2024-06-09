@@ -18,8 +18,8 @@ public class ImportTwoCSVController {
     private Optional<BufferedReader> matrixFile;
     private Optional<BufferedReader> namesFile;
     public int[][] costMatrix;
-    public List<Integer> assemblyPoints = new ArrayList<>();
-    public List<String> verticeNames = new ArrayList<>();
+    public List<Integer> assemblyPoints;
+    public List<String> verticeNames;
 
 
 
@@ -27,7 +27,8 @@ public class ImportTwoCSVController {
 
         matrixFile = Optional.empty();
         namesFile = Optional.empty();
-
+        assemblyPoints = new ArrayList<>();
+        verticeNames = new ArrayList<>();
     }
 
 
@@ -83,6 +84,8 @@ public class ImportTwoCSVController {
     }
 
     public List<Routes> calculateShorterRoute() {
+        assemblyPoints = new ArrayList<>();
+        verticeNames = new ArrayList<>();
         try {
             importCSVFile();
         } catch (IOException e) {

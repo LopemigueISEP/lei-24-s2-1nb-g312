@@ -34,35 +34,65 @@
 
         }
 
+**Test 3:** Test that the postponed task is postponed
+
+       @Test
+    void testPostponedTask() {
+        try {
+            GreenSpace greenSpace = new GreenSpace("Parque da Cidade do Porto", "Porto", 99.6, GreenSpaceTypology.LARGE, "Green Space Manager");
+            Task task = new Task(greenSpace, "Clean Park", "Clean the park area", TaskUrgency.HIGH, 120, TaskPosition.TODOLIST, 99999);
+            Date newStartDate = dateFormat.parse("01/01/2025");
+
+            task.setTaskStartDate(newStartDate);
+            task.setEndDate();
+            task.setTaskStatus(TaskStatus.POSTPONED);
+            task.assignTeam(null);
+            task.clearVehicleList();
+
+            assertEquals(TaskStatus.POSTPONED, task.getStatus());
+            assertEquals(newStartDate, task.getStartDate());
+            assertNull(task.getAssignedTeam());
+            assertTrue(task.getAssignedVehicles().isEmpty());
+        } catch (ParseException e) {
+            raiseInvalidInput();
+        }
+    }
+
 
 ## 5. Construction (Implementation)
 
-### Class Employee 
+### Class PostponeTaskInTheAgendaUI
 
 ```java
-@Test
-void testPostponedTask() {
-    try {
-        GreenSpace greenSpace = new GreenSpace("Parque da Cidade do Porto", "Porto", 99.6, GreenSpaceTypology.LARGE, "Green Space Manager");
-        Task task = new Task(greenSpace, "Clean Park", "Clean the park area", TaskUrgency.HIGH, 120, TaskPosition.TODOLIST, 99999);
-        Date newStartDate = dateFormat.parse("01/01/2025");
-
-        task.setTaskStartDate(newStartDate);
-        task.setEndDate();
-        task.setTaskStatus(TaskStatus.POSTPONED);
-        task.assignTeam(null);
-        task.clearVehicleList();
-
-        assertEquals(TaskStatus.POSTPONED, task.getStatus());
-        assertEquals(newStartDate, task.getStartDate());
-        assertNull(task.getAssignedTeam());
-        assertTrue(task.getAssignedVehicles().isEmpty());
-    } catch (ParseException e) {
-        raiseInvalidInput();
-    }
-}
+public PostponeTaskInTheAgendaUI(){
+        cancelEntryAgendaController=new CancelEntryAgendaController();
+        }
 ```
 
+### Class PostponeTaskInTheAgendaController
+
+```java
+public PostponeTaskInTheAgendaController() {
+        this.taskRepository = getTaskRepository();
+        this.greenSpaceRepository = getGreenSpaceRepository();
+        }
+```
+
+### Class Task
+
+```java
+public Task(String title,String description,TaskUrgency urgency,int taskExpectedDuration,GreenSpace greenSpace,TaskPosition taskPosition){
+        this.title=title;
+        this.description=description;
+        this.taskExpectedDuration=taskExpectedDuration;
+        this.greenSpace=greenSpace;
+        this.urgency=urgency;
+        this.assignedVehicles=new ArrayList<>();
+        this.taskPosition=taskPosition;
+
+
+        }
+```
 
 
 

@@ -32,7 +32,7 @@
 
 ## 5. Construction (Implementation)
 
-### Class AddEntryToDoListUI
+### Class CancelEntryAgendaUI
 
 ```java
 public CancelEntryAgendaUI(){
@@ -40,7 +40,7 @@ public CancelEntryAgendaUI(){
         }
 ```
 
-### Class AddEntryToDoListController
+### Class CancelEntryAgendaController
 
 ```java
 public CancelEntryAgendaController(){

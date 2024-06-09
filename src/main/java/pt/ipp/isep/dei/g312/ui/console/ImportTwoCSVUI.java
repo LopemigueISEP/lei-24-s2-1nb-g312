@@ -6,6 +6,7 @@ import pt.ipp.isep.dei.g312.ui.console.utils.VisualizeParkGraphs;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,8 +24,8 @@ public class ImportTwoCSVUI implements Runnable {
             File[] files = requestCSVFiles();
             controller.startMatrixBuffer(files[0]);
             controller.startNameBuffer(files[1]);
-
-            List<Routes> routes = controller.calculateShorterRoute();
+            List<Routes> routes = new ArrayList<Routes>();
+            routes = controller.calculateShorterRoute();
             VisualizeParkGraphs.generateAndDisplayInputGraph(controller.costMatrix, controller.verticeNames, "inputGraph.png");
             VisualizeParkGraphs.generateAndDisplayPaths(routes, "");
 
