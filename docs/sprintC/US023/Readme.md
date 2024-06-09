@@ -1,4 +1,4 @@
-# US23 - Assign a Team to an entry in the Agenda
+# US23 - As a GSM, I want to assign a Team to an entry in the Agenda
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 
