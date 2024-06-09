@@ -224,7 +224,7 @@ public class EmployeeRepository implements Serializable {
         Optional<Employee> responsible = Optional.empty();
         for (Employee e :
                 employeeList) {
-            if (e.getEmail().equals(userEmail)) {
+            if (e.getEmail().equalsIgnoreCase(userEmail)) {
                 responsible = Optional.of(e);
             }
         }

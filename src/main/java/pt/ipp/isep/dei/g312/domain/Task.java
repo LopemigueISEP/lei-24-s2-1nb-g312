@@ -285,8 +285,12 @@ public class Task implements Cloneable, Serializable {
      */
     @Override
     public boolean equals(Object obj) {
-        Task task = (Task) obj;
-        return this.getTaskID()==task.getTaskID();
+        if (obj==null){
+            return false;
+        }else {
+            Task task = (Task) obj;
+            return this.getTaskID() == task.getTaskID();
+        }
     }
 
     public String getObservation() {
