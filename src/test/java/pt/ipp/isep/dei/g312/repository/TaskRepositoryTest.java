@@ -22,7 +22,7 @@ class TaskRepositoryTest {
     private SimpleDateFormat dateFormat;
 
     private GreenSpace greenSpace;
-    private Task task1, task2, task5, canceledTask;
+    private Task task1, task2, task5,task6, canceledTask;
     private Vehicle vehicle1, vehicle2;
     private List<Vehicle> vehicles = new ArrayList<>();
     private Team team1;
@@ -82,6 +82,12 @@ class TaskRepositoryTest {
         task5.assignVehicle(vehicle1);
         task5.assignVehicle(vehicle2);
         taskRepository.addTask(task5);
+
+        task6 = new Task("Sample Task 2 for testing", "This is a sample task description.", 8, "Type A", greenSpace,
+                TaskUrgency.HIGH, TaskStatus.PLANNED, null, new ArrayList<>(), taskRepository.getNextTaskId(), startDate, endDate, TaskPosition.AGENDA);
+        task6.assignVehicle(vehicle2);
+        task6.assignTeam(team1);
+        taskRepository.addTask(task6);
 
 
 
@@ -148,6 +154,14 @@ class TaskRepositoryTest {
         assertEquals(4, cancelableTasks.size());
         assertTrue(cancelableTasks.contains(task1));
     }
+    @Test
+    void testGetTasksCompletable() throws ParseException {
+        Date startDate = dateFormat.parse("01/06/2024 - 14");
+        Date endDate = dateFormat.parse("02/06/2024 - 13");
+        List<Task> completableTasks = taskRepository.getTasksCompletable(team1.getTeamEmployees().get(0));
+        assertEquals(1, completableTasks.size());
+        assertEquals(task6, completableTasks.get(0));
+    }
 
     @Test
     public void testCancelTask() {
@@ -155,6 +169,16 @@ class TaskRepositoryTest {
         taskRepository.cancelTask(task1);
         assertEquals(TaskStatus.CANCELED, task1.getStatus());
     }
+
+    @Test
+    void testCompleteTask() throws ParseException {
+
+        taskRepository.completeTask(task6, "Completed", dateFormat.parse("02/06/2024 - 13"));
+        assertEquals(TaskStatus.DONE, task6.getStatus());
+        assertEquals("Completed", task6.getObservation());
+        assertEquals(dateFormat.parse("02/06/2024 - 13"), task6.getEndDate());
+    }
+
 
     @Test
     void testGetTasksAssignedToMeBetweenToDates() throws ParseException {

@@ -288,6 +288,14 @@ public class Task implements Cloneable, Serializable {
         Task task = (Task) obj;
         return this.getTaskID()==task.getTaskID();
     }
+
+    public String getObservation() {
+        return observation;
+    }
+
+    public void setObservation(String observation) {
+        this.observation = observation;
+    }
 }
 
 

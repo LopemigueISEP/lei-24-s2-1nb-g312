@@ -2,61 +2,75 @@
 
 ## 4. Tests 
 
-**Test 1:** Check that it is not possible to create an instance of the Task class with null values. 
+**Test 1:** Check that the task is really completed
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Task instance = new Task(null, null, null, null, null, null, null);
-	}
-	
+	@Test
+    void testComplete() {
+        task.complete("Completed", endDate);
+        assertEquals(TaskStatus.DONE, task.getStatus());
+        assertEquals("Completed", task.getObservation());
+        assertEquals(endDate, task.getEndDate());
+    }
 
-**Test 2:** Check that it is not possible to create an instance of the Task class with a reference containing less than five chars - AC2. 
+**Test 2:** Check that the repository correctly returns all completable tasks.
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureReferenceMeetsAC2() {
-		Category cat = new Category(10, "Category 10");
-		
-		Task instance = new Task("Ab1", "Task Description", "Informal Data", "Technical Data", 3, 3780, cat);
-	}
+    @Test
+    void testGetTasksCompletable() throws ParseException {
+        Date startDate = dateFormat.parse("01/06/2024 - 14");
+        Date endDate = dateFormat.parse("02/06/2024 - 13");
+        List<Task> completableTasks = taskRepository.getTasksCompletable(team1.getTeamEmployees().get(0));
+        assertEquals(1, completableTasks.size());
+        assertEquals(task6, completableTasks.get(0));
+    }
 
-_It is also recommended to organize this content by subsections._ 
+**Test 3:** Check that completing a task updates its status to DONE
+
+    @Test
+    void testCompleteTask() throws ParseException {
+
+        taskRepository.completeTask(task6, "Completed", dateFormat.parse("02/06/2024 - 13"));
+        assertEquals(TaskStatus.DONE, task6.getStatus());
+        assertEquals("Completed", task6.getObservation());
+        assertEquals(dateFormat.parse("02/06/2024 - 13"), task6.getEndDate());
+    }
 
 
 ## 5. Construction (Implementation)
 
-### Class CreateTaskController 
+### Class CompleteTaskUI
 
 ```java
-public Task createTask(String reference, String description, String informalDescription, String technicalDescription,
-                       Integer duration, Double cost, String taskCategoryDescription) {
-
-	TaskCategory taskCategory = getTaskCategoryByDescription(taskCategoryDescription);
-
-	Employee employee = getEmployeeFromSession();
-	Organization organization = getOrganizationRepository().getOrganizationByEmployee(employee);
-
-	newTask = organization.createTask(reference, description, informalDescription, technicalDescription, duration,
-                                      cost,taskCategory, employee);
-    
-	return newTask;
-}
+public CompleteTaskUI() {
+        completeTaskController = new CompleteTaskController();
+        }
 ```
 
-### Class Organization
+### Class CompleteTaskController
 
 ```java
-public Optional<Task> createTask(String reference, String description, String informalDescription,
-                                 String technicalDescription, Integer duration, Double cost, TaskCategory taskCategory,
-                                 Employee employee) {
-    
-    Task task = new Task(reference, description, informalDescription, technicalDescription, duration, cost,
-                         taskCategory, employee);
-
-    addTask(task);
-        
-    return task;
-}
+public CompleteTaskController(){
+        getTaskRepository();
+        getEmployeeRepository();
+        getAuthRepository();
+        }
 ```
+
+### Class Task
+
+```java
+public Task(String title,String description,TaskUrgency urgency,int taskExpectedDuration,GreenSpace greenSpace,TaskPosition taskPosition){
+        this.title=title;
+        this.description=description;
+        this.taskExpectedDuration=taskExpectedDuration;
+        this.greenSpace=greenSpace;
+        this.urgency=urgency;
+        this.assignedVehicles=new ArrayList<>();
+        this.taskPosition=taskPosition;
+
+
+        }
+```
+
 
 
 ## 6. Integration and Demo 

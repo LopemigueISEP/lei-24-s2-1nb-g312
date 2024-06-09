@@ -28,7 +28,7 @@
         assertEquals(TaskStatus.CANCELED, task1.getStatus());
     }
 
-_It is also recommended to organize this content by subsections._
+
 
 ## 5. Construction (Implementation)
 
@@ -68,7 +68,6 @@ public Task(String title,String description,TaskUrgency urgency,int taskExpected
 
 * A new option on the Employee menu options was added.
 
-* For demo purposes some tasks are bootstrapped while system starts.
 
 ## 7. Observations
 

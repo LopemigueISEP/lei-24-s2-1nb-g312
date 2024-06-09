@@ -110,6 +110,13 @@ class TaskTest {
         assertEquals(TaskStatus.CANCELED, task.getStatus());
     }
     @Test
+    void testComplete() {
+        task.complete("Completed", endDate);
+        assertEquals(TaskStatus.DONE, task.getStatus());
+        assertEquals("Completed", task.getObservation());
+        assertEquals(endDate, task.getEndDate());
+    }
+    @Test
     public void testAddTaskAgenda() {
         LocalDate startDate = LocalDate.of(2024, 6, 8);
         LocalTime startTime = LocalTime.of(10, 30);
