@@ -1,0 +1,5 @@
+graph PathGraph {
+    "CasaRoseiral" -- "Escadas2";
+    "Escadas2" -- "Escadas1";
+    "Escadas1" -- "AP";
+}

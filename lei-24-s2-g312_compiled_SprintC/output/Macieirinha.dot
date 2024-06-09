@@ -1,0 +1,5 @@
+graph PathGraph {
+    "Macieirinha" -- "ParqueInfantil";
+    "ParqueInfantil" -- "Topo";
+    "Topo" -- "AP";
+}

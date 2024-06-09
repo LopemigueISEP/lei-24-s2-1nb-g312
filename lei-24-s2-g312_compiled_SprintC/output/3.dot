@@ -1,0 +1,4 @@
+graph PathGraph {
+    "3" -- "5";
+    "5" -- "AP5";
+}

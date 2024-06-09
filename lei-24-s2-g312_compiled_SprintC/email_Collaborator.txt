@@ -1,0 +1,17 @@
+To: colab@this.app
+Subject: Task Assignment
+
+Dear Collaborator,
+
+You have been assigned a new task.
+
+Task Details:
+Title: Cortar a erva
+Description: Cortar a erva perto do lago
+Greenspace: Parque da Cidade do Porto - Estrada Interior da Circunvalação - 83,00 m² - Large-Sized Park - Managed by: GSM@this.app
+Assigned Team: Collaborator; 
+Start Date: Wed Jun 12 10:00:00 WEST 2024
+End Date: Wed Jun 12 16:00:00 WEST 2024
+
+Best regards,
+MusgoSublime
