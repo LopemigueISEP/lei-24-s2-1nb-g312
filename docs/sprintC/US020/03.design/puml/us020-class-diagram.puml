@@ -65,7 +65,11 @@ class GreenSpace {
         - greenSpaceManager : String
 }
 
-
+enum GreenSpaceTypology {
+    GARDEN
+MEDIUM
+LARGE
+}
 
 
 
@@ -78,6 +82,7 @@ AuthenticationRepository "1" --> "*" Employee
 Employee "1" --> "*" GreenSpace : registerGreenSpace
 Repositories "1" --> "1" EmployeeRepository
 Repositories "1" --> "1" AuthenticationRepository
+GreenSpace "1" .> "1" GreenSpaceTypology
 
 
 
