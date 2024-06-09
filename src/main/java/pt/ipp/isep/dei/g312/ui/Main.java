@@ -8,6 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         Bootstrap bootstrap = new Bootstrap();
+        System.out.println("Getting data from serialization...");
         bootstrap.run();
 
 
