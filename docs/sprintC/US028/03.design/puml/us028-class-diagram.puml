@@ -67,7 +67,7 @@ enum TaskStatus {
 }
 
 class Employee {
-getTasksAssignedToMeBetweenToDates(startDate, endDate): List<Task>
++getTasksAssignedToMeBetweenToDates(startDate, endDate): List<Task>
 }
 
 TasksAssignedToMeBetweenTwoDatesUI "1" ..> "1" TasksAssignedToMeBetweenToDatesController

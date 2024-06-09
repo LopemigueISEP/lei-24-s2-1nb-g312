@@ -51,14 +51,14 @@ conditions) a task has to be postponed to a new date; task duration is not direc
 * **AC1:** All required fields must be filled in.
 * **AC2:** To postpone a task, it must have the "Planned" status in the Agenda.
 * **AC3:** To postpone a task, the GSM must define a new date for the task to be executed.
-* **AC4:** The assigned team needs to be available on the new date.
+* **AC4:** The postponed task must clear the assigned team and vehicles of the previous registration in the Agenda.
 
 ### 1.4. Found out Dependencies
 
 * There is a dependency on "US022 - Add a new entry in the Agenda" as there must be a task in the Agenda to be
   assigned to a team.
 
-* There is a dependency on "US023 - As a GSM, I want to assign a team to a task in the Agenda" as the task must have a team already assigned and planned status.
+* There is a dependency on "US023 - As a GSM, I want to assign a team to a task in the Agenda" as the task must have a team already assigned and have planned status.
 
 ### 1.5 Input and Output Data
 

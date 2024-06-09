@@ -99,7 +99,9 @@ class Employee{
     +addGreenSpace(greenSpace) : Optional<GreenSpace>
     +validateGreenSpace(greenSpace) : boolean
     + addTaskAgenda(selectedGreenSpace : GreenSpace, selectedTask : Task, selectedDate : LocalDate, startTime : LocalTime, agenda : TaskPosition, userValidation : boolean) : Optional<Task>
-
+    +assignVehicleToTask(Vehicle availableVehicle, Task selectedTask):void
+    +getGreenSpacesManagedByMe(): List<GreenSpace>
+    +getTasksAssignedToMeBetweenToDates(startDate, endDate): List<Task>
 
 }
 
@@ -107,7 +109,7 @@ RegisterSkillUi ..> RegisterSkillController
 
 RegisterSkillController ..> "1" Repositories : repositories
 
-Repositories -> Repositories : instance
+
 RegisterSkillController ..>Employee: registerSkill
 
 Repositories "1" --> "1" EmployeeRepository
@@ -195,7 +197,7 @@ class JobRepository {
 RegisterCollaboratorController ..> Repositories: repositories
 JobRepository "1" --> "*" Employee
 
-AuthenticationRepository "1"--> "*" Employee
+
 Repositories "1" --> "1" JobRepository
 Repositories "1" --> "1" AuthenticationRepository
 RegisterCollaboratorUI ..> RegisterCollaboratorController
@@ -515,12 +517,11 @@ class GreenSpace {
 RegisterGreenSpaceController ..> Repositories: repositories
 RegisterGreenSpaceController ..> Employee
 RegisterGreenSpaceUI ..> RegisterGreenSpaceController
-Repositories -> Repositories : instance
-EmployeeRepository "1" --> "*" Employee
+
+
 AuthenticationRepository "1" --> "*" Employee
 Employee "1" --> "*" GreenSpace : registerGreenSpace
-Repositories "1" --> "1" EmployeeRepository
-Repositories "1" --> "1" AuthenticationRepository
+
 
 
 class AddEntryAgendaUI{
@@ -544,6 +545,9 @@ class AddEntryAgendaController{
 }
 class TasksRepository{
  +getToDoListEntries(): List<ToDoEntries>
+ +getAllAgendaTasksExceptDoneCanceled(): List<Task>
+ +getVehicleAvaiability(Task selectedTask, List<Vehicle> vehicles): List<Vehicle>
+
 }
 class GreenSpacesRepository{
 +getGreenSpacesList(): GreenSpace
@@ -568,16 +572,105 @@ AddEntryAgendaUI ..>AddEntryAgendaController
 AddEntryAgendaController ..> "1" Repositories
 
 Repositories "1" --> "1" Repositories : getInstance()
-Repositories "1" --> "1" EmployeeRepository
+
 Repositories "1" --> "1" TasksRepository
 Repositories "1" --> "1" GreenSpacesRepository
 
 AddEntryAgendaController ..>Employee
 
-EmployeeRepository "1" --> "1" Employee
+
 TasksRepository "1" --> "1" Employee
 GreenSpacesRepository "1" --> "1" Employee
 
 Employee --> Task: registers
+
+
+
+
+class AssignVehicleToAgendaEntryUI{
+}
+
+class AssignVehicleToAgendaEntryController{
++getEmployeeRepository()
++getTaskRepository()
++getVehicleRepository()
++getAvailableTasks(): List<Task>
++getAvailableVehicles(Task taskSelected): List<Vehicle>
++getTaskAssignedVehicles(Task task): List<Vehicle>
++assignVehicleToTask(Vehicle vehicle, Task task): void
+}
+
+
+AssignVehicleToAgendaEntryUI ..> AssignVehicleToAgendaEntryController
+
+AssignVehicleToAgendaEntryController ..> Repositories : repositories
+AssignVehicleToAgendaEntryController ..> Employee
+
+class ListGreenSpacesManagedByMeUI{
+}
+
+class ListGreenSpacesManagedByMeController{
++getGreenSpaceRepository()
++getEmployeeRepository()
++getGreenSpacesManagedByMe(): List<GreenSpace>
+
+}
+
+class GreenSpaces{
+-List<GreenSpace> greenSpaces
++getGreenSpacesManagedByEmployee()
+}
+
+
+ListGreenSpacesManagedByMeUI ..> ListGreenSpacesManagedByMeController
+
+ListGreenSpacesManagedByMeController ..> Repositories : repositories
+Employee "1" --> "1"GreenSpaces: list GreenSpaces
+GreenSpaces "1" --> "*"GreenSpace
+
+
+ListGreenSpacesManagedByMeController .> Employee
+
+
+
+
+
+class TasksAssignedToMeBetweenTwoDatesUI {
+
+}
+
+
+class TasksAssignedToMeBetweenToDatesController {
+
+    +getEmployeeRepository()
+    getTaskStatusValues(): List<TaskStatus>
+    getTasksAssignedToMeBetweenToDates(startDate, endDate): List<Task>
+}
+
+class Tasks{
+    - List<Task> tasks
+    +getAgenda(): List<Task>
+    +isBetweenDates(startDate,endDate)
+    +getAssignedTeam(): team
+    +getTeamEmployees(): List<Employee>
+    +isAssignedToCurrentCollaborator():boolean
+
+}
+
+enum TaskStatus {
+    PLANNED
+    POSTPONED
+    CANCELED
+    DONE
+    PENDING
+}
+
+TasksAssignedToMeBetweenTwoDatesUI "1" ..> "1" TasksAssignedToMeBetweenToDatesController
+TasksAssignedToMeBetweenToDatesController "1" ..> "1" Repositories: repositories
+TasksAssignedToMeBetweenToDatesController "1" .> "*" Employee
+TasksAssignedToMeBetweenToDatesController "1" .> "*" TaskStatus: taskStatus
+Employee "1" --> "1" Tasks: listTasks
+Tasks "1" --> "*" Task
+Task "1" .> "1" TaskStatus
 
 @enduml

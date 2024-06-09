@@ -15,7 +15,13 @@ import java.util.Properties;
  */
 public class Email implements EmailService {
 
-    private List<String> emailServices = new ArrayList<>();
+
+    public List<String> emailServices;
+
+    public Email() {
+        emailServices = new ArrayList<>();
+        loadValidEmailServices();
+    }
 
     /**
      * Sends an email to notify the assignment of a task to a team.
@@ -33,7 +39,6 @@ public class Email implements EmailService {
      * @return true if at least one email was sent successfully, false otherwise.
      */
     private boolean sendEmailTeam(Task task) {
-        loadValidEmailServices();
 
         boolean emailSent = false;
 
@@ -74,7 +79,7 @@ public class Email implements EmailService {
      * @param email The email address to validate.
      * @return true if the email address is valid, false otherwise.
      */
-    private boolean validEmail(String email) {
+    public boolean validEmail(String email) {
         String domain = email.split("@")[1];
         return emailServices.contains(domain);
     }

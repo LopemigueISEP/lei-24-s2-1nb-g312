@@ -21,7 +21,8 @@ class PostponeTaskInTheAgendaUI{
 }
 
 class PostponeTaskInTheAgendaController {
-- taskRepository
+-getGreenSpaceRepository()
+-getGreenSpaceRepository()
 +PostponeTaskInTheAgendaController()
 -getTaskRepository()
 +listPlannedTasks()
@@ -71,12 +72,16 @@ class TeamRepository{
 +getAllTeams()
 }
 
+class GreenSpaceRepository{
+getGreenSpaceList()
+}
+
 class Repositories {
     - Repositories()
     + getInstance() : Repositories
     + getTaskRepository()
-    + getEmployeeRepository()
-    + getVehicleRepository()
+    + getTeamRepository()
+    + getGreenSpaceRepository()
 
 }
 
@@ -98,15 +103,17 @@ PostponeTaskInTheAgendaController ..> Repositories
 
 Repositories "1"--> "1" TaskRepository
 Repositories "1"--> "1" TeamRepository
+Repositories "1"--> "1" GreenSpaceRepository
 
 TaskRepository "1"--> "*" Employee
 TeamRepository "1"--> "*" Employee
+GreenSpaceRepository "1"--> "*" Employee
 
 
 
 PostponeTaskInTheAgendaController ..> Employee
 
-Employee "1" --> "1" Tasks : list tasks
+Employee "1" --> "1" Tasks : list planned tasks in the Agenda
 Tasks "1" --> "*" Task
 
 

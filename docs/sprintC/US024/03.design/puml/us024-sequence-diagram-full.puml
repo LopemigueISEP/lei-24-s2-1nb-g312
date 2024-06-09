@@ -13,7 +13,6 @@ participant ":Repositories" as Repositories
 participant ":repositories\n:Repositories"
 participant ":Employee" as Employee
 participant ":TaskRepository" as TaskRepository
-participant ":TeamRepository" as TeamRepository
 
 activate GSM
 ref over GSM, UI : This action assumes that the user has already logged in
@@ -52,16 +51,14 @@ GSM -> UI: types the new date and startHour for the task
                         activate Employee
                         Employee -> Task: postponedTask(task, newDate)
                                 activate Task
+                                Task -> Task : setStartDate(newDate)
+                                Task -> Task : clearAssignedTeam
                                 Task -> Task : clearAssignedTeam
                                 Task -> Task : setTaskStatus(POSTPONED)
                                 Task --> Employee : postpone success
                                 deactivate Task
                         Employee --> Controller : postpone success
                         deactivate Employee
-            Controller -> TaskRepository : updateTask(task)
-                        activate TaskRepository
-                        TaskRepository --> Controller : update success
-                        deactivate TaskRepository
             Controller -> UI : postpone success
             deactivate Controller
        UI -> GSM : postpone success
