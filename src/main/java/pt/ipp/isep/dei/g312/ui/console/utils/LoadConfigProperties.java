@@ -9,7 +9,7 @@ import java.util.Properties;
 public class LoadConfigProperties {
 
     private static final Properties properties = new Properties();
-    private static final String PATH = "src/main/resources/config.properties";
+    private static final String PATH = "config.properties";
 
     static {
         loadFile();

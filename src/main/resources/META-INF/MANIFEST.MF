@@ -1,8 +1,11 @@
 Manifest-Version: 1.0
 Main-Class: pt.ipp.isep.dei.g312.ui.Main
-Class-Path: AuthLib-1.0-20220308.131530-2.jar slf4j-api-1.7.30.jar jul-t
- o-slf4j-1.7.30.jar commons-exec-1.3.jar jcl-over-slf4j-1.7.30.jar graph
- viz-java-0.18.1.jar viz.js-graphviz-java-2.1.3.jar svgSalamander-1.1.3.
- jar bytes-1.3.0.jar jsr305-3.0.2.jar commons-lang3-3.12.0.jar bcrypt-0.
- 9.0.jar j2v8_win32_x86_64-4.6.0.jar nashorn-promise-0.1.1.jar
+Class-Path: jul-to-slf4j-1.7.30.jar jcl-over-slf4j-1.7.30.jar bytes-1.3.
+ 0.jar svgSalamander-1.1.3.jar javafx-base-17.0.6.jar javafx-fxml-17.0.6
+ .jar bcrypt-0.9.0.jar jsr305-3.0.2.jar slf4j-api-1.7.30.jar commons-lan
+ g3-3.12.0.jar graphviz-java-0.18.1.jar viz.js-graphviz-java-2.1.3.jar j
+ 2v8_win32_x86_64-4.6.0.jar javafx-graphics-17.0.6-win.jar javafx-contro
+ ls-17.0.6.jar javafx-graphics-17.0.6.jar javafx-base-17.0.6-win.jar com
+ mons-exec-1.3.jar AuthLib-1.0-20220308.131530-2.jar nashorn-promise-0.1
+ .1.jar javafx-fxml-17.0.6-win.jar javafx-controls-17.0.6-win.jar
 

@@ -56,22 +56,13 @@ public class Email implements EmailService {
      * Loads the valid email services from a configuration file.
      */
     private void loadValidEmailServices() {
-        String filePath = "src/main/resources/config.properties";
-        Properties properties = new Properties();
-
-        try (FileInputStream input = new FileInputStream(filePath)) {
-            properties.load(input);
-
-            String validEmail = properties.getProperty("ValidEmail");
+            String validEmail = LoadConfigProperties.getProperty("ValidEmail");
             if (validEmail != null && !validEmail.isEmpty()) {
                 String[] services = validEmail.split(",");
                 for (String service : services) {
                     emailServices.add(service.trim());
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
