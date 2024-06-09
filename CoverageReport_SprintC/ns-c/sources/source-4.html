@@ -1,0 +1,368 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > AssignVehicleToAgendaEntryGUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui.gui</a>
+</div>
+
+<h1>Coverage Summary for Class: AssignVehicleToAgendaEntryGUI (pt.ipp.isep.dei.g312.ui.gui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AssignVehicleToAgendaEntryGUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/105)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui.gui;
+&nbsp;
+&nbsp;import javafx.application.Application;
+&nbsp;import javafx.application.Platform;
+&nbsp;import javafx.collections.FXCollections;
+&nbsp;import javafx.collections.ObservableList;
+&nbsp;import javafx.event.ActionEvent;
+&nbsp;import javafx.fxml.FXML;
+&nbsp;import javafx.fxml.FXMLLoader;
+&nbsp;import javafx.fxml.Initializable;
+&nbsp;import javafx.scene.Scene;
+&nbsp;import javafx.scene.control.ComboBox;
+&nbsp;import javafx.scene.control.Label;
+&nbsp;import javafx.scene.control.ListView;
+&nbsp;import javafx.stage.Stage;
+&nbsp;import pt.ipp.isep.dei.g312.application.controller.AssignVehicleToAgendaEntryController;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Task;
+&nbsp;import pt.ipp.isep.dei.g312.domain.TaskStatus;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Vehicle;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.net.URL;
+&nbsp;import java.text.SimpleDateFormat;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;import java.util.ResourceBundle;
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * GUI class to manage the assignment of vehicles to agenda entries.
+&nbsp; */
+<b class="nc">&nbsp;public class AssignVehicleToAgendaEntryGUI extends Application implements Initializable{</b>
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public ComboBox&lt;String&gt; cmbTask;
+&nbsp;    @FXML
+&nbsp;    public ListView&lt;String&gt; listViewAssignedVehicles;
+&nbsp;    @FXML
+&nbsp;    public ListView&lt;String&gt; listViewVehicles;
+&nbsp;    @FXML
+&nbsp;    public Label label_NeedToChoseTask;
+&nbsp;    @FXML
+&nbsp;    public Label label_NeedToSelectVehicle;
+&nbsp;
+&nbsp;    private AssignVehicleToAgendaEntryController controller;
+&nbsp;
+&nbsp;    private Map&lt;String,Vehicle&gt; vehicleMap;
+&nbsp;    private Map&lt;String,Task&gt; taskMap;
+<b class="nc">&nbsp;    private Task selectedTask = null;</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void start(Stage primaryStage) throws Exception {
+<b class="nc">&nbsp;        Platform.setImplicitExit(false);</b>
+&nbsp;
+<b class="nc">&nbsp;        FXMLLoader fxmlLoader = new FXMLLoader(AssignVehicleToAgendaEntryGUI.class.getResource(&quot;AssignVehicleToAgendaEntryGUI.fxml&quot;));</b>
+&nbsp;        Scene scene;
+&nbsp;        try {
+<b class="nc">&nbsp;            scene = new Scene(fxmlLoader.load());</b>
+<b class="nc">&nbsp;            primaryStage.setTitle(&quot;MusgoSublime&quot;);</b>
+<b class="nc">&nbsp;            primaryStage.setScene(scene);</b>
+<b class="nc">&nbsp;            primaryStage.show();</b>
+&nbsp;
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;failed to load fxml&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Initializes the controller and loads available tasks.
+&nbsp;     *
+&nbsp;     * @param url the location used to resolve relative paths for the root object
+&nbsp;     * @param resourceBundle the resources used to localize the root object
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void initialize(URL url, ResourceBundle resourceBundle) {
+&nbsp;        try {
+<b class="nc">&nbsp;            controller = new AssignVehicleToAgendaEntryController();</b>
+<b class="nc">&nbsp;            vehicleMap = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;            taskMap = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;            label_NeedToChoseTask.setText(&quot;&quot;);</b>
+<b class="nc">&nbsp;            label_NeedToSelectVehicle.setText(&quot;&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            loadAvailableTasks();</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in initialize in GUI&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Loads available tasks and populates the ComboBox with them.
+&nbsp;     */
+&nbsp;    private void loadAvailableTasks() {
+&nbsp;        try {
+<b class="nc">&nbsp;            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(&quot;dd/MM/yyyy - HH&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            String taskTitle = &quot;&quot;;</b>
+<b class="nc">&nbsp;            String taskGreenSpaceName =&quot;&quot;;</b>
+<b class="nc">&nbsp;            String taskStatus=&quot;&quot;;</b>
+<b class="nc">&nbsp;            String taskStartDate =&quot;&quot;;</b>
+<b class="nc">&nbsp;            String taskEndDate = &quot;&quot;;</b>
+&nbsp;
+<b class="nc">&nbsp;            ObservableList&lt;String&gt; tasks = FXCollections.observableArrayList();</b>
+<b class="nc">&nbsp;            for (Task task : controller.getAvailableTasks()) {</b>
+&nbsp;
+<b class="nc">&nbsp;                if(task.getTitle() != null) {</b>
+<b class="nc">&nbsp;                    taskTitle = task.getTitle();</b>
+&nbsp;                }else {
+<b class="nc">&nbsp;                    taskTitle = &quot;not available&quot;;</b>
+&nbsp;                }
+&nbsp;
+<b class="nc">&nbsp;                if(task.getGreenSpace().getName() != null) {</b>
+<b class="nc">&nbsp;                    taskGreenSpaceName = task.getGreenSpace().getName();</b>
+&nbsp;                }else {
+<b class="nc">&nbsp;                    taskGreenSpaceName = &quot;not available&quot;;</b>
+&nbsp;                }
+&nbsp;
+<b class="nc">&nbsp;                if(task.getStatus() != null) {</b>
+<b class="nc">&nbsp;                    taskStatus = task.getStatus().toString();</b>
+&nbsp;                }else {
+<b class="nc">&nbsp;                    taskStatus = &quot;not available&quot;;</b>
+&nbsp;                }
+&nbsp;
+<b class="nc">&nbsp;                if (task.getStartDate() != null){</b>
+<b class="nc">&nbsp;                    taskStartDate = simpleDateFormat.format(task.getStartDate());</b>
+&nbsp;                }else {
+<b class="nc">&nbsp;                    taskStartDate = &quot;not available&quot;;</b>
+&nbsp;                }
+&nbsp;
+<b class="nc">&nbsp;                if (task.getEndDate() != null){</b>
+<b class="nc">&nbsp;                    taskEndDate = simpleDateFormat.format(task.getEndDate());</b>
+&nbsp;                }else {
+<b class="nc">&nbsp;                    taskEndDate = &quot;not available&quot;;</b>
+&nbsp;                }
+&nbsp;
+<b class="nc">&nbsp;                String descriptionTask = String.format(&quot;%s | %s | %s | Start: %sh | Finish: %sh&quot;, taskTitle, taskGreenSpaceName, taskStatus, taskStartDate, taskEndDate);</b>
+<b class="nc">&nbsp;                tasks.add(descriptionTask);</b>
+<b class="nc">&nbsp;                taskMap.put(descriptionTask, task);</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            cmbTask.setItems(tasks);</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in loadAvailableTasks in GUI&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Loads available vehicles for the selected task and populates the ListView with them.
+&nbsp;     *
+&nbsp;     * @param taskSelecionada the selected task
+&nbsp;     */
+&nbsp;    private void loadAvailableVehicles(Task taskSelecionada){
+&nbsp;        try {
+<b class="nc">&nbsp;            ObservableList&lt;String&gt; vehicles = FXCollections.observableArrayList();</b>
+&nbsp;
+&nbsp;            //vehicles.add(String.format(&quot;%-15s      %-15s   %-15s %-15s&quot;,&quot;PLATE&quot;,&quot;BRAND&quot;,&quot;MODEL&quot;,&quot;CURRENT_KM&quot;));
+&nbsp;
+<b class="nc">&nbsp;            for (Vehicle vehicle : controller.getAvailableVehicles(taskSelecionada)) {</b>
+<b class="nc">&nbsp;                String descriptionVehicle = (String.format(&quot;Plate: %-15s    Brand: %-10s    %-15s   CurrentKm: %-15.0f&quot;, vehicle.getRegistrationPlate(), vehicle.getBrand(), vehicle.getModel(), vehicle.getCurrentKm()));</b>
+<b class="nc">&nbsp;                vehicles.add(descriptionVehicle);</b>
+<b class="nc">&nbsp;                vehicleMap.put(descriptionVehicle, vehicle);</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            listViewVehicles.setItems(vehicles);</b>
+<b class="nc">&nbsp;            listViewVehicles.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.MULTIPLE);</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in loadAvailableVehicles in GUI&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Loads assigned vehicles for the selected task and populates the ListView with them.
+&nbsp;     *
+&nbsp;     * @param task the selected task
+&nbsp;     */
+&nbsp;    private void loadAssignedVehicles(Task task){
+&nbsp;        try {
+<b class="nc">&nbsp;            ObservableList&lt;String&gt; assignedVehicles = FXCollections.observableArrayList();</b>
+&nbsp;
+&nbsp;            try {
+<b class="nc">&nbsp;                for (Vehicle vehicle : controller.getTaskAssignedVehicles(task)) {</b>
+<b class="nc">&nbsp;                    String descriptionVehicle = (String.format(&quot;Plate: %-15s    Brand: %-10s    %-15s   CurrentKm: %-15.0f&quot;, vehicle.getRegistrationPlate(), vehicle.getBrand(), vehicle.getModel(), vehicle.getCurrentKm()));</b>
+<b class="nc">&nbsp;                    assignedVehicles.add(descriptionVehicle);</b>
+<b class="nc">&nbsp;                }</b>
+<b class="nc">&nbsp;            } catch (NullPointerException nullPointerException) {</b>
+<b class="nc">&nbsp;                throw new RuntimeException(&quot;error in TaskAssignedVehiclesList in GUI&quot;,nullPointerException);</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;
+<b class="nc">&nbsp;            listViewAssignedVehicles.setItems(assignedVehicles);</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in loadAssignedVehicles in GUI&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Handles the submit button click event, assigning selected vehicles to the selected task.
+&nbsp;     */
+&nbsp;    @FXML
+&nbsp;    public void ClickBtnSubmit() {
+&nbsp;        try {
+<b class="nc">&nbsp;            if (selectedTask == null) {</b>
+<b class="nc">&nbsp;                label_NeedToChoseTask.setText(&quot;Need to select a task&quot;);</b>
+&nbsp;                return;
+&nbsp;            } else {
+<b class="nc">&nbsp;                label_NeedToChoseTask.setText(&quot;&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            List&lt;String&gt; selectedVehiclesDescriptions = listViewVehicles.getSelectionModel().getSelectedItems();</b>
+<b class="nc">&nbsp;            if (selectedVehiclesDescriptions.isEmpty()) {</b>
+<b class="nc">&nbsp;                label_NeedToSelectVehicle.setText(&quot;Need to select at least 1 vehicle&quot;);</b>
+&nbsp;                return;
+&nbsp;
+&nbsp;            } else {
+<b class="nc">&nbsp;                label_NeedToSelectVehicle.setText(&quot;&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            for (String vehicleDescription : selectedVehiclesDescriptions) {</b>
+<b class="nc">&nbsp;                Vehicle vehicle = vehicleMap.get(vehicleDescription);</b>
+<b class="nc">&nbsp;                if (vehicle != null) {</b>
+<b class="nc">&nbsp;                    controller.assignVehicleToTask(vehicle, selectedTask);</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+&nbsp;
+<b class="nc">&nbsp;            listViewVehicles.getSelectionModel().clearSelection();</b>
+<b class="nc">&nbsp;            listViewAssignedVehicles.getSelectionModel().clearSelection();</b>
+<b class="nc">&nbsp;            loadAvailableVehicles(selectedTask);</b>
+<b class="nc">&nbsp;            loadAssignedVehicles(selectedTask);</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in submitData in GUI&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Handles the task ComboBox action event, loading vehicles for the selected task.
+&nbsp;     *
+&nbsp;     * @param actionEvent the action event
+&nbsp;     */
+&nbsp;    @FXML
+&nbsp;    public void cmbTaskOnAction(ActionEvent actionEvent) {
+&nbsp;        try {
+&nbsp;
+<b class="nc">&nbsp;            label_NeedToSelectVehicle.setText(&quot;&quot;);</b>
+<b class="nc">&nbsp;            label_NeedToChoseTask.setText(&quot;&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            String strSelected = cmbTask.getValue();</b>
+<b class="nc">&nbsp;            if( strSelected != null){</b>
+<b class="nc">&nbsp;                Task taskSelected = taskMap.get(strSelected);</b>
+<b class="nc">&nbsp;                if(taskSelected!=null) {</b>
+<b class="nc">&nbsp;                    loadAvailableVehicles(taskSelected);</b>
+<b class="nc">&nbsp;                    loadAssignedVehicles(taskSelected);</b>
+<b class="nc">&nbsp;                    selectedTask = taskSelected;</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;        }catch (Exception e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in cmbTaskOnAction in GUI&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

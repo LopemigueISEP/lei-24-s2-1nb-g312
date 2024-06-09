@@ -1,0 +1,400 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > AssignTeamEntryAgendaUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui.gui</a>
+</div>
+
+<h1>Coverage Summary for Class: AssignTeamEntryAgendaUI (pt.ipp.isep.dei.g312.ui.gui)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AssignTeamEntryAgendaUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/51)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AssignTeamEntryAgendaUI$GreenSpaceComboNames</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AssignTeamEntryAgendaUI$TaskComboNames</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AssignTeamEntryAgendaUI$TeamComboNames</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/72)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui.gui;
+&nbsp;
+&nbsp;import javafx.application.Application;
+&nbsp;import javafx.application.Platform;
+&nbsp;import javafx.collections.FXCollections;
+&nbsp;import javafx.event.ActionEvent;
+&nbsp;import javafx.fxml.FXMLLoader;
+&nbsp;import javafx.fxml.Initializable;
+&nbsp;import javafx.scene.Scene;
+&nbsp;import javafx.scene.control.ComboBox;
+&nbsp;import javafx.scene.control.Label;
+&nbsp;import javafx.scene.control.ListCell;
+&nbsp;import javafx.stage.Stage;
+&nbsp;import pt.ipp.isep.dei.g312.application.controller.AssignTeamEntryAgendaController;
+&nbsp;import pt.ipp.isep.dei.g312.domain.GreenSpace;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Task;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Team;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.net.URL;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;import java.util.ResourceBundle;
+&nbsp;/**
+&nbsp; * The AssignTeamEntryAgendaUI class is responsible for the graphical user interface for assigning a team to a task in a green space.
+&nbsp; * It extends the JavaFX Application class and implements Initializable for initialization logic.
+&nbsp; */
+&nbsp;public class AssignTeamEntryAgendaUI extends Application implements Initializable {
+&nbsp;
+&nbsp;    private final AssignTeamEntryAgendaController controller;
+&nbsp;    public ComboBox cmbTask;
+&nbsp;    public ComboBox cmbTeam;
+&nbsp;    public Label messageLabel;
+&nbsp;    public ComboBox cmbGreenSpace;
+<b class="nc">&nbsp;    private Optional&lt;Task&gt; chosenTask = null;</b>
+<b class="nc">&nbsp;    private Optional&lt;Team&gt; chosenTeam = null;</b>
+<b class="nc">&nbsp;    private Optional&lt;GreenSpace&gt; chosenGreenSpace = null;</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs an AssignTeamEntryAgendaUI object and initializes the controller.
+&nbsp;     */
+<b class="nc">&nbsp;    public AssignTeamEntryAgendaUI() {</b>
+<b class="nc">&nbsp;        controller = new AssignTeamEntryAgendaController();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void start(Stage primaryStage) {
+<b class="nc">&nbsp;        Platform.setImplicitExit(false);</b>
+<b class="nc">&nbsp;        FXMLLoader fxmlLoader = new FXMLLoader(AssignTeamEntryAgendaUI.class.getResource(&quot;AssignTeamEntryAgendaUI.fxml&quot;));</b>
+&nbsp;        Scene scene;
+&nbsp;        try {
+<b class="nc">&nbsp;            scene = new Scene(fxmlLoader.load());</b>
+<b class="nc">&nbsp;            primaryStage.setTitle(&quot;MusgoSublime&quot;);</b>
+<b class="nc">&nbsp;            primaryStage.setScene(scene);</b>
+&nbsp;
+<b class="nc">&nbsp;            primaryStage.show();</b>
+&nbsp;
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method is called to initialize a controller after its root element has been completely processed.
+&nbsp;     *
+&nbsp;     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
+&nbsp;     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void initialize(URL url, ResourceBundle resourceBundle) {
+<b class="nc">&nbsp;        initializeGreenSpaceComboBox();</b>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Initializes the GreenSpace ComboBox with the list of green spaces.
+&nbsp;     */
+&nbsp;    private void initializeGreenSpaceComboBox() {
+<b class="nc">&nbsp;        List&lt;GreenSpace&gt; greenSpaceList = controller.getGreenSpaces();</b>
+<b class="nc">&nbsp;        cmbGreenSpace.setItems(FXCollections.observableArrayList(greenSpaceList));</b>
+<b class="nc">&nbsp;        cmbGreenSpace.setCellFactory(listView -&gt; new AssignTeamEntryAgendaUI.GreenSpaceComboNames());</b>
+<b class="nc">&nbsp;        cmbGreenSpace.setButtonCell(new AssignTeamEntryAgendaUI.GreenSpaceComboNames());</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Handles the event when the GreenSpace ComboBox value changes.
+&nbsp;     *
+&nbsp;     * @param actionEvent the action event triggered by changing the GreenSpace ComboBox value
+&nbsp;     */
+&nbsp;    public void onChangeCmbGreenSpace(ActionEvent actionEvent) {
+<b class="nc">&nbsp;        chosenGreenSpace = Optional.empty();</b>
+<b class="nc">&nbsp;        if (cmbGreenSpace.getValue() != null) {</b>
+<b class="nc">&nbsp;            GreenSpace greenSpace = (GreenSpace) cmbGreenSpace.getValue();</b>
+<b class="nc">&nbsp;            initializeTaskComboBox(greenSpace);</b>
+<b class="nc">&nbsp;            chosenGreenSpace = Optional.of(greenSpace);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Custom ListCell implementation for displaying GreenSpace names in the ComboBox.
+&nbsp;     */
+<b class="nc">&nbsp;    private static class GreenSpaceComboNames extends ListCell&lt;GreenSpace&gt; {</b>
+&nbsp;
+&nbsp;        @Override
+&nbsp;        public void updateItem(GreenSpace item, boolean empty) {
+<b class="nc">&nbsp;            super.updateItem(item, empty);</b>
+<b class="nc">&nbsp;            if (item != null) {</b>
+&nbsp;
+<b class="nc">&nbsp;                setText(item.toString());</b>
+&nbsp;
+<b class="nc">&nbsp;            } else if (empty || item == null) {</b>
+<b class="nc">&nbsp;                setText(&quot;Select a GreenSpace&quot;);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                setText(null);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Initializes the Task ComboBox with the list of tasks for the selected GreenSpace.
+&nbsp;     *
+&nbsp;     * @param greenSpace the selected GreenSpace
+&nbsp;     */
+&nbsp;    private void initializeTaskComboBox(GreenSpace greenSpace) {
+<b class="nc">&nbsp;        List&lt;Task&gt; taskList = controller.getTasksByGreenSpaceForTeam(greenSpace);</b>
+<b class="nc">&nbsp;        cmbTask.setItems(FXCollections.observableArrayList(taskList));</b>
+<b class="nc">&nbsp;        cmbTask.setCellFactory(listView -&gt; new TaskComboNames());</b>
+<b class="nc">&nbsp;        cmbTask.setButtonCell(new TaskComboNames());</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Handles the event when the Task ComboBox value changes.
+&nbsp;     *
+&nbsp;     * @param actionEvent the action event triggered by changing the Task ComboBox value
+&nbsp;     */
+&nbsp;    public void onChangeCmbTask(ActionEvent actionEvent) {
+<b class="nc">&nbsp;        chosenTask = Optional.empty();</b>
+<b class="nc">&nbsp;        if (cmbTask.getValue() != null) {</b>
+<b class="nc">&nbsp;            Task task = (Task) cmbTask.getValue();</b>
+<b class="nc">&nbsp;            chosenTask = Optional.of(task);</b>
+<b class="nc">&nbsp;        initializeTeamComboBox(task);</b>
+&nbsp;
+&nbsp;        }
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Custom ListCell implementation for displaying Task names in the ComboBox.
+&nbsp;     */
+<b class="nc">&nbsp;    private static class TaskComboNames extends ListCell&lt;Task&gt; {</b>
+&nbsp;
+&nbsp;        @Override
+&nbsp;        public void updateItem(Task item, boolean empty) {
+<b class="nc">&nbsp;            super.updateItem(item, empty);</b>
+<b class="nc">&nbsp;            if (item != null) {</b>
+&nbsp;
+<b class="nc">&nbsp;                setText(item.toString());</b>
+&nbsp;
+<b class="nc">&nbsp;            } else if (empty || item == null) {</b>
+<b class="nc">&nbsp;                setText(&quot;Select a Task&quot;);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                setText(null);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Handles the event when the Team ComboBox value changes.
+&nbsp;     *
+&nbsp;     * @param actionEvent the action event triggered by changing the Team ComboBox value
+&nbsp;     */
+&nbsp;    public void onChangeCmbTeam(ActionEvent actionEvent) {
+<b class="nc">&nbsp;        chosenTeam = Optional.empty();</b>
+<b class="nc">&nbsp;        if(chosenTask.isPresent()) {</b>
+&nbsp;
+<b class="nc">&nbsp;            if (cmbTeam.getValue() != null) {</b>
+&nbsp;
+<b class="nc">&nbsp;                Team team = (Team) cmbTeam.getValue();</b>
+<b class="nc">&nbsp;                chosenTeam = Optional.of(team);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    private void initializeTeamComboBox(Task task) {
+&nbsp;
+<b class="nc">&nbsp;        List&lt;Team&gt; availableTeamList = controller.listAvailableTeams(task);</b>
+<b class="nc">&nbsp;        cmbTeam.setItems(FXCollections.observableArrayList(availableTeamList));</b>
+&nbsp;
+<b class="nc">&nbsp;        cmbTeam.setCellFactory(listView -&gt; new TeamComboNames());</b>
+<b class="nc">&nbsp;        cmbTeam.setButtonCell(new TeamComboNames());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;    private static class TeamComboNames extends ListCell&lt;Team&gt; {</b>
+&nbsp;
+&nbsp;        @Override
+&nbsp;        public void updateItem(Team item, boolean empty) {
+<b class="nc">&nbsp;            super.updateItem(item, empty);</b>
+<b class="nc">&nbsp;            if (item != null) {</b>
+&nbsp;
+<b class="nc">&nbsp;                setText(item.toString());</b>
+&nbsp;
+<b class="nc">&nbsp;            } else if (empty || item == null) {</b>
+<b class="nc">&nbsp;                setText(&quot;Select a Team&quot;);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                setText(null);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public void handleRegisterButtonAction(ActionEvent actionEvent) {
+<b class="nc">&nbsp;        if (chosenTask.isPresent() &amp;&amp; chosenTeam.isPresent()) {</b>
+<b class="nc">&nbsp;            Task task = chosenTask.get();</b>
+<b class="nc">&nbsp;            Team team = chosenTeam.get();</b>
+<b class="nc">&nbsp;            boolean result = controller.assignTeamToTask(team, task);</b>
+<b class="nc">&nbsp;            if (result) {</b>
+<b class="nc">&nbsp;                messageLabel.setText(&quot;Team assigned to Task&quot;);</b>
+&nbsp;                //controller.assignTeamToTaskEmail();
+&nbsp;            } else {
+<b class="nc">&nbsp;                messageLabel.setText(&quot;Team not assigned to Task&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } else {</b>
+<b class="nc">&nbsp;            messageLabel.setText(&quot;Please select a Task and a Team&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

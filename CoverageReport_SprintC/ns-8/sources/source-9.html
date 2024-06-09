@@ -1,0 +1,200 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > RegisterCheckUpUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui.console</a>
+</div>
+
+<h1>Coverage Summary for Class: RegisterCheckUpUI (pt.ipp.isep.dei.g312.ui.console)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RegisterCheckUpUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/24)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui.console;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.application.controller.CheckUpController;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Vehicle;
+&nbsp;import java.text.ParseException;
+&nbsp;import java.text.SimpleDateFormat;
+&nbsp;import java.util.Date;
+&nbsp;import java.util.Optional;
+&nbsp;import java.util.Scanner;
+&nbsp;
+&nbsp;public class RegisterCheckUpUI implements Runnable {
+&nbsp;
+&nbsp;    private final CheckUpController controller;
+&nbsp;
+&nbsp;
+&nbsp;    /** Constructs a new RegisterCheckUpUI instance and initializes the controller responsible
+&nbsp;     * for managing vehicle check-up registrations.
+&nbsp;     */
+<b class="nc">&nbsp;    public RegisterCheckUpUI(){</b>
+&nbsp;
+<b class="nc">&nbsp;        controller = new CheckUpController();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /** The main method for the check-up registration process. It prompts the user for the vehicle
+&nbsp;     * registration plate, check-up date, and kilometers at last check-up, then attempts to register
+&nbsp;     * the check-up.
+&nbsp;     *
+&nbsp;     * If any input format is incorrect, particularly the date, it catches the exception and notifies
+&nbsp;     * the user of an unexpected input format.
+&nbsp;     */
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void run() {
+<b class="nc">&nbsp;        System.out.println(&quot;\n\n--- Register Check-up ------------------------&quot;);</b>
+&nbsp;
+&nbsp;        try {
+<b class="nc">&nbsp;            String registrationPlate = requestRegistrationPlate();</b>
+<b class="nc">&nbsp;            Date checkUpDate = requestCheckUpDate();</b>
+<b class="nc">&nbsp;            double kmAtLastCheckUp = requestKmAtLastCheckUp();</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;            submitData(registrationPlate, checkUpDate, kmAtLastCheckUp);</b>
+<b class="nc">&nbsp;        } catch (ParseException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Unexpected input format&quot;);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /** Submits the check-up data to the controller for registration.
+&nbsp;     *
+&nbsp;     * @param registrationPlate The vehicle&#39;s registration plate.
+&nbsp;     * @param checkUpDate The date when the check-up was performed.
+&nbsp;     * @param kmAtLastCheckUp The vehicle current kilometers at the last check-up.
+&nbsp;     */
+&nbsp;    private void submitData(String registrationPlate, Date checkUpDate, double kmAtLastCheckUp) {
+<b class="nc">&nbsp;        boolean checkUpRegistered = controller.registerCheckUp(registrationPlate, checkUpDate, kmAtLastCheckUp);</b>
+<b class="nc">&nbsp;        if (checkUpRegistered) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Check-up registered successfully&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            System.out.println(&quot;Vehicle not found. Please register the vehicle first.&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /** Requests and returns the registration plate from the user.
+&nbsp;     *
+&nbsp;     * @return The vehicle&#39;s registration plate entered by the user.
+&nbsp;     */
+&nbsp;    private String requestRegistrationPlate() {
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;        System.out.print(&quot;Registration Plate: &quot;);</b>
+<b class="nc">&nbsp;        return input.nextLine();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /** Requests and returns the check-up date from the user. The date must be entered in the format &quot;dd/MM/yyyy&quot;.
+&nbsp;     *
+&nbsp;     * @return Date object representing the date of the check-up.
+&nbsp;     * @throws ParseException If the user&#39;s input does not match the &quot;dd/MM/yyyy&quot; format.
+&nbsp;     */
+&nbsp;    private Date requestCheckUpDate() throws ParseException {
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;        SimpleDateFormat registerDateFormat = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</b>
+<b class="nc">&nbsp;        System.out.print(&quot;Check-up Date (dd/MM/yyyy): &quot;);</b>
+<b class="nc">&nbsp;        return registerDateFormat.parse(input.nextLine());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /** Requests and returns the vehicle current kilometers at the last check-up from the user.
+&nbsp;     *
+&nbsp;     * @return The vehicle current kilometers at the last check-up as a double.
+&nbsp;     */
+&nbsp;    private double requestKmAtLastCheckUp() {
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;        System.out.print(&quot;Km at Last Check-up: &quot;);</b>
+<b class="nc">&nbsp;        return Double.parseDouble(input.nextLine());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,144 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > GSMUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui.console.menu</a>
+</div>
+
+<h1>Coverage Summary for Class: GSMUI (pt.ipp.isep.dei.g312.ui.console.menu)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GSMUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui.console.menu;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.ui.console.*;
+&nbsp;import pt.ipp.isep.dei.g312.ui.console.utils.Utils;
+&nbsp;import pt.ipp.isep.dei.g312.ui.gui.*;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;public class GSMUI implements Runnable {
+&nbsp;
+<b class="nc">&nbsp;    public GSMUI() {</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // TODO falta alterar para as respetivas UI
+&nbsp;    public void run() {
+<b class="nc">&nbsp;        List&lt;MenuItem&gt; options = new ArrayList&lt;MenuItem&gt;();</b>
+<b class="nc">&nbsp;        options.add(new MenuItem(&quot;Register a Green Space&quot;, new RegisterGreenSpaceUI()));</b>
+<b class="nc">&nbsp;        options.add(new MenuItem(&quot;Show list of green Spaces&quot;, new ShowListOfGreenSpacesUI()));</b>
+<b class="nc">&nbsp;        options.add(new MenuItem(&quot;Add entry to the To-Do List&quot;, new AddEntryToDoListUI()));</b>
+<b class="nc">&nbsp;        options.add(new MenuItem(&quot;Show To-Do List&quot;, new ShowToDoListUI()));</b>
+<b class="nc">&nbsp;        options.add(new MenuItem(&quot;Add entry to the Agenda &quot;, new AddEntryToAgendaUI()));</b>
+<b class="nc">&nbsp;        options.add(new MenuItem(&quot;Show Agenda&quot;, new ShowListOfAgendaUI()));</b>
+<b class="nc">&nbsp;        options.add(new MenuItem(&quot;Assign Team to an entry in Agenda&quot;, new AssignTeamEntryAgendaUI()));</b>
+<b class="nc">&nbsp;        options.add(new MenuItem(&quot;Postpone an entry in the Agenda to a specific future date&quot;, new PostponeTaskInTheAgendaUI()));</b>
+<b class="nc">&nbsp;        options.add(new MenuItem(&quot;Cancel an entry in the Agenda&quot;, new CancelEntryAgendaUI()));</b>
+<b class="nc">&nbsp;        options.add(new MenuItem(&quot;Assign vehicles to an entry in the Agenda&quot;, new AssignVehicleToAgendaEntryGUI()));</b>
+<b class="nc">&nbsp;        options.add(new MenuItem(&quot;List all green spaces managed by Me&quot;, new ListGreenSpacesManagedByMeGUI()));</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        int option = 0;</b>
+&nbsp;        do {
+<b class="nc">&nbsp;            option = Utils.showAndSelectIndex(options, &quot;\n\n---------------- GSM MENU -----------------&quot;,true);</b>
+&nbsp;
+<b class="nc">&nbsp;            if ((option &gt;= 0) &amp;&amp; (option &lt; options.size())) {</b>
+<b class="nc">&nbsp;                options.get(option).run();</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } while (option != -1);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,613 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Employee</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.domain</a>
+</div>
+
+<h1>Coverage Summary for Class: Employee (pt.ipp.isep.dei.g312.domain)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Employee</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    60%
+  </span>
+  <span class="absValue">
+    (24/40)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    47.9%
+  </span>
+  <span class="absValue">
+    (68/142)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.domain;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.repository.Repositories;
+&nbsp;import pt.ipp.isep.dei.g312.repository.SkillRepository;
+&nbsp;
+&nbsp;
+&nbsp;import java.io.Serializable;
+&nbsp;import java.time.LocalDate;
+&nbsp;import java.time.LocalTime;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Date;
+&nbsp;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;/**
+&nbsp; * This class represents an employee (collaborator) in the system. It stores essential information
+&nbsp; * about the employee - fundamental characteristics - and a list of associated skills.
+&nbsp; * The class provides methods for accessing and modifying employee attributes, adding skills, and retrieving
+&nbsp; * a list of skills available to be assigned to collaborators. It also implements methods for cloning
+&nbsp; * and comparing employees.
+&nbsp; */
+&nbsp;public class Employee implements Cloneable, Comparable&lt;Employee&gt;, Serializable {
+&nbsp;    private String name;
+&nbsp;    private Date birthDate;
+&nbsp;    private String email;
+&nbsp;    private int phoneNumber;
+&nbsp;    private Date admissionDate;
+&nbsp;    private String taxpayerNumber;
+&nbsp;    private String address;
+&nbsp;    private String docNumber;
+&nbsp;
+&nbsp;    private List&lt;Skill&gt; skills;
+&nbsp;    private String job;
+&nbsp;    //private List&lt;Skill&gt; skillsAdded;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Main constructor for creating an `Employee` object.
+&nbsp;     *
+&nbsp;     * @param name           The employee&#39;s name.
+&nbsp;     * @param birthDate      The employee&#39;s birthdate.
+&nbsp;     * @param email          The employee&#39;s email address.
+&nbsp;     * @param phoneNumber    The employee&#39;s phone number.
+&nbsp;     * @param admissionDate  The employee&#39;s admission date.
+&nbsp;     * @param taxpayerNumber The employee&#39;s taxpayer number.
+&nbsp;     * @param address        The employee&#39;s address.
+&nbsp;     * @param docNumber      The employee&#39;s ID document number.
+&nbsp;     * @param job            The employee&#39;s job title.
+&nbsp;     */
+<b class="fc">&nbsp;    public Employee(String name, Date birthDate, String email, int phoneNumber, Date admissionDate, String taxpayerNumber, String address, String docNumber, String job) {</b>
+&nbsp;
+<b class="fc">&nbsp;        this.name = name;</b>
+<b class="fc">&nbsp;        this.birthDate = birthDate;</b>
+<b class="fc">&nbsp;        this.phoneNumber = phoneNumber;</b>
+<b class="fc">&nbsp;        this.taxpayerNumber = taxpayerNumber;</b>
+<b class="fc">&nbsp;        this.address = address;</b>
+<b class="fc">&nbsp;        this.docNumber = docNumber;</b>
+<b class="fc">&nbsp;        this.admissionDate = admissionDate;</b>
+<b class="fc">&nbsp;        this.email = email;</b>
+<b class="fc">&nbsp;        this.job = job;</b>
+<b class="fc">&nbsp;        this.skills = new ArrayList&lt;&gt;();</b>
+&nbsp;
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Constructs a new Employee with the specified details.
+&nbsp;     *
+&nbsp;     * @param name           The employee&#39;s name.
+&nbsp;     * @param birthDate      The employee&#39;s birthdate.
+&nbsp;     * @param email          The employee&#39;s email address.
+&nbsp;     * @param phoneNumber    The employee&#39;s phone number.
+&nbsp;     * @param admissionDate  The employee&#39;s admission date.
+&nbsp;     * @param taxpayerNumber The employee&#39;s taxpayer number.
+&nbsp;     * @param address        The employee&#39;s address.
+&nbsp;     * @param docNumber      The employee&#39;s ID document number.
+&nbsp;     * @param job            The employee&#39;s job title.
+&nbsp;     * @param skills         The list of skills of the employee.
+&nbsp;     */
+<b class="fc">&nbsp;    public Employee(String name, Date birthDate, String email, int phoneNumber, Date admissionDate, String taxpayerNumber, String address, String docNumber, String job, List&lt;Skill&gt; skills) {</b>
+&nbsp;
+<b class="fc">&nbsp;        this.name = name;</b>
+<b class="fc">&nbsp;        this.birthDate = birthDate;</b>
+<b class="fc">&nbsp;        this.phoneNumber = phoneNumber;</b>
+<b class="fc">&nbsp;        this.taxpayerNumber = taxpayerNumber;</b>
+<b class="fc">&nbsp;        this.address = address;</b>
+<b class="fc">&nbsp;        this.docNumber = docNumber;</b>
+<b class="fc">&nbsp;        this.admissionDate = admissionDate;</b>
+<b class="fc">&nbsp;        this.email = email;</b>
+<b class="fc">&nbsp;        this.job = job;</b>
+<b class="fc">&nbsp;        this.skills = new ArrayList&lt;&gt;(skills);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Constructs a new Employee with the specified name and skills.
+&nbsp;     *
+&nbsp;     * @param name   The name of the employee.
+&nbsp;     * @param skills The list of skills of the employee.
+&nbsp;     */
+<b class="fc">&nbsp;    public Employee(String name, List&lt;Skill&gt; skills) {</b>
+<b class="fc">&nbsp;        this.name = name;</b>
+<b class="fc">&nbsp;        this.skills = skills;</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Constructs a new Employee by copying another Employee.
+&nbsp;     *
+&nbsp;     * @param employee The Employee to copy.
+&nbsp;     */
+<b class="nc">&nbsp;    public Employee(Employee employee) {</b>
+<b class="nc">&nbsp;        this.name=employee.getName();</b>
+<b class="nc">&nbsp;        this.birthDate=employee.getBirthDate();</b>
+<b class="nc">&nbsp;        this.email=employee.getEmail();</b>
+<b class="nc">&nbsp;        this.phoneNumber=employee.getPhoneNumber();</b>
+<b class="nc">&nbsp;        this.admissionDate=employee.getAdmissionDate();</b>
+<b class="nc">&nbsp;        this.taxpayerNumber=employee.getTaxpayerNumber();</b>
+<b class="nc">&nbsp;        this.address=employee.getAddress();</b>
+<b class="nc">&nbsp;        this.docNumber=employee.getDocNumber();</b>
+&nbsp;
+<b class="nc">&nbsp;        this.skills=employee.getSkills();</b>
+<b class="nc">&nbsp;        this.job=employee.getJob();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getTaxpayerNumber() {
+<b class="fc">&nbsp;        return taxpayerNumber;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setTaxpayerNumber(String taxpayerNumber) {
+<b class="nc">&nbsp;        this.name = taxpayerNumber;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getName() {
+<b class="fc">&nbsp;        return name;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setName(String name) {
+<b class="nc">&nbsp;        this.name = name;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Date getBirthDate() {
+<b class="fc">&nbsp;        return birthDate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setBirthDate(Date birthDate) {
+<b class="nc">&nbsp;        this.birthDate = birthDate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getPhoneNumber() {
+<b class="fc">&nbsp;        return phoneNumber;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setPhoneNumber(int phoneNumber) {
+<b class="nc">&nbsp;        this.phoneNumber = phoneNumber;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getAddress() {
+<b class="fc">&nbsp;        return address;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setAddress(String address) {
+<b class="nc">&nbsp;        this.address = address;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getDocNumber() {
+<b class="fc">&nbsp;        return docNumber;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setDocNumber(String docNumber) {
+<b class="nc">&nbsp;        this.docNumber = docNumber;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Date getAdmissionDate() {
+<b class="fc">&nbsp;        return admissionDate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setAdmissionDateDate(Date birthDate) {
+<b class="nc">&nbsp;        this.admissionDate = birthDate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getEmail() {
+<b class="fc">&nbsp;        return email;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setEmail(String email) {
+<b class="nc">&nbsp;        this.email = email;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setJob(String job) {
+<b class="nc">&nbsp;        this.job = String.valueOf(job);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getJob() {
+<b class="fc">&nbsp;        return job;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Skill&gt; getEmployeeSkillList() {
+<b class="fc">&nbsp;        return this.skills;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates a clone of the current employee object.
+&nbsp;     *
+&nbsp;     * @return A new `Employee` object that is a copy of the current instance.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Employee clone() {
+<b class="fc">&nbsp;        return new Employee(this.name, this.birthDate, this.email, this.phoneNumber, this.admissionDate, this.taxpayerNumber, this.address, this.docNumber, this.job, this.skills);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Registers a new skill.
+&nbsp;     *
+&nbsp;     * @param skillName        The name of the skill.
+&nbsp;     * @param skillDescription The description of the skill.
+&nbsp;     * @param userValidation   True if the user has permissions to register the skill, false otherwise.
+&nbsp;     * @return An Optional containing the registered skill, or empty if the registration fails.
+&nbsp;     */
+&nbsp;    public Optional&lt;Skill&gt; registerSkill(String skillName, String skillDescription, boolean userValidation) {
+&nbsp;        boolean validateAddedRepository;
+&nbsp;        try {
+<b class="fc">&nbsp;            if (userValidation) {</b>
+<b class="fc">&nbsp;                Skill skill = new Skill(skillName, skillDescription);</b>
+<b class="fc">&nbsp;                validateAddedRepository = Repositories.getInstance().getSkillRepository().addSkillRep(skill);</b>
+<b class="fc">&nbsp;                if (validateAddedRepository) {</b>
+<b class="fc">&nbsp;                    return Optional.of(skill);</b>
+&nbsp;                } else {
+<b class="fc">&nbsp;                    return Optional.empty();</b>
+&nbsp;                }
+&nbsp;            } else {
+<b class="fc">&nbsp;                System.out.println(&quot;This user don&#39;t have permissions to register skills&quot;);</b>
+<b class="fc">&nbsp;                return Optional.empty();</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            return Optional.empty();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Registers a job with the provided name and description, subject to user validation.
+&nbsp;     *
+&nbsp;     * @param jobName        The name of the job to register.
+&nbsp;     * @param jobDescription The description of the job to register.
+&nbsp;     * @param userValidation True if the user&#39;s validation was successful, false otherwise.
+&nbsp;     * @return An Optional containing the registered job if successful, otherwise empty.
+&nbsp;     */
+&nbsp;    public Optional&lt;Job&gt; registerJob(String jobName, String jobDescription, boolean userValidation) {
+&nbsp;        boolean validateAddedRepository;
+&nbsp;        try {
+<b class="fc">&nbsp;            if (userValidation) {</b>
+<b class="fc">&nbsp;                Job job = new Job(jobName, jobDescription);</b>
+<b class="fc">&nbsp;                validateAddedRepository = Repositories.getInstance().getJobRepository().addJobRep(job);</b>
+&nbsp;
+<b class="fc">&nbsp;                if (validateAddedRepository) {</b>
+<b class="fc">&nbsp;                    return Optional.of(job);</b>
+&nbsp;                } else {
+<b class="fc">&nbsp;                    return Optional.empty();</b>
+&nbsp;                }
+&nbsp;            } else {
+<b class="fc">&nbsp;                System.out.println(&quot;This user don&#39;t have permissions to register jobs&quot;);</b>
+<b class="fc">&nbsp;                return Optional.empty();</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            return Optional.empty();</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method overrides the default `equals` method of the Object class.
+&nbsp;     * It checks for object identity and type equality. If the object is the same instance (`this == o`), it returns true.
+&nbsp;     * If the object is not an instance of the `Employee` class, it returns false.
+&nbsp;     * Otherwise, it casts the object to `Employee` and compares the email addresses for equality using the `equals` method of the String class.
+&nbsp;     *
+&nbsp;     * @param o The object to be compared with this Employee object.
+&nbsp;     * @return True if the objects are equal (same email address), False otherwise.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public boolean equals(Object o) {
+<b class="fc">&nbsp;        if (this == o) {</b>
+<b class="fc">&nbsp;            return true;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (!(o instanceof Employee)) {</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        Employee employee = (Employee) o;</b>
+<b class="fc">&nbsp;        return email.equals(employee.email);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Overrides the default {@code hashCode()} implementation to generate a hash code based on the email address.
+&nbsp;     *
+&nbsp;     * @return The hash code of the email address.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public int hashCode() {
+<b class="fc">&nbsp;        return Objects.hash(email);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Checks if the provided email address matches the email address associated with this object.
+&nbsp;     *
+&nbsp;     * @param email The email address to compare.
+&nbsp;     * @return True if the provided email address matches the object&#39;s email address, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean hasEmail(String email) {
+<b class="fc">&nbsp;        return this.email.equals(email);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method retrieves the list of skills associated with the current Employee object.
+&nbsp;     * It interacts with a repository class to access and retrieve the skills.
+&nbsp;     *
+&nbsp;     * @return A list of Skill objects representing the skills of the current Employee.
+&nbsp;     */
+&nbsp;    public List&lt;Skill&gt; getSkills() {
+<b class="fc">&nbsp;        return Repositories.getInstance().getEmployeeRepository().getEmployeeSkills(this);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Adds a list of skills to the employee&#39;s skill set.
+&nbsp;     *
+&nbsp;     * @param skillsToAdd The list of `Skill` objects to be added to the employee&#39;s skills.
+&nbsp;     */
+&nbsp;    public void addSkills(List&lt;Skill&gt; skillsToAdd) {
+<b class="fc">&nbsp;        skills.addAll(skillsToAdd); // Add all skills from the provided list</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets skills available to add to a collaborator, considering existing skills.
+&nbsp;     *
+&nbsp;     * @param skillRepository The repository to access all skills.
+&nbsp;     * @return List of skills not yet assigned to the collaborator.
+&nbsp;     */
+&nbsp;    public List&lt;Skill&gt; getAvailableSkillsToAddToCollaborator(SkillRepository skillRepository) {
+<b class="nc">&nbsp;        List&lt;Skill&gt; allSkills = skillRepository.getSkills().get();</b>
+&nbsp;
+<b class="nc">&nbsp;        List&lt;Skill&gt; availableSkills = new ArrayList&lt;&gt;();</b>
+&nbsp;
+&nbsp;        // Check for existing skills in the selected collaborator
+<b class="nc">&nbsp;        List&lt;Skill&gt; collaboratorSkills = this.getSkills(); // Assuming you have a getSkills method in Employee</b>
+<b class="nc">&nbsp;        for (Skill skill : allSkills) {</b>
+<b class="nc">&nbsp;            boolean skillAlreadyPresent = false;</b>
+<b class="nc">&nbsp;            for (Skill collaboratorSkill : collaboratorSkills) {</b>
+<b class="nc">&nbsp;                if (skill.getSkillName().equals(collaboratorSkill.getSkillName())) {</b>
+<b class="nc">&nbsp;                    skillAlreadyPresent = true;</b>
+<b class="nc">&nbsp;                    break;</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            if (!skillAlreadyPresent) {</b>
+<b class="nc">&nbsp;                availableSkills.add(skill);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return availableSkills;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method overrides the default `toString` method of the Object class.
+&nbsp;     * It returns a String representation of the Employee object, likely containing the employee&#39;s name.
+&nbsp;     *
+&nbsp;     * @return A String representation of the Employee object.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public String toString() {
+&nbsp;
+<b class="fc">&nbsp;        return this.name;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Attempts to add the employee to a team if they possess the required skills and are not already part of the team.
+&nbsp;     *
+&nbsp;     * @param skillSetNeeded The list of skills needed for the team.
+&nbsp;     * @param teamEmployees  The list of employees already in the team.
+&nbsp;     * @return True if the employee is suitable for addition to the team, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean addEmployeeIfSuitable(List&lt;Skill&gt; skillSetNeeded, List&lt;Employee&gt; teamEmployees) {
+&nbsp;        for (Skill employeeSkill :
+<b class="nc">&nbsp;                this.getSkills()) {</b>
+&nbsp;            for (Skill neededSkill :
+<b class="nc">&nbsp;                    skillSetNeeded) {</b>
+<b class="nc">&nbsp;                if (neededSkill.equals(employeeSkill) &amp;&amp; !(teamEmployees.contains(this))) {</b>
+<b class="nc">&nbsp;                    return true;</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Validates whether the employee can be added to the team by checking if they are already part of it.
+&nbsp;     *
+&nbsp;     * @param teamEmployees The list of employees already in the team.
+&nbsp;     * @return True if the employee can be added to the team, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean validateAddToTeam(List&lt;Employee&gt; teamEmployees) {
+&nbsp;        for (Employee employee :
+<b class="nc">&nbsp;                teamEmployees) {</b>
+<b class="nc">&nbsp;            if (teamEmployees.contains(this)) {</b>
+<b class="nc">&nbsp;                return false;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Registers a new green space if the user has permission to do so.
+&nbsp;     *
+&nbsp;     * @param name              The name of the green space.
+&nbsp;     * @param address           The address of the green space.
+&nbsp;     * @param area              The area of the green space.
+&nbsp;     * @param typology          The typology of the green space.
+&nbsp;     * @param greenSpaceManager The manager of the green space.
+&nbsp;     * @param userValidation    A boolean indicating whether the user has permission to register green spaces.
+&nbsp;     * @return An Optional containing the registered GreenSpace object if registration is successful and user has permission, otherwise an empty Optional.
+&nbsp;     */
+&nbsp;    public static Optional&lt;GreenSpace&gt; registerGreenSpace(String name, String address, double area, GreenSpaceTypology typology, String greenSpaceManager, boolean userValidation) {
+&nbsp;        try {
+<b class="nc">&nbsp;            if (userValidation) {</b>
+<b class="nc">&nbsp;                GreenSpace greenSpace = new GreenSpace(name, address, area, typology, greenSpaceManager);</b>
+<b class="nc">&nbsp;                Optional&lt;GreenSpace&gt; addedGreenSpace = Repositories.getInstance().getGreenSpaceRepository().addGreenSpace(greenSpace);</b>
+<b class="nc">&nbsp;                return addedGreenSpace;</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                System.out.println(&quot;This user doesn&#39;t have permissions to register green spaces&quot;);</b>
+<b class="nc">&nbsp;                return Optional.empty();</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            System.err.println(&quot;Error occurred while registering a green space: &quot; + e.getMessage());</b>
+<b class="nc">&nbsp;            return Optional.empty();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Registers a new task.
+&nbsp;     * @param GreenSpace       The green space where the task is to be performed.
+&nbsp;     * @param taskTitle        The title of the task.
+&nbsp;     * @param taskDescr        The description of the task.
+&nbsp;     * @param taskUrgency      The urgency level of the task.
+&nbsp;     * @param expectedDuration The expected duration of the task.
+&nbsp;     * @param todolist         The position of the task in the to-do list.
+&nbsp;     * @param taskId           The ID of the task.
+&nbsp;     * @return An Optional containing the registered task, or empty if the registration fails.
+&nbsp;     */
+&nbsp;    public Optional&lt;Task&gt; registerTask(GreenSpace GreenSpace, String taskTitle, String taskDescr, TaskUrgency taskUrgency, int expectedDuration, TaskPosition todolist, int taskId) {
+&nbsp;        try {
+&nbsp;
+<b class="fc">&nbsp;            Task newtask = new Task(GreenSpace, taskTitle, taskDescr, taskUrgency, expectedDuration, todolist,taskId);</b>
+<b class="fc">&nbsp;            Optional&lt;Task&gt; addedTask = Repositories.getInstance().getTaskRepository().addTask(newtask);</b>
+<b class="fc">&nbsp;            return addedTask;</b>
+&nbsp;
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error occurred while registering a task: &quot; + e.getMessage());</b>
+<b class="nc">&nbsp;            return Optional.empty();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Assigns a team to a task.
+&nbsp;     * @param team The team to assign to the task.
+&nbsp;     * @param task The task to assign the team to.
+&nbsp;     * @return An Optional containing the updated task, or empty if the assignment fails.
+&nbsp;     */
+&nbsp;    public static Optional&lt;Task&gt; assignTeamToTask(Team team, Task task) {
+<b class="fc">&nbsp;        task.assignTeam(team);</b>
+<b class="fc">&nbsp;        task.setTaskStatus(TaskStatus.PLANNED);</b>
+<b class="fc">&nbsp;        return Repositories.getInstance().getTaskRepository().updateTask(task);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Postpones a task to a new start date.
+&nbsp;     * @param task The task to postpone.
+&nbsp;     * @param startDate The new start date for the task.
+&nbsp;     * @return An Optional containing the postponed task, or empty if the postponement fails.
+&nbsp;     */
+&nbsp;    public static Optional&lt;Task&gt; postponedTask(Task task, Date startDate) {
+<b class="nc">&nbsp;        task.setTaskStartDate(startDate);</b>
+<b class="nc">&nbsp;        task.setEndDate();</b>
+<b class="nc">&nbsp;        task.setTaskStatus(TaskStatus.POSTPONED);</b>
+<b class="nc">&nbsp;        task.assignTeam(null);</b>
+<b class="nc">&nbsp;        task.clearVehicleList();</b>
+<b class="nc">&nbsp;        return Repositories.getInstance().getTaskRepository().updateTask(task);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Compares this employee with another based on their skills.
+&nbsp;     *
+&nbsp;     * @param o The Employee object to compare with.
+&nbsp;     * @return A negative integer if this employee has fewer skills than the specified employee,
+&nbsp;     * zero if they have the same number of skills, or a positive integer if this employee
+&nbsp;     * has more skills than the specified employee.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public int compareTo(Employee o) {
+<b class="nc">&nbsp;        if (this.skills.size() &gt; o.getSkills().size()) {</b>
+<b class="nc">&nbsp;            return 1;</b>
+<b class="nc">&nbsp;        } else if (this.skills.size() &lt; o.getSkills().size()) {</b>
+<b class="nc">&nbsp;            return -1;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            return 0;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

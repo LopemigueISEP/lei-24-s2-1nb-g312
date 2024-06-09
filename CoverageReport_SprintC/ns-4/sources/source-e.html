@@ -1,0 +1,214 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Team</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.domain</a>
+</div>
+
+<h1>Coverage Summary for Class: Team (pt.ipp.isep.dei.g312.domain)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Team</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    90.9%
+  </span>
+  <span class="absValue">
+    (10/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    70.6%
+  </span>
+  <span class="absValue">
+    (12/17)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.domain;
+&nbsp;
+&nbsp;import java.io.Serializable;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * Represents a team of employees within an organization. This class manages a collection of
+&nbsp; * Employee instances that constitute a team. It provides functionality to add employees,
+&nbsp; * get information about team members, and manage the team&#39;s composition.
+&nbsp; * &lt;p&gt;
+&nbsp; * The class is designed to allow straightforward manipulation of team member lists, including
+&nbsp; * adding new members, retrieving the list of current members, and checking team attributes such
+&nbsp; * as size and whether the team is empty.
+&nbsp; */
+&nbsp;public class Team implements Serializable {
+&nbsp;
+&nbsp;    private List&lt;Employee&gt; teamEmployees;
+&nbsp;
+<b class="fc">&nbsp;    public Team() {</b>
+<b class="fc">&nbsp;        teamEmployees = new ArrayList&lt;&gt;();</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public Team(List&lt;Employee&gt; teamEmployees) {</b>
+<b class="fc">&nbsp;        this.teamEmployees = new ArrayList&lt;&gt;(teamEmployees);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns a list of employees in the team. Modifications to the returned list will not affect
+&nbsp;     * the original team.
+&nbsp;     *
+&nbsp;     * @return A new list containing all the employees currently in the team.
+&nbsp;     */
+&nbsp;    public List&lt;Employee&gt; getTeamEmployees() {
+<b class="fc">&nbsp;        return new ArrayList&lt;&gt;(teamEmployees);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setTeamEmployees(List&lt;Employee&gt; teamEmployees) {
+<b class="fc">&nbsp;        this.teamEmployees = teamEmployees;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates and returns a deep copy of this team.
+&nbsp;     *
+&nbsp;     * @return A new {@link Team} object with the same employees as this one.
+&nbsp;     */
+&nbsp;    public Team clone() {
+<b class="fc">&nbsp;        return new Team(this.teamEmployees);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Adds an employee to the team.
+&nbsp;     *
+&nbsp;     * @param employee The {@link Employee} to add to the team.
+&nbsp;     */
+&nbsp;    public void add(Employee employee) {
+<b class="fc">&nbsp;        this.teamEmployees.add(employee.clone());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Checks if the team is currently empty (i.e., has no members).
+&nbsp;     *
+&nbsp;     * @return {@code true} if the team has no employees, {@code false} otherwise.
+&nbsp;     */
+&nbsp;    public boolean isEmpty() {
+<b class="fc">&nbsp;        return this.teamEmployees.isEmpty();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns the number of employees currently in the team.
+&nbsp;     *
+&nbsp;     * @return The size of the team as an integer.
+&nbsp;     */
+&nbsp;    public int size() {
+<b class="fc">&nbsp;        return this.teamEmployees.size();</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Adds an employee to the team.
+&nbsp;     *
+&nbsp;     * @param employee The employee to be added to the team.
+&nbsp;     */
+&nbsp;    public void addEmployee(Employee employee) {
+<b class="fc">&nbsp;        this.teamEmployees.add(employee);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Indicates whether some other object is &quot;equal to&quot; this one. This method overrides the default equals method of the Object class.
+&nbsp;     *
+&nbsp;     * @param obj The reference object with which to compare.
+&nbsp;     * @return True if this object is the same as the obj argument; false otherwise.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public boolean equals(Object obj) {
+<b class="fc">&nbsp;        return super.equals(obj);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Returns a string representation of the team&#39;s composition, consisting of the names of the employees in the team.
+&nbsp;     * Since the `toString` method of the Employee class doesn&#39;t include skill information, only the names of the employees are included.
+&nbsp;     *
+&nbsp;     * @return A string representing the composition of the team.
+&nbsp;     */
+&nbsp;    // because method tostring on employee didn&#39;t have skill return, i only implemented the toString of the names of the employees of the team
+&nbsp;    @Override
+&nbsp;    public String toString() {
+<b class="nc">&nbsp;        String teamComposition = &quot;&quot;;</b>
+<b class="nc">&nbsp;        for(Employee e : teamEmployees) {</b>
+<b class="nc">&nbsp;            teamComposition += e.toString() + &quot;; &quot;;</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return teamComposition;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

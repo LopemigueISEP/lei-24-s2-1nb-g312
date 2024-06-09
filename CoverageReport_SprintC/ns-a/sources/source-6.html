@@ -1,0 +1,171 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > MenuItem</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui.console.menu</a>
+</div>
+
+<h1>Coverage Summary for Class: MenuItem (pt.ipp.isep.dei.g312.ui.console.menu)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MenuItem</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/25)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui.console.menu;
+&nbsp;
+&nbsp;import javafx.application.Application;
+&nbsp;import javafx.application.Platform;
+&nbsp;import javafx.stage.Stage;
+&nbsp;import org.apache.commons.lang3.StringUtils;
+&nbsp;
+&nbsp;import java.util.Objects;
+&nbsp;
+&nbsp;/**
+&nbsp; * @author Paulo Maio pam@isep.ipp.pt
+&nbsp; */
+&nbsp;
+&nbsp;public class MenuItem {
+&nbsp;    private final String description;
+&nbsp;    private final Runnable ui;
+&nbsp;    private final Application gui;
+&nbsp;
+<b class="nc">&nbsp;    public MenuItem(String description, Runnable ui) {</b>
+<b class="nc">&nbsp;        if (StringUtils.isBlank(description)) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;MenuItem description cannot be null or empty.&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (Objects.isNull(ui)) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;MenuItem does not support a null UI.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        this.description = description;</b>
+<b class="nc">&nbsp;        this.ui = ui;</b>
+<b class="nc">&nbsp;        this.gui=null;</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public MenuItem(String description, Application gui) {</b>
+<b class="nc">&nbsp;        if (StringUtils.isBlank(description)) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;MenuItem description cannot be null or empty.&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (Objects.isNull(gui)) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;MenuItem does not support a null UI.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        this.description = description;</b>
+<b class="nc">&nbsp;        this.gui = gui;</b>
+<b class="nc">&nbsp;        this.ui=null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void run() {
+<b class="nc">&nbsp;        if (this.ui==null){</b>
+<b class="nc">&nbsp;            Platform.runLater(() -&gt; {</b>
+&nbsp;                try {
+<b class="nc">&nbsp;                    this.gui.start(new Stage());</b>
+<b class="nc">&nbsp;                } catch (Exception e) {</b>
+<b class="nc">&nbsp;                    throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;            });
+&nbsp;        }
+&nbsp;        else {
+<b class="nc">&nbsp;            this.ui.run();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean hasDescription(String description) {
+<b class="nc">&nbsp;        return this.description.equals(description);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String toString() {
+<b class="nc">&nbsp;        return this.description;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

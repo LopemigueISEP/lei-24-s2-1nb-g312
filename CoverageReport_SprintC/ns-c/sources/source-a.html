@@ -1,0 +1,442 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > RegisterGreenSpaceUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui.gui</a>
+</div>
+
+<h1>Coverage Summary for Class: RegisterGreenSpaceUI (pt.ipp.isep.dei.g312.ui.gui)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RegisterGreenSpaceUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/87)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">RegisterGreenSpaceUI$TypologyChoiceBoxNames</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/94)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui.gui;
+&nbsp;
+&nbsp;import javafx.application.Application;
+&nbsp;import javafx.application.Platform;
+&nbsp;
+&nbsp;import javafx.collections.FXCollections;
+&nbsp;import javafx.fxml.FXML;
+&nbsp;import javafx.fxml.FXMLLoader;
+&nbsp;import javafx.scene.Scene;
+&nbsp;import javafx.scene.control.*;
+&nbsp;
+&nbsp;import javafx.stage.Stage;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.application.controller.RegisterGreenSpaceController;
+&nbsp;import pt.ipp.isep.dei.g312.domain.GreenSpace;
+&nbsp;import pt.ipp.isep.dei.g312.domain.GreenSpaceTypology;
+&nbsp;import pt.ipp.isep.dei.g312.domain.TaskUrgency;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;
+&nbsp;
+&nbsp;import java.util.Objects;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;import static pt.ipp.isep.dei.g312.application.controller.RegisterGreenSpaceController.existsWithName;
+&nbsp;
+&nbsp;/**
+&nbsp; * This class represents the main entry point for the Register Green Space UI application.
+&nbsp; * It extends the JavaFX Application class and initializes the UI by loading the FXML file and setting up the controller.
+&nbsp; */
+&nbsp;public class RegisterGreenSpaceUI extends Application {
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private TextField nameField;
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private TextField addressField;
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private TextField areaField;
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private ComboBox typologyChoiceBox;
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private Label greenSpaceManagerLabel;
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private Label messageLabel;
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private final RegisterGreenSpaceController registerGreenSpaceController;
+&nbsp;    /**
+&nbsp;     * Constructor to initialize the RegisterGreenSpaceController.
+&nbsp;     */
+<b class="nc">&nbsp;    public RegisterGreenSpaceUI(){</b>
+<b class="nc">&nbsp;        registerGreenSpaceController= new RegisterGreenSpaceController();</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Main method to launch the application.
+&nbsp;     *
+&nbsp;     * @param args Command-line arguments.
+&nbsp;     */
+&nbsp;    public static void main(String[] args) {
+<b class="nc">&nbsp;        launch();</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Method called to start the application.
+&nbsp;     * Initializes the UI by loading the FXML file and setting up the controller.
+&nbsp;     *
+&nbsp;     * @param primaryStage The primary stage for the application.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void start(Stage primaryStage) {
+<b class="nc">&nbsp;        Platform.setImplicitExit(false);</b>
+<b class="nc">&nbsp;        FXMLLoader fxmlLoader = new FXMLLoader(RegisterGreenSpaceUI.class.getResource(&quot;RegisterGreenSpace.fxml&quot;));</b>
+&nbsp;        Scene scene;
+&nbsp;        try {
+<b class="nc">&nbsp;            scene = new Scene(fxmlLoader.load());</b>
+<b class="nc">&nbsp;            primaryStage.setTitle(&quot;MusgoSublime&quot;);</b>
+<b class="nc">&nbsp;            primaryStage.setScene(scene);</b>
+<b class="nc">&nbsp;            primaryStage.show();</b>
+&nbsp;
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method is called by the FXML loader during application initialization.
+&nbsp;     * It initializes the register green space UI.
+&nbsp;     */
+&nbsp;    @FXML
+&nbsp;    public void initialize() {
+<b class="nc">&nbsp;            initializeRegisterGreenSpaceUI();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method is called during FXML initialization to set up the UI elements for registering a new green space.
+&nbsp;     * - Sets the prompt text for the typology choice box.
+&nbsp;     * - Adds available green space types (&quot;Garden&quot;, &quot;Medium-Sized Park&quot;, &quot;Large-Sized Park&quot;) to the choice box.
+&nbsp;     * - Calls the `setGreenSpaceManager` method to set the green space manager.
+&nbsp;     */
+&nbsp;    @FXML
+&nbsp;    public void initializeRegisterGreenSpaceUI() {
+&nbsp;        try {
+<b class="nc">&nbsp;            initializetypologyChoiceBox();</b>
+<b class="nc">&nbsp;            setGreenSpaceManager();</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;eero&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Initializes the typology choice box with available green space typologies.
+&nbsp;     */
+&nbsp;    private void initializetypologyChoiceBox() {
+<b class="nc">&nbsp;        GreenSpaceTypology[] taskUrgencies= registerGreenSpaceController.getGreenSpaceTypologies();</b>
+<b class="nc">&nbsp;        typologyChoiceBox.setItems(FXCollections.observableArrayList(taskUrgencies));</b>
+<b class="nc">&nbsp;        typologyChoiceBox.setCellFactory(listView -&gt; new TypologyChoiceBoxNames());</b>
+<b class="nc">&nbsp;        typologyChoiceBox.setButtonCell(new TypologyChoiceBoxNames());</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Custom ListCell implementation for displaying GreenSpaceTypology names in the ComboBox.
+&nbsp;     */
+<b class="nc">&nbsp;    private static class TypologyChoiceBoxNames extends ListCell&lt;GreenSpaceTypology&gt; {</b>
+&nbsp;
+&nbsp;        @Override
+&nbsp;        public void updateItem(GreenSpaceTypology item, boolean empty) {
+<b class="nc">&nbsp;            super.updateItem(item, empty);</b>
+<b class="nc">&nbsp;            if (item != null) {</b>
+&nbsp;
+<b class="nc">&nbsp;                setText(item.toString());</b>
+&nbsp;
+<b class="nc">&nbsp;            } else if (empty || item == null) {</b>
+<b class="nc">&nbsp;                setText(&quot;Select Green Space Type&quot;);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                setText(null);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Sets the green space manager label based on the current user&#39;s login status.
+&nbsp;     */
+&nbsp;    @FXML
+&nbsp;    private void setGreenSpaceManager() {
+<b class="nc">&nbsp;        if (RegisterGreenSpaceController.currentUserLogInValidation()) {</b>
+<b class="nc">&nbsp;            if(RegisterGreenSpaceController.matchEmployeeByRole() != null) {</b>
+<b class="nc">&nbsp;                greenSpaceManagerLabel.setText(Objects.requireNonNull(RegisterGreenSpaceController.matchEmployeeByRole()).getEmail());</b>
+&nbsp;            }else{
+<b class="nc">&nbsp;                greenSpaceManagerLabel.setText(&quot;user not registered in employees&quot;);</b>
+&nbsp;            }
+&nbsp;        } else {
+<b class="nc">&nbsp;            greenSpaceManagerLabel.setText(&quot;Not Logged In&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method is called when the &quot;Register&quot; button is clicked.
+&nbsp;     * It handles the registration process for a new green space.
+&nbsp;     * - Validates user input.
+&nbsp;     * - Extracts user input from UI controls.
+&nbsp;     * - Checks for existing green space with the same name and address.
+&nbsp;     * - Registers the new green space if no conflicts are found.
+&nbsp;     * - Displays appropriate messages based on the outcome.
+&nbsp;     */
+&nbsp;    public void handleRegisterButtonAction() {
+<b class="nc">&nbsp;        if (!validateInput()) {</b>
+&nbsp;            return;
+&nbsp;        }
+<b class="nc">&nbsp;        if (!confirmsData()) {</b>
+&nbsp;            return;
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        String name = nameField.getText();</b>
+<b class="nc">&nbsp;        String address = addressField.getText();</b>
+&nbsp;        double area;
+&nbsp;        try {
+<b class="nc">&nbsp;            area = parseAreaField(areaField.getText().trim());</b>
+<b class="nc">&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc">&nbsp;            messageLabel.setText(&quot;Invalid area. Please enter a valid number.&quot;);</b>
+&nbsp;            return;
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        GreenSpaceTypology typology = (GreenSpaceTypology) typologyChoiceBox.getValue();</b>
+<b class="nc">&nbsp;        String greenSpaceManager = greenSpaceManagerLabel.getText();</b>
+&nbsp;
+<b class="nc">&nbsp;        if (RegisterGreenSpaceController.currentUserLogInValidation()) {</b>
+<b class="nc">&nbsp;            if (existsWithName(name)) {</b>
+<b class="nc">&nbsp;                messageLabel.setText(&quot;Failed to register green space. A green space with the same name already exists.&quot;);</b>
+&nbsp;                return;
+&nbsp;            }
+<b class="nc">&nbsp;            if (RegisterGreenSpaceController.existsWithAddress(address)) {</b>
+<b class="nc">&nbsp;                messageLabel.setText(&quot;Failed to register green space. A green space with the same address already exists.&quot;);</b>
+&nbsp;                return;
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            Optional&lt;GreenSpace&gt; registerGreenSpace = RegisterGreenSpaceController.registerGreenSpace(</b>
+&nbsp;                    name, address, area, typology, greenSpaceManager);
+<b class="nc">&nbsp;            if (registerGreenSpace.isPresent()) {</b>
+<b class="nc">&nbsp;                messageLabel.setText(&quot;Green space registered successfully!&quot;);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                messageLabel.setText(&quot;Failed to register green space. An error occurred.&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } else {</b>
+<b class="nc">&nbsp;            messageLabel.setText(&quot;You do not have permission to register green spaces.&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (addAnotherGreenSpace()) {</b>
+<b class="nc">&nbsp;            resetAllFields();</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            Stage stage = (Stage) messageLabel.getScene().getWindow();</b>
+<b class="nc">&nbsp;            stage.close();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Validates the input fields for registering a green space.
+&nbsp;     *
+&nbsp;     * @return True if the input is valid, false otherwise.
+&nbsp;     */
+&nbsp;    private boolean validateInput() {
+<b class="nc">&nbsp;        if (nameField.getText().trim().isEmpty() ||</b>
+<b class="nc">&nbsp;                addressField.getText().trim().isEmpty() ||</b>
+<b class="nc">&nbsp;                areaField.getText().trim().isEmpty() ||</b>
+<b class="nc">&nbsp;                typologyChoiceBox.getValue() == null) {</b>
+<b class="nc">&nbsp;            messageLabel.setText(&quot;Please choose a type for green space&quot;);</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (!nameField.getText().matches(&quot;[a-zA-Z\\s]+&quot;)) {</b>
+<b class="nc">&nbsp;            messageLabel.setText(&quot;Invalid name. Only letters and spaces are allowed.&quot;);</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (!areaField.getText().matches(&quot;[0-9.,]+&quot;)) {</b>
+<b class="nc">&nbsp;            messageLabel.setText(&quot;Invalid area - only digits accepted&quot;);</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Parses the given string to a {@code double} representing an area.
+&nbsp;     * This method attempts to convert the input string to a {@code double} value.
+&nbsp;     *
+&nbsp;     * @param areaText the string to be parsed as a {@code double}.
+&nbsp;     * @return the parsed {@code double} value.
+&nbsp;     * @throws NumberFormatException if the string cannot be parsed as a {@code double}.
+&nbsp;     */
+&nbsp;    private double parseAreaField(String areaText) throws NumberFormatException {
+<b class="nc">&nbsp;        return Double.parseDouble(areaText);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Resets all input fields in the form.
+&nbsp;     */
+&nbsp;    private void resetAllFields() {
+<b class="nc">&nbsp;        nameField.setText(&quot;&quot;);</b>
+<b class="nc">&nbsp;        addressField.setText(&quot;&quot;);</b>
+<b class="nc">&nbsp;        areaField.setText(&quot;&quot;);</b>
+<b class="nc">&nbsp;        typologyChoiceBox.getSelectionModel().clearSelection();</b>
+<b class="nc">&nbsp;        typologyChoiceBox.setValue(null);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Displays a confirmation dialog to confirm the submission of the new green space.
+&nbsp;     *
+&nbsp;     * @return True if the user confirms the submission, false otherwise.
+&nbsp;     */
+&nbsp;    private boolean confirmsData() {
+<b class="nc">&nbsp;        ButtonType yes = new ButtonType(&quot;Yes&quot;, ButtonBar.ButtonData.OK_DONE);</b>
+<b class="nc">&nbsp;        ButtonType no = new ButtonType(&quot;No&quot;, ButtonBar.ButtonData.CANCEL_CLOSE);</b>
+<b class="nc">&nbsp;        Alert alert = new Alert(Alert.AlertType.INFORMATION,</b>
+&nbsp;                &quot;Confirm submission?&quot;,
+&nbsp;                yes,
+&nbsp;                no);
+&nbsp;
+<b class="nc">&nbsp;        alert.setTitle(&quot;Green space registered&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        Optional&lt;ButtonType&gt; result = alert.showAndWait();</b>
+<b class="nc">&nbsp;        if (result.orElse(yes) == yes) {</b>
+<b class="nc">&nbsp;            return true;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Prompts the user after a successful task addition to see if they want to add another task.
+&nbsp;     *
+&nbsp;     * @return True if the user wants to add another task, false otherwise.
+&nbsp;     */
+&nbsp;    private boolean addAnotherGreenSpace() {
+<b class="nc">&nbsp;        ButtonType yes = new ButtonType(&quot;Yes&quot;, ButtonBar.ButtonData.OK_DONE);</b>
+<b class="nc">&nbsp;        ButtonType no = new ButtonType(&quot;No&quot;, ButtonBar.ButtonData.CANCEL_CLOSE);</b>
+<b class="nc">&nbsp;        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,</b>
+&nbsp;                &quot;Green space registered, do you wish to register another?&quot;,
+&nbsp;                yes,
+&nbsp;                no);
+&nbsp;
+<b class="nc">&nbsp;        alert.setTitle(&quot;Green space successfully registered&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        Optional&lt;ButtonType&gt; result = alert.showAndWait();</b>
+<b class="nc">&nbsp;        if (result.orElse(yes) == yes) {</b>
+<b class="nc">&nbsp;            return true;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

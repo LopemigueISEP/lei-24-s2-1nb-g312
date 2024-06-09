@@ -1,0 +1,273 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > AssignVehicleToAgendaEntryController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.application.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: AssignVehicleToAgendaEntryController (pt.ipp.isep.dei.g312.application.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AssignVehicleToAgendaEntryController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/49)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.application.controller;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Task;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Vehicle;
+&nbsp;import pt.ipp.isep.dei.g312.repository.EmployeeRepository;
+&nbsp;import pt.ipp.isep.dei.g312.repository.Repositories;
+&nbsp;import pt.ipp.isep.dei.g312.repository.TaskRepository;
+&nbsp;import pt.ipp.isep.dei.g312.repository.VehicleRepository;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * Controller class to manage the assignment of vehicles to agenda entries.
+&nbsp; */
+&nbsp;public class AssignVehicleToAgendaEntryController {
+&nbsp;
+&nbsp;
+&nbsp;    private EmployeeRepository employeeRepository;
+&nbsp;    private TaskRepository taskRepository;
+&nbsp;    private VehicleRepository vehicleRepository;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructor to initialize repositories.
+&nbsp;     */
+<b class="nc">&nbsp;    public AssignVehicleToAgendaEntryController(){</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            this.employeeRepository = getEmployeeRepository();</b>
+<b class="nc">&nbsp;            this.taskRepository = getTaskRepository();</b>
+<b class="nc">&nbsp;            this.vehicleRepository = getVehicleRepository();</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in initializing repositories&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets the EmployeeRepository, initializing it if necessary.
+&nbsp;     *
+&nbsp;     * @return the EmployeeRepository instance
+&nbsp;     */
+&nbsp;    private EmployeeRepository getEmployeeRepository() {
+&nbsp;
+<b class="nc">&nbsp;        if (employeeRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            employeeRepository = repositories.getEmployeeRepository();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return employeeRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets the TaskRepository, initializing it if necessary.
+&nbsp;     *
+&nbsp;     * @return the TaskRepository instance
+&nbsp;     */
+&nbsp;    private TaskRepository getTaskRepository(){
+&nbsp;
+<b class="nc">&nbsp;        if(taskRepository == null){</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            taskRepository = repositories.getTaskRepository();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return taskRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets the VehicleRepository, initializing it if necessary.
+&nbsp;     *
+&nbsp;     * @return the VehicleRepository instance
+&nbsp;     */
+&nbsp;    private VehicleRepository getVehicleRepository(){
+&nbsp;
+<b class="nc">&nbsp;        if (vehicleRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            vehicleRepository = repositories.getVehicleRepository();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return vehicleRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves all available tasks except those that are done or canceled.
+&nbsp;     *
+&nbsp;     * @return a list of available tasks
+&nbsp;     */
+&nbsp;    public List&lt;Task&gt; getAvailableTasks(){
+&nbsp;        List&lt;Task&gt; listAvailableTasks;
+&nbsp;        try{
+<b class="nc">&nbsp;            listAvailableTasks = taskRepository.getAllAgendaTasksExceptDoneCanceled();</b>
+&nbsp;
+<b class="nc">&nbsp;        }catch (NullPointerException nullPointerException) {</b>
+<b class="nc">&nbsp;            listAvailableTasks = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;no data in tasksExceptDoneCanceled in AssignVehicleToAgendaEntryController&quot;,nullPointerException);</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in getAvailableTasks in AssignVehicleToAgendaEntryController&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return listAvailableTasks;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves all available vehicles that can assign to a selected task.
+&nbsp;     *
+&nbsp;     * @param taskSelected the selected task
+&nbsp;     * @return a list of available vehicles
+&nbsp;     */
+&nbsp;    public List&lt;Vehicle&gt; getAvailableVehicles(Task taskSelected){
+&nbsp;
+&nbsp;        List&lt;Vehicle&gt; listAvailableVehicles;
+&nbsp;        try {
+<b class="nc">&nbsp;            listAvailableVehicles = taskRepository.getVehicleAvaiability(taskSelected, vehicleRepository.getVehicles());</b>
+<b class="nc">&nbsp;        }catch (NullPointerException nullPointerException) {</b>
+<b class="nc">&nbsp;            listAvailableVehicles = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;no data in getVehicleAvaiability in AssignVehicleToAgendaEntryController&quot;,nullPointerException);</b>
+<b class="nc">&nbsp;        }catch (Exception e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in getAvailableVehicles in AssignVehicleToAgendaEntryController&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return listAvailableVehicles;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves all vehicles assigned to a specific task.
+&nbsp;     *
+&nbsp;     * @param task the task to get assigned vehicles for
+&nbsp;     * @return a list of assigned vehicles
+&nbsp;     */
+&nbsp;    public List&lt;Vehicle&gt; getTaskAssignedVehicles(Task task){
+&nbsp;        List&lt;Vehicle&gt; taskAssignedVehicles;
+&nbsp;
+&nbsp;        try {
+<b class="nc">&nbsp;            taskAssignedVehicles = task.getAssignedVehicles();</b>
+&nbsp;
+<b class="nc">&nbsp;        }catch (NullPointerException npe){</b>
+<b class="nc">&nbsp;            taskAssignedVehicles = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;no data in getAssignedVehicles in getTaskAssignedVehicles&quot;,npe);</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in getTaskAssignedVehicles in AssignVehicleToAgendaEntryController&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return taskAssignedVehicles;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Assigns a vehicle to a specific task.
+&nbsp;     *
+&nbsp;     * @param vehicle the vehicle to assign
+&nbsp;     * @param task the task to assign the vehicle to
+&nbsp;     */
+&nbsp;    public void assignVehicleToTask(Vehicle vehicle, Task task){
+&nbsp;        try {
+<b class="nc">&nbsp;            task.assignVehicle(vehicle);</b>
+<b class="nc">&nbsp;        }catch (NullPointerException nullPointerException){</b>
+<b class="nc">&nbsp;            throw  new RuntimeException(&quot;doesn&#39;t found the vehicle list in task&quot;,nullPointerException);</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in assigneVehicleToTask in AssignVehicleToAgendaEntryController&quot;, e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

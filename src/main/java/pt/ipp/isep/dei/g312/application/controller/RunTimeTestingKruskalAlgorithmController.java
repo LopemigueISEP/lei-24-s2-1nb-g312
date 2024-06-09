@@ -10,7 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
-import static jdk.internal.org.jline.utils.InfoCmp.Capability.lines;
+
 
 public class RunTimeTestingKruskalAlgorithmController {
     private String folderPath;

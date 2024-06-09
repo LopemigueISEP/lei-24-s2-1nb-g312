@@ -1,0 +1,197 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Skill</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.domain</a>
+</div>
+
+<h1>Coverage Summary for Class: Skill (pt.ipp.isep.dei.g312.domain)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Skill</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/11)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.domain;
+&nbsp;
+&nbsp;import java.io.Serializable;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * Represents a skill that has a skill name and description.
+&nbsp; * Provides methods to access and modify the skill attributes, and implements Comparable to enable sorting by skill name.
+&nbsp; */
+&nbsp;public class Skill implements Comparable&lt;Skill&gt;, Serializable {
+&nbsp;
+&nbsp;    private String skillName;
+&nbsp;    private String skillDescription;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a Skill object with the specified name and description.
+&nbsp;     *
+&nbsp;     * @param skillName        The name of the skill.
+&nbsp;     * @param skillDescription The description of the skill.
+&nbsp;     */
+<b class="fc">&nbsp;    public Skill(String skillName, String skillDescription){</b>
+<b class="fc">&nbsp;        this.skillName = skillName;</b>
+<b class="fc">&nbsp;        this.skillDescription = skillDescription;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets the name of the skill.
+&nbsp;     *
+&nbsp;     * @return The skill name.
+&nbsp;     */
+&nbsp;    public String getSkillName() {
+<b class="fc">&nbsp;        return skillName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sets the name of the skill.
+&nbsp;     *
+&nbsp;     * @param skillName The new name for the skill.
+&nbsp;     */
+&nbsp;    public void setSkillName(String skillName) {
+<b class="fc">&nbsp;        this.skillName = skillName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets the description of the skill.
+&nbsp;     *
+&nbsp;     * @return The skill description.
+&nbsp;     */
+&nbsp;    public String getSkillDescription() {
+<b class="fc">&nbsp;        return skillDescription;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sets the description of the skill.
+&nbsp;     *
+&nbsp;     * @param skillDescription The new description for the skill.
+&nbsp;     */
+&nbsp;    public void setSkillDescription(String skillDescription) {
+<b class="fc">&nbsp;        this.skillDescription = skillDescription;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates a clone of the current skill object.
+&nbsp;     *
+&nbsp;     * @return A new Skill object that is a copy of the current instance.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Skill clone(){
+<b class="fc">&nbsp;        return new Skill(this.skillName,this.skillDescription);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Compares this skill with another skill based on their names.
+&nbsp;     *
+&nbsp;     * @param o The skill to be compared.
+&nbsp;     * @return A negative integer, zero, or a positive integer as this skill is less than, equal to, or greater than the specified skill.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public int compareTo(Skill o) {
+<b class="fc">&nbsp;        return this.skillName.compareTo(o.getSkillName());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean equals(Object skill) {
+<b class="fc">&nbsp;        Skill newskill= (Skill) skill;</b>
+<b class="fc">&nbsp;        return this.getSkillName().equals(newskill.getSkillName());</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

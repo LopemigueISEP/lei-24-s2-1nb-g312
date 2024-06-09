@@ -1,0 +1,239 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > AssignTeamEntryAgendaController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.application.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: AssignTeamEntryAgendaController (pt.ipp.isep.dei.g312.application.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AssignTeamEntryAgendaController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/28)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.application.controller;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.domain.*;
+&nbsp;import pt.ipp.isep.dei.g312.repository.GreenSpaceRepository;
+&nbsp;import pt.ipp.isep.dei.g312.repository.Repositories;
+&nbsp;import pt.ipp.isep.dei.g312.repository.TaskRepository;
+&nbsp;import pt.ipp.isep.dei.g312.repository.TeamRepository;
+&nbsp;import pt.ipp.isep.dei.g312.ui.console.utils.Email;
+&nbsp;import pt.ipp.isep.dei.g312.ui.console.utils.EmailService;
+&nbsp;
+&nbsp;import java.io.FileInputStream;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Properties;
+&nbsp;import java.util.stream.Collectors;
+&nbsp;
+&nbsp;/**
+&nbsp; * Controller class responsible for managing the assignment of teams to tasks.
+&nbsp; */
+&nbsp;public class AssignTeamEntryAgendaController {
+&nbsp;
+&nbsp;    private TeamRepository teamRepository;
+&nbsp;    private TaskRepository taskRepository;
+&nbsp;    private GreenSpaceRepository greenSpaceRepository;
+&nbsp;    private EmailService emailService;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructor for AssignTeamEntryAgendaController.
+&nbsp;     * Initializes the repositories and email service.
+&nbsp;     */
+<b class="nc">&nbsp;    public AssignTeamEntryAgendaController() {</b>
+<b class="nc">&nbsp;        this.taskRepository = getTaskRepository();</b>
+<b class="nc">&nbsp;        this.teamRepository = getTeamRepository();</b>
+<b class="nc">&nbsp;        this.greenSpaceRepository = getGreenSpaceRepository();</b>
+<b class="nc">&nbsp;        this.emailService = new Email();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets the team repository instance.
+&nbsp;     * @return the team repository instance
+&nbsp;     */
+&nbsp;    private TeamRepository getTeamRepository() {
+<b class="nc">&nbsp;        return Repositories.getInstance().getTeamRepository();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets the task repository instance.
+&nbsp;     * @return the task repository instance
+&nbsp;     */
+&nbsp;    private TaskRepository getTaskRepository() {
+<b class="nc">&nbsp;        return Repositories.getInstance().getTaskRepository();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets the green space repository instance.
+&nbsp;     * @return the green space repository instance
+&nbsp;     */
+&nbsp;    private GreenSpaceRepository getGreenSpaceRepository() {
+<b class="nc">&nbsp;        return Repositories.getInstance().getGreenSpaceRepository();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Assigns a team to a task and sends an email notification.
+&nbsp;     * @param team the team to assign
+&nbsp;     * @param task the task to assign the team to
+&nbsp;     * @return true if the team was successfully assigned and the email was sent, false otherwise
+&nbsp;     */
+&nbsp;    public boolean assignTeamToTask(Team team, Task task) {
+<b class="nc">&nbsp;        if (Employee.assignTeamToTask(team, task).isPresent()) {</b>
+<b class="nc">&nbsp;            return emailService.assignTaskToTeamEmail(task);  // envia o email e retorna o resultado</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Lists the teams that are available for a selected task.
+&nbsp;     * @param task the task to check for team availability
+&nbsp;     * @return a list of available teams
+&nbsp;     */
+&nbsp;    public List&lt;Team&gt; listAvailableTeams(Task task) {
+<b class="nc">&nbsp;        List&lt;Team&gt; availableTeams = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (Team team : teamRepository.getAllTeams()) {</b>
+<b class="nc">&nbsp;            List&lt;Task&gt; teamTasks = taskRepository.getAllTeamTasks(team);</b>
+<b class="nc">&nbsp;            boolean isAvailable = taskRepository.teamAvailability(teamTasks, task);</b>
+<b class="nc">&nbsp;            if (isAvailable) {</b>
+<b class="nc">&nbsp;                availableTeams.add(team);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return availableTeams;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Lists the tasks that are not done or cancelled.
+&nbsp;     * @return a list of unfinished tasks
+&nbsp;     */
+&nbsp;    public List&lt;Task&gt; listUnfinishedTasks() {
+<b class="nc">&nbsp;        List&lt;Task&gt; tasklist = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (Task task : taskRepository.getAgenda()) {</b>
+<b class="nc">&nbsp;            if (!task.getStatus().equals(TaskStatus.CANCELED) || !task.getStatus().equals(TaskStatus.DONE)) {</b>
+<b class="nc">&nbsp;                tasklist.add(task);</b>
+&nbsp;
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return tasklist;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets the tasks in the agenda.
+&nbsp;     * @return a list of all tasks in the agenda
+&nbsp;     */
+&nbsp;    public List&lt;Task&gt; getAgenda() {
+<b class="nc">&nbsp;        return taskRepository.getAgenda();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets the list of all green spaces.
+&nbsp;     * @return a list of green spaces
+&nbsp;     */
+&nbsp;    public List&lt;GreenSpace&gt; getGreenSpaces() {
+<b class="nc">&nbsp;        return greenSpaceRepository.getGreenSpaceList();</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets the tasks assigned to a specific green space for a team.
+&nbsp;     * @param greenSpace the green space to get tasks for
+&nbsp;     * @return a list of tasks for the specified green space
+&nbsp;     */
+&nbsp;    public List&lt;Task&gt; getTasksByGreenSpaceForTeam(GreenSpace greenSpace) {
+<b class="nc">&nbsp;        return taskRepository.getTasksByGreenSpaceForTeam(greenSpace);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

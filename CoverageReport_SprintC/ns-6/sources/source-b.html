@@ -1,0 +1,296 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > VehicleRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.repository</a>
+</div>
+
+<h1>Coverage Summary for Class: VehicleRepository (pt.ipp.isep.dei.g312.repository)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">VehicleRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    60%
+  </span>
+  <span class="absValue">
+    (6/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    45%
+  </span>
+  <span class="absValue">
+    (27/60)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.repository;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Job;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Organization;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Vehicle;
+&nbsp;
+&nbsp;import java.io.*;
+&nbsp;import java.util.*;
+&nbsp;
+<b class="fc">&nbsp;public class VehicleRepository implements Serializable {</b>
+&nbsp;
+&nbsp;    // list of vehicles
+<b class="fc">&nbsp;    public List&lt;Vehicle&gt; vehiclesList = new ArrayList&lt;&gt;();</b>
+&nbsp;
+&nbsp;
+&nbsp;    /** Retrieves a Vehicle object from the repository based on its registration plate.
+&nbsp;     * This method iterates through the list of vehicles and returns the vehicle if its registration
+&nbsp;     * plate matches the provided string.
+&nbsp;     *
+&nbsp;     * @param registrationPlate the registration plate of the vehicle to be retrieved.
+&nbsp;     * @return Vehicle object with the matching registration plate.
+&nbsp;     * @throws NoSuchElementException if no vehicle with the given registration plate is found in the repository.
+&nbsp;     */
+&nbsp;    public Vehicle getVehicle(String registrationPlate) {
+<b class="fc">&nbsp;        for (Vehicle vehicle : vehiclesList) {</b>
+<b class="fc">&nbsp;            if (vehicle.getRegistrationPlate().equals(registrationPlate)) {</b>
+<b class="fc">&nbsp;                return vehicle;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="fc">&nbsp;        throw new NoSuchElementException(&quot;Vehicle not found&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Vehicle&gt; getVehicles() {
+<b class="nc">&nbsp;        return new ArrayList&lt;&gt;(vehiclesList);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /** Updates the details of an existing vehicle in the repository. This method iterates through the
+&nbsp;     * list of vehicles and replaces the old vehicle with the provided vehicle object if their
+&nbsp;     * registration plates match. The operation is based on the registration plate.
+&nbsp;     *
+&nbsp;     * @param vehicle the object that contains the updated details. It must have a
+&nbsp;     *                registration plate that matches an existing vehicle in the repository.
+&nbsp;     */
+&nbsp;    public void updateVehicle(Vehicle vehicle) {
+<b class="fc">&nbsp;        for (int i = 0; i &lt; vehiclesList.size(); i++) {</b>
+<b class="fc">&nbsp;            if (vehiclesList.get(i).getRegistrationPlate().equals(vehicle.getRegistrationPlate())) {</b>
+<b class="fc">&nbsp;                vehiclesList.set(i, vehicle);</b>
+&nbsp;                return;
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Checks if a vehicle exists in the repository.
+&nbsp;     *
+&nbsp;     * @param vehicle The vehicle to check.
+&nbsp;     * @return True if the vehicle exists in the repository, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean existsVehicle(Vehicle vehicle){
+<b class="nc">&nbsp;        if (vehiclesList.contains(vehicle)) {</b>
+<b class="nc">&nbsp;            return true;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Checks if a vehicle with the given registration plate exists in the repository.
+&nbsp;     *
+&nbsp;     * @param registrationPlate The registration plate to check.
+&nbsp;     * @return True if a vehicle with the given registration plate exists, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean existsVehicle(String registrationPlate){
+<b class="fc">&nbsp;        if (registrationPlate == null) {</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        List&lt;Vehicle&gt; vehicles = new ArrayList&lt;&gt;(vehiclesList);</b>
+<b class="fc">&nbsp;        if (vehicles == null) {</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        for (Vehicle v : vehicles) {</b>
+<b class="fc">&nbsp;            if (registrationPlate.equalsIgnoreCase(v.getRegistrationPlate())) {</b>
+<b class="fc">&nbsp;                return true;</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Adds a new vehicle to the repository.
+&nbsp;     *
+&nbsp;     * @param vehicle The vehicle to add.
+&nbsp;     * @return An Optional containing the added vehicle if the operation is successful, empty otherwise.
+&nbsp;     */
+&nbsp;    public Optional&lt;Vehicle&gt; add(Vehicle vehicle) {
+<b class="fc">&nbsp;        Optional&lt;Vehicle&gt; newVehicle=Optional.empty();</b>
+<b class="fc">&nbsp;        boolean operationSuccess=false;</b>
+&nbsp;
+<b class="fc">&nbsp;        if (validateVehicle(vehicle) &amp;&amp; !existsVehicle(vehicle.getRegistrationPlate())){</b>
+<b class="fc">&nbsp;            newVehicle=Optional.of(vehicle.clone());</b>
+<b class="fc">&nbsp;            operationSuccess=vehiclesList.add(newVehicle.get());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (!operationSuccess){</b>
+<b class="fc">&nbsp;            newVehicle=Optional.empty();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return newVehicle;</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Validates whether a vehicle is not already present in the repository.
+&nbsp;     *
+&nbsp;     * @param vehicle The vehicle to validate.
+&nbsp;     * @return True if the vehicle is not already present in the repository, false otherwise.
+&nbsp;     */
+&nbsp;    private boolean validateVehicle(Vehicle vehicle) {
+<b class="fc">&nbsp;        boolean isValid = !vehiclesList.contains(vehicle);</b>
+&nbsp;
+<b class="fc">&nbsp;        return isValid;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Serializes the VehicleRepository object to a file.
+&nbsp;     * The repository is saved to a file named after the class with a &quot;.bin&quot; extension.
+&nbsp;     * This method handles the serialization process and writes the object state to a file.
+&nbsp;     */
+&nbsp;    public void serializateData() {
+&nbsp;
+<b class="nc">&nbsp;        String filename = this.getClass().getSimpleName()+&quot;.bin&quot;;</b>
+&nbsp;
+&nbsp;        // Serialization
+&nbsp;        try {
+&nbsp;
+&nbsp;            // Saving of object in a file
+<b class="nc">&nbsp;            FileOutputStream file = new FileOutputStream</b>
+&nbsp;                    (filename);
+<b class="nc">&nbsp;            ObjectOutputStream out = new ObjectOutputStream</b>
+&nbsp;                    (file);
+&nbsp;
+&nbsp;            // Method for serialization of object
+<b class="nc">&nbsp;            out.writeObject(this);</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;            out.close();</b>
+<b class="nc">&nbsp;            file.close();</b>
+&nbsp;
+<b class="nc">&nbsp;            System.out.println(this.getClass().getSimpleName()+&quot; Has Been Serialized successfully! &quot;);</b>
+<b class="nc">&nbsp;        } catch (FileNotFoundException ex) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;IOException is caught&quot;);</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Deserializes the VehicleRepository object from a file and adds the vehicles to the current repository.
+&nbsp;     * The repository is read from a file named after the class with a &quot;.bin&quot; extension.
+&nbsp;     * This method handles the deserialization process and reads the object state from a file.
+&nbsp;     */
+&nbsp;    public void getSeralizatedData() {
+<b class="nc">&nbsp;        String filename = this.getClass().getSimpleName()+&quot;.bin&quot;;</b>
+&nbsp;
+&nbsp;        try {
+&nbsp;
+&nbsp;            // Reading the object from a file
+<b class="nc">&nbsp;            FileInputStream file = new FileInputStream</b>
+&nbsp;                    (filename);
+<b class="nc">&nbsp;            ObjectInputStream in = new ObjectInputStream</b>
+&nbsp;                    (file);
+&nbsp;
+&nbsp;            // Method for deserialization of object
+<b class="nc">&nbsp;            VehicleRepository vehicleRepository = (VehicleRepository) in.readObject();</b>
+&nbsp;
+<b class="nc">&nbsp;            for (Vehicle j :vehicleRepository.getVehicles()){</b>
+<b class="nc">&nbsp;                this.add(j);</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;
+<b class="nc">&nbsp;            in.close();</b>
+<b class="nc">&nbsp;            file.close();</b>
+&nbsp;
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        catch (IOException ex) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;IOException is caught&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        catch (ClassNotFoundException ex) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;ClassNotFoundException&quot; +</b>
+&nbsp;                    &quot; is caught&quot;);
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

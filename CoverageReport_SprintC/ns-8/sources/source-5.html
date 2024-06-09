@@ -1,0 +1,214 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > ImportCSVUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui.console</a>
+</div>
+
+<h1>Coverage Summary for Class: ImportCSVUI (pt.ipp.isep.dei.g312.ui.console)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ImportCSVUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/40)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui.console;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.application.controller.ImportCSVController;
+&nbsp;import pt.ipp.isep.dei.g312.domain.CSVFile;
+&nbsp;import pt.ipp.isep.dei.g312.domain.CSVLine;
+&nbsp;import pt.ipp.isep.dei.g312.ui.console.utils.Result;
+&nbsp;
+&nbsp;
+&nbsp;import java.io.File;
+&nbsp;import java.io.FileNotFoundException;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;import java.util.Scanner;
+&nbsp;
+&nbsp;import static pt.ipp.isep.dei.g312.ui.console.utils.Utils.raiseAlertMessage;
+&nbsp;
+&nbsp;public class ImportCSVUI implements Runnable {
+&nbsp;
+&nbsp;    private ImportCSVController controller;
+&nbsp;    private String fileName;
+&nbsp;    private List&lt;CSVLine&gt; csvLines;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;    public ImportCSVUI() {</b>
+<b class="nc">&nbsp;        this.controller = new ImportCSVController();</b>
+<b class="nc">&nbsp;        this.csvLines = new ArrayList&lt;&gt;();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void run() {
+<b class="nc">&nbsp;        System.out.println(&quot;\n\n--- Import CSV ------------------------&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        Result result = new Result();</b>
+<b class="nc">&nbsp;        result = requestData();</b>
+<b class="nc">&nbsp;        if (!result.hasError) {</b>
+<b class="nc">&nbsp;            submitData();</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            raiseAlertMessage(result.message);</b>
+&nbsp;        }
+&nbsp;        //TODO: remove this print once the import is fixed
+<b class="nc">&nbsp;        for(CSVFile csvFile: controller.csvFileRepository.getCSVFiles()){</b>
+&nbsp;            //TODO: saves to the repo with out saving the lines
+<b class="nc">&nbsp;            System.out.println(&quot;CSV File: &quot;+csvFile.getFileName() + &quot; with &quot; + csvFile.getCsvLines().size() + &quot; lines.&quot;);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    private Result requestData() {
+<b class="nc">&nbsp;        Scanner in = new Scanner(System.in);</b>
+<b class="nc">&nbsp;        System.out.print(&quot;CSV File Path: &quot;);</b>
+<b class="nc">&nbsp;        File csv = new File(in.nextLine());</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            Scanner fileIn = new Scanner(csv);</b>
+<b class="nc">&nbsp;            fileName=csv.getName();</b>
+<b class="nc">&nbsp;            if (!controller.existsCSVFile(fileName)) {</b>
+<b class="nc">&nbsp;                while (fileIn.hasNextLine()) {</b>
+<b class="nc">&nbsp;                    String[] getter = fileIn.nextLine().split(&quot;;&quot;);</b>
+<b class="nc">&nbsp;                    String x = getter[0];</b>
+<b class="nc">&nbsp;                    String y = getter[1];</b>
+<b class="nc">&nbsp;                    double cost = Double.parseDouble(getter[2]);</b>
+<b class="nc">&nbsp;                    csvLines.add(new CSVLine(x, y, cost));</b>
+<b class="nc">&nbsp;                }</b>
+<b class="nc">&nbsp;                fileIn.close();</b>
+<b class="nc">&nbsp;                return new Result();</b>
+&nbsp;            } else {
+&nbsp;                //TODO: fazer com que o ficheiro pergunte se quer dar replace
+<b class="nc">&nbsp;                return new Result(&quot;A file with that name already exists&quot;, true);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } catch (FileNotFoundException e) {</b>
+<b class="nc">&nbsp;            return new Result(&quot;File not found&quot;, true);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    private void submitData() {
+<b class="nc">&nbsp;        Optional&lt;CSVFile&gt; csvFile = getController().createCSVFile(this.fileName, this.csvLines);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (csvFile.isPresent()){</b>
+<b class="nc">&nbsp;            System.out.println(&quot;CSV File successfully imported!&quot;);</b>
+&nbsp;
+&nbsp;        }
+<b class="nc">&nbsp;        this.csvLines.clear();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public ImportCSVController getController() {
+<b class="nc">&nbsp;        return controller;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setController(ImportCSVController controller) {
+<b class="nc">&nbsp;        this.controller = controller;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;CSVLine&gt; getCsvLines() {
+<b class="nc">&nbsp;        return csvLines;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setCsvLines(List&lt;CSVLine&gt; csvLines) {
+<b class="nc">&nbsp;        this.csvLines = csvLines;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getFileName() {
+<b class="nc">&nbsp;        return fileName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setFileName(String fileName) {
+<b class="nc">&nbsp;        this.fileName = fileName;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

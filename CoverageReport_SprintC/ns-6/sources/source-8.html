@@ -1,0 +1,270 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > SkillRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.repository</a>
+</div>
+
+<h1>Coverage Summary for Class: SkillRepository (pt.ipp.isep.dei.g312.repository)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SkillRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    57.1%
+  </span>
+  <span class="absValue">
+    (4/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    36%
+  </span>
+  <span class="absValue">
+    (18/50)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.repository;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Employee;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Skill;
+&nbsp;
+&nbsp;
+&nbsp;import java.io.*;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Collections;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;/**
+&nbsp; * The SkillRepository class manages a collection of skills.
+&nbsp; * It provides methods for adding, validating, and retrieving skills.
+&nbsp; */
+&nbsp;public class SkillRepository implements Serializable {
+&nbsp;
+&nbsp;    private final List&lt;Skill&gt; listOfSkills;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a SkillRepository object.
+&nbsp;     * Initializes the list of skills.
+&nbsp;     */
+<b class="fc">&nbsp;    public SkillRepository(){</b>
+<b class="fc">&nbsp;        listOfSkills = new ArrayList&lt;Skill&gt;();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Adds a skill to the repository.
+&nbsp;     *
+&nbsp;     * @param skill The skill to add
+&nbsp;     * @return True if the skill was successfully added, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean addSkillRep(Skill skill) {
+&nbsp;
+<b class="fc">&nbsp;        boolean operationSuccess = false;</b>
+&nbsp;
+<b class="fc">&nbsp;        if (validateSkill(skill)) {</b>
+<b class="fc">&nbsp;            operationSuccess = listOfSkills.add(skill.clone());</b>
+<b class="fc">&nbsp;            Collections.sort(listOfSkills);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (!operationSuccess) {</b>
+<b class="fc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return true;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Validates a skill before adding it to the repository.
+&nbsp;     *
+&nbsp;     * @param skill The skill to validate.
+&nbsp;     * @return true if the skill didn&#39;t exist in the repository and can be added, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean validateSkill(Skill skill) {
+<b class="fc">&nbsp;        for(Skill skl: listOfSkills){</b>
+<b class="fc">&nbsp;            if(skl.getSkillName().equals(skill.getSkillName())){</b>
+<b class="fc">&nbsp;                System.out.print(&quot;\nAlready existing skill&quot;);</b>
+<b class="fc">&nbsp;                return false;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Prints all skills in the repository.
+&nbsp;     */
+&nbsp;    public void printAllSkill(){
+<b class="nc">&nbsp;        for(Skill skl:listOfSkills){</b>
+<b class="nc">&nbsp;            if(skl!=null){</b>
+<b class="nc">&nbsp;                System.out.printf(&quot;%12s - Description: %s\n&quot;,skl.getSkillName(),skl.getSkillDescription());</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        System.out.println(&quot;------------------------------------------------&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves all skills from the repository.
+&nbsp;     *
+&nbsp;     * @return A list containing all skills.
+&nbsp;     */
+&nbsp;    public Optional&lt;List&lt;Skill&gt;&gt; getSkills(){
+<b class="fc">&nbsp;        Optional&lt;List&lt;Skill&gt;&gt; skillList = Optional.empty();</b>
+<b class="fc">&nbsp;        List&lt;Skill&gt; listSkills = new ArrayList&lt;&gt;(listOfSkills);</b>
+<b class="fc">&nbsp;        skillList= Optional.of(listSkills);</b>
+<b class="fc">&nbsp;        return skillList;</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Serializes the SkillRepository object to a file.
+&nbsp;     * The repository is saved to a file named after the class with a &quot;.bin&quot; extension.
+&nbsp;     * This method handles the serialization process and writes the object state to a file.
+&nbsp;     */
+&nbsp;    public void serializateData() {
+&nbsp;
+<b class="nc">&nbsp;        String filename = this.getClass().getSimpleName()+&quot;.bin&quot;;</b>
+&nbsp;
+&nbsp;        // Serialization
+&nbsp;        try {
+&nbsp;
+&nbsp;            // Saving of object in a file
+<b class="nc">&nbsp;            FileOutputStream file = new FileOutputStream</b>
+&nbsp;                    (filename);
+<b class="nc">&nbsp;            ObjectOutputStream out = new ObjectOutputStream</b>
+&nbsp;                    (file);
+&nbsp;
+&nbsp;            // Method for serialization of object
+<b class="nc">&nbsp;            out.writeObject(this);</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;            out.close();</b>
+<b class="nc">&nbsp;            file.close();</b>
+&nbsp;
+<b class="nc">&nbsp;            System.out.println(this.getClass().getSimpleName()+&quot; Has Been Serialized successfully! &quot;);</b>
+<b class="nc">&nbsp;        } catch (FileNotFoundException ex) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;IOException is caught&quot;);</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Deserializes the SkillRepository object from a file and adds the skills to the current repository.
+&nbsp;     * The repository is read from a file named after the class with a &quot;.bin&quot; extension.
+&nbsp;     * This method handles the deserialization process and reads the object state from a file.
+&nbsp;     */
+&nbsp;    public void getSeralizatedData() {
+<b class="nc">&nbsp;        String filename = this.getClass().getSimpleName()+&quot;.bin&quot;;</b>
+&nbsp;
+&nbsp;        try {
+&nbsp;
+&nbsp;            // Reading the object from a file
+<b class="nc">&nbsp;            FileInputStream file = new FileInputStream</b>
+&nbsp;                    (filename);
+<b class="nc">&nbsp;            ObjectInputStream in = new ObjectInputStream</b>
+&nbsp;                    (file);
+&nbsp;
+&nbsp;            // Method for deserialization of object
+<b class="nc">&nbsp;            SkillRepository skillRepo = (SkillRepository) in.readObject();</b>
+&nbsp;
+&nbsp;            for (Skill s :
+<b class="nc">&nbsp;                    skillRepo.getSkills().get()) {</b>
+<b class="nc">&nbsp;                this.addSkillRep(s);</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;            
+<b class="nc">&nbsp;            in.close();</b>
+<b class="nc">&nbsp;            file.close();</b>
+&nbsp;
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        catch (IOException ex) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;IOException is caught&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        catch (ClassNotFoundException ex) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;ClassNotFoundException&quot; +</b>
+&nbsp;                    &quot; is caught&quot;);
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

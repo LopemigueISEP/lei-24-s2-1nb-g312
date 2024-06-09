@@ -1,0 +1,294 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Bootstrap</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui</a>
+</div>
+
+<h1>Coverage Summary for Class: Bootstrap (pt.ipp.isep.dei.g312.ui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Bootstrap</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/50)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.domain.*;
+&nbsp;import pt.ipp.isep.dei.g312.repository.*;
+&nbsp;import pt.ipp.isep.dei.g312.application.controller.authorization.AuthenticationController;
+&nbsp;import pt.ipp.isep.dei.g312.ui.console.utils.Utils;
+&nbsp;
+&nbsp;import java.text.ParseException;
+&nbsp;import java.text.SimpleDateFormat;
+&nbsp;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Date;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;import java.util.logging.Level;
+&nbsp;import java.util.logging.Logger;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;public class Bootstrap implements Runnable {</b>
+&nbsp;
+&nbsp;
+&nbsp;    public void run() {
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        addOrganization();</b>
+<b class="nc">&nbsp;        addUsers();</b>
+<b class="nc">&nbsp;        addSkills();</b>
+<b class="nc">&nbsp;        addJobs();</b>
+<b class="nc">&nbsp;        addGreenSpaces();</b>
+&nbsp;
+&nbsp;        try {
+&nbsp;
+<b class="nc">&nbsp;            addVehicles();</b>
+<b class="nc">&nbsp;            addEmployes();</b>
+<b class="nc">&nbsp;            addTasks();</b>
+<b class="nc">&nbsp;            addTeams();</b>
+<b class="nc">&nbsp;        } catch (ParseException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * TODO:Adicionar aqui todos os repositórios
+&nbsp;     */
+&nbsp;    public void saveSeralization(){
+<b class="nc">&nbsp;        Repositories.getInstance().getSkillRepository().serializateData();</b>
+<b class="nc">&nbsp;        Repositories.getInstance().getGreenSpaceRepository().serializateData();</b>
+<b class="nc">&nbsp;        Repositories.getInstance().getJobRepository().serializateData();</b>
+<b class="nc">&nbsp;        Repositories.getInstance().getTaskRepository().serializateData();</b>
+<b class="nc">&nbsp;        Repositories.getInstance().getVehicleRepository().serializateData();</b>
+<b class="nc">&nbsp;        Repositories.getInstance().getEmployeeRepository().serializateData();</b>
+<b class="nc">&nbsp;        Repositories.getInstance().getTeamRepository().serializateData();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void addEmployes() {
+<b class="nc">&nbsp;        EmployeeRepository employeeRepository = Repositories.getInstance().getEmployeeRepository();</b>
+<b class="nc">&nbsp;        employeeRepository.getSeralizatedData();</b>
+&nbsp;
+&nbsp;
+&nbsp;//        SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);
+&nbsp;//        try {
+&nbsp;//            employeeRepository.addEmployee(new Employee(&quot;Main Administrator&quot;, dateFormat.parse(&quot;01/01/1950&quot;), &quot;admin@this.app&quot;, 919017113,  dateFormat.parse(&quot;01/01/1968&quot;), &quot;246597859&quot;, &quot;Porto&quot;, &quot;12345678&quot;, &quot;ADMIN&quot;));
+&nbsp;//            employeeRepository.addEmployee(new Employee(&quot;Employee&quot;,  dateFormat.parse(&quot;01/01/1950&quot;), &quot;employee@this.app&quot;, 919017113,  dateFormat.parse(&quot;01/01/1968&quot;), &quot;246597858&quot;, &quot;Porto&quot;, &quot;12345678&quot;, &quot;EMPLOYEE&quot;));
+&nbsp;//            employeeRepository.addEmployee(new Employee(&quot;Human Resources Manager&quot;,  dateFormat.parse(&quot;01/01/1950&quot;), &quot;HRM@this.app&quot;, 919017113,  dateFormat.parse(&quot;01/01/1968&quot;), &quot;246597857&quot;, &quot;Porto&quot;, &quot;12345678&quot;, &quot;HRM&quot;));
+&nbsp;//            employeeRepository.addEmployee(new Employee(&quot;Vehicle and Equipment Fleet Manager&quot;, dateFormat.parse(&quot;01/01/1950&quot;), &quot;VFM@this.app&quot;, 919017113,  dateFormat.parse(&quot;01/01/1968&quot;), &quot;246597856&quot;, &quot;Porto&quot;, &quot;12345678&quot;, &quot;VFM&quot;));
+&nbsp;//            employeeRepository.addEmployee(new Employee(&quot;Green Space Manager&quot;,  dateFormat.parse(&quot;01/01/1950&quot;), &quot;GSM@this.app&quot;, 919017113,  dateFormat.parse(&quot;01/01/1968&quot;), &quot;246597855&quot;, &quot;Porto&quot;, &quot;12345678&quot;, &quot;GSM&quot;));
+&nbsp;//
+&nbsp;//        } catch (ParseException e) {
+&nbsp;//            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, &quot;Incorrect date Format&quot;, e);
+&nbsp;//        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private void addSkills() {
+<b class="nc">&nbsp;        SkillRepository skillRepository = Repositories.getInstance().getSkillRepository();</b>
+<b class="nc">&nbsp;        skillRepository.getSeralizatedData();</b>
+&nbsp;//        skillRepository.addSkillRep(new Skill(&quot;Prune&quot;, &quot;Prune trees, shrubs and plants&quot;));
+&nbsp;//        skillRepository.addSkillRep(new Skill(&quot;Light Vehicle license&quot;, &quot;Driver able to drive vehicles up to 1500 tare weight&quot;));
+&nbsp;//        skillRepository.addSkillRep(new Skill(&quot;Heavy Vehicle license&quot;, &quot;Driver able to drive vehicles up to 3500 tare weight&quot;));
+&nbsp;    }
+&nbsp;
+&nbsp;    private void addJobs() {
+<b class="nc">&nbsp;        JobRepository jobRepository = Repositories.getInstance().getJobRepository();</b>
+<b class="nc">&nbsp;        jobRepository.getSeralizatedData();</b>
+&nbsp;//        jobRepository.addJobRep(new Job(&quot;Pruner&quot;, &quot;Who can all types of plants&quot;));
+&nbsp;//        jobRepository.addJobRep(new Job(&quot;Light Vehicle Driver&quot;, &quot;Who drives vehicles up to 1500 tare weight&quot;));
+&nbsp;//        jobRepository.addJobRep(new Job(&quot;Heavy Vehicle Driver&quot;, &quot;Who drives vehicles up to 3500 tare weight&quot;));
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    private void addTeams() {
+<b class="nc">&nbsp;        TeamRepository teamRepository = Repositories.getInstance().getTeamRepository();</b>
+<b class="nc">&nbsp;        teamRepository.getSeralizatedData();</b>
+&nbsp;
+&nbsp;//        EmployeeRepository employeeRepository = Repositories.getInstance().getEmployeeRepository();
+&nbsp;//
+&nbsp;//        // Get employees to form teams
+&nbsp;//        List&lt;Employee&gt; allEmployees = employeeRepository.getEmployees();
+&nbsp;//
+&nbsp;//        // Create a sample team with some employees
+&nbsp;//        List&lt;Employee&gt; teamMembers = new ArrayList&lt;&gt;();
+&nbsp;//        teamMembers.add(allEmployees.get(0)); // Add first employee
+&nbsp;//        teamMembers.add(allEmployees.get(1)); // Add second employee
+&nbsp;//
+&nbsp;//        Team team = new Team(teamMembers);
+&nbsp;//
+&nbsp;//        // Add the team to the repository
+&nbsp;//        Optional&lt;Team&gt; addedTeam = teamRepository.add(team);
+&nbsp;    }
+&nbsp;
+&nbsp;    private void addTasks() {
+<b class="nc">&nbsp;        TaskRepository taskRepository = Repositories.getInstance().getTaskRepository();</b>
+<b class="nc">&nbsp;        taskRepository.getSeralizatedData();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void addVehicles() throws ParseException {
+<b class="nc">&nbsp;        VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();</b>
+<b class="nc">&nbsp;        vehicleRepository.getSeralizatedData();</b>
+&nbsp;
+&nbsp;//        SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);
+&nbsp;//        Vehicle vehicle = new Vehicle(&quot;80-PH-70&quot;, &quot;BMW&quot;, &quot;320D&quot;, &quot;Passageiros&quot;, 1900, 2000, 19000, dateFormat.parse(&quot;08/03/2011&quot;), dateFormat.parse(&quot;01/09/2020&quot;), 20000);
+&nbsp;//        vehicleRepository.add(vehicle);
+&nbsp;//
+&nbsp;//        Vehicle vehicleDrivenWithin = new Vehicle(&quot;81-PH-70&quot;, &quot;BMW&quot;, &quot;320D&quot;, &quot;Passageiros&quot;, 1900, 2000, 19000, dateFormat.parse(&quot;08/03/2011&quot;), dateFormat.parse(&quot;01/09/2020&quot;), 20000);
+&nbsp;//        vehicleRepository.add(vehicleDrivenWithin);
+&nbsp;//        vehicleDrivenWithin.setCurrentKm(38500.0);
+&nbsp;//        vehicleRepository.updateVehicle(vehicleDrivenWithin);
+&nbsp;//
+&nbsp;//        Vehicle vehicleDrivenAbove = new Vehicle(&quot;82-PH-70&quot;, &quot;BMW&quot;, &quot;320D&quot;, &quot;Passageiros&quot;, 1900, 2000, 19000, dateFormat.parse(&quot;08/03/2011&quot;), dateFormat.parse(&quot;01/09/2020&quot;), 20000);
+&nbsp;//        vehicleRepository.add(vehicleDrivenAbove);
+&nbsp;//        vehicleDrivenAbove.setCurrentKm(42000.0);
+&nbsp;//        vehicleRepository.updateVehicle(vehicleDrivenAbove);
+&nbsp;    }
+&nbsp;    private void addGreenSpaces() {
+<b class="nc">&nbsp;        GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();</b>
+<b class="nc">&nbsp;        greenSpaceRepository.getSeralizatedData();</b>
+&nbsp;//        greenSpaceRepository.addGreenSpace(new GreenSpace(&quot;Parque da Cidade do Porto&quot;, &quot;Porto&quot;, 99.6, &quot;Large-sized park&quot;, &quot;Green Space Manager&quot;));
+&nbsp;//        greenSpaceRepository.addGreenSpace(new GreenSpace(&quot;Avioso&quot;, &quot;Maia&quot;, 43.4, &quot;Medium-sized park&quot;, &quot;Main Administrator&quot;));
+&nbsp;//        greenSpaceRepository.addGreenSpace(new GreenSpace(&quot;Rabada&quot;, &quot;Santo Tirso&quot;, 15.3, &quot;Garden&quot;, &quot;Green Space Manager&quot;));
+&nbsp;//        greenSpaceRepository.addGreenSpace(new GreenSpace(&quot;Bela Vista&quot;, &quot;Lisboa&quot;, 259.6, &quot;Large-sized park&quot;, &quot;Main Administrator&quot;));
+&nbsp;//        greenSpaceRepository.addGreenSpace(new GreenSpace(&quot;Azibo&quot;, &quot;Bragança&quot;, 493.2, &quot;Large-sized park&quot;, &quot;Green Space Manager&quot;));
+&nbsp;//        greenSpaceRepository.addGreenSpace(new GreenSpace(&quot;Oriental&quot;, &quot;Campanhã&quot;, 35.9, &quot;Medium-sized park&quot;, &quot;Green Space Manager&quot;));
+&nbsp;//        greenSpaceRepository.addGreenSpace(new GreenSpace(&quot;Parque Eduardo VII&quot;, &quot;Lisboa&quot;, 26.0, &quot;Large-sized park&quot;, &quot;Green Space Manager&quot;));
+&nbsp;//        greenSpaceRepository.addGreenSpace(new GreenSpace(&quot;Parque da Cidade do Porto&quot;, &quot;Porto&quot;, 83.0, &quot;Large-sized park&quot;, &quot;Main Administrator&quot;));
+&nbsp;//        greenSpaceRepository.addGreenSpace(new GreenSpace(&quot;Parque Florestal de Monsanto&quot;, &quot;Lisboa&quot;, 900.0, &quot;Large-sized park&quot;, &quot;Main Administrator&quot;));
+&nbsp;    }
+&nbsp;
+&nbsp;    private void addOrganization() {
+&nbsp;        //TODO: add organizations bootstrap here
+&nbsp;        //get organization repository
+<b class="nc">&nbsp;        OrganizationRepository organizationRepository = Repositories.getInstance().getOrganizationRepository();</b>
+<b class="nc">&nbsp;        Organization organization = new Organization(&quot;This Company&quot;);</b>
+<b class="nc">&nbsp;        organizationRepository.add(organization);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void addUsers() {
+&nbsp;        //TODO: add Authentication users here: should be created for each user in the organization
+<b class="nc">&nbsp;        AuthenticationRepository authenticationRepository = Repositories.getInstance().getAuthenticationRepository();</b>
+<b class="nc">&nbsp;        authenticationRepository.addUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_ADMIN);</b>
+<b class="nc">&nbsp;        authenticationRepository.addUserRole(AuthenticationController.ROLE_EMPLOYEE,</b>
+&nbsp;                AuthenticationController.ROLE_EMPLOYEE);
+<b class="nc">&nbsp;        authenticationRepository.addUserRole(AuthenticationController.ROLE_HRM,</b>
+&nbsp;                AuthenticationController.ROLE_HRM);
+<b class="nc">&nbsp;        authenticationRepository.addUserRole(AuthenticationController.ROLE_VFM,</b>
+&nbsp;                AuthenticationController.ROLE_VFM);
+<b class="nc">&nbsp;        authenticationRepository.addUserRole(AuthenticationController.ROLE_COLLABORATOR,</b>
+&nbsp;                AuthenticationController.ROLE_COLLABORATOR);
+<b class="nc">&nbsp;        authenticationRepository.addUserRole(AuthenticationController.ROLE_GSM,</b>
+&nbsp;                AuthenticationController.ROLE_GSM);
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        authenticationRepository.addUserWithRole(&quot;Main Administrator&quot;, &quot;admin@this.app&quot;, &quot;admin&quot;,</b>
+&nbsp;                AuthenticationController.ROLE_ADMIN);
+<b class="nc">&nbsp;        authenticationRepository.addUserWithRole(&quot;Human Resources Manager&quot;, &quot;hrm@this.app&quot;, &quot;hrm&quot;,</b>
+&nbsp;                AuthenticationController.ROLE_HRM);
+<b class="nc">&nbsp;        authenticationRepository.addUserWithRole(&quot;Vehicle and Equipment Fleet Manager&quot;, &quot;vfm@this.app&quot;, &quot;vfm&quot;,</b>
+&nbsp;                AuthenticationController.ROLE_VFM);
+<b class="nc">&nbsp;        authenticationRepository.addUserWithRole(&quot;Green Space Manager&quot;, &quot;gsm@this.app&quot;, &quot;gsm&quot;,</b>
+&nbsp;                AuthenticationController.ROLE_GSM);
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        authenticationRepository.addUserWithRole(&quot;Employee&quot;, &quot;employee@this.app&quot;, &quot;pwd&quot;,</b>
+&nbsp;                AuthenticationController.ROLE_EMPLOYEE);
+<b class="nc">&nbsp;        authenticationRepository.addUserWithRole(&quot;Collaborator&quot;, &quot;collaborator@this.app&quot;, &quot;collaborator&quot;,</b>
+&nbsp;                AuthenticationController.ROLE_COLLABORATOR);
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

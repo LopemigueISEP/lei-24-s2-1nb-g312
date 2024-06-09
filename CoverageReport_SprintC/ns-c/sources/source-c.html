@@ -1,0 +1,199 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > ShowListOfGreenSpacesUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui.gui</a>
+</div>
+
+<h1>Coverage Summary for Class: ShowListOfGreenSpacesUI (pt.ipp.isep.dei.g312.ui.gui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShowListOfGreenSpacesUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/26)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui.gui;
+&nbsp;
+&nbsp;import javafx.application.Application;
+&nbsp;import javafx.application.Platform;
+&nbsp;import javafx.collections.FXCollections;
+&nbsp;import javafx.collections.ObservableList;
+&nbsp;import javafx.fxml.FXMLLoader;
+&nbsp;import javafx.fxml.Initializable;
+&nbsp;import javafx.scene.Scene;
+&nbsp;import javafx.scene.control.TableColumn;
+&nbsp;import javafx.scene.control.TableView;
+&nbsp;import javafx.scene.control.cell.PropertyValueFactory;
+&nbsp;import javafx.stage.Stage;
+&nbsp;import pt.ipp.isep.dei.g312.application.controller.ShowListOfGreenSpacesController;
+&nbsp;import pt.ipp.isep.dei.g312.domain.GreenSpace;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.net.URL;
+&nbsp;import java.util.List;
+&nbsp;import java.util.ResourceBundle;
+&nbsp;/**
+&nbsp; * This class represents the main entry point for the Show List Of Green Spaces UI application.
+&nbsp; * It extends the JavaFX Application class and initializes the UI by loading the FXML file and setting up the controller.
+&nbsp; */
+<b class="nc">&nbsp;public class ShowListOfGreenSpacesUI extends Application implements Initializable {</b>
+&nbsp;    public TableView&lt;GreenSpace&gt; greenSpacesTableView;
+&nbsp;    public TableColumn&lt;GreenSpace, String&gt; column_Name;
+&nbsp;    public TableColumn&lt;GreenSpace, Double&gt; column_Area;
+&nbsp;    public TableColumn&lt;GreenSpace, String&gt; column_Typology;
+&nbsp;    public TableColumn&lt;GreenSpace, String&gt; column_Address;
+&nbsp;    private ShowListOfGreenSpacesController controller;
+&nbsp;    /**
+&nbsp;     * Main method to launch the application.
+&nbsp;     *
+&nbsp;     * @param args Command-line arguments.
+&nbsp;     */
+&nbsp;    public static void main(String[] args) {
+<b class="nc">&nbsp;        launch();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Method called to start the application.
+&nbsp;     * Initializes the UI by loading the FXML file and setting up the controller.
+&nbsp;     *
+&nbsp;     * @param primaryStage The primary stage for the application.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void start(Stage primaryStage) {
+<b class="nc">&nbsp;        Platform.setImplicitExit(false);</b>
+<b class="nc">&nbsp;        FXMLLoader fxmlLoader = new FXMLLoader(ShowListOfGreenSpacesUI.class.getResource(&quot;ShowListOfGreenSpaces.fxml&quot;));</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            Scene scene = new Scene(fxmlLoader.load());</b>
+<b class="nc">&nbsp;            primaryStage.setTitle(&quot;MusgoSublime&quot;);</b>
+<b class="nc">&nbsp;            primaryStage.setScene(scene);</b>
+<b class="nc">&nbsp;            primaryStage.show();</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Initializes the UI components and sets up the controller.
+&nbsp;     * Called automatically after the FXML file has been loaded.
+&nbsp;     *
+&nbsp;     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
+&nbsp;     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void initialize(URL url, ResourceBundle resourceBundle) {
+&nbsp;        try {
+<b class="nc">&nbsp;            controller = new ShowListOfGreenSpacesController();</b>
+&nbsp;
+<b class="nc">&nbsp;            column_Area.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;area&quot;));</b>
+<b class="nc">&nbsp;            column_Address.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;address&quot;));</b>
+<b class="nc">&nbsp;            column_Typology.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;typology&quot;));</b>
+<b class="nc">&nbsp;            column_Name.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;name&quot;));</b>
+&nbsp;
+<b class="nc">&nbsp;            loadTableViewValues();</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in initialize&quot;, e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Loads the values into the TableView by fetching the list of green spaces from the controller.
+&nbsp;     */
+&nbsp;    private void loadTableViewValues() {
+&nbsp;        try {
+<b class="nc">&nbsp;            List&lt;GreenSpace&gt; greenSpaces = controller.getGreenSpaceList();</b>
+<b class="nc">&nbsp;            ObservableList&lt;GreenSpace&gt; greenSpaceObservableList = FXCollections.observableList(greenSpaces);</b>
+<b class="nc">&nbsp;            greenSpacesTableView.setItems(greenSpaceObservableList);</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error loadingTableViewValues&quot;, e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

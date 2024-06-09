@@ -1,0 +1,241 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > TasksAssignedToMeBetweenToDatesController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.application.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: TasksAssignedToMeBetweenToDatesController (pt.ipp.isep.dei.g312.application.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TasksAssignedToMeBetweenToDatesController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/32)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.application.controller;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Task;
+&nbsp;import pt.ipp.isep.dei.g312.domain.TaskStatus;
+&nbsp;import pt.ipp.isep.dei.g312.repository.AuthenticationRepository;
+&nbsp;import pt.ipp.isep.dei.g312.repository.Repositories;
+&nbsp;import pt.ipp.isep.dei.g312.repository.TaskRepository;
+&nbsp;import pt.ipp.isep.dei.g312.repository.TeamRepository;
+&nbsp;import pt.isep.lei.esoft.auth.domain.model.Email;
+&nbsp;
+&nbsp;import java.time.LocalDate;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Date;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * Controller class for managing tasks assigned to the logged-in user between two dates.
+&nbsp; */
+&nbsp;public class TasksAssignedToMeBetweenToDatesController {
+&nbsp;
+&nbsp;    private AuthenticationRepository authenticationRepository;
+&nbsp;    private TaskRepository taskRepository;
+&nbsp;    private TeamRepository teamRepository;
+&nbsp;    private String loggedInUser;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructor for TasksAssignedToMeBetweenToDatesController.
+&nbsp;     */
+<b class="nc">&nbsp;    public TasksAssignedToMeBetweenToDatesController(){</b>
+<b class="nc">&nbsp;        this.authenticationRepository = getAuthenticationRepository();</b>
+<b class="nc">&nbsp;        this.taskRepository = getTaskRepository();</b>
+<b class="nc">&nbsp;        this.teamRepository = getTeamRepository();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the AuthenticationRepository instance.
+&nbsp;     *
+&nbsp;     * @return the AuthenticationRepository instance
+&nbsp;     */
+&nbsp;    private AuthenticationRepository getAuthenticationRepository() {
+&nbsp;
+<b class="nc">&nbsp;        if (authenticationRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            authenticationRepository = repositories.getAuthenticationRepository();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return authenticationRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the TaskRepository instance.
+&nbsp;     *
+&nbsp;     * @return the TaskRepository instance
+&nbsp;     */
+&nbsp;    private TaskRepository getTaskRepository() {
+&nbsp;
+<b class="nc">&nbsp;        if (taskRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            taskRepository = repositories.getTaskRepository();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return taskRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the TeamRepository instance.
+&nbsp;     *
+&nbsp;     * @return the TeamRepository instance
+&nbsp;     */
+&nbsp;    private TeamRepository getTeamRepository() {
+&nbsp;
+<b class="nc">&nbsp;        if (teamRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            teamRepository = repositories.getTeamRepository();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return teamRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets the email of the logged-in user.
+&nbsp;     *
+&nbsp;     * @return the email of the logged-in user
+&nbsp;     * @throws RuntimeException if an error occurs while retrieving the email
+&nbsp;     */
+&nbsp;    public String getLoggedInUserEmail() {
+&nbsp;        try {
+<b class="nc">&nbsp;            Email mail = authenticationRepository.getCurrentUserSession().getUserId();</b>
+<b class="nc">&nbsp;            loggedInUser = mail.toString();</b>
+&nbsp;
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            loggedInUser = &quot;No user identified&quot;;</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in getLoggedinUserEmail&quot;,e);</b>
+&nbsp;
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return loggedInUser;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves tasks assigned to the logged-in user between the specified start and end dates.
+&nbsp;     *
+&nbsp;     * @param startDate the start date
+&nbsp;     * @param endDate   the end date
+&nbsp;     * @return the list of tasks assigned to the logged-in user between the specified dates
+&nbsp;     * @throws RuntimeException if an error occurs while retrieving the tasks
+&nbsp;     */
+&nbsp;    public List&lt;Task&gt; getTasksAssignedToMeBetweenToDates(LocalDate startDate, LocalDate endDate) {
+&nbsp;
+<b class="nc">&nbsp;        List&lt;Task&gt; taskList = new ArrayList&lt;&gt;();</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            taskList = taskRepository.getTasksAssignedToMeBetweenToDates(getLoggedInUserEmail(), startDate, endDate);</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in getTasksAssignedToMeBetweenToDates&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return taskList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the list of task status values.
+&nbsp;     *
+&nbsp;     * @return the list of task status values
+&nbsp;     * @throws RuntimeException if an error occurs while retrieving the task status values
+&nbsp;     */
+&nbsp;    public List&lt;TaskStatus&gt; getTaskStatusValues() {
+&nbsp;        try {
+<b class="nc">&nbsp;            return List.of(TaskStatus.values());</b>
+&nbsp;
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in getTaskStatusValues&quot;,e);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

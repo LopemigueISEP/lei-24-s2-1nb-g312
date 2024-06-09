@@ -1,0 +1,228 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > RegisterCollaboratorController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.application.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: RegisterCollaboratorController (pt.ipp.isep.dei.g312.application.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RegisterCollaboratorController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/28)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.application.controller;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Employee;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Job;
+&nbsp;import pt.ipp.isep.dei.g312.repository.*;
+&nbsp;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * This class is responsible for handling collaborator registration functionalities.
+&nbsp; * It interacts with repositories to register new employees and retrieve job information.
+&nbsp; */
+&nbsp;public class RegisterCollaboratorController {
+&nbsp;
+&nbsp;
+&nbsp;    private  EmployeeRepository employeeRepository;
+&nbsp;    private  JobRepository jobRepository;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a new RegisterCollaboratorController instance and retrieves repositories
+&nbsp;     * through the Repositories class.
+&nbsp;     */
+<b class="nc">&nbsp;    public RegisterCollaboratorController() {</b>
+<b class="nc">&nbsp;        this.employeeRepository = getEmployeeRepository();</b>
+<b class="nc">&nbsp;        this.jobRepository = getJobRepository();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Attempts to register a new employee with the provided information.
+&nbsp;     *
+&nbsp;     * @param name Employee&#39;s name
+&nbsp;     * @param birthDate Employee&#39;s birth date
+&nbsp;     * @param email Employee&#39;s email address
+&nbsp;     * @param phoneNumber Employee&#39;s phone number
+&nbsp;     * @param admissionDate Employee&#39;s admission date
+&nbsp;     * @param taxpayerNumber Employee&#39;s taxpayer number
+&nbsp;     * @param address Employee&#39;s address
+&nbsp;     * @param docNumber Employee&#39;s document number
+&nbsp;     * @param jobTitle Employee&#39;s job title
+&nbsp;     * @return An Optional containing the newly registered employee if successful, empty Optional otherwise
+&nbsp;     */
+&nbsp;    public Optional&lt;Employee&gt; registerEmployee(String name, Date birthDate, String email, int phoneNumber, Date admissionDate,
+&nbsp;                                               String taxpayerNumber, String address, String docNumber, String jobTitle) {
+&nbsp;        Optional&lt;Employee&gt; newEmployee;
+<b class="nc">&nbsp;        Employee employee = new Employee(name, birthDate, email, phoneNumber, admissionDate, taxpayerNumber, address, docNumber, jobTitle);</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        Optional&lt;Job&gt; selectedJob = jobRepository.getJobTitle(jobTitle);</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        employee.setJob(String.valueOf(selectedJob.get()));</b>
+<b class="nc">&nbsp;        newEmployee = employeeRepository.addEmployee(employee);</b>
+&nbsp;
+<b class="nc">&nbsp;        return newEmployee;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the JobRepository instance from the Repositories class.
+&nbsp;     *
+&nbsp;     * @return The JobRepository instance
+&nbsp;     */
+&nbsp;     public JobRepository getJobRepository() {
+<b class="nc">&nbsp;        if (jobRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            jobRepository = repositories.getJobRepository();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return jobRepository;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Retrieves the EmployeeRepository instance from the Repositories class.
+&nbsp;     *
+&nbsp;     * @return The EmployeeRepository instance
+&nbsp;     */
+&nbsp;    public EmployeeRepository getEmployeeRepository() {
+<b class="nc">&nbsp;        if (employeeRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            employeeRepository = repositories.getEmployeeRepository();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return employeeRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Checks if a collaborator with the provided taxpayer number already exists.
+&nbsp;     *
+&nbsp;     * @param taxpayerNumber The taxpayer number to check
+&nbsp;     * @return True if a collaborator with the given taxpayer number exists, False otherwise
+&nbsp;     */
+&nbsp;    public Boolean existsCollaborator(String taxpayerNumber) {
+<b class="nc">&nbsp;        for (Employee e : employeeRepository.getEmployees()) {</b>
+<b class="nc">&nbsp;            if (e.getTaxpayerNumber().equalsIgnoreCase(taxpayerNumber)) {</b>
+<b class="nc">&nbsp;                return true;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves a list of all job titles available.
+&nbsp;     *
+&nbsp;     * @return A list of job titles (Strings)
+&nbsp;     */
+&nbsp;    public List&lt;String&gt; getJobsList() { // Renamed for consistency
+<b class="nc">&nbsp;        List&lt;String&gt; jobTitles = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        List&lt;Job&gt; jobs = jobRepository.getJobsList(); // Get all jobs from repository</b>
+<b class="nc">&nbsp;        for (Job job : jobs) {</b>
+<b class="nc">&nbsp;            jobTitles.add(job.getTitle());</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return jobTitles;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Prints information about all registered employees using the EmployeeRepository.
+&nbsp;     */
+&nbsp;    public void printEmployes(){
+&nbsp;
+<b class="nc">&nbsp;        Repositories.getInstance().getEmployeeRepository().printRegisteredEmployees();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

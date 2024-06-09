@@ -1,0 +1,150 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > ImportTwoCSVUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui.console</a>
+</div>
+
+<h1>Coverage Summary for Class: ImportTwoCSVUI (pt.ipp.isep.dei.g312.ui.console)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ImportTwoCSVUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/19)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui.console;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.application.controller.ImportTwoCSVController;
+&nbsp;import pt.ipp.isep.dei.g312.domain.comparators.Routes;
+&nbsp;import pt.ipp.isep.dei.g312.ui.console.utils.VisualizeParkGraphs;
+&nbsp;
+&nbsp;import java.io.File;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Scanner;
+&nbsp;
+&nbsp;public class ImportTwoCSVUI implements Runnable {
+&nbsp;    private final ImportTwoCSVController controller;
+&nbsp;
+<b class="nc">&nbsp;    public ImportTwoCSVUI() {</b>
+<b class="nc">&nbsp;        controller = new ImportTwoCSVController();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void run() {
+<b class="nc">&nbsp;        System.out.println(&quot;\n\n--- Dijkstra Algorithm ------------------------&quot;);</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            File[] files = requestCSVFiles();</b>
+<b class="nc">&nbsp;            controller.startMatrixBuffer(files[0]);</b>
+<b class="nc">&nbsp;            controller.startNameBuffer(files[1]);</b>
+&nbsp;
+<b class="nc">&nbsp;            List&lt;Routes&gt; routes = controller.calculateShorterRoute();</b>
+<b class="nc">&nbsp;            VisualizeParkGraphs.generateAndDisplayInputGraph(controller.costMatrix, controller.verticeNames, &quot;inputGraph.png&quot;);</b>
+<b class="nc">&nbsp;            VisualizeParkGraphs.generateAndDisplayPaths(routes, &quot;&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            VisualizeParkGraphs.exportCSV(routes);</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error processing graph visualization&quot;);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private File[] requestCSVFiles() {
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;        System.out.print(&quot;Enter the path for the cost matrix CSV file: &quot;);</b>
+<b class="nc">&nbsp;        String matrixPath = input.nextLine();</b>
+<b class="nc">&nbsp;        System.out.print(&quot;Enter the path for the names CSV file: &quot;);</b>
+<b class="nc">&nbsp;        String namesPath = input.nextLine();</b>
+&nbsp;
+<b class="nc">&nbsp;        return new File[] { new File(matrixPath), new File(namesPath) };</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,213 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > ShowListOfGreenSpacesController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.application.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: ShowListOfGreenSpacesController (pt.ipp.isep.dei.g312.application.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShowListOfGreenSpacesController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/32)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.application.controller;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.domain.GreenSpace;
+&nbsp;import pt.ipp.isep.dei.g312.domain.comparators.GreenSpaceComparatorDescendingArea;
+&nbsp;import pt.ipp.isep.dei.g312.domain.comparators.GreenSpaceComparatorNameAlphabetical;
+&nbsp;import pt.ipp.isep.dei.g312.repository.AuthenticationRepository;
+&nbsp;import pt.ipp.isep.dei.g312.repository.GreenSpaceRepository;
+&nbsp;import pt.ipp.isep.dei.g312.repository.Repositories;
+&nbsp;import pt.ipp.isep.dei.g312.ui.console.utils.LoadConfigProperties;
+&nbsp;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Collections;
+&nbsp;import java.util.Comparator;
+&nbsp;import java.util.List;
+&nbsp;/**
+&nbsp; * Controller class responsible for managing the display of green spaces.
+&nbsp; */
+&nbsp;public class ShowListOfGreenSpacesController {
+&nbsp;
+&nbsp;    private AuthenticationRepository authenticationRepository;
+&nbsp;    private GreenSpaceRepository greenSpaceRepository;
+&nbsp;
+&nbsp;
+&nbsp;    private final String greenSpaceComparator;
+&nbsp;    /**
+&nbsp;     * Constructor that initializes the repositories and loads the green space sorting algorithm from properties.
+&nbsp;     */
+&nbsp;
+<b class="nc">&nbsp;    public ShowListOfGreenSpacesController(){</b>
+<b class="nc">&nbsp;        this.authenticationRepository = getAuthenticationRepository();</b>
+<b class="nc">&nbsp;        this.greenSpaceRepository = getGreenSpaceRepository();</b>
+<b class="nc">&nbsp;        this.greenSpaceComparator = LoadConfigProperties.getProperty(&quot;GreenSpaceSortingAlgoritm&quot;);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Retrieves the GreenSpaceRepository instance.
+&nbsp;     *
+&nbsp;     * @return the GreenSpaceRepository instance
+&nbsp;     */
+&nbsp;    private GreenSpaceRepository getGreenSpaceRepository() {
+&nbsp;        try {
+<b class="nc">&nbsp;            if (greenSpaceRepository == null) {</b>
+<b class="nc">&nbsp;                Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;                greenSpaceRepository = repositories.getGreenSpaceRepository();</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in getting Authentication Repository&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return greenSpaceRepository;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the AuthenticationRepository instance.
+&nbsp;     *
+&nbsp;     * @return the AuthenticationRepository instance
+&nbsp;     */
+&nbsp;    private AuthenticationRepository getAuthenticationRepository() {
+&nbsp;        try {
+<b class="nc">&nbsp;            if (authenticationRepository == null) {</b>
+<b class="nc">&nbsp;                Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;                authenticationRepository = repositories.getAuthenticationRepository();</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in getting Authentication Repository&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return authenticationRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the list of green spaces and sorts them based on the configured comparator.
+&nbsp;     *
+&nbsp;     * @return a sorted list of green spaces
+&nbsp;     */
+&nbsp;
+&nbsp;    public List&lt;GreenSpace&gt; getGreenSpaceList() {
+<b class="nc">&nbsp;        List&lt;GreenSpace&gt; greenSpaceList = new ArrayList&lt;&gt;();</b>
+&nbsp;        Comparator&lt;GreenSpace&gt; comparator;
+&nbsp;
+&nbsp;        try {
+<b class="nc">&nbsp;            greenSpaceList = greenSpaceRepository.getGreenSpaceList();</b>
+&nbsp;
+<b class="nc">&nbsp;            switch (greenSpaceComparator) {</b>
+&nbsp;                case &quot;DESC_AREA&quot;:
+<b class="nc">&nbsp;                    comparator = new GreenSpaceComparatorDescendingArea();</b>
+<b class="nc">&nbsp;                    break;</b>
+&nbsp;
+&nbsp;                case &quot;NAME_ALPHA&quot;:
+<b class="nc">&nbsp;                    comparator = new GreenSpaceComparatorNameAlphabetical();</b>
+<b class="nc">&nbsp;                    break;</b>
+&nbsp;
+&nbsp;                default:
+<b class="nc">&nbsp;                    comparator = null;</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            if (comparator != null) {</b>
+<b class="nc">&nbsp;                Collections.sort(greenSpaceList, comparator);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in switch case in getGreenSpaceList&quot;, e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return greenSpaceList;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

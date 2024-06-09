@@ -1,0 +1,587 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > RegisterCollaboratorUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui.console</a>
+</div>
+
+<h1>Coverage Summary for Class: RegisterCollaboratorUI (pt.ipp.isep.dei.g312.ui.console)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RegisterCollaboratorUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/19)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/177)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui.console;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.application.controller.RegisterCollaboratorController;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Employee;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.ui.console.utils.Result;
+&nbsp;
+&nbsp;
+&nbsp;import java.text.ParseException;
+&nbsp;import java.text.SimpleDateFormat;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;import static pt.ipp.isep.dei.g312.ui.console.utils.Utils.raiseAlertMessage;
+&nbsp;
+&nbsp;/**
+&nbsp; * This class implements the user interface for registering collaborators.
+&nbsp; * It interacts with the `RegisterCollaboratorController` to collect user input,
+&nbsp; * validate data, and submit employee information for registration.
+&nbsp;
+&nbsp; * This class implements the `Runnable` interface, indicating it can be executed
+&nbsp; * as a thread.
+&nbsp;
+&nbsp;When we implement Runnable we must override the method run() so it works
+&nbsp; */
+&nbsp;public class RegisterCollaboratorUI implements Runnable {
+&nbsp;
+&nbsp;    private final RegisterCollaboratorController controller;
+&nbsp;    private String name;
+&nbsp;    private Date birthDate;
+&nbsp;    private int phoneNumber;
+&nbsp;    private String email;
+&nbsp;    private Date admissionDate;
+&nbsp;    private String taxpayerNumber;
+&nbsp;    private String address;
+&nbsp;    private String docNumber;
+&nbsp;    private String job;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates a new instance of `RegisterCollaboratorUI`.
+&nbsp;     * Internally, it creates a new instance of `RegisterCollaboratorController`
+&nbsp;     * to interact with the application logic.
+&nbsp;     */
+<b class="nc">&nbsp;    public RegisterCollaboratorUI() {</b>
+<b class="nc">&nbsp;        controller = new RegisterCollaboratorController();</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Getter method for the `RegisterCollaboratorController` instance.
+&nbsp;     *
+&nbsp;     * @return The associated `RegisterCollaboratorController` instance
+&nbsp;     */
+&nbsp;    public RegisterCollaboratorController getController() {
+<b class="nc">&nbsp;        return controller;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method defines the tasks to be executed by a separate thread for registering a collaborator.
+&nbsp;
+&nbsp;     * The method creates a new Result object to store the outcome of the operation an prints a message to the console indicating the start of the collaborator registration process.
+&nbsp;     * Then calls the `requestData` method to retrieve the collaborator&#39;s data and checks the `hasError` field of the `Result` object:
+&nbsp;     *      - If there are no errors (`hasError` is false), the method calls the `submitData` method to submit the data.
+&nbsp;     *      - If there are errors (`hasError` is true), the method calls the `raiseAlertMessage` method to display an alert message with the error details.
+&nbsp;     */
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void run() {
+<b class="nc">&nbsp;        Result result = new Result();</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;\n\n--- Register Collaborator ---&quot;);</b>
+<b class="nc">&nbsp;        System.out.println();</b>
+&nbsp;
+<b class="nc">&nbsp;        result = requestData();</b>
+<b class="nc">&nbsp;        if (!result.hasError) {</b>
+<b class="nc">&nbsp;            submitData();</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            raiseAlertMessage(result.message);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * This method collects user input for all employee attributes:
+&nbsp;     * name, birthdate, email, phone number, admission date, taxpayer number,
+&nbsp;     * address, ID document number, and job title. It also verifies if the
+&nbsp;     * provided taxpayer number already exists in the system. If it does,
+&nbsp;     * it prompts the user to enter a new one or exit the registration process.
+&nbsp;     */
+&nbsp;
+&nbsp;    private void submitData() {
+<b class="nc">&nbsp;        Optional&lt;Employee&gt; employee = getController().registerEmployee(name, birthDate, email</b>
+&nbsp;                , phoneNumber, admissionDate, taxpayerNumber
+&nbsp;                , address, docNumber, job);
+&nbsp;        //controller.printEmployes();
+<b class="nc">&nbsp;        if (employee.isPresent()) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Collaborator successfully registered&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            System.out.println(&quot;Failed to register collaborator due to an error.&quot;);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;       /**
+&nbsp;     * This method retrieves information required to register a collaborator.
+&nbsp;     * The method requests the taxpayer number of the collaborator using the `requestTaxpayerNumber` method and checks if a collaborator with the provided taxpayer number already exists in the system using the `controller.existsCollaborator` method.
+&nbsp;     *     - If a collaborator exists it prints an error message indicating a duplicate taxpayer number, prompts the user to enter a new taxpayer number or exit the registration process using a loop, validates user input (1 - enter new number, 0 - exit) andreturns a `Result` object with an error message if the user chooses to exit.
+&nbsp;     *     - If a collaborator doesn&#39;t exist with the provided taxpayer number it requests additional collaborator information using dedicated methods for each field (name, birth date, email, etc.) and returns a successful `Result` object.
+&nbsp;     * @return A `Result` object containing either collaborator information or an error message if the registration fails.
+&nbsp;     */
+&nbsp;    private Result requestData() {
+<b class="nc">&nbsp;         taxpayerNumber = requestTaxpayerNumber();</b>
+&nbsp;        // confirm that the collaborator is not registered using taxpayer number that is different for each collaborator
+<b class="nc">&nbsp;        if (controller.existsCollaborator(taxpayerNumber)) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Collaborator with taxpayer number &quot; + taxpayerNumber + &quot; already exists in the system, insert a different one.&quot;);</b>
+<b class="nc">&nbsp;            System.out.println();</b>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;           while (true) {
+&nbsp;
+<b class="nc">&nbsp;                System.out.println(&quot;Enter your choice:&quot;);</b>
+<b class="nc">&nbsp;                System.out.println(&quot;1. Enter a new taxpayer number&quot;);</b>
+<b class="nc">&nbsp;                System.out.println(&quot;0. Exit&quot;);</b>
+<b class="nc">&nbsp;                System.out.print(&quot;Type your option: &quot;);</b>
+<b class="nc">&nbsp;                Scanner scanner = new Scanner(System.in);</b>
+<b class="nc">&nbsp;                String choice = scanner.nextLine();</b>
+&nbsp;
+<b class="nc">&nbsp;                if (choice.equals(&quot;1&quot;)) {</b>
+<b class="nc">&nbsp;                    requestData();</b>
+<b class="nc">&nbsp;                    return new Result();</b>
+&nbsp;
+<b class="nc">&nbsp;                } else if (choice.equals(&quot;0&quot;)) {</b>
+<b class="nc">&nbsp;                    return new Result(&quot;Collaborator already exists.&quot;, true);</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    System.out.println(&quot;Invalid choice. Please enter 1 or 0.&quot;);</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+&nbsp;        }else{
+<b class="nc">&nbsp;            name = requestName();</b>
+<b class="nc">&nbsp;            birthDate = requestBirthDate();</b>
+<b class="nc">&nbsp;            email = requestEmail();</b>
+<b class="nc">&nbsp;            phoneNumber = Integer.parseInt(requestPhoneNumber());</b>
+<b class="nc">&nbsp;            admissionDate = requestAdmissionDate(birthDate);</b>
+<b class="nc">&nbsp;            address = requestAddress();</b>
+<b class="nc">&nbsp;            docNumber = requestDocNumber();</b>
+<b class="nc">&nbsp;            job = requestJobList();</b>
+<b class="nc">&nbsp;            showsDataRequestsValidation();</b>
+&nbsp;            }
+<b class="nc">&nbsp;        return new Result();</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Requests the user to enter the collaborator&#39;s name. It ensures the name
+&nbsp;     * is not empty and has a maximum of 6 words.
+&nbsp;     *
+&nbsp;     * @return The collaborator&#39;s name entered by the user
+&nbsp;     */
+&nbsp;    private String requestName() {
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+&nbsp;
+&nbsp;        while (true) {
+<b class="nc">&nbsp;            System.out.print(&quot;Name: &quot;);</b>
+<b class="nc">&nbsp;            String name = input.nextLine();</b>
+&nbsp;
+<b class="nc">&nbsp;            if (!name.isEmpty()) {</b>
+<b class="nc">&nbsp;                String[] words = name.split(&quot; &quot;); // verify number of words</b>
+&nbsp;
+<b class="nc">&nbsp;                if (words.length &lt;= 6) {</b>
+<b class="nc">&nbsp;                    return name; // name is valid - less or equal to 6 words</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    System.out.println(&quot;Error: Name must be maximum 6 words&quot;);</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Requests the user to enter the collaborator&#39;s birthdate in the format DD/MM/YYYY. It ensures the user
+&nbsp;     * is at least 18 years old by checking against the current date.
+&nbsp;     *
+&nbsp;     * @return The collaborator&#39;s birthdate
+&nbsp;     */
+&nbsp;    private Date requestBirthDate() {
+<b class="nc">&nbsp;        boolean validDate = false;</b>
+<b class="nc">&nbsp;        Date birthDate = null;</b>
+&nbsp;
+<b class="nc">&nbsp;        while (!validDate) {</b>
+&nbsp;            try {
+<b class="nc">&nbsp;                System.out.print(&quot;Birth date: &quot;);</b>
+<b class="nc">&nbsp;                birthDate = getDate();</b>
+<b class="nc">&nbsp;                Calendar now = Calendar.getInstance();</b>
+&nbsp;
+&nbsp;
+&nbsp;                // Check if birthDate is 18 years before today (not only year, but also the day)
+<b class="nc">&nbsp;                now.add(Calendar.YEAR, -18);</b>
+<b class="nc">&nbsp;                if (birthDate.before(now.getTime())) {</b>
+<b class="nc">&nbsp;                    validDate = true;</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    System.out.println(&quot;Invalid date. User must be at least 18 years old.&quot;);</b>
+&nbsp;                }
+<b class="nc">&nbsp;            } catch (Exception e) {</b>
+<b class="nc">&nbsp;                raiseInvalidInput();</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return birthDate;</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Requests the user to enter the collaborator&#39;s email address. It validates the email format using a
+&nbsp;     * regular expression to ensure it includes an &quot;@&quot; symbol and a domain name.
+&nbsp;     *
+&nbsp;     * @return The collaborator&#39;s email
+&nbsp;     */
+&nbsp;    private String requestEmail() {
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+&nbsp;        String email;
+&nbsp;
+&nbsp;        while (true) {
+<b class="nc">&nbsp;            System.out.print(&quot;Enter email: &quot;);</b>
+<b class="nc">&nbsp;            email = input.nextLine();</b>
+&nbsp;
+<b class="nc">&nbsp;            if (isEmailValid(email)) { // verify is mail is valid</b>
+<b class="nc">&nbsp;                return email;</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                System.out.println(&quot;Invalid email format. Please enter a valid email&quot;);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Validates the email format using a regular expression that checks for the presence of &quot;@&quot; and a domain name.
+&nbsp;     *
+&nbsp;     * @param email The email address to validate
+&nbsp;     * @return True if the email format is valid, false otherwise
+&nbsp;     */
+&nbsp;    private boolean isEmailValid(String email) {
+<b class="nc">&nbsp;        String regex = &quot;^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$&quot;;</b>
+<b class="nc">&nbsp;        return email.matches(regex);</b>
+&nbsp;    }
+&nbsp; /** Requests the user to enter the collaborator&#39;s phone number.
+&nbsp;  * It ensures the phone number has exactly 9 digits.
+&nbsp;  * @return The collaborator&#39;s phone number as an integer
+&nbsp;  **/
+&nbsp;    private String requestPhoneNumber() {
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+&nbsp;        String phoneNumber;
+&nbsp;
+&nbsp;        while (true) {
+<b class="nc">&nbsp;            System.out.print(&quot;Phone Number: &quot;);</b>
+<b class="nc">&nbsp;            phoneNumber = input.nextLine();</b>
+&nbsp;
+<b class="nc">&nbsp;            if (phoneNumber.matches(&quot;^[0-9]{9}$&quot;) &amp;&amp; phoneNumber.length() == 9) { //verify 9 digits</b>
+<b class="nc">&nbsp;                return phoneNumber;</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                System.out.println(&quot;Error: Invalid phone number format. Please enter 9 digits.&quot;);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Requests the user to enter the collaborator&#39;s taxpayer number. It ensures the taxpayer number
+&nbsp;     * is not empty and has exactly 9 digits.
+&nbsp;     * @return The collaborator&#39;s taxpayer number entered by the user
+&nbsp;     */
+&nbsp;    private String requestTaxpayerNumber() {
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+&nbsp;        String taxpayerNumber;
+&nbsp;
+&nbsp;        while (true) {
+<b class="nc">&nbsp;            System.out.print(&quot;Taxpayer Number: &quot;);</b>
+<b class="nc">&nbsp;            taxpayerNumber = input.nextLine();</b>
+&nbsp;
+&nbsp;            // Check if empty or doesn&#39;t have exactly 9 digits
+<b class="nc">&nbsp;            if (taxpayerNumber.length() != 9 || !taxpayerNumber.matches(&quot;^[0-9]+$&quot;)) {</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Error: Taxpayer number cannot be empty and must have exactly 9 digits.&quot;);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                return taxpayerNumber;</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Requests the user to enter the collaborator&#39;s admission date in the format DD/MM/YYYY. It ensures the user
+&nbsp;     * is at least 18 years old by checking against the birth date.
+&nbsp;     * @param birthDate The collaborator&#39;s birth date (used to calculate minimum valid admission date)
+&nbsp;     * @return The collaborator&#39;s admission date entered by the user (after validation)
+&nbsp;     */
+&nbsp;    private Date requestAdmissionDate(Date birthDate) {
+<b class="nc">&nbsp;        boolean parseSuccess = false;</b>
+<b class="nc">&nbsp;        Date admissionDate = null;</b>
+<b class="nc">&nbsp;        Calendar minAdmissionDate = Calendar.getInstance();</b>
+<b class="nc">&nbsp;        minAdmissionDate.setTime(birthDate);</b>
+<b class="nc">&nbsp;        minAdmissionDate.add(Calendar.YEAR, 18);</b>
+&nbsp;
+<b class="nc">&nbsp;        Calendar birthCalendar = Calendar.getInstance();</b>
+<b class="nc">&nbsp;        birthCalendar.setTime(birthDate);</b>
+<b class="nc">&nbsp;        int birthYear = birthCalendar.get(Calendar.YEAR);</b>
+&nbsp;
+<b class="nc">&nbsp;        while (!parseSuccess) {</b>
+<b class="nc">&nbsp;            System.out.print(&quot;Admission Date: &quot;);</b>
+&nbsp;            try {
+<b class="nc">&nbsp;                admissionDate = getDate();</b>
+<b class="nc">&nbsp;                Calendar admissionCalendar = Calendar.getInstance();</b>
+<b class="nc">&nbsp;                admissionCalendar.setTime(admissionDate);</b>
+&nbsp;
+<b class="nc">&nbsp;                if (admissionCalendar.get(Calendar.YEAR) &gt;= (birthYear + 18)) {</b>
+&nbsp;
+<b class="nc">&nbsp;                        parseSuccess = true;</b>
+&nbsp;                    } else{
+<b class="nc">&nbsp;                        System.out.println(&quot;Invalid admission date. Must be at least 18 years after birth date.&quot;);</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                } catch(Exception e){</b>
+<b class="nc">&nbsp;                    raiseInvalidInput();</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;
+&nbsp;        }
+<b class="nc">&nbsp;        return admissionDate;</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Requests the user to enter the collaborator&#39;s address. There are no specific format restrictions
+&nbsp;     * on the address input.
+&nbsp;     * @return The collaborator&#39;s address entered by the user
+&nbsp;     */
+&nbsp;    private String requestAddress() {
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;        System.out.print(&quot;Address: &quot;);</b>
+<b class="nc">&nbsp;        return input.nextLine();</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Prompts the user to enter a document number by repeatedly asking for the document type (CC or Passport)
+&nbsp;     * and the corresponding document number until a valid format is provided.
+&nbsp;     * @return The valid document number entered by the user.
+&nbsp;     * @throws InputMismatchException if the user enters an invalid document type (not &#39;CC&#39; or &#39;Passport&#39;).
+&nbsp;     */
+&nbsp;    private String requestDocNumber() {
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+&nbsp;        String docNumber;
+&nbsp;        // asks if it is CC or passport
+&nbsp;        while (true) {
+<b class="nc">&nbsp;            System.out.print(&quot;ID document type (CC/Passport): &quot;);</b>
+<b class="nc">&nbsp;            String docType = input.nextLine().toUpperCase();</b>
+&nbsp;
+<b class="nc">&nbsp;            if (docType.equals(&quot;CC&quot;)) { // if it is CC</b>
+<b class="nc">&nbsp;                System.out.print(&quot;Citizen card number: &quot;);</b>
+<b class="nc">&nbsp;                docNumber = input.nextLine();</b>
+<b class="nc">&nbsp;                if (docNumber.matches(&quot;^[0-9]{8}$&quot;)) {  // Check if format is valid (8 digits)</b>
+<b class="nc">&nbsp;                    return docNumber;</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    System.out.println(&quot;Invalid citizen card number format (must be 8 digits).&quot;);</b>
+&nbsp;                }
+<b class="nc">&nbsp;            } else if (docType.equals(&quot;PASSPORT&quot;)) {  // if it is PASSPORT</b>
+<b class="nc">&nbsp;                System.out.print(&quot;Passport number: &quot;);</b>
+<b class="nc">&nbsp;                docNumber = input.nextLine();</b>
+<b class="nc">&nbsp;                if (docNumber.matches(&quot;^[A-Za-z]{2}[0-9]{6}$&quot;)) {  // Check if format is valid: 2 letters followed by 6 digits</b>
+<b class="nc">&nbsp;                    return docNumber;</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    System.out.println(&quot;Invalid passport number format (must be 2 letters followed by 6 digits).&quot;);</b>
+&nbsp;                }
+&nbsp;            } else {
+<b class="nc">&nbsp;                System.out.println(&quot;Error: Invalid document type. Please enter &#39;CC&#39; or &#39;Passport&#39;.&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * This method retrieves the list of available jobs from the controller and displays them to the user.
+&nbsp;     * The user is then prompted to enter a number corresponding to the desired job. The method validates the user input
+&nbsp;     * and ensures the selected number is within the valid range of available jobs. If a valid selection is made,
+&nbsp;     * the corresponding job title is returned. Otherwise, an error message is displayed, and the user is prompted
+&nbsp;     * to re-enter a valid selection.
+&nbsp;     * @return The selected job title (String) or an empty string if no valid selection is made.
+&nbsp;     * @throws NullPointerException if the retrieved list of jobs is null.
+&nbsp;     */
+&nbsp;    public String requestJobList() {
+<b class="nc">&nbsp;        String selectedJob =&quot;&quot;;</b>
+<b class="nc">&nbsp;        List&lt;String&gt; jobs = controller.getJobsList(); //asks controller to acesss jobList</b>
+&nbsp;
+<b class="nc">&nbsp;        if (jobs.isEmpty()) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;No jobs available.&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            System.out.println(&quot;Available Jobs:&quot;);</b>
+<b class="nc">&nbsp;            for (int i = 0; i &lt; jobs.size(); i++) {</b>
+<b class="nc">&nbsp;                System.out.printf(&quot;%d. %s\n&quot;, i + 1, jobs.get(i)); // Display numbered titles with jobs registered</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;            int selection = -1;</b>
+<b class="nc">&nbsp;            boolean validSelection = false;</b>
+&nbsp;
+<b class="nc">&nbsp;            while (!validSelection) {</b>
+<b class="nc">&nbsp;                System.out.print(&quot;Select Job (by number): &quot;);</b>
+&nbsp;
+&nbsp;                try {
+<b class="nc">&nbsp;                    selection = input.nextInt();</b>
+<b class="nc">&nbsp;                    validSelection = selection &gt;= 1 &amp;&amp; selection &lt;= jobs.size(); // Check for valid range within loop</b>
+<b class="nc">&nbsp;                    if (!validSelection) {</b>
+<b class="nc">&nbsp;                        System.out.println(&quot;Invalid job selection. Please choose a number between 1 and &quot; + jobs.size() + &quot;.&quot;);</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                } catch (InputMismatchException e) {</b>
+<b class="nc">&nbsp;                    System.out.println(&quot;Invalid input. Please enter a number.&quot;);</b>
+<b class="nc">&nbsp;                    selection = -1; // Reset selection on invalid input</b>
+<b class="nc">&nbsp;                    input.nextLine(); // Clear the scanner buffer to avoid infinite loop</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            selectedJob = jobs.get(selection - 1);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return selectedJob;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     Prints a simple error message &quot;Invalid Input!&quot; to the console. This method likely serves as a helper method
+&nbsp;     used within the UI class to provide basic feedback to the user when input validation fails.
+&nbsp;     */
+&nbsp;    private void raiseInvalidInput() {
+<b class="nc">&nbsp;        System.out.println(&quot;Invalid Input!&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     Prompts the user to enter a date in the format DD/MM/YYYY and validates the input. It uses a loop to continuously
+&nbsp;     request input until a valid date is entered.
+&nbsp;     @return The parsed Date object representing the entered date
+&nbsp;
+&nbsp;     */
+&nbsp;    private Date getDate() {
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;        SimpleDateFormat registerDateFormat = new SimpleDateFormat(&quot;DD/MM/YYYY&quot;);</b>
+&nbsp;
+&nbsp;        while (true) {
+&nbsp;
+<b class="nc">&nbsp;            String dateString = input.nextLine();</b>
+&nbsp;
+&nbsp;            // Validate date format using regular expression
+<b class="nc">&nbsp;            if (!dateString.matches(&quot;^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$&quot;)) {</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Error: Invalid date format. Please use DD/MM/YYYY.&quot;);</b>
+<b class="nc">&nbsp;                continue;</b>
+&nbsp;            }
+&nbsp;
+&nbsp;            try {
+&nbsp;                // Parse the date string if format is valid
+<b class="nc">&nbsp;                return registerDateFormat.parse(dateString);</b>
+<b class="nc">&nbsp;            } catch (ParseException e) {</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Please enter a valid date.&quot;); // More specific error message</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     Presents a summary of the collaborator&#39;s information to the user for confirmation before creating
+&nbsp;     the collaborator in the system. This method formats the date attributes (birth date and admission date)
+&nbsp;     using a SimpleDateFormat object.
+&nbsp;     @return True if the user confirms the information is correct, false otherwise. */
+&nbsp;    private boolean showsDataRequestsValidation() {
+<b class="nc">&nbsp;        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</b>
+<b class="nc">&nbsp;        System.out.printf(&quot;\nName: %s\nBirth date: %s\nEmail: %s\nPhone Number: %s\nAdmission Date: %s\nTaxpayer Number: %s\nAddress: %s\nID number: %s\nJob: %s\n&quot;, name, simpleDateFormat.format(birthDate), email, phoneNumber, simpleDateFormat.format(admissionDate), taxpayerNumber, address, docNumber, job);</b>
+<b class="nc">&nbsp;        return requestConfirmation();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     Prompts the user to confirm the collaborator&#39;s information by entering &#39;Y&#39; (yes) or &#39;N&#39; (no). It validates
+&nbsp;     the user input to ensure it&#39;s either &#39;Y&#39; or &#39;N&#39; (case-insensitive).
+&nbsp;     @return True if the user confirms the information (enters &#39;Y&#39;), false otherwise.
+&nbsp;     */
+&nbsp;    private boolean requestConfirmation() {
+<b class="nc">&nbsp;        String dados =&quot;&quot;;</b>
+<b class="nc">&nbsp;        final String CONFIRMAR = &quot;y&quot;;</b>
+<b class="nc">&nbsp;        final String REJEITAR = &quot;n&quot;;</b>
+<b class="nc">&nbsp;        boolean resposta = false;</b>
+&nbsp;
+&nbsp;        do {
+&nbsp;            try {
+<b class="nc">&nbsp;                Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;                System.out.print(&quot;\nThe data is correct? [Y/N]&quot;);</b>
+<b class="nc">&nbsp;                dados = input.nextLine().toLowerCase();</b>
+<b class="nc">&nbsp;                if(!dados.matches(&quot;[YyNn]+&quot;)){</b>
+<b class="nc">&nbsp;                    System.out.print(&quot;Inserted character is incorrect&quot;);</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }catch (Exception e){</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Error reading Y/N in UI&quot;);</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;        }while (!dados.equals(CONFIRMAR) &amp;&amp; !dados.equals(REJEITAR));</b>
+&nbsp;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        if(dados.equals(CONFIRMAR)){</b>
+<b class="nc">&nbsp;            resposta = true;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return resposta;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

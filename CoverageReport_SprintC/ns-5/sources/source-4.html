@@ -1,0 +1,140 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > TasksByDateComparatorDescendingOrder</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.domain.comparators</a>
+</div>
+
+<h1>Coverage Summary for Class: TasksByDateComparatorDescendingOrder (pt.ipp.isep.dei.g312.domain.comparators)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TasksByDateComparatorDescendingOrder</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.domain.comparators;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Task;
+&nbsp;
+&nbsp;import java.util.Comparator;
+&nbsp;import java.util.Date;
+&nbsp;
+&nbsp;/**
+&nbsp; * Comparator class to compare tasks by start date in descending order.
+&nbsp; */
+<b class="nc">&nbsp;public class TasksByDateComparatorDescendingOrder implements Comparator&lt;Task&gt; {</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Compares two tasks by start date in descending order.
+&nbsp;     *
+&nbsp;     * @param o1 the first task to compare
+&nbsp;     * @param o2 the second task to compare
+&nbsp;     * @return a negative integer, zero, or a positive integer if the first task is less than, equal to, or greater
+&nbsp;     * than the second task, respectively
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public int compare(Task o1, Task o2) {
+&nbsp;
+<b class="nc">&nbsp;        int i = o2.getStartDate().compareTo(o1.getStartDate());</b>
+<b class="nc">&nbsp;        if(i == 0){</b>
+<b class="nc">&nbsp;            return 0;</b>
+<b class="nc">&nbsp;        } else if (i&gt;0) {</b>
+<b class="nc">&nbsp;            return 1;</b>
+&nbsp;
+&nbsp;        }else {
+<b class="nc">&nbsp;            return -1;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

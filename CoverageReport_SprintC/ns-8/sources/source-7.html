@@ -1,0 +1,288 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > KruskalAlgorithmUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui.console</a>
+</div>
+
+<h1>Coverage Summary for Class: KruskalAlgorithmUI (pt.ipp.isep.dei.g312.ui.console)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">KruskalAlgorithmUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/102)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui.console;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.application.controller.KruskalAlgorithmController;
+&nbsp;import pt.ipp.isep.dei.g312.domain.CSVLine;
+&nbsp;
+&nbsp;import java.io.FileWriter;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.NoSuchElementException;
+&nbsp;import java.util.Scanner;
+&nbsp;
+&nbsp;public class KruskalAlgorithmUI implements Runnable {
+&nbsp;    private final KruskalAlgorithmController controller;
+&nbsp;
+<b class="nc">&nbsp;    public KruskalAlgorithmUI() {</b>
+<b class="nc">&nbsp;        controller = new KruskalAlgorithmController();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void run() {
+<b class="nc">&nbsp;        System.out.println(&quot;\n\n--- Kruskal Algorithm ------------------------&quot;);</b>
+<b class="nc">&nbsp;        controller.clearData();</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            printCSVFileList();</b>
+<b class="nc">&nbsp;            int fileIndex = requestFileName();</b>
+<b class="nc">&nbsp;            if (fileIndex == -1) {</b>
+&nbsp;                return; // If no CSV files, return from the method
+&nbsp;            }
+<b class="nc">&nbsp;            String inputFileName = loadCSVFile(fileIndex); // Get the selected file name</b>
+<b class="nc">&nbsp;            List&lt;CSVLine&gt; originalEdges = new ArrayList&lt;&gt;(controller.getLines()); // Assuming getLines returns the original edges</b>
+<b class="nc">&nbsp;            String inputImageName = constructOutputImageNameOriginalGraph(inputFileName); // PNG for original graph</b>
+<b class="nc">&nbsp;            generateAndDisplayGraph(originalEdges, inputImageName);</b>
+<b class="nc">&nbsp;            List&lt;CSVLine&gt; mstEdges = controller.runKruskalAlgorithm();</b>
+<b class="nc">&nbsp;            int totalCost = printMST(mstEdges);</b>
+<b class="nc">&nbsp;            String outputFileName = constructOutputFileName(inputFileName); // Construct output file name</b>
+<b class="nc">&nbsp;            String outputImageName = constructOutputImageNameMST(inputFileName); // Construct output file name for PNG</b>
+<b class="nc">&nbsp;            generateAndDisplayGraph(mstEdges, outputImageName);</b>
+<b class="nc">&nbsp;            exportCSV(mstEdges, totalCost, controller.getLines().size(), controller.getvertices().size(), outputFileName);</b>
+<b class="nc">&nbsp;        } catch (NoSuchElementException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Unexpected input format&quot;);</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error processing graph visualization&quot;);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void generateAndDisplayGraph(List&lt;CSVLine&gt; edges, String imagePath) throws IOException {
+<b class="nc">&nbsp;        String dotPath = &quot;mst.dot&quot;;</b>
+<b class="nc">&nbsp;        try (FileWriter writer = new FileWriter(dotPath)) {</b>
+<b class="nc">&nbsp;            writer.write(&quot;graph MST {\n&quot;);</b>
+<b class="nc">&nbsp;            for (CSVLine edge : edges) {</b>
+<b class="nc">&nbsp;                writer.write(&quot;    \&quot;&quot; + edge.getX() + &quot;\&quot; -- \&quot;&quot; + edge.getY() + &quot;\&quot; [label=\&quot;&quot; + edge.getCost() + &quot;\&quot;];\n&quot;);</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            writer.write(&quot;}\n&quot;);</b>
+<b class="nc">&nbsp;        } // FileWriter auto-closed here due to try-with-resources</b>
+&nbsp;
+<b class="nc">&nbsp;        ProcessBuilder pb = new ProcessBuilder(&quot;dot&quot;, &quot;-Tpng&quot;, dotPath, &quot;-o&quot;, imagePath);</b>
+<b class="nc">&nbsp;        pb.redirectErrorStream(true);</b>
+<b class="nc">&nbsp;        Process process = pb.start();</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            int exitCode = process.waitFor();</b>
+<b class="nc">&nbsp;            if (exitCode == 0) {</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Generated graph image at: &quot; + imagePath);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                System.out.println(&quot;Graphviz execution failed with exit code: &quot; + exitCode);</b>
+<b class="nc">&nbsp;                try (Scanner scanner = new Scanner(process.getErrorStream())) {</b>
+<b class="nc">&nbsp;                    while (scanner.hasNextLine()) {</b>
+<b class="nc">&nbsp;                        System.out.println(scanner.nextLine());</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                }</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } catch (InterruptedException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Graphviz process was interrupted.&quot;);</b>
+<b class="nc">&nbsp;            Thread.currentThread().interrupt(); // Reset the interrupt flag</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private String constructOutputImageNameMST(String inputFileName) {
+<b class="nc">&nbsp;        int dotIndex = inputFileName.lastIndexOf(&#39;.&#39;);</b>
+<b class="nc">&nbsp;        if (dotIndex == -1) { // No extension found</b>
+<b class="nc">&nbsp;            return inputFileName + &quot;_Output.png&quot;; // Append &quot;_Output.png&quot; if no extension exists</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return inputFileName.substring(0, dotIndex) + &quot;_Output.png&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private String constructOutputImageNameOriginalGraph(String inputFileName) {
+<b class="nc">&nbsp;        int dotIndex = inputFileName.lastIndexOf(&#39;.&#39;);</b>
+<b class="nc">&nbsp;        if (dotIndex == -1) { // No extension found</b>
+<b class="nc">&nbsp;            return inputFileName + &quot;_Input.png&quot;; // Corrected to ensure it&#39;s different from MST output</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return inputFileName.substring(0, dotIndex) + &quot;_Input.png&quot;; // Corrected to ensure it&#39;s different from MST output</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    private void printCSVFileList() {
+<b class="nc">&nbsp;        List&lt;String&gt; csvFiles = controller.getCSVFiles();</b>
+<b class="nc">&nbsp;        if (csvFiles.isEmpty()) {</b>
+&nbsp;            return; // Return from the method if there are no CSV files
+&nbsp;        }
+<b class="nc">&nbsp;        System.out.println(&quot;CSV Files:&quot;);</b>
+<b class="nc">&nbsp;        int index = 1;</b>
+<b class="nc">&nbsp;        for (String fileName : controller.getCSVFiles()) {</b>
+<b class="nc">&nbsp;            System.out.println(index + &quot;: &quot; + fileName);</b>
+<b class="nc">&nbsp;            index++;</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private String loadCSVFile(int fileIndex) {
+<b class="nc">&nbsp;        String fileName = controller.getCSVFiles().get(fileIndex - 1);</b>
+<b class="nc">&nbsp;        controller.loadCSVFile(fileName);</b>
+<b class="nc">&nbsp;        return fileName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private int requestFileName() {
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;        List&lt;String&gt; csvFiles = controller.getCSVFiles();</b>
+&nbsp;
+&nbsp;        // Check if there are no CSV files
+<b class="nc">&nbsp;        if (csvFiles.isEmpty()) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;No CSV files are available, import CSV file first.&quot;);</b>
+<b class="nc">&nbsp;            return -1;  // Indicate an error or empty state</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        while (true) {  // Use an infinite loop to keep asking until correct input is received
+&nbsp;            //System.out.print(&quot;File Number: &quot;);
+&nbsp;            try {
+<b class="nc">&nbsp;                int fileIndex = Integer.parseInt(input.nextLine()); // Parse the input</b>
+<b class="nc">&nbsp;                if (fileIndex &gt;= 1 &amp;&amp; fileIndex &lt;= csvFiles.size()) {</b>
+<b class="nc">&nbsp;                    return fileIndex;  // Return the valid input</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    System.out.println(&quot;Please enter a valid file number between 1 and &quot; + csvFiles.size());</b>
+&nbsp;                }
+<b class="nc">&nbsp;            } catch (NumberFormatException e) {</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Invalid input. Please enter a numeric value.&quot;);</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private String constructOutputFileName(String inputFileName) {
+<b class="nc">&nbsp;        int dotIndex = inputFileName.lastIndexOf(&#39;.&#39;);</b>
+<b class="nc">&nbsp;        if (dotIndex == -1) { // No extension found</b>
+<b class="nc">&nbsp;            return inputFileName + &quot;_Output.csv&quot;; // Append &quot;_Output.csv&quot; if no extension exists</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return inputFileName.substring(0, dotIndex) + &quot;_Output&quot; + inputFileName.substring(dotIndex);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private int printMST(List&lt;CSVLine&gt; edges) {
+<b class="nc">&nbsp;        int totalCost = 0;</b>
+<b class="nc">&nbsp;        int graphOrder = controller.getvertices().size();</b>
+<b class="nc">&nbsp;        int graphSize = controller.getLines().size();</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;Minimum Spanning Tree:&quot;);</b>
+<b class="nc">&nbsp;        for (CSVLine edge : edges) {</b>
+<b class="nc">&nbsp;            System.out.println(edge.getX() + &quot; - &quot; + edge.getY() + &quot; : &quot; + edge.getCost());</b>
+<b class="nc">&nbsp;            totalCost += edge.getCost();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;\nGraph Dimension: &quot; + graphSize);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Graph Order: &quot; + graphOrder);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Total Cost: &quot; + totalCost);</b>
+&nbsp;
+<b class="nc">&nbsp;        return totalCost;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    private void exportCSV(List&lt;CSVLine&gt; edges, int totalCost, int graphSize, int graphOrder, String csvPath) throws IOException {
+<b class="nc">&nbsp;        try (FileWriter csvWriter = new FileWriter(csvPath)) {</b>
+&nbsp;            // Write header
+<b class="nc">&nbsp;            csvWriter.append(&quot;Vertice; Vertice; Edge Cost\n&quot;);</b>
+&nbsp;
+&nbsp;            // Write edges
+<b class="nc">&nbsp;            for (CSVLine edge : edges) {</b>
+<b class="nc">&nbsp;                csvWriter.append(edge.getX() + &quot;;&quot; + edge.getY() + &quot;;&quot; + edge.getCost() + &quot;\n&quot;);</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;
+&nbsp;            // Write graph information
+<b class="nc">&nbsp;            csvWriter.append(&quot;\nGraph Dimension: &quot; + graphSize + &quot;\n&quot;);</b>
+<b class="nc">&nbsp;            csvWriter.append(&quot;Graph Order: &quot; + graphOrder + &quot;\n&quot;);</b>
+<b class="nc">&nbsp;            csvWriter.append(&quot;Total Cost: &quot; + totalCost + &quot;\n&quot;);</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        System.out.println(&quot;CSV file generated at: &quot; + csvPath);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

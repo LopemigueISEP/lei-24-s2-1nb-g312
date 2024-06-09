@@ -1,0 +1,360 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > TasksAssignedToMeBetweenToDatesGUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui.gui</a>
+</div>
+
+<h1>Coverage Summary for Class: TasksAssignedToMeBetweenToDatesGUI (pt.ipp.isep.dei.g312.ui.gui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TasksAssignedToMeBetweenToDatesGUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/84)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui.gui;
+&nbsp;
+&nbsp;import javafx.application.Application;
+&nbsp;import javafx.application.Platform;
+&nbsp;import javafx.beans.property.SimpleStringProperty;
+&nbsp;import javafx.collections.FXCollections;
+&nbsp;import javafx.collections.ObservableList;
+&nbsp;import javafx.event.ActionEvent;
+&nbsp;import javafx.fxml.FXMLLoader;
+&nbsp;import javafx.fxml.Initializable;
+&nbsp;import javafx.scene.Scene;
+&nbsp;import javafx.scene.control.*;
+&nbsp;import javafx.scene.control.cell.PropertyValueFactory;
+&nbsp;import javafx.stage.Stage;
+&nbsp;import pt.ipp.isep.dei.g312.application.controller.TasksAssignedToMeBetweenToDatesController;
+&nbsp;import pt.ipp.isep.dei.g312.domain.GreenSpace;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Task;
+&nbsp;import pt.ipp.isep.dei.g312.domain.TaskStatus;
+&nbsp;import pt.ipp.isep.dei.g312.domain.comparators.TasksByDateComparatorDescendingOrder;
+&nbsp;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.net.URL;
+&nbsp;import java.time.LocalDate;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Collections;
+&nbsp;import java.util.List;
+&nbsp;import java.util.ResourceBundle;
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * GUI class for displaying tasks assigned to the logged-in user between two dates.
+&nbsp; */
+<b class="nc">&nbsp;public class TasksAssignedToMeBetweenToDatesGUI extends Application implements Initializable {</b>
+&nbsp;
+&nbsp;
+&nbsp;    public Label label_currentUserEmail;
+&nbsp;    public DatePicker DatePickerStartDate;
+&nbsp;    public DatePicker DatePickerEndDate;
+&nbsp;    public ComboBox&lt;String&gt; comboboxTaskStatus;
+&nbsp;    public TableView&lt;Task&gt; TableView_TasksAssignedToMeBeetwenToDates;
+&nbsp;    public TableColumn column_Name;
+&nbsp;    public TableColumn column_Team;
+&nbsp;    public TableColumn column_StartDate;
+&nbsp;    public TableColumn column_GreenSpace;
+&nbsp;    public TableColumn column_Status;
+&nbsp;    public Label label_error;
+&nbsp;    TasksAssignedToMeBetweenToDatesController controller;
+&nbsp;
+&nbsp;    LocalDate startDate,endDate;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Starts the JavaFX application.
+&nbsp;     *
+&nbsp;     * @param primaryStage the primary stage for this application
+&nbsp;     * @throws Exception if an error occurs during startup
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void start(Stage primaryStage) throws Exception {
+<b class="nc">&nbsp;        Platform.setImplicitExit(false);</b>
+&nbsp;
+<b class="nc">&nbsp;        FXMLLoader fxmlLoader = new FXMLLoader(TasksAssignedToMeBetweenToDatesGUI.class.getResource(&quot;TasksAssignedToMeBetweenToDatesGUI.fxml&quot;));</b>
+&nbsp;        Scene scene;
+&nbsp;        try {
+<b class="nc">&nbsp;            scene = new Scene(fxmlLoader.load());</b>
+<b class="nc">&nbsp;            primaryStage.setTitle(&quot;MusgoSublime&quot;);</b>
+<b class="nc">&nbsp;            primaryStage.setScene(scene);</b>
+<b class="nc">&nbsp;            primaryStage.show();</b>
+&nbsp;
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            throw new IOException(&quot;failed to load fxml&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Initializes the controller class.
+&nbsp;     *
+&nbsp;     * @param url            the location used to resolve relative paths for the root object, or null if the location is not known
+&nbsp;     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void initialize(URL url, ResourceBundle resourceBundle) {
+&nbsp;
+&nbsp;        try {
+&nbsp;
+<b class="nc">&nbsp;            controller = new TasksAssignedToMeBetweenToDatesController();</b>
+<b class="nc">&nbsp;            label_error.setText(&quot;&quot;);</b>
+<b class="nc">&nbsp;            label_currentUserEmail.setText(controller.getLoggedInUserEmail());</b>
+&nbsp;
+<b class="nc">&nbsp;            loadValuesTaskStatusComboBox();</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;            column_Status.setCellValueFactory((new PropertyValueFactory&lt;&gt;(&quot;status&quot;)));</b>
+<b class="nc">&nbsp;            column_GreenSpace.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;GreenSpace&quot;));</b>
+<b class="nc">&nbsp;            column_StartDate.setCellValueFactory((new PropertyValueFactory&lt;&gt;(&quot;startDate&quot;)));</b>
+<b class="nc">&nbsp;            column_Team.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;assignedTeam&quot;));</b>
+<b class="nc">&nbsp;            column_Name.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;title&quot;));</b>
+&nbsp;
+<b class="nc">&nbsp;            loadTableView();</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in initialize&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Loads the task status values into the ComboBox.
+&nbsp;     */
+&nbsp;    private void loadValuesTaskStatusComboBox() {
+&nbsp;        try {
+<b class="nc">&nbsp;            List&lt;TaskStatus&gt; taskStatus = controller.getTaskStatusValues();</b>
+&nbsp;
+<b class="nc">&nbsp;            ObservableList&lt;String&gt; observableListTaskStatus = FXCollections.observableArrayList();</b>
+<b class="nc">&nbsp;            observableListTaskStatus.add(&quot;All&quot;);</b>
+<b class="nc">&nbsp;            for (TaskStatus ts : taskStatus) {</b>
+<b class="nc">&nbsp;                if (ts != null) {</b>
+<b class="nc">&nbsp;                    observableListTaskStatus.add(ts.toString());</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            comboboxTaskStatus.setItems(observableListTaskStatus);</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error im loadValuesTaskStatusCombobox&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Handles the action event for the start date DatePicker.
+&nbsp;     *
+&nbsp;     * @param actionEvent the action event
+&nbsp;     */
+&nbsp;    public void DatePickerStartDate_onAction(ActionEvent actionEvent) {
+&nbsp;        try {
+<b class="nc">&nbsp;            startDate = DatePickerStartDate.getValue();</b>
+<b class="nc">&nbsp;            if (endDate == null || endDate.isAfter(startDate) || endDate.isEqual(startDate)) {</b>
+<b class="nc">&nbsp;                loadTableView();</b>
+<b class="nc">&nbsp;                label_error.setText(&quot;&quot;);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                label_error.setText(&quot;Start date can&#39;t be after end date&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in DatePickerStartDate_onAction&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Handles the action event for the end date DatePicker.
+&nbsp;     *
+&nbsp;     * @param actionEvent the action event
+&nbsp;     */
+&nbsp;    public void DatePickerEndtDate_onAction(ActionEvent actionEvent) {
+&nbsp;        try {
+<b class="nc">&nbsp;            endDate = DatePickerEndDate.getValue();</b>
+<b class="nc">&nbsp;            if (startDate == null || startDate.isBefore(endDate) || startDate.isEqual(endDate)) {</b>
+<b class="nc">&nbsp;                loadTableView();</b>
+<b class="nc">&nbsp;                label_error.setText(&quot;&quot;);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                label_error.setText(&quot;End date can&#39;t be before start date&quot;);</b>
+&nbsp;
+&nbsp;            }
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in DatePickerEndDate_onAction&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Loads the tasks into the TableView.
+&nbsp;     */
+&nbsp;    public void loadTableView() {
+&nbsp;        try {
+<b class="nc">&nbsp;            List&lt;Task&gt; userTasksBetweenToDates = loadUserTasksBetweenToDates();</b>
+<b class="nc">&nbsp;            userTasksBetweenToDates = filterTasksByStatus(userTasksBetweenToDates);</b>
+<b class="nc">&nbsp;            Collections.sort(userTasksBetweenToDates,new TasksByDateComparatorDescendingOrder());</b>
+&nbsp;
+<b class="nc">&nbsp;            ObservableList&lt;Task&gt; observableList = FXCollections.observableList(userTasksBetweenToDates);</b>
+<b class="nc">&nbsp;            TableView_TasksAssignedToMeBeetwenToDates.setItems(observableList);</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in loadTableView&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Loads the tasks assigned to the user between the specified start and end dates.
+&nbsp;     *
+&nbsp;     * @return the list of tasks assigned to the user between the specified dates
+&nbsp;     */
+&nbsp;    public List&lt;Task&gt; loadUserTasksBetweenToDates(){
+<b class="nc">&nbsp;        List&lt;Task&gt; taskList = new ArrayList&lt;&gt;();</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            if (startDate != null &amp; endDate != null) {</b>
+<b class="nc">&nbsp;                if (endDate.isAfter(startDate) || endDate.isEqual(startDate)) {</b>
+<b class="nc">&nbsp;                    taskList = controller.getTasksAssignedToMeBetweenToDates(startDate, endDate);</b>
+&nbsp;
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in loadUserTasksBetweenDates&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return taskList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Handles the action event for the task status ComboBox.
+&nbsp;     *
+&nbsp;     * @param actionEvent the action event
+&nbsp;     */
+&nbsp;    public void comboBox_TaskStatus_OnAction(ActionEvent actionEvent) {
+&nbsp;        try {
+<b class="nc">&nbsp;            loadTableView();</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in comboBox_TaskStatus_OnAction&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Filters the tasks by the selected status.
+&nbsp;     *
+&nbsp;     * @param tasks the list of tasks to filter
+&nbsp;     * @return the filtered list of tasks
+&nbsp;     */
+&nbsp;    public List&lt;Task&gt; filterTasksByStatus(List&lt;Task&gt; tasks) {
+&nbsp;
+&nbsp;        try {
+&nbsp;
+<b class="nc">&nbsp;            if(tasks == null){</b>
+<b class="nc">&nbsp;                return new ArrayList&lt;&gt;();</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            String selectedStatus = comboboxTaskStatus.getValue();</b>
+<b class="nc">&nbsp;            if (selectedStatus != null &amp;&amp; !selectedStatus.equals(&quot;All&quot;)) {</b>
+<b class="nc">&nbsp;                List&lt;Task&gt; filteredTasks = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;                for (Task task : tasks) {</b>
+<b class="nc">&nbsp;                    if (task.getStatus().toString().equals(selectedStatus)) {</b>
+<b class="nc">&nbsp;                        filteredTasks.add(task);</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                }</b>
+<b class="nc">&nbsp;                return filteredTasks;</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;error in filterTasksByStatus&quot;,e);</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return tasks;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

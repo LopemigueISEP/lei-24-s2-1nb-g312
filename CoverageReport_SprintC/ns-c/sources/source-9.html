@@ -1,0 +1,378 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > PostponeTaskInTheAgendaUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui.gui</a>
+</div>
+
+<h1>Coverage Summary for Class: PostponeTaskInTheAgendaUI (pt.ipp.isep.dei.g312.ui.gui)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PostponeTaskInTheAgendaUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/66)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">PostponeTaskInTheAgendaUI$GreenSpaceComboNames</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">PostponeTaskInTheAgendaUI$TaskComboNames</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/80)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui.gui;
+&nbsp;
+&nbsp;import javafx.application.Application;
+&nbsp;import javafx.application.Platform;
+&nbsp;import javafx.collections.FXCollections;
+&nbsp;import javafx.event.ActionEvent;
+&nbsp;import javafx.fxml.FXMLLoader;
+&nbsp;import javafx.fxml.Initializable;
+&nbsp;import javafx.scene.Scene;
+&nbsp;import javafx.scene.control.*;
+&nbsp;import javafx.stage.Stage;
+&nbsp;import pt.ipp.isep.dei.g312.application.controller.PostponeTaskInTheAgendaController;
+&nbsp;import pt.ipp.isep.dei.g312.domain.GreenSpace;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Task;
+&nbsp;
+&nbsp;import java.net.URL;
+&nbsp;import java.time.LocalDate;
+&nbsp;import java.time.LocalTime;
+&nbsp;import java.time.format.DateTimeFormatter;
+&nbsp;import java.time.format.DateTimeParseException;
+&nbsp;import java.util.*;
+&nbsp;/**
+&nbsp; * The PostponeTaskInTheAgendaUI class is responsible for the graphical user interface for postponing tasks in the agenda.
+&nbsp; * It extends the JavaFX Application class and implements Initializable for initialization logic.
+&nbsp; */
+&nbsp;public class PostponeTaskInTheAgendaUI extends Application implements Initializable {
+&nbsp;
+&nbsp;    private final PostponeTaskInTheAgendaController controller;
+&nbsp;    public Button btnSubmit;
+&nbsp;    public ComboBox cmbGreenSpace;
+&nbsp;    public ComboBox cmbTask;
+&nbsp;    public DatePicker datePicker;
+&nbsp;    public TextField textStartTime;
+&nbsp;    public Label lblAllFields;
+<b class="nc">&nbsp;    private Optional&lt;GreenSpace&gt; chosenGreenSpace = null;</b>
+<b class="nc">&nbsp;    private Optional&lt;Task&gt; chosenTask = null;</b>
+<b class="nc">&nbsp;    private Optional&lt;LocalDate&gt; chosenDate = null;</b>
+<b class="nc">&nbsp;    private Optional&lt;LocalTime&gt; chosenStartTime = Optional.empty();</b>
+&nbsp;    /**
+&nbsp;     * Constructs a PostponeTaskInTheAgendaUI object and initializes the controller.
+&nbsp;     */
+<b class="nc">&nbsp;    public PostponeTaskInTheAgendaUI() {</b>
+<b class="nc">&nbsp;        controller = new PostponeTaskInTheAgendaController();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void start (Stage primaryStage) {
+<b class="nc">&nbsp;        Platform.setImplicitExit(false);</b>
+<b class="nc">&nbsp;        FXMLLoader fxmlLoader = new FXMLLoader(PostponeTaskInTheAgendaUI.class.getResource(&quot;PostponeTaskInTheAgendaUI.fxml&quot;));</b>
+&nbsp;        Scene scene;
+&nbsp;        try {
+<b class="nc">&nbsp;            scene = new Scene(fxmlLoader.load());</b>
+<b class="nc">&nbsp;            primaryStage.setTitle(&quot;MusgoSublime&quot;);</b>
+<b class="nc">&nbsp;            primaryStage.setScene(scene);</b>
+&nbsp;
+<b class="nc">&nbsp;            primaryStage.show();</b>
+&nbsp;
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * This method is called to initialize a controller after its root element has been completely processed.
+&nbsp;     *
+&nbsp;     * @param url the location used to resolve relative paths for the root object, or null if the location is not known.
+&nbsp;     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void initialize(URL url, ResourceBundle resourceBundle) {
+<b class="nc">&nbsp;        initializeGreenSpaceComboBox();</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Initializes the GreenSpace ComboBox with the list of green spaces.
+&nbsp;     */
+&nbsp;    private void initializeGreenSpaceComboBox() {
+<b class="nc">&nbsp;        List&lt;GreenSpace&gt; greenSpaceList = controller.getGreenSpaces();</b>
+<b class="nc">&nbsp;        cmbGreenSpace.setItems(FXCollections.observableArrayList(greenSpaceList));</b>
+<b class="nc">&nbsp;        cmbGreenSpace.setCellFactory(listView -&gt; new GreenSpaceComboNames());</b>
+<b class="nc">&nbsp;        cmbGreenSpace.setButtonCell(new GreenSpaceComboNames());</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Handles the event when the GreenSpace ComboBox value changes.
+&nbsp;     *
+&nbsp;     * @param actionEvent the action event triggered by changing the GreenSpace ComboBox value.
+&nbsp;     */
+&nbsp;    public void onChangeCmbGreenSpace(ActionEvent actionEvent) {
+<b class="nc">&nbsp;        chosenGreenSpace = Optional.empty();</b>
+<b class="nc">&nbsp;        if (cmbGreenSpace.getValue() != null) {</b>
+<b class="nc">&nbsp;            GreenSpace greenSpace = (GreenSpace) cmbGreenSpace.getValue();</b>
+<b class="nc">&nbsp;            initializeTaskComboBox(greenSpace);</b>
+<b class="nc">&nbsp;            chosenGreenSpace = Optional.of(greenSpace);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Custom ListCell implementation for displaying GreenSpace names in the ComboBox.
+&nbsp;     */
+<b class="nc">&nbsp;    private static class GreenSpaceComboNames extends ListCell&lt;GreenSpace&gt; {</b>
+&nbsp;
+&nbsp;        @Override
+&nbsp;        public void updateItem(GreenSpace item, boolean empty) {
+<b class="nc">&nbsp;            super.updateItem(item, empty);</b>
+<b class="nc">&nbsp;            if (item != null) {</b>
+&nbsp;
+<b class="nc">&nbsp;                setText(item.toString());</b>
+&nbsp;
+<b class="nc">&nbsp;            } else if (empty || item == null) {</b>
+<b class="nc">&nbsp;                setText(&quot;Select a GreenSpace&quot;);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                setText(null);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Initializes the Task ComboBox with the list of tasks for the selected GreenSpace.
+&nbsp;     *
+&nbsp;     * @param greenSpace the selected GreenSpace.
+&nbsp;     */
+&nbsp;    private void initializeTaskComboBox(GreenSpace greenSpace) {
+<b class="nc">&nbsp;        List&lt;Task&gt; taskList = controller.getTasksByGreenSpace(greenSpace);</b>
+<b class="nc">&nbsp;        cmbTask.setItems(FXCollections.observableArrayList(taskList));</b>
+<b class="nc">&nbsp;        cmbTask.setCellFactory(listView -&gt; new TaskComboNames());</b>
+<b class="nc">&nbsp;        cmbTask.setButtonCell(new TaskComboNames());</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Handles the event when the Task ComboBox value changes.
+&nbsp;     *
+&nbsp;     * @param actionEvent the action event triggered by changing the Task ComboBox value.
+&nbsp;     */
+&nbsp;    public void onChangeCmbTask(ActionEvent actionEvent) {
+<b class="nc">&nbsp;        chosenTask = Optional.empty();</b>
+<b class="nc">&nbsp;        if (cmbTask.getValue() != null) {</b>
+<b class="nc">&nbsp;            Task task = (Task) cmbTask.getValue();</b>
+&nbsp;            //initializeTaskComboBox(chosenTask);
+<b class="nc">&nbsp;            chosenTask = Optional.of(task);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Custom ListCell implementation for displaying Task names in the ComboBox.
+&nbsp;     */
+<b class="nc">&nbsp;    private static class TaskComboNames extends ListCell&lt;Task&gt; {</b>
+&nbsp;
+&nbsp;        @Override
+&nbsp;        public void updateItem(Task item, boolean empty) {
+<b class="nc">&nbsp;            super.updateItem(item, empty);</b>
+<b class="nc">&nbsp;            if (item != null) {</b>
+&nbsp;
+<b class="nc">&nbsp;                setText(item.toString());</b>
+&nbsp;
+<b class="nc">&nbsp;            } else if (empty || item == null) {</b>
+<b class="nc">&nbsp;                setText(&quot;Select a Task&quot;);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                setText(null);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Handles the event when the DatePicker value changes.
+&nbsp;     *
+&nbsp;     * @param actionEvent the action event triggered by changing the DatePicker value.
+&nbsp;     */
+&nbsp;    public void onChangeDatePicker(ActionEvent actionEvent) {
+<b class="nc">&nbsp;        chosenDate = Optional.ofNullable(datePicker.getValue());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Handles the event when the start time input is changed.
+&nbsp;     * Verifies if the entered time is valid and within working hours (9:00 to 17:00).
+&nbsp;     */
+&nbsp;    public void onChangeStartTime() {
+&nbsp;        try {
+<b class="nc">&nbsp;            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;HH:mm&quot;);</b>
+<b class="nc">&nbsp;            LocalTime time = LocalTime.parse(textStartTime.getText(), formatter);</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;            LocalTime startTime = LocalTime.of(9, 0);</b>
+<b class="nc">&nbsp;            LocalTime endTime = LocalTime.of(17, 0);</b>
+&nbsp;
+<b class="nc">&nbsp;            if (time.isBefore(startTime) || time.isAfter(endTime)) {</b>
+<b class="nc">&nbsp;                textStartTime.setStyle(&quot;-fx-border-color: red;&quot;);</b>
+<b class="nc">&nbsp;                chosenStartTime = Optional.empty();</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                textStartTime.setStyle(null); // Remove o estilo de borda vermelha caso esteja correto</b>
+<b class="nc">&nbsp;                chosenStartTime = Optional.of(time);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } catch (DateTimeParseException e) {</b>
+<b class="nc">&nbsp;            textStartTime.setStyle(&quot;-fx-border-color: red;&quot;);</b>
+<b class="nc">&nbsp;            chosenStartTime = Optional.empty();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Handles the action event when the submit button is clicked to postpone the task.
+&nbsp;     *
+&nbsp;     * @param actionEvent the action event triggered by the submit button.
+&nbsp;     */
+&nbsp;    public void postponeTask(ActionEvent actionEvent) {
+<b class="nc">&nbsp;        if (chosenGreenSpace.isPresent() &amp;&amp; chosenTask.isPresent() &amp;&amp; chosenDate.isPresent() &amp;&amp; !textStartTime.getText().isEmpty()) {</b>
+<b class="nc">&nbsp;            onChangeStartTime();</b>
+<b class="nc">&nbsp;            if (chosenStartTime.isPresent()) {</b>
+&nbsp;                // Call controller to postpone task
+<b class="nc">&nbsp;                Optional&lt;Task&gt; success = controller.postponeTask(chosenTask.get(), chosenDate.get(), chosenStartTime.get());</b>
+<b class="nc">&nbsp;                if (success.isPresent()) {</b>
+<b class="nc">&nbsp;                    lblAllFields.setVisible(false);</b>
+<b class="nc">&nbsp;                    Alert alert = new Alert(Alert.AlertType.INFORMATION);</b>
+<b class="nc">&nbsp;                    alert.setTitle(&quot;Success&quot;);</b>
+<b class="nc">&nbsp;                    alert.setHeaderText(null);</b>
+<b class="nc">&nbsp;                    alert.setContentText(&quot;The task has been successfully postponed.&quot;);</b>
+<b class="nc">&nbsp;                    alert.showAndWait();</b>
+<b class="nc">&nbsp;                } else {</b>
+<b class="nc">&nbsp;                    Alert alert = new Alert(Alert.AlertType.ERROR);</b>
+<b class="nc">&nbsp;                    alert.setTitle(&quot;Error&quot;);</b>
+<b class="nc">&nbsp;                    alert.setHeaderText(null);</b>
+<b class="nc">&nbsp;                    alert.setContentText(&quot;There was an error postponing the task. Please try again.&quot;);</b>
+<b class="nc">&nbsp;                    alert.showAndWait();</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            lblAllFields.setVisible(true);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>

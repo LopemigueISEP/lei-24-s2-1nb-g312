@@ -1,0 +1,215 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Email</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.g312.ui.console.utils</a>
+</div>
+
+<h1>Coverage Summary for Class: Email (pt.ipp.isep.dei.g312.ui.console.utils)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Email</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (3/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    38.1%
+  </span>
+  <span class="absValue">
+    (16/42)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.g312.ui.console.utils;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Employee;
+&nbsp;import pt.ipp.isep.dei.g312.domain.Task;
+&nbsp;
+&nbsp;import java.io.FileInputStream;
+&nbsp;import java.io.FileWriter;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Properties;
+&nbsp;
+&nbsp;/**
+&nbsp; * Implementation of the EmailService interface for sending emails related to task assignments.
+&nbsp; */
+&nbsp;public class Email implements EmailService {
+&nbsp;
+&nbsp;
+&nbsp;    public List&lt;String&gt; emailServices;
+&nbsp;
+<b class="fc">&nbsp;    public Email() {</b>
+<b class="fc">&nbsp;        emailServices = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        loadValidEmailServices();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sends an email to notify the assignment of a task to a team.
+&nbsp;     * @param task The task that has been assigned to a team.
+&nbsp;     * @return true if the email was sent successfully, false otherwise.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public boolean assignTaskToTeamEmail(Task task) {
+<b class="nc">&nbsp;        return sendEmailTeam(task);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sends emails to all team members assigned to the task.
+&nbsp;     * @param task The task assigned to the team.
+&nbsp;     * @return true if at least one email was sent successfully, false otherwise.
+&nbsp;     */
+&nbsp;    private boolean sendEmailTeam(Task task) {
+&nbsp;
+<b class="nc">&nbsp;        boolean emailSent = false;</b>
+&nbsp;
+<b class="nc">&nbsp;        for (Employee e : task.getAssignedTeam().getTeamEmployees()) {</b>
+<b class="nc">&nbsp;            if (validEmail(e.getEmail())) {</b>
+<b class="nc">&nbsp;                createEmailFile(e, task);</b>
+<b class="nc">&nbsp;                emailSent = true;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return emailSent;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Loads the valid email services from a configuration file.
+&nbsp;     */
+&nbsp;    private void loadValidEmailServices() {
+<b class="fc">&nbsp;        String filePath = &quot;src/main/resources/config.properties&quot;;</b>
+<b class="fc">&nbsp;        Properties properties = new Properties();</b>
+&nbsp;
+<b class="fc">&nbsp;        try (FileInputStream input = new FileInputStream(filePath)) {</b>
+<b class="fc">&nbsp;            properties.load(input);</b>
+&nbsp;
+<b class="fc">&nbsp;            String validEmail = properties.getProperty(&quot;ValidEmail&quot;);</b>
+<b class="fc">&nbsp;            if (validEmail != null &amp;&amp; !validEmail.isEmpty()) {</b>
+<b class="fc">&nbsp;                String[] services = validEmail.split(&quot;,&quot;);</b>
+<b class="fc">&nbsp;                for (String service : services) {</b>
+<b class="fc">&nbsp;                    emailServices.add(service.trim());</b>
+&nbsp;                }
+&nbsp;            }
+<b class="fc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Checks if the provided email address belongs to a valid email service.
+&nbsp;     * @param email The email address to validate.
+&nbsp;     * @return true if the email address is valid, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean validEmail(String email) {
+<b class="fc">&nbsp;        String domain = email.split(&quot;@&quot;)[1];</b>
+<b class="fc">&nbsp;        return emailServices.contains(domain);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates an email file with the task assignment details for the specified employee.
+&nbsp;     * @param employee The employee to whom the email is addressed.
+&nbsp;     * @param task     The task details to include in the email.
+&nbsp;     */
+&nbsp;    private void createEmailFile(Employee employee, Task task) {
+<b class="nc">&nbsp;        String fileName = &quot;email_&quot; + employee.getName() + &quot;.txt&quot;;</b>
+<b class="nc">&nbsp;        try (FileWriter writer = new FileWriter(fileName)) {</b>
+<b class="nc">&nbsp;            writer.write(&quot;To: &quot; + employee.getEmail() + &quot;\n&quot;);</b>
+<b class="nc">&nbsp;            writer.write(&quot;Subject: Task Assignment\n\n&quot;);</b>
+<b class="nc">&nbsp;            writer.write(&quot;Dear &quot; + employee.getName() + &quot;,\n\n&quot;);</b>
+<b class="nc">&nbsp;            writer.write(&quot;You have been assigned a new task.\n\n&quot;);</b>
+<b class="nc">&nbsp;            writer.write(&quot;Task Details:\n&quot;);</b>
+<b class="nc">&nbsp;            writer.write(&quot;Title: &quot; + task.getTitle() + &quot;\n&quot;);</b>
+<b class="nc">&nbsp;            writer.write(&quot;Description: &quot; + task.getDescription() + &quot;\n&quot;);</b>
+<b class="nc">&nbsp;            writer.write(&quot;Greenspace: &quot; + task.getGreenSpace() + &quot;\n&quot;);</b>
+<b class="nc">&nbsp;            writer.write(&quot;Assigned Team: &quot; + task.getAssignedTeam() + &quot;\n&quot;);</b>
+<b class="nc">&nbsp;            writer.write(&quot;Start Date: &quot; + task.getStartDate() + &quot;\n&quot;);</b>
+<b class="nc">&nbsp;            writer.write(&quot;End Date: &quot; + task.getEndDate() + &quot;\n&quot;);</b>
+<b class="nc">&nbsp;            writer.write(&quot;\nBest regards,\nMusgoSublime\n&quot;);</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-09 17:29</div>
+</div>
+</body>
+</html>
