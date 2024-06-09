@@ -718,8 +718,74 @@ GreenSpaces "1" --> "*"GreenSpace
 ListGreenSpacesManagedByMeController .> Employee
 
 
+class AssignTeamToTaskInTheAgendaUI{
+}
+
+class AssignTeamController{
++assignTeamController()
++assignTeamToTask()
++listAvailableTeams()
++listUnfinishedTasks()
++getAgenda()
++loadValidEmailServices()
++validEmail()
+-getTaskRepository()
+-getTeamRepository()
+-getGreenSpaceRepository()
+}
+
+interface EmailService{
++assignTaskToTeamEmail()
+}
+
+class Email {
++assignTaskToTeamEmail()
+-sendEmailTeam()
+-loadValidEmailServices() {
+-validEmail()
+-createEmailFile()
+}
+
+AssignTeamToTaskInTheAgendaUI "1" ..> "1" AssignTeamController
+AssignTeamController "1" ..> "1" Repositories
 
 
+Repositories "1"--> "1" TaskRepository
+Repositories "1"--> "1" TeamRepository
+Repositories "1"--> "1" GreenSpaceRepository
+
+TaskRepository "1"--> "*" Employee
+TeamRepository "1"--> "*" Employee
+GreenSpaceRepository "1"--> "*" Employee
+
+
+
+
+AssignTeamController "1" ..> "1" Employee
+AssignTeamController "1" ..> "1" EmailService
+EmailService "1" --> "*" Email
+
+Employee "1" --> "1" Tasks : list pending tasks in the Agenda
+Tasks "1" --> "*" Task
+
+class PostponeTaskInTheAgendaUI{
+}
+
+class PostponeTaskInTheAgendaController {
+-getGreenSpaceRepository()
+-getGreenSpaceRepository()
++PostponeTaskInTheAgendaController()
+-getTaskRepository()
++listPlannedTasks()
++getTeamTasks()
++postponeTask(task, newDate)
+}
+
+PostponeTaskInTheAgendaUI ..> PostponeTaskInTheAgendaController
+
+PostponeTaskInTheAgendaController ..> Repositories
+
+PostponeTaskInTheAgendaController ..> Employee
 
 class TasksAssignedToMeBetweenTwoDatesUI {
 
