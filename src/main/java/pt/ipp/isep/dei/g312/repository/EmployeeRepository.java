@@ -293,7 +293,7 @@ public class EmployeeRepository implements Serializable {
             file.close();
 
         } catch (IOException ex) {
-            System.out.println("IOException is caught");
+            System.out.printf("\n%s not found!",filename);
         } catch (ClassNotFoundException ex) {
             System.out.println("ClassNotFoundException" +
                     " is caught");
