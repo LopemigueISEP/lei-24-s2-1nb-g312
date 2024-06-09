@@ -166,7 +166,7 @@ public class GreenSpaceRepository implements Serializable {
         try {
             for (GreenSpace grn : getGreenSpaceList()) {
                 if (grn != null) {
-                    if (grn.getGreenSpaceManager().equals(loggedInUser)) {
+                    if (grn.getGreenSpaceManager().equalsIgnoreCase(loggedInUser)) {
                         listOfGreenSpacesManagedByMe.add(grn);
                     }
                 }

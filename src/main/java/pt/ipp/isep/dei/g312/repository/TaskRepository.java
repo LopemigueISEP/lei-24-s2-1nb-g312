@@ -7,7 +7,6 @@ import java.time.*;
 import java.util.*;
 
 
-
 /**
  * Repository class for managing tasks.
  */
@@ -41,10 +40,10 @@ public class TaskRepository implements Serializable {
      *
      * @return an Optional containing the list of tasks, or empty if the list is null
      */
-    public Optional<List<Task>> getTaskList(){
+    public Optional<List<Task>> getTaskList() {
         Optional<List<Task>> tasksList = Optional.empty();
         List<Task> listTask = new ArrayList<>(taskList);
-        tasksList= Optional.of(listTask);
+        tasksList = Optional.of(listTask);
         return tasksList;
     }
 
@@ -81,7 +80,6 @@ public class TaskRepository implements Serializable {
     }
 
 
-
     /**
      * Updates a task in the agenda.
      *
@@ -92,8 +90,8 @@ public class TaskRepository implements Serializable {
         int index = 0;
         for (Task t : taskList) {
             if (t.getTaskID() == task.getTaskID()) {
-                    taskList.set(index, task);
-                    return Optional.of(task);
+                taskList.set(index, task);
+                return Optional.of(task);
             }
             index++;
         }
@@ -105,7 +103,7 @@ public class TaskRepository implements Serializable {
      * Checks the availability of a team for a given task.
      *
      * @param teamTasks the list of tasks assigned to the team
-     * @param task the task to check availability for
+     * @param task      the task to check availability for
      * @return true if the team is available for the task, false otherwise
      */
     public boolean teamAvailability(List<Task> teamTasks, Task task) {
@@ -122,7 +120,6 @@ public class TaskRepository implements Serializable {
         return true;
 
     }
-
 
 
     /**
@@ -209,6 +206,7 @@ public class TaskRepository implements Serializable {
         }
         return pendingTasks;
     }
+
     /**
      * Retrieves a list of tasks associated with a specific green space.
      *
@@ -231,13 +229,13 @@ public class TaskRepository implements Serializable {
      *
      * @param task the task to validate
      * @return true if the task is valid (i.e., not already present in the list),
-     *        false otherwise
+     * false otherwise
      */
     private boolean isValidTask(Task task) {
 
         for (Task t :
                 taskList) {
-            if (t.getTaskID() == task.getTaskID()){
+            if (t.getTaskID() == task.getTaskID()) {
                 return false;
             }
         }
@@ -324,6 +322,7 @@ public class TaskRepository implements Serializable {
         }
         return cancelableTasks;
     }
+
     /**
      * Retrieves a list of tasks that can be completed.
      *
@@ -333,10 +332,10 @@ public class TaskRepository implements Serializable {
         List<Task> completableTasks = new ArrayList<>();
         for (Task task : getAgenda()) {
             if (task.getStatus() != TaskStatus.CANCELED && task.getStatus() != TaskStatus.DONE) {
-                if (task.getAssignedTeam()!=null){
-                    for (Employee e:
+                if (task.getAssignedTeam() != null) {
+                    for (Employee e :
                             task.getAssignedTeam().getTeamEmployees()) {
-                        if (e.getEmail().equals(colab.getEmail())){
+                        if (e.getEmail().equals(colab.getEmail())) {
                             completableTasks.add(task);
                         }
                     }
@@ -363,17 +362,17 @@ public class TaskRepository implements Serializable {
      * Completes a given task.
      *
      * @param taskToComplete the task to cancel
-     * @param observation optional observation
-     * @param endDate date of the finished task
+     * @param observation    optional observation
+     * @param endDate        date of the finished task
      */
     public void completeTask(Task taskToComplete, String observation, Date endDate) {
-        taskToComplete.complete(observation,endDate);
+        taskToComplete.complete(observation, endDate);
     }
 
     /**
      * Adds the specified task to the agenda with the provided start date and time.
      *
-     * @param task the task to add to the agenda
+     * @param task      the task to add to the agenda
      * @param startDate the date on which the task is to be scheduled
      * @param startTime the time at which the task is to start
      */
@@ -393,15 +392,15 @@ public class TaskRepository implements Serializable {
      * @return the next available task ID
      */
     public int getNextTaskId() {
-        int maxId=0;
-        for (Task task:
-             taskList) {
-            if (maxId<task.getTaskID()){
-                maxId=task.getTaskID();
+        int maxId = 0;
+        for (Task task :
+                taskList) {
+            if (maxId < task.getTaskID()) {
+                maxId = task.getTaskID();
             }
 
         }
-        return maxId+1;
+        return maxId + 1;
     }
 
 
@@ -415,8 +414,10 @@ public class TaskRepository implements Serializable {
         List<Task> tasksOfGreenSpace = new ArrayList<>();
         for (Task t :
                 taskList) {
-            if (t.getGreenSpace().equals(greenSpace)) {
-                tasksOfGreenSpace.add(t);
+            if (t.getStatus() != null) {
+                if (t.getGreenSpace().equals(greenSpace) && (t.getStatus().equals(TaskStatus.PENDING) || t.getStatus().equals(TaskStatus.POSTPONED))) {
+                    tasksOfGreenSpace.add(t);
+                }
             }
         }
         return tasksOfGreenSpace;
@@ -428,7 +429,7 @@ public class TaskRepository implements Serializable {
      */
     public void serializateData() {
 
-        String filename = this.getClass().getSimpleName()+".bin";
+        String filename = this.getClass().getSimpleName() + ".bin";
 
         // Serialization
         try {
@@ -446,18 +447,19 @@ public class TaskRepository implements Serializable {
             out.close();
             file.close();
 
-            System.out.println(this.getClass().getSimpleName()+" Has Been Serialized successfully! ");
+            System.out.println(this.getClass().getSimpleName() + " Has Been Serialized successfully! ");
         } catch (FileNotFoundException ex) {
             System.out.println("IOException is caught");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
     /**
      * Deserializes the TaskRepository object from a file and adds the skills to the current repository.
      */
     public void getSeralizatedData() {
-        String filename = this.getClass().getSimpleName()+".bin";
+        String filename = this.getClass().getSimpleName() + ".bin";
 
         try {
 
@@ -478,18 +480,13 @@ public class TaskRepository implements Serializable {
             in.close();
             file.close();
 
-        }
-
-        catch (IOException ex) {
-            System.out.printf("\n%s not found!",filename);
-        }
-
-        catch (ClassNotFoundException ex) {
+        } catch (IOException ex) {
+            System.out.printf("\n%s not found!", filename);
+        } catch (ClassNotFoundException ex) {
             System.out.println("ClassNotFoundException" +
                     " is caught");
         }
     }
-
 
 
     /**
@@ -497,7 +494,7 @@ public class TaskRepository implements Serializable {
      *
      * @param userEmail the email of the user whose tasks are to be retrieved
      * @param startDate the start date of the range
-     * @param endDate the end date of the range
+     * @param endDate   the end date of the range
      * @return a list of tasks assigned to the specified user within the given date range
      */
     public List<Task> getTasksAssignedToMeBetweenToDates(String userEmail, LocalDate startDate, LocalDate endDate) {
@@ -513,7 +510,7 @@ public class TaskRepository implements Serializable {
         List<Task> employeeTasksBetweenDates = new ArrayList<>();
         List<Employee> taskEmployees = new ArrayList<>();
 
-        for(Task task : getAgenda()) {
+        for (Task task : getAgenda()) {
             try {
                 if (task != null) {
                     if ((startDateDate.before(task.getEndDate()) || startDateDate.equals(task.getEndDate())) && (endDateDate.after(task.getStartDate()) || endDateDate.equals(task.getStartDate()))) {
