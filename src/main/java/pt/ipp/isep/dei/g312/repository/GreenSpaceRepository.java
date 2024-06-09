@@ -83,21 +83,9 @@ public class GreenSpaceRepository implements Serializable {
         return false;
     }
     /**
-     * Retrieves a GreenSpace object from the repository based on its name.
-     *
-     * @param name The name of the GreenSpace to retrieve.
-     * @return An Optional containing the GreenSpace object if found, or an empty Optional if not found.
-     */
-//    public Optional<GreenSpace> getGreenSpaceByName(String name) {
-//        for (GreenSpace greenSpace : greenSpaceList) {
-//            if (greenSpace.getName().equalsIgnoreCase(name)) {
-//                return Optional.of(greenSpace);
-//            }
-//        }
-//        return Optional.empty();
-//    }
-    /**
-     * Serialize data and save it to a file.
+     * Serializes the GreenSpaceRepository object to a file.
+     * The repository is saved to a file named after the class with a ".bin" extension.
+     * This method handles the serialization process and writes the object state to a file.
      */
     public void serializateData() {
 
@@ -128,7 +116,9 @@ public class GreenSpaceRepository implements Serializable {
     }
 
     /**
-     * Deserialize data from a file and add it to the repository.
+     * Deserializes the GreenSpaceRepository object from a file and adds the data to the current repository.
+     * The repository is read from a file named after the class with a ".bin" extension.
+     * This method handles the deserialization process and reads the object state from a file.
      */
     public void getSeralizatedData() {
         String filename = this.getClass().getSimpleName()+".bin";

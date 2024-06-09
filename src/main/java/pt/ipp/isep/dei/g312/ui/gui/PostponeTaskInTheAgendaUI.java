@@ -19,7 +19,10 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
-
+/**
+ * The PostponeTaskInTheAgendaUI class is responsible for the graphical user interface for postponing tasks in the agenda.
+ * It extends the JavaFX Application class and implements Initializable for initialization logic.
+ */
 public class PostponeTaskInTheAgendaUI extends Application implements Initializable {
 
     private final PostponeTaskInTheAgendaController controller;
@@ -33,7 +36,9 @@ public class PostponeTaskInTheAgendaUI extends Application implements Initializa
     private Optional<Task> chosenTask = null;
     private Optional<LocalDate> chosenDate = null;
     private Optional<LocalTime> chosenStartTime = Optional.empty();
-
+    /**
+     * Constructs a PostponeTaskInTheAgendaUI object and initializes the controller.
+     */
     public PostponeTaskInTheAgendaUI() {
         controller = new PostponeTaskInTheAgendaController();
     }
@@ -54,21 +59,32 @@ public class PostponeTaskInTheAgendaUI extends Application implements Initializa
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * This method is called to initialize a controller after its root element has been completely processed.
+     *
+     * @param url the location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeGreenSpaceComboBox();
 
     }
 
-    //comboBox for GreenSpace
+    /**
+     * Initializes the GreenSpace ComboBox with the list of green spaces.
+     */
     private void initializeGreenSpaceComboBox() {
         List<GreenSpace> greenSpaceList = controller.getGreenSpaces();
         cmbGreenSpace.setItems(FXCollections.observableArrayList(greenSpaceList));
         cmbGreenSpace.setCellFactory(listView -> new GreenSpaceComboNames());
         cmbGreenSpace.setButtonCell(new GreenSpaceComboNames());
     }
-
+    /**
+     * Handles the event when the GreenSpace ComboBox value changes.
+     *
+     * @param actionEvent the action event triggered by changing the GreenSpace ComboBox value.
+     */
     public void onChangeCmbGreenSpace(ActionEvent actionEvent) {
         chosenGreenSpace = Optional.empty();
         if (cmbGreenSpace.getValue() != null) {
@@ -78,8 +94,9 @@ public class PostponeTaskInTheAgendaUI extends Application implements Initializa
         }
     }
 
-
-
+    /**
+     * Custom ListCell implementation for displaying GreenSpace names in the ComboBox.
+     */
     private static class GreenSpaceComboNames extends ListCell<GreenSpace> {
 
         @Override
@@ -98,15 +115,22 @@ public class PostponeTaskInTheAgendaUI extends Application implements Initializa
 
     }
 
-
-    //comboBox for Task
+    /**
+     * Initializes the Task ComboBox with the list of tasks for the selected GreenSpace.
+     *
+     * @param greenSpace the selected GreenSpace.
+     */
     private void initializeTaskComboBox(GreenSpace greenSpace) {
         List<Task> taskList = controller.getTasksByGreenSpace(greenSpace);
         cmbTask.setItems(FXCollections.observableArrayList(taskList));
         cmbTask.setCellFactory(listView -> new TaskComboNames());
         cmbTask.setButtonCell(new TaskComboNames());
     }
-
+    /**
+     * Handles the event when the Task ComboBox value changes.
+     *
+     * @param actionEvent the action event triggered by changing the Task ComboBox value.
+     */
     public void onChangeCmbTask(ActionEvent actionEvent) {
         chosenTask = Optional.empty();
         if (cmbTask.getValue() != null) {
@@ -115,7 +139,9 @@ public class PostponeTaskInTheAgendaUI extends Application implements Initializa
             chosenTask = Optional.of(task);
         }
     }
-
+    /**
+     * Custom ListCell implementation for displaying Task names in the ComboBox.
+     */
     private static class TaskComboNames extends ListCell<Task> {
 
         @Override
@@ -133,24 +159,25 @@ public class PostponeTaskInTheAgendaUI extends Application implements Initializa
         }
 
     }
-
-
-    //Datepicker for new Date
-
+    /**
+     * Handles the event when the DatePicker value changes.
+     *
+     * @param actionEvent the action event triggered by changing the DatePicker value.
+     */
     public void onChangeDatePicker(ActionEvent actionEvent) {
         chosenDate = Optional.ofNullable(datePicker.getValue());
     }
 
-
-
-    //Hour for new Time
-
+    /**
+     * Handles the event when the start time input is changed.
+     * Verifies if the entered time is valid and within working hours (9:00 to 17:00).
+     */
     public void onChangeStartTime() {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             LocalTime time = LocalTime.parse(textStartTime.getText(), formatter);
 
-            // Verifica se o horário está entre 9:00 e 17:00
+
             LocalTime startTime = LocalTime.of(9, 0);
             LocalTime endTime = LocalTime.of(17, 0);
 
@@ -167,11 +194,11 @@ public class PostponeTaskInTheAgendaUI extends Application implements Initializa
         }
     }
 
-
-
-
-
-    //Button to postpone Task
+    /**
+     * Handles the action event when the submit button is clicked to postpone the task.
+     *
+     * @param actionEvent the action event triggered by the submit button.
+     */
     public void postponeTask(ActionEvent actionEvent) {
         if (chosenGreenSpace.isPresent() && chosenTask.isPresent() && chosenDate.isPresent() && !textStartTime.getText().isEmpty()) {
             onChangeStartTime();
@@ -198,10 +225,5 @@ public class PostponeTaskInTheAgendaUI extends Application implements Initializa
         }
 
     }
-
-
-
-
-
 
 }

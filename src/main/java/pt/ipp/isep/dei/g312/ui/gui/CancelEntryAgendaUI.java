@@ -19,7 +19,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
+/**
+ * The CancelEntryAgendaUI class is responsible for the graphical user interface for canceling tasks from the agenda.
+ * It extends the JavaFX Application class and implements Initializable for initialization logic.
+ */
 public class CancelEntryAgendaUI extends Application implements Initializable {
     public ComboBox cmbTasks;
     public Button btnCancel;
@@ -57,7 +60,9 @@ public class CancelEntryAgendaUI extends Application implements Initializable {
             raiseNoTaksAvaiable();
         }
     }
-
+    /**
+     * Displays a warning dialog when no tasks are available to cancel.
+     */
     private void raiseNoTaksAvaiable() {
         ButtonType yes = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
         Alert alert = new Alert(Alert.AlertType.WARNING,
@@ -70,20 +75,30 @@ public class CancelEntryAgendaUI extends Application implements Initializable {
 
 
     }
-
+    /**
+     * This method is called to initialize a controller after its root element has been completely processed.
+     *
+     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeTaskComboBox();
 
 
     }
+    /**
+     * Initializes the Task ComboBox with the list of cancelable tasks.
+     */
     private void initializeTaskComboBox() {
         List<Task> tasks= cancelEntryAgendaController.getTasksCancelable();
         cmbTasks.setItems(FXCollections.observableArrayList(tasks));
         cmbTasks.setCellFactory(listView -> new TasksComboNames());
         cmbTasks.setButtonCell(new TasksComboNames());
     }
-
+    /**
+     * Custom ListCell implementation for displaying Task titles in the ComboBox.
+     */
     private static class TasksComboNames extends ListCell<Task> {
 
         @Override
@@ -101,7 +116,11 @@ public class CancelEntryAgendaUI extends Application implements Initializable {
         }
 
     }
-
+    /**
+     * Handles the action event when the cancel button is clicked to cancel a task.
+     *
+     * @param actionEvent the action event triggered by the cancel button
+     */
     public void cancelEntryAgenda(ActionEvent actionEvent) {
         if (verifyEmptyField()){
             lblStatusMsg.setVisible(true);
@@ -122,10 +141,19 @@ public class CancelEntryAgendaUI extends Application implements Initializable {
             }
         }
     }
+    /**
+     * Verifies if the Task ComboBox is empty.
+     *
+     * @return true if the Task ComboBox is empty, false otherwise
+     */
     private boolean verifyEmptyField() {
         return cmbTasks.getValue()==null;
     }
-
+    /**
+     * Displays a confirmation dialog to confirm the cancellation of the task.
+     *
+     * @return true if the user confirms the cancellation, false otherwise
+     */
     private boolean confirmsData() {
         ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
         ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -139,6 +167,11 @@ public class CancelEntryAgendaUI extends Application implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         return result.orElse(yes) == yes;
     }
+    /**
+     * Displays a dialog asking if the user wants to cancel another task.
+     *
+     * @return true if the user wants to cancel another task, false otherwise
+     */
     private boolean cancelAnotherTask() {
         if (cancelEntryAgendaController.getTasksCancelable().size()>0) {
             ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
@@ -158,7 +191,9 @@ public class CancelEntryAgendaUI extends Application implements Initializable {
             return false;
         }
     }
-
+    /**
+     * Resets all input fields in the form.
+     */
     private void resetAllFields() {
 
         initializeTaskComboBox();

@@ -49,13 +49,6 @@ public class AssignVehicleToAgendaEntryGUI extends Application implements Initia
     private Map<String,Task> taskMap;
     private Task selectedTask = null;
 
-
-    /**
-     * Starts the GUI application.
-     *
-     * @param primaryStage the primary stage for this application
-     * @throws Exception if the FXML file cannot be loaded
-     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         Platform.setImplicitExit(false);

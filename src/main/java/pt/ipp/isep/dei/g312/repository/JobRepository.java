@@ -106,6 +106,8 @@ public class JobRepository implements Serializable {
 
     /**
      * Serializes the JobRepository object to a file.
+     * The repository is saved to a file named after the class with a ".bin" extension.
+     * This method handles the serialization process and writes the object state to a file.
      */
     public void serializateData() {
 
@@ -138,6 +140,8 @@ public class JobRepository implements Serializable {
 
     /**
      * Deserializes the JobRepository object from a file and adds the jobs to the current repository.
+     * The repository is read from a file named after the class with a ".bin" extension.
+     * This method handles the deserialization process and reads the object state from a file.
      */
     public void getSeralizatedData() {
         String filename = this.getClass().getSimpleName()+".bin";

@@ -94,6 +94,8 @@ public class SkillRepository implements Serializable {
     }
     /**
      * Serializes the SkillRepository object to a file.
+     * The repository is saved to a file named after the class with a ".bin" extension.
+     * This method handles the serialization process and writes the object state to a file.
      */
     public void serializateData() {
 
@@ -125,6 +127,8 @@ public class SkillRepository implements Serializable {
 
     /**
      * Deserializes the SkillRepository object from a file and adds the skills to the current repository.
+     * The repository is read from a file named after the class with a ".bin" extension.
+     * This method handles the deserialization process and reads the object state from a file.
      */
     public void getSeralizatedData() {
         String filename = this.getClass().getSimpleName()+".bin";

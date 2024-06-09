@@ -101,7 +101,6 @@ public class RegisterGreenSpaceUI extends Application {
 
     /**
      * This method is called during FXML initialization to set up the UI elements for registering a new green space.
-     *
      * - Sets the prompt text for the typology choice box.
      * - Adds available green space types ("Garden", "Medium-Sized Park", "Large-Sized Park") to the choice box.
      * - Calls the `setGreenSpaceManager` method to set the green space manager.
@@ -115,12 +114,18 @@ public class RegisterGreenSpaceUI extends Application {
             throw new RuntimeException("eero",e);
         }
     }
+    /**
+     * Initializes the typology choice box with available green space typologies.
+     */
     private void initializetypologyChoiceBox() {
         GreenSpaceTypology[] taskUrgencies= registerGreenSpaceController.getGreenSpaceTypologies();
         typologyChoiceBox.setItems(FXCollections.observableArrayList(taskUrgencies));
         typologyChoiceBox.setCellFactory(listView -> new TypologyChoiceBoxNames());
         typologyChoiceBox.setButtonCell(new TypologyChoiceBoxNames());
     }
+    /**
+     * Custom ListCell implementation for displaying GreenSpaceTypology names in the ComboBox.
+     */
     private static class TypologyChoiceBoxNames extends ListCell<GreenSpaceTypology> {
 
         @Override
@@ -157,7 +162,6 @@ public class RegisterGreenSpaceUI extends Application {
     /**
      * This method is called when the "Register" button is clicked.
      * It handles the registration process for a new green space.
-     *
      * - Validates user input.
      * - Extracts user input from UI controls.
      * - Checks for existing green space with the same name and address.
@@ -249,6 +253,9 @@ public class RegisterGreenSpaceUI extends Application {
     private double parseAreaField(String areaText) throws NumberFormatException {
         return Double.parseDouble(areaText);
     }
+    /**
+     * Resets all input fields in the form.
+     */
     private void resetAllFields() {
         nameField.setText("");
         addressField.setText("");
@@ -256,6 +263,11 @@ public class RegisterGreenSpaceUI extends Application {
         typologyChoiceBox.getSelectionModel().clearSelection();
         typologyChoiceBox.setValue(null);
     }
+    /**
+     * Displays a confirmation dialog to confirm the submission of the new green space.
+     *
+     * @return True if the user confirms the submission, false otherwise.
+     */
     private boolean confirmsData() {
         ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
         ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);

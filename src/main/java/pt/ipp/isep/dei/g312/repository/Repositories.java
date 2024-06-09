@@ -63,10 +63,6 @@ public class Repositories {
         return organizationRepository;
     }
 
-//    public TaskCategoryRepository getTaskCategoryRepository() {
-//        return taskCategoryRepository;
-//    }
-
     /**
      * Gets the authentication repository instance.
      *

@@ -242,11 +242,19 @@ public class Task implements Cloneable, Serializable {
 
     /**
      * Cancels the task by setting its status to CANCELED.
+     * This method changes the task's status to indicate that it has been canceled and is no longer PLANNED or POSTPONED.
      */
     public void cancel() {
         this.status=TaskStatus.CANCELED;
     }
 
+    /**
+     * Completes the task by setting its status to DONE.
+     * This method also records an observation and sets the end date of the task.
+     *
+     * @param observation a string containing observations or notes about the task's completion
+     * @param endDate the date and time when the task was completed
+     */
     public void complete(String observation, Date endDate) {
         this.observation=observation;
         this.endDate=endDate;
@@ -256,7 +264,7 @@ public class Task implements Cloneable, Serializable {
     /**
      * Adds the task to the agenda with the specified start date and time.
      * Sets the task's position to {@code TaskPosition.AGENDA} and its status to {@code TaskStatus.PENDING}.
-     * Also calculates and sets the task's start date and end date.
+     * Also calculates and sets the task's start date and end date based on the provided start date and time.
      *
      * @param startDate the date on which the task is to be scheduled
      * @param startTime the time at which the task is to start

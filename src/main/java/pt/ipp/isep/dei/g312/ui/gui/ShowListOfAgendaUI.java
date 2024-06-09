@@ -24,7 +24,10 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-
+/**
+ * The ShowListOfAgendaUI class is responsible for displaying the list of tasks in the agenda.
+ * It extends the JavaFX Application class and implements Initializable for initialization logic.
+ */
 public class ShowListOfAgendaUI extends Application implements Initializable {
 
     public TableView<Task> TableView_TaskAgenda;
@@ -59,7 +62,12 @@ public class ShowListOfAgendaUI extends Application implements Initializable {
             throw new RuntimeException("failed to load fxml", e);
         }
     }
-
+    /**
+     * This method is called by the FXMLLoader when initialization is complete.
+     *
+     * @param url the location used to resolve relative paths for the root object, or null if the location is not known
+     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         controller = new ShowAgendaController();
@@ -94,7 +102,9 @@ public class ShowListOfAgendaUI extends Application implements Initializable {
 
         loadTableViewValues();
     }
-
+    /**
+     * Loads the values into the TableView.
+     */
     private void loadTableViewValues() {
         List<Task> taskList = controller.getAgenda();
         ObservableList<Task> taskObservableList = FXCollections.observableList(taskList);
