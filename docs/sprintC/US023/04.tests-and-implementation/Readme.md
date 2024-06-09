@@ -39,8 +39,8 @@
 **Test 3:** Check if it is possible to list tasks by green space.
 
 
-@Test
-void getTasksByGreenSpace() throws ParseException {
+        @Test
+        void getTasksByGreenSpace() throws ParseException {
 
         Date task5startDate = dateFormat.parse("16/06/2024 - 14");
         Date task5EndDate = dateFormat.parse("17/06/2024 - 13");

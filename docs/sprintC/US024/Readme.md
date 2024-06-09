@@ -1,4 +1,4 @@
-# US24 - Postpone an entry in the Agenda to a specific future date
+# US024 - As a GSM, I want to Postpone an entry in the Agenda to a specific future date.
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

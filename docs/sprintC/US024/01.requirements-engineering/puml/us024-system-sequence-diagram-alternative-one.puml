@@ -21,7 +21,7 @@ activate GSM
     GSM -> System : selects a task from the list
     activate System
 
-        System --> GSM : check and prints the availability of the team already assigned to the \n task and asks for the new date to postpone the selected task
+        System --> GSM : asks for the new date to postpone the selected task
 
     deactivate System
 
