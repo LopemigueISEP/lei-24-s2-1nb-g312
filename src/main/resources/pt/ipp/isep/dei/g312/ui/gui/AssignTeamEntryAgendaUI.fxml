@@ -42,10 +42,7 @@
 
             <ComboBox fx:id="cmbTeam" onAction="#onChangeCmbTeam" prefHeight="25.0" prefWidth="728.0" promptText="Select a Team" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
 
-            <HBox GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
-                <Label style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Managed by: " />
-                <Label fx:id="greenSpaceManagerLabel" style="-fx-font-size: 14px;" text="Manager's Name" />
-            </HBox>
+            <HBox GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
 
             <Button fx:id="registerButton" onAction="#handleRegisterButtonAction" prefHeight="25.0" prefWidth="149.0" text="Register" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
                 <font>
