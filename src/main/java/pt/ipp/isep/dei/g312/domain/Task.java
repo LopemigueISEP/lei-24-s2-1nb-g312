@@ -276,7 +276,18 @@ public class Task implements Cloneable, Serializable {
         this.startDate=Date.from(newStartDateTime.atZone(ZoneId.systemDefault()).toInstant());
         this.endDate= calculateEndDate();
     }
-
+    /**
+     * Compares this Task object with the specified object for equality.
+     * The comparison is based on the task ID of the Task objects.
+     *
+     * @param obj the object to compare with this Task.
+     * @return true if the specified object is a Task with the same task ID as this Task, false otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        Task task = (Task) obj;
+        return this.getTaskID()==task.getTaskID();
+    }
 }
 
 

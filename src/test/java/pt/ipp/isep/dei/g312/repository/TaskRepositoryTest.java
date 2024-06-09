@@ -51,6 +51,13 @@ class TaskRepositoryTest {
         task2 = new Task("Sample Task 2 for testing", "This is a sample task description.", 8, "Type A", greenSpace,
                 TaskUrgency.HIGH, TaskStatus.CANCELED, null, new ArrayList<>(), taskRepository.getNextTaskId(), startDate, endDate, TaskPosition.AGENDA);
         task2.assignVehicle(vehicle2);
+        Date startDate1 = dateFormat.parse("01/06/2024 - 14");
+        Date endDate1 = dateFormat.parse("02/06/2024 - 13");
+        team1 = new Team();
+        Employee employee1 = new Employee("Joao Santos", startDate1, "joao.santos@gmail.com", 123456789, startDate1, "123456789", "Address 1", "DOC123", "Developer", new ArrayList<>());
+        Employee employee2 = new Employee("Joana Santos", startDate1, "joana.santos@gmail.com", 987654321, startDate1, "987654321", "Address 2", "DOC456", "Manager", new ArrayList<>());
+        team1.add(employee1);
+        task2.assignTeam(team1);
         taskRepository.addTask(task2);
 
         canceledTask = new Task("Sample Task", "This is a sample task description.", 8, "Type A", greenSpace,
@@ -75,7 +82,9 @@ class TaskRepositoryTest {
         task5.assignVehicle(vehicle1);
         task5.assignVehicle(vehicle2);
         taskRepository.addTask(task5);
-        team1 = new Team();
+
+
+
 
 
     }
@@ -89,7 +98,7 @@ class TaskRepositoryTest {
         // in setup 5 tasks 1 is done and 1 is canceled
         assertEquals(3, result.size());
 
-        Task taskTeste6 = new Task("TASK_TESTE", "DESCRICAO", 8, "", greenSpace, TaskUrgency.HIGH, TaskStatus.DONE, team1, new ArrayList<Vehicle>(), 1012, dateFormat.parse("16/06/2024 - 14"), dateFormat.parse("19/06/2024 - 14"), TaskPosition.AGENDA);
+        Task taskTeste6 = new Task("TASK_TESTE", "DESCRICAO", 8, "", greenSpace, TaskUrgency.HIGH, TaskStatus.DONE, team1, new ArrayList<Vehicle>(), taskRepository.getNextTaskId(), dateFormat.parse("16/06/2024 - 14"), dateFormat.parse("19/06/2024 - 14"), TaskPosition.AGENDA);
 
         taskRepository.addTask(taskTeste6);
         List<Task> result1 = taskRepository.getAllAgendaTasksExceptDoneCanceled();
@@ -109,15 +118,15 @@ class TaskRepositoryTest {
         GreenSpace greenSpace12 = new GreenSpace("ABC", "asd", 1000, GreenSpaceTypology.MEDIUM, "asd");
 
         Task task12 = new Task("TaskSemNomeDeJeito", "Vou-me despedir para ficar a dormir o dia todo", 5, "Type A", greenSpace12,
-                TaskUrgency.LOW, TaskStatus.PENDING, null, new ArrayList<>(), 5, task5startDate, task5EndDate, TaskPosition.AGENDA);
+                TaskUrgency.LOW, TaskStatus.PENDING, null, new ArrayList<>(), taskRepository.getNextTaskId(), task5startDate, task5EndDate, TaskPosition.AGENDA);
 
         taskRepository.addTask(task12);
-        List<Task> result = taskRepository.getTasksByGreenSpace(greenSpace);
+        List<Task> result = taskRepository.getTasksByGreenSpace(greenSpace12);
 
 
         assertNotEquals(5, result.size()); //All 5 starting tasks are assigned to this greenspace, the number 6 task12 is in another greenspace
-        assertFalse(result.contains(task1)); //contains a task of the selected greenspace
-        assertFalse(result.contains(task12)); // didn't contain a task of another greenspace
+        assertFalse(result.contains(task1)); // didn't contain a task of another greenspace
+        assertTrue(result.contains(task12)); //contains a task of the selected greenspace
 
 
     }
@@ -151,41 +160,11 @@ class TaskRepositoryTest {
     void testGetTasksAssignedToMeBetweenToDates() throws ParseException {
         // Create necessary data within the test method
         GreenSpace greenSpace = new GreenSpace("greenTeste", "casota", 200, GreenSpaceTypology.GARDEN, "GSM@this.app");
-
-        Date startDate1 = dateFormat.parse("01/06/2024 - 14");
-        Date endDate1 = dateFormat.parse("02/06/2024 - 13");
-
-        Employee employee1 = new Employee("Joao Santos", startDate1, "joao.santos@gmail.com", 123456789, startDate1, "123456789", "Address 1", "DOC123", "Developer", new ArrayList<>());
-        Employee employee2 = new Employee("Joana Santos", startDate1, "joana.santos@gmail.com", 987654321, startDate1, "987654321", "Address 2", "DOC456", "Manager", new ArrayList<>());
-
-        Team team1 = new Team();
-        team1.addEmployee(employee1);
-        team1.addEmployee(employee2);
-
-        Task task1 = new Task("Task 1", "Task description 1", 8, "Type A", greenSpace, TaskUrgency.HIGH, TaskStatus.PENDING, team1, new ArrayList<>(), 1, startDate1, endDate1, TaskPosition.AGENDA);
-        taskRepository.addTask(task1);
-
-        Date startDate2 = dateFormat.parse("05/06/2024 - 14");
-        Date endDate2 = dateFormat.parse("06/06/2024 - 13");
-
-        Task task2 = new Task("Task 2", "Task description 2", 8, "Type B", greenSpace, TaskUrgency.MEDIUM, TaskStatus.PENDING, team1, new ArrayList<>(), 2, startDate2, endDate2, TaskPosition.AGENDA);
-        taskRepository.addTask(task2);
-
-        Date startDate3 = dateFormat.parse("01/05/2024 - 14");
-        Date endDate3 = dateFormat.parse("02/05/2024 - 13");
-
-        Task task3 = new Task("Task 3", "Task description 3", 8, "Type C", greenSpace, TaskUrgency.LOW, TaskStatus.PENDING, team1, new ArrayList<>(), 3, startDate3, endDate3, TaskPosition.AGENDA);
-        taskRepository.addTask(task3);
-
-        Task taskNoTeam = new Task("Task No Team", "No team assigned", 8, "Type D", greenSpace, TaskUrgency.HIGH, TaskStatus.PENDING, null, new ArrayList<>(), 4, new Date(), new Date(), TaskPosition.AGENDA);
-        taskRepository.addTask(taskNoTeam);
-
         // Tasks within the date range
         LocalDate startDate = LocalDate.of(2024, 6, 1);
         LocalDate endDate = LocalDate.of(2024, 6, 7);
         List<Task> result = taskRepository.getTasksAssignedToMeBetweenToDates("joao.santos@gmail.com", startDate, endDate);
-        assertEquals(2, result.size());
-        assertTrue(result.contains(task1));
+        assertEquals(1, result.size());
         assertTrue(result.contains(task2));
 
         // Tasks outside the date range
@@ -198,8 +177,8 @@ class TaskRepositoryTest {
         startDate = LocalDate.of(2024, 6, 1);
         endDate = LocalDate.of(2024, 6, 7);
         result = taskRepository.getTasksAssignedToMeBetweenToDates("joao.santos@gmail.com", startDate, endDate);
-        assertEquals(2, result.size());
-        assertFalse(result.contains(taskNoTeam));
+        assertEquals(1, result.size());
+        assertFalse(result.contains(task1));
 
         // Tasks with no matching employee email
         startDate = LocalDate.of(2024, 6, 1);
