@@ -85,7 +85,6 @@ class TaskRepositoryTest {
 
         task6 = new Task("Sample Task 2 for testing", "This is a sample task description.", 8, "Type A", greenSpace,
                 TaskUrgency.HIGH, TaskStatus.PLANNED, null, new ArrayList<>(), taskRepository.getNextTaskId(), startDate, endDate, TaskPosition.AGENDA);
-        task6.assignVehicle(vehicle2);
         task6.assignTeam(team1);
         taskRepository.addTask(task6);
 
@@ -102,14 +101,14 @@ class TaskRepositoryTest {
         List<Task> result = taskRepository.getAllAgendaTasksExceptDoneCanceled();
 
         // in setup 5 tasks 1 is done and 1 is canceled
-        assertEquals(3, result.size());
+        assertEquals(4, result.size());
 
         Task taskTeste6 = new Task("TASK_TESTE", "DESCRICAO", 8, "", greenSpace, TaskUrgency.HIGH, TaskStatus.DONE, team1, new ArrayList<Vehicle>(), taskRepository.getNextTaskId(), dateFormat.parse("16/06/2024 - 14"), dateFormat.parse("19/06/2024 - 14"), TaskPosition.AGENDA);
 
         taskRepository.addTask(taskTeste6);
         List<Task> result1 = taskRepository.getAllAgendaTasksExceptDoneCanceled();
 
-        assertNotEquals(4, result1.size());
+        assertNotEquals(5, result1.size());
         assertEquals(taskTeste6.getStatus(), TaskStatus.DONE);
         assertFalse(result1.contains(taskTeste6)); //check if not contains a done status task
         assertTrue(result1.contains(task1)); // check if contains a pending status task
@@ -151,7 +150,7 @@ class TaskRepositoryTest {
     @Test
     public void testGetTasksCancelable() {
         List<Task> cancelableTasks = taskRepository.getTasksCancelable();
-        assertEquals(4, cancelableTasks.size());
+        assertEquals(5, cancelableTasks.size());
         assertTrue(cancelableTasks.contains(task1));
     }
     @Test
@@ -188,7 +187,7 @@ class TaskRepositoryTest {
         LocalDate startDate = LocalDate.of(2024, 6, 1);
         LocalDate endDate = LocalDate.of(2024, 6, 7);
         List<Task> result = taskRepository.getTasksAssignedToMeBetweenToDates("joao.santos@gmail.com", startDate, endDate);
-        assertEquals(1, result.size());
+        assertEquals(2, result.size());
         assertTrue(result.contains(task2));
 
         // Tasks outside the date range
@@ -201,7 +200,7 @@ class TaskRepositoryTest {
         startDate = LocalDate.of(2024, 6, 1);
         endDate = LocalDate.of(2024, 6, 7);
         result = taskRepository.getTasksAssignedToMeBetweenToDates("joao.santos@gmail.com", startDate, endDate);
-        assertEquals(1, result.size());
+        assertEquals(2, result.size());
         assertFalse(result.contains(task1));
 
         // Tasks with no matching employee email
@@ -219,7 +218,7 @@ class TaskRepositoryTest {
         Task task = new Task( greenSpace, "Title", "Descr", TaskUrgency.HIGH, 2, TaskPosition.TODOLIST,taskRepository.getNextTaskId());
         taskRepository.addTask(task);
         int nextId = taskRepository.getNextTaskId();
-        assertEquals(8, nextId);
+        assertEquals(9, nextId);
     }
 
     @Test
@@ -236,14 +235,14 @@ class TaskRepositoryTest {
         Optional<List<Task>> optionalTaskList = taskRepository.getTaskList();
         assertTrue(optionalTaskList.isPresent(), "Task list should be present");
         List<Task> taskList = optionalTaskList.get();
-        assertEquals(6, taskList.size());
+        assertEquals(7, taskList.size());
     }
 
     @Test
     void testGetAgenda() {
         List<Task> agendaTasks = taskRepository.getAgenda();
 
-        assertEquals(6, agendaTasks.size());
+        assertEquals(7, agendaTasks.size());
         agendaTasks.forEach(task -> assertEquals(TaskPosition.AGENDA, task.getTaskPosition()));
     }
 
