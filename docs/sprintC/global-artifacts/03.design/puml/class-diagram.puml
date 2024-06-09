@@ -102,6 +102,9 @@ class Employee{
     +assignVehicleToTask(Vehicle availableVehicle, Task selectedTask):void
     +getGreenSpacesManagedByMe(): List<GreenSpace>
     +getTasksAssignedToMeBetweenToDates(startDate, endDate): List<Task>
+    + cancelTask(Task taskToCancel)
+    + addTaskAgenda(selectedGreenSpace : GreenSpace, selectedTask : Task, selectedDate : LocalDate, startTime : int, agenda : TaskPosition, userValidation : boolean) : Optional<Task>
+
 
 }
 
@@ -120,9 +123,30 @@ Employee "1"  -->  "*"Skill : registerSkill
 RegisterCollaboratorController ..> Employee : employee
 
 
+class CompleteTaskUI {
 
+}
 
+class CompleteTaskController {
 
+}
+
+CompleteTaskUI  ..>  CompleteTaskController
+
+CompleteTaskController  ..> "1" Repositories
+
+Repositories "1" --> "1" Repositories: instance
+Repositories "1" --> "1" EmployeeRepository
+Repositories "1" --> "1" TaskRepository
+
+CompleteTaskController ..> Employee
+
+EmployeeRepository "1" --> "1" Employee
+TaskRepository "1" --> "1" Employee
+
+Employee --> Task: complete
+
+Task "1" .> "1" TaskStatus
 
 class RegisterJobController{
 
@@ -152,6 +176,13 @@ RegisterJobController ..> "1" Repositories : repositories
 RegisterJobController ..>Employee: registerJob
 
 Employee "1"  -->  "*"Job : registerJob
+
+enum GreenSpaceTypology {
+    GARDEN
+MEDIUM
+LARGE
+}
+GreenSpace "1" .> "1" GreenSpaceTypology
 
 
 
@@ -522,11 +553,40 @@ RegisterGreenSpaceUI ..> RegisterGreenSpaceController
 AuthenticationRepository "1" --> "*" Employee
 Employee "1" --> "*" GreenSpace : registerGreenSpace
 
+class AddEntryToDoListUI{
 
+}
+class AddEntryToDoListController{
+
+}
+
+enum TaskUrgency {
+    LOW
+    MEDIUM
+    HIGH
+}
+
+AddEntryToDoListUI ..>AddEntryToDoListController
+
+AddEntryToDoListController ..> "1" Repositories
+
+Repositories "1" --> "1" Repositories : getInstance()
+Repositories "1" --> "1" EmployeeRepository
+
+Repositories "1" --> "1" GreenSpacesRepository
+
+AddEntryToDoListController ..>Employee
+
+EmployeeRepository "1" --> "1" Employee
+GreenSpacesRepository "1" --> "1" Employee
+
+Employee .> TaskUrgency
+Employee --> Task: registers
 
 class AddEntryAgendaUI{
 
 }
+
 
 class AddEntryAgendaController{
 + getGreenSpaceRepository() : void
@@ -547,10 +607,14 @@ class TasksRepository{
  +getToDoListEntries(): List<ToDoEntries>
  +getAllAgendaTasksExceptDoneCanceled(): List<Task>
  +getVehicleAvaiability(Task selectedTask, List<Vehicle> vehicles): List<Vehicle>
+ +getAgendaEntries(): List<ToDoEntries>
+ +List<Task>
+    +recordTaskCompletion(Task task, String observations)
 
 }
 class GreenSpacesRepository{
 +getGreenSpacesList(): GreenSpace
++getGreenSpaces(): GreenSpace
 }
 class Task{
     -title: String
@@ -584,12 +648,34 @@ GreenSpacesRepository "1" --> "1" Employee
 
 Employee --> Task: registers
 
+class CancelEntryAgendaController{
+
+}
+
+class CancelEntryAgendaUI{
+
+}
 
 
 
 class AssignVehicleToAgendaEntryUI{
 }
+CancelEntryAgendaUI ..>CancelEntryAgendaController
 
+CancelEntryAgendaController ..> "1" Repositories
+
+Repositories "1" --> "1" Repositories : getInstance()
+Repositories "1" --> "1" EmployeeRepository
+Repositories "1" --> "1" TasksRepository
+
+CancelEntryAgendaController ..>Employee
+
+EmployeeRepository "1" --> "1" Employee
+TasksRepository "1" --> "1" Employee
+
+Employee --> Task: update
+
+Task "1" .> "1" TaskStatus
 class AssignVehicleToAgendaEntryController{
 +getEmployeeRepository()
 +getTaskRepository()
@@ -654,6 +740,7 @@ class Tasks{
     +getAssignedTeam(): team
     +getTeamEmployees(): List<Employee>
     +isAssignedToCurrentCollaborator():boolean
+    +setCompleted(String observations)
 
 }
 
