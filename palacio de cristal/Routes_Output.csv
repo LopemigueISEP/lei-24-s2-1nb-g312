@@ -1,0 +1,18 @@
+Start; Route; Cost
+Pavilhao;Pavilhao, AP,;5
+Teatro;Teatro, AP,;7
+Topo;Topo, AP,;9
+Lago;Lago, AP,;9
+﻿Biblioteca;﻿Biblioteca, AP,;10
+Escadas1;Escadas1, AP,;10
+Miradouro;Miradouro, Topo, AP,;12
+Capela;Capela, Topo, AP,;13
+Escadas2;Escadas2, Escadas1, AP,;13
+ParqueInfantil;ParqueInfantil, Topo, AP,;16
+JardimRoseiral;JardimRoseiral, Escadas2, Escadas1, AP,;16
+CasaRoseiral;CasaRoseiral, Escadas2, Escadas1, AP,;17
+Escadas3;Escadas3, Escadas2, Escadas1, AP,;18
+Fontaine;Fontaine, Miradouro, Topo, AP,;20
+Sentimentos;Sentimentos, Escadas2, Escadas1, AP,;20
+Torreao;Torreao, Miradouro, Topo, AP,;21
+Macieirinha;Macieirinha, ParqueInfantil, Topo, AP,;26
