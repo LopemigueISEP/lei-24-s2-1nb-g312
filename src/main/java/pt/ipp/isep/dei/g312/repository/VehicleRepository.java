@@ -49,13 +49,24 @@ public class VehicleRepository implements Serializable {
             }
         }
     }
-
+    /**
+     * Checks if a vehicle exists in the repository.
+     *
+     * @param vehicle The vehicle to check.
+     * @return True if the vehicle exists in the repository, false otherwise.
+     */
     public boolean existsVehicle(Vehicle vehicle){
         if (vehiclesList.contains(vehicle)) {
             return true;
         }
         return false;
     }
+    /**
+     * Checks if a vehicle with the given registration plate exists in the repository.
+     *
+     * @param registrationPlate The registration plate to check.
+     * @return True if a vehicle with the given registration plate exists, false otherwise.
+     */
     public boolean existsVehicle(String registrationPlate){
         if (registrationPlate == null) {
             return false;
@@ -72,7 +83,12 @@ public class VehicleRepository implements Serializable {
         return false;
     }
 
-
+    /**
+     * Adds a new vehicle to the repository.
+     *
+     * @param vehicle The vehicle to add.
+     * @return An Optional containing the added vehicle if the operation is successful, empty otherwise.
+     */
     public Optional<Vehicle> add(Vehicle vehicle) {
         Optional<Vehicle> newVehicle=Optional.empty();
         boolean operationSuccess=false;
@@ -86,7 +102,12 @@ public class VehicleRepository implements Serializable {
         }
         return newVehicle;
     }
-
+    /**
+     * Validates whether a vehicle is not already present in the repository.
+     *
+     * @param vehicle The vehicle to validate.
+     * @return True if the vehicle is not already present in the repository, false otherwise.
+     */
     private boolean validateVehicle(Vehicle vehicle) {
         boolean isValid = !vehiclesList.contains(vehicle);
 
@@ -95,7 +116,9 @@ public class VehicleRepository implements Serializable {
 
 
     /**
-     * Serializes the Vehicle object to a file.
+     * Serializes the VehicleRepository object to a file.
+     * The repository is saved to a file named after the class with a ".bin" extension.
+     * This method handles the serialization process and writes the object state to a file.
      */
     public void serializateData() {
 
@@ -127,7 +150,9 @@ public class VehicleRepository implements Serializable {
 
 
     /**
-     * Deserializes the Vehicle object from a file and adds the jobs to the current repository.
+     * Deserializes the VehicleRepository object from a file and adds the vehicles to the current repository.
+     * The repository is read from a file named after the class with a ".bin" extension.
+     * This method handles the deserialization process and reads the object state from a file.
      */
     public void getSeralizatedData() {
         String filename = this.getClass().getSimpleName()+".bin";

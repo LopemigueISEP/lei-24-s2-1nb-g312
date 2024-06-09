@@ -24,7 +24,6 @@ import java.util.ResourceBundle;
 /**
  * GUI class for displaying a list of green spaces managed by the logged-in user.
  */
-
 public class ListGreenSpacesManagedByMeGUI extends Application implements Initializable {
     @FXML
     public Label label_ManagerEmail;

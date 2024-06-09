@@ -23,6 +23,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * The CompleteTaskUI class is responsible for the graphical user interface for completing tasks.
+ * It extends the JavaFX Application class and implements Initializable for initialization logic.
+ */
 public class CompleteTaskUI extends Application implements Initializable {
     public ComboBox cmbTasks;
     public DatePicker datePicker;
@@ -60,6 +64,9 @@ public class CompleteTaskUI extends Application implements Initializable {
         }
     }
 
+    /**
+     * Displays a warning dialog when no tasks are available to complete.
+     */
     private void raiseNoTaksAvaiable() {
         ButtonType yes = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
         Alert alert = new Alert(Alert.AlertType.WARNING,
@@ -72,12 +79,21 @@ public class CompleteTaskUI extends Application implements Initializable {
 
     }
 
+    /**
+     * This method is called to initialize a controller after its root element has been completely processed.
+     *
+     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeTaskComboBox();
         initializeDatePicker();
     }
 
+    /**
+     * Initializes the Task ComboBox with the list of completable tasks.
+     */
     private void initializeTaskComboBox() {
         List<Task> tasks = completeTaskController.getTasksCompletable();
         cmbTasks.setItems(FXCollections.observableArrayList(tasks));
@@ -85,6 +101,9 @@ public class CompleteTaskUI extends Application implements Initializable {
         cmbTasks.setButtonCell(new TasksComboNames());
     }
 
+    /**
+     * Custom ListCell implementation for displaying Task titles in the ComboBox.
+     */
     private static class TasksComboNames extends ListCell<Task> {
 
         @Override
@@ -102,6 +121,9 @@ public class CompleteTaskUI extends Application implements Initializable {
         }
     }
 
+    /**
+     * Initializes the DatePicker to disable dates before today.
+     */
     private void initializeDatePicker() {
         datePicker.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
@@ -112,11 +134,16 @@ public class CompleteTaskUI extends Application implements Initializable {
         });
     }
 
+    /**
+     * Handles the action event when the complete task button is clicked.
+     *
+     * @param actionEvent the action event triggered by the complete task button
+     */
     public void completeTask(ActionEvent actionEvent) {
         if (verifyEmptyField()) {
-                lblStatusMsg.setVisible(true);
-                lblStatusMsg.setText("Please fill out required information.");
-        } else if (datePicker.getValue()!=null && textStartTime.getText().split(":").length != 2) {
+            lblStatusMsg.setVisible(true);
+            lblStatusMsg.setText("Please fill out required information.");
+        } else if (datePicker.getValue() != null && textStartTime.getText().split(":").length != 2) {
             lblStatusMsg.setText("Expected start time should in format HH:MM");
             lblStatusMsg.setVisible(true);
         } else {
@@ -152,10 +179,20 @@ public class CompleteTaskUI extends Application implements Initializable {
         }
     }
 
+    /**
+     * Verifies if the Task ComboBox is empty.
+     *
+     * @return true if the Task ComboBox is empty, false otherwise
+     */
     private boolean verifyEmptyField() {
         return cmbTasks.getValue() == null;
     }
 
+    /**
+     * Displays a confirmation dialog to confirm the completion of the task.
+     *
+     * @return true if the user confirms the completion, false otherwise
+     */
     private boolean confirmsData() {
         ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
         ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -170,6 +207,11 @@ public class CompleteTaskUI extends Application implements Initializable {
         return result.orElse(yes) == yes;
     }
 
+    /**
+     * Displays a dialog asking if the user wants to complete another task.
+     *
+     * @return true if the user wants to complete another task, false otherwise
+     */
     private boolean completeAnotherTask() {
         if (completeTaskController.getTasksCompletable().size() > 0) {
             ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
@@ -189,6 +231,9 @@ public class CompleteTaskUI extends Application implements Initializable {
         }
     }
 
+    /**
+     * Resets all input fields in the form.
+     */
     private void resetAllFields() {
         cmbTasks.getSelectionModel().clearSelection();
         cmbTasks.setValue(null);

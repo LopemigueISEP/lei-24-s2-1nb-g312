@@ -4,17 +4,29 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
-
+/**
+ * The JavaFXInitializer class is responsible for initializing the JavaFX platform.
+ * This class ensures that the JavaFX platform is initialized only once.
+ */
 public class JavaFXInitializer extends Application {
+    /**
+     * This method is called when the application is started.
+     * It is overridden to do nothing because the purpose of this class is only to initialize the JavaFX platform.
+     *
+     * @param primaryStage the primary stage for this application
+     */
     @Override
     public void start(Stage primaryStage) {
-        // Não faça nada aqui, isso é apenas para inicializar a plataforma
     }
 
+    /**
+     * Initializes the JavaFX platform.
+     * This method ensures that the platform is initialized only once by checking if the current thread is the JavaFX application thread.
+     */
     public static void initialize() {
-        // Use uma variável estática para garantir que a plataforma seja inicializada apenas uma vez
         if (!Platform.isFxApplicationThread()) {
-            Platform.startup(() -> {});
+            Platform.startup(() -> {
+            });
         }
     }
 }

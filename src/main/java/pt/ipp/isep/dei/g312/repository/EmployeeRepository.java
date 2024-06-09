@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 
-
-
 /**
  * This class represents a repository for managing Employee objects. It provides methods
  * for adding, retrieving, updating, and searching for employees.
@@ -24,9 +22,11 @@ public class EmployeeRepository implements Serializable {
      * List to store all registered employees.
      */
     private List<Employee> employeeList = new ArrayList<>();
+
     /**
      * Retrieves an `Optional` containing the employee with the specified taxpayer number.
      * If no employee is found, an empty `Optional` is returned.
+     *
      * @param taxpayerNumber The taxpayer number of the employee to search for.
      * @return An `Optional` containing the employee or empty if not found.
      */
@@ -42,14 +42,16 @@ public class EmployeeRepository implements Serializable {
     /**
      * Returns a copy of the list containing all registered employees.
      * Modifying the returned list will not affect the internal employee list.
+     *
      * @return A copy of the employee list.
      */
     public List<Employee> getEmployees() {
-        return new ArrayList<>(employeeList) ;
+        return new ArrayList<>(employeeList);
     }
 
     /**
      * Attempts to add a new employee to the repository.
+     *
      * @param employee The employee object to be added.
      * @return An `Optional` containing the added employee if successful, or empty if the operation fails
      */
@@ -66,9 +68,11 @@ public class EmployeeRepository implements Serializable {
         }
         return newEmployee;
     }
+
     /**
      * Validates if the provided employee can be added to the repository.
      * Currently, it checks for duplicate employees based on object equality.
+     *
      * @param employee The employee to be validated.
      * @return True if the employee is valid to add, false otherwise.
      */
@@ -88,6 +92,7 @@ public class EmployeeRepository implements Serializable {
         }
         System.out.println("---------------------------------------------------");
     }
+
     /**
      * Prints a formatted list of all registered employees and their associated skills.
      * If the employee has no skills, "No skills assigned" is displayed.
@@ -118,14 +123,15 @@ public class EmployeeRepository implements Serializable {
         }
         System.out.println("----------------------------------------------------------");
     }
+
     /**
      * Attempts to add a list of skills to an existing employee's profile by finding
      * the employee in the repository and then updates their skills
+     *
      * @param collaborator The employee object whose skills should be updated.
-     * @param skillsToAdd The list of skills to be added to the employee's profile.
-
+     * @param skillsToAdd  The list of skills to be added to the employee's profile.
      * @return An `Optional` containing the updated employee if successful, or empty if the collaborator
-     *         is not found.
+     * is not found.
      */
     public Optional<Employee> addSkillsToCollaboratorProfile(Employee collaborator, List<Skill> skillsToAdd) {
         // Attempt to find the collaborator in the employee list
@@ -168,7 +174,7 @@ public class EmployeeRepository implements Serializable {
      * @param rl The job title of the employee to search for.
      * @return The employee object with the matching job title, or null if not found.
      * @deprecated This method does not use `Optional` for null safety. Consider using `findEmployee`
-     *             with a search criteria based on job title instead.
+     * with a search criteria based on job title instead.
      */
 
     public Employee getEmployFromJob(String rl) {
@@ -178,22 +184,24 @@ public class EmployeeRepository implements Serializable {
                     return emp;
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Error in getting employee from the current user Job");
         }
-     return null;
+        return null;
     }
 
     /**
      * Retrieves a copy of the list containing the employee's associated skills..
+     *
      * @param employee The employee whose skills should be retrieved.
      * @return A copy of the employee's skill list.
      */
 
-    public List<Skill> getEmployeeSkills(Employee employee){
+    public List<Skill> getEmployeeSkills(Employee employee) {
 
         return new ArrayList<>(employee.getEmployeeSkillList());
     }
+
     /**
      * Retrieves a list of employees sorted by the number of skills they possess.
      *
@@ -205,6 +213,7 @@ public class EmployeeRepository implements Serializable {
         return employeesSortedSkills;
 
     }
+
     /**
      * Retrieves an employee by their email address.
      *
@@ -212,11 +221,11 @@ public class EmployeeRepository implements Serializable {
      * @return An Optional containing the employee with the specified email address if found, or an empty Optional if no employee matches the provided email.
      */
     public Optional<Employee> getEmployeeByEmail(String userEmail) {
-        Optional<Employee> responsible=Optional.empty();
+        Optional<Employee> responsible = Optional.empty();
         for (Employee e :
                 employeeList) {
-            if (e.getEmail().equals(userEmail)){
-                responsible=Optional.of(e);
+            if (e.getEmail().equals(userEmail)) {
+                responsible = Optional.of(e);
             }
         }
         return responsible;
@@ -225,10 +234,12 @@ public class EmployeeRepository implements Serializable {
 
     /**
      * Serializes the EmployeeRepository object to a file.
+     * The repository is saved to a file named after the class with a ".bin" extension.
+     * This method handles the serialization process and writes the object state to a file.
      */
     public void serializateData() {
 
-        String filename = this.getClass().getSimpleName()+".bin";
+        String filename = this.getClass().getSimpleName() + ".bin";
 
         // Serialization
         try {
@@ -246,7 +257,7 @@ public class EmployeeRepository implements Serializable {
             out.close();
             file.close();
 
-            System.out.println(this.getClass().getSimpleName()+" Has Been Serialized successfully! ");
+            System.out.println(this.getClass().getSimpleName() + " Has Been Serialized successfully! ");
         } catch (FileNotFoundException ex) {
             System.out.println("IOException is caught");
         } catch (IOException e) {
@@ -256,9 +267,11 @@ public class EmployeeRepository implements Serializable {
 
     /**
      * Deserializes the EmployeeRepository object from a file and adds the skills to the current repository.
+     * The repository is read from a file named after the class with a ".bin" extension.
+     * This method handles the deserialization process and reads the object state from a file.
      */
     public void getSeralizatedData() {
-        String filename = this.getClass().getSimpleName()+".bin";
+        String filename = this.getClass().getSimpleName() + ".bin";
 
         try {
 
@@ -279,13 +292,9 @@ public class EmployeeRepository implements Serializable {
             in.close();
             file.close();
 
-        }
-
-        catch (IOException ex) {
+        } catch (IOException ex) {
             System.out.println("IOException is caught");
-        }
-
-        catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex) {
             System.out.println("ClassNotFoundException" +
                     " is caught");
         }

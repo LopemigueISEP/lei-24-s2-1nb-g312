@@ -21,7 +21,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
+/**
+ * The AssignTeamEntryAgendaUI class is responsible for the graphical user interface for assigning a team to a task in a green space.
+ * It extends the JavaFX Application class and implements Initializable for initialization logic.
+ */
 public class AssignTeamEntryAgendaUI extends Application implements Initializable {
 
     private final AssignTeamEntryAgendaController controller;
@@ -33,7 +36,9 @@ public class AssignTeamEntryAgendaUI extends Application implements Initializabl
     private Optional<Team> chosenTeam = null;
     private Optional<GreenSpace> chosenGreenSpace = null;
 
-
+    /**
+     * Constructs an AssignTeamEntryAgendaUI object and initializes the controller.
+     */
     public AssignTeamEntryAgendaUI() {
         controller = new AssignTeamEntryAgendaController();
     }
@@ -55,7 +60,12 @@ public class AssignTeamEntryAgendaUI extends Application implements Initializabl
         }
     }
 
-
+    /**
+     * This method is called to initialize a controller after its root element has been completely processed.
+     *
+     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeGreenSpaceComboBox();
@@ -64,14 +74,20 @@ public class AssignTeamEntryAgendaUI extends Application implements Initializabl
 
     }
 
-    //comboBox for GreenSpace
+    /**
+     * Initializes the GreenSpace ComboBox with the list of green spaces.
+     */
     private void initializeGreenSpaceComboBox() {
         List<GreenSpace> greenSpaceList = controller.getGreenSpaces();
         cmbGreenSpace.setItems(FXCollections.observableArrayList(greenSpaceList));
         cmbGreenSpace.setCellFactory(listView -> new AssignTeamEntryAgendaUI.GreenSpaceComboNames());
         cmbGreenSpace.setButtonCell(new AssignTeamEntryAgendaUI.GreenSpaceComboNames());
     }
-
+    /**
+     * Handles the event when the GreenSpace ComboBox value changes.
+     *
+     * @param actionEvent the action event triggered by changing the GreenSpace ComboBox value
+     */
     public void onChangeCmbGreenSpace(ActionEvent actionEvent) {
         chosenGreenSpace = Optional.empty();
         if (cmbGreenSpace.getValue() != null) {
@@ -82,7 +98,9 @@ public class AssignTeamEntryAgendaUI extends Application implements Initializabl
     }
 
 
-
+    /**
+     * Custom ListCell implementation for displaying GreenSpace names in the ComboBox.
+     */
     private static class GreenSpaceComboNames extends ListCell<GreenSpace> {
 
         @Override
@@ -102,14 +120,22 @@ public class AssignTeamEntryAgendaUI extends Application implements Initializabl
     }
 
 
-    //comboBox for Task
+    /**
+     * Initializes the Task ComboBox with the list of tasks for the selected GreenSpace.
+     *
+     * @param greenSpace the selected GreenSpace
+     */
     private void initializeTaskComboBox(GreenSpace greenSpace) {
         List<Task> taskList = controller.getTasksByGreenSpaceForTeam(greenSpace);
         cmbTask.setItems(FXCollections.observableArrayList(taskList));
         cmbTask.setCellFactory(listView -> new TaskComboNames());
         cmbTask.setButtonCell(new TaskComboNames());
     }
-
+    /**
+     * Handles the event when the Task ComboBox value changes.
+     *
+     * @param actionEvent the action event triggered by changing the Task ComboBox value
+     */
     public void onChangeCmbTask(ActionEvent actionEvent) {
         chosenTask = Optional.empty();
         if (cmbTask.getValue() != null) {
@@ -119,7 +145,9 @@ public class AssignTeamEntryAgendaUI extends Application implements Initializabl
 
         }
     }
-
+    /**
+     * Custom ListCell implementation for displaying Task names in the ComboBox.
+     */
     private static class TaskComboNames extends ListCell<Task> {
 
         @Override
@@ -137,7 +165,11 @@ public class AssignTeamEntryAgendaUI extends Application implements Initializabl
         }
 
     }
-
+    /**
+     * Handles the event when the Team ComboBox value changes.
+     *
+     * @param actionEvent the action event triggered by changing the Team ComboBox value
+     */
     public void onChangeCmbTeam(ActionEvent actionEvent) {
         chosenTeam = Optional.empty();
         if(chosenTask.isPresent()) {

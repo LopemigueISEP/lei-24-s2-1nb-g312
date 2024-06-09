@@ -135,7 +135,11 @@ public class RegisterGreenSpaceController {
             return Optional.empty();
         }
     }
-
+    /**
+     * Retrieves an array of available green space typologies.
+     *
+     * @return An array of GreenSpaceTypology values.
+     */
     public GreenSpaceTypology[] getGreenSpaceTypologies() {
         return GreenSpaceTypology.values();
     }
